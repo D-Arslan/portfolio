@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://difarslan.com/sitemap.xml

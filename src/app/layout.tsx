@@ -6,17 +6,47 @@ import { LanguageProvider } from "@/context/LanguageContext";
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
 export const metadata: Metadata = {
-  title: "Arslan DIF – Full Stack Developer & AI Engineer",
+  title: "Arslan DIF – Développeur Full Stack & Ingénieur IA",
   description:
-    "Portfolio of Arslan DIF, full stack developer and AI engineer. Founder of FIELDZ and Coiflow. Looking for an apprenticeship in Paris from September 2026.",
-  keywords: ["developer", "full stack", "AI", "machine learning", "Paris", "alternance"],
+    "Portfolio d'Arslan DIF, développeur Full Stack et ingénieur IA. Fondateur de FIELDZ et Coiflow. Recherche une alternance à Paris à partir de septembre 2026.",
+  keywords: [
+    "développeur full stack", "ingénieur IA", "machine learning", "deep learning",
+    "React", "Spring Boot", "PyTorch", "alternance Paris", "portfolio",
+    "Arslan DIF", "FIELDZ", "Coiflow"
+  ],
+  authors: [{ name: "Arslan DIF", url: "https://difarslan.com" }],
+  creator: "Arslan DIF",
+  metadataBase: new URL("https://difarslan.com"),
+  alternates: {
+    canonical: "https://difarslan.com",
+  },
   openGraph: {
-    title: "Arslan DIF – Full Stack Developer & AI Engineer",
-    description: "Portfolio of Arslan DIF",
+    title: "Arslan DIF – Développeur Full Stack & Ingénieur IA",
+    description:
+      "Portfolio d'Arslan DIF, développeur Full Stack et ingénieur IA. Fondateur de FIELDZ et Coiflow. Recherche une alternance à Paris à partir de septembre 2026.",
     url: "https://difarslan.com",
     siteName: "Arslan DIF",
     locale: "fr_FR",
     type: "website",
+    images: [
+      {
+        url: "/photo.png",
+        width: 1200,
+        height: 630,
+        alt: "Arslan DIF – Développeur Full Stack & Ingénieur IA",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Arslan DIF – Développeur Full Stack & Ingénieur IA",
+    description:
+      "Portfolio d'Arslan DIF, développeur Full Stack et ingénieur IA. Alternance Paris sept. 2026.",
+    images: ["/photo.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 

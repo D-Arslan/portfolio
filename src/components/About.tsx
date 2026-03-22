@@ -15,7 +15,7 @@ export default function About() {
       <div className="max-w-6xl mx-auto px-6">
         <SectionTitle>{t(tr.title)}</SectionTitle>
 
-        <div className="grid md:grid-cols-2 gap-16 items-center mt-12">
+        <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-center mt-12">
           {/* Text */}
           <div className="flex flex-col gap-5 text-[#a1a1aa] leading-relaxed">
             <p>{t(tr.p1)}</p>

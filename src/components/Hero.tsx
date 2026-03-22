@@ -23,7 +23,7 @@ export default function Hero() {
         />
       </div>
 
-      <div className="max-w-6xl mx-auto px-6 w-full py-32">
+      <div className="max-w-6xl mx-auto px-6 w-full py-24 md:py-32">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           {/* Left: Text */}
           <div className="flex flex-col gap-6">
@@ -38,16 +38,16 @@ export default function Hero() {
 
             {/* Title */}
             <div>
-              <h1 className="text-5xl md:text-6xl font-bold text-white leading-tight">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white leading-tight">
                 {t(tr.title)}
               </h1>
-              <h1 className="text-5xl md:text-6xl font-bold text-[#3b82f6] leading-tight">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-[#3b82f6] leading-tight">
                 {t(tr.subtitle)}
               </h1>
             </div>
 
             {/* Description */}
-            <p className="text-lg text-[#a1a1aa] leading-relaxed max-w-md">
+            <p className="text-base md:text-lg text-[#a1a1aa] leading-relaxed max-w-md">
               {t(tr.desc)}
             </p>
 

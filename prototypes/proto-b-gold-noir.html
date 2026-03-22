@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Proto B — Gold Noir | Arslan DIF</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #09090B;
+      --bg2:       #0C0C0E;
+      --surface:   #111113;
+      --surface2:  #1A1A1D;
+      --border:    #2A2A2E;
+      --border-h:  #3D3D42;
+      --gold:      #D4AF37;
+      --gold-h:    #B8960A;
+      --gold-pale: #E8C547;
+      --gold-glow: rgba(212,175,55,0.12);
+      --text:      #F5F0E8;
+      --muted:     #8A8070;
+      --dim:       #4A4540;
+      --heading:   'Space Grotesk', sans-serif;
+      --body:      'DM Sans', sans-serif;
+      --mono:      'JetBrains Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--body);
+      overflow-x: hidden;
+    }
+
+    /* ── NAVBAR ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px;
+      transition: all 0.3s;
+    }
+    nav.scrolled {
+      background: rgba(9,9,11,0.95);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: var(--heading);
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--text);
+      text-decoration: none;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .nav-logo-icon {
+      width: 32px; height: 32px;
+      border: 1.5px solid var(--gold);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px;
+      color: var(--gold);
+    }
+    .nav-links { display: flex; gap: 32px; align-items: center; }
+    .nav-links a {
+      font-size: 14px;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-cta {
+      background: transparent;
+      border: 1px solid var(--gold);
+      color: var(--gold) !important;
+      padding: 8px 20px;
+      border-radius: 6px;
+      font-size: 14px;
+      transition: all 0.2s !important;
+    }
+    .nav-cta:hover {
+      background: var(--gold) !important;
+      color: #000 !important;
+    }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: grid; grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 80px 48px 48px;
+      gap: 64px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg-lines {
+      position: absolute; inset: 0; z-index: 0;
+      background-image:
+        repeating-linear-gradient(
+          90deg,
+          transparent,
+          transparent 79px,
+          rgba(212,175,55,0.04) 79px,
+          rgba(212,175,55,0.04) 80px
+        );
+    }
+    .hero-bg-glow {
+      position: absolute; z-index: 0;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(212,175,55,0.08) 0%, transparent 70%);
+      top: 50%; left: 50%; transform: translate(-50%, -50%);
+    }
+    .hero-left { position: relative; z-index: 1; }
+    .hero-right { position: relative; z-index: 1; display: flex; justify-content: flex-end; }
+
+    .hero-overline {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      margin-bottom: 28px;
+    }
+    .hero-overline::before, .hero-overline::after {
+      content: '';
+      width: 24px; height: 1px;
+      background: var(--gold);
+      opacity: 0.5;
+    }
+
+    .hero-title {
+      font-family: var(--heading);
+      font-size: clamp(44px, 5.5vw, 72px);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -2px;
+      margin-bottom: 20px;
+    }
+    .hero-name { color: var(--gold); }
+    .hero-name span {
+      display: inline-block;
+      animation: fadeSlide 0.8s cubic-bezier(0.16,1,0.3,1) both;
+    }
+    @keyframes fadeSlide {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-role-line {
+      font-family: var(--mono);
+      font-size: 16px;
+      color: var(--muted);
+      margin-bottom: 32px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .hero-role-line::before {
+      content: '→';
+      color: var(--gold);
+    }
+    .hero-desc {
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.75;
+      max-width: 480px;
+      margin-bottom: 40px;
+      border-left: 2px solid var(--gold);
+      padding-left: 20px;
+    }
+    .hero-ctas { display: flex; gap: 12px; margin-bottom: 48px; flex-wrap: wrap; }
+    .btn-gold {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--gold);
+      color: #000;
+      font-weight: 700;
+      font-size: 14px;
+      padding: 13px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-family: var(--heading);
+      letter-spacing: 0.3px;
+      transition: all 0.2s;
+    }
+    .btn-gold:hover {
+      background: var(--gold-pale);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 32px rgba(212,175,55,0.25);
+    }
+    .btn-outline-gold {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: transparent;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-size: 14px;
+      padding: 13px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-family: var(--body);
+      transition: all 0.2s;
+    }
+    .btn-outline-gold:hover { background: rgba(212,175,55,0.08); }
+
+    /* Hero card */
+    .hero-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 36px;
+      width: 340px;
+      position: relative;
+    }
+    .hero-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+    .card-avatar {
+      width: 72px; height: 72px;
+      border-radius: 16px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+    .card-name {
+      font-family: var(--heading);
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .card-subtitle {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 24px;
+      font-family: var(--mono);
+    }
+    .card-stats {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 16px; margin-bottom: 24px;
+    }
+    .card-stat {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+    }
+    .card-stat-val {
+      font-family: var(--heading);
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--gold);
+    }
+    .card-stat-lbl {
+      font-size: 11px;
+      color: var(--dim);
+      margin-top: 2px;
+    }
+    .card-stack { display: flex; flex-wrap: wrap; gap: 6px; }
+    .stack-chip {
+      font-size: 11px;
+      font-family: var(--mono);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 4px 10px;
+      border-radius: 4px;
+    }
+    .card-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--gold);
+      background: rgba(212,175,55,0.08);
+      border: 1px solid rgba(212,175,55,0.2);
+      border-radius: 100px;
+      padding: 5px 12px;
+      margin-bottom: 20px;
+    }
+    .card-badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--gold);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse { 50% { opacity: 0.4; } }
+
+    /* ── SECTIONS ── */
+    section { padding: 96px 48px; }
+    .section-inner { max-width: 1100px; margin: 0 auto; }
+    .section-header {
+      display: flex; align-items: center; gap: 16px;
+      margin-bottom: 56px;
+    }
+    .section-num {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--gold);
+      opacity: 0.7;
+    }
+    .section-title {
+      font-family: var(--heading);
+      font-size: clamp(28px, 3.5vw, 40px);
+      font-weight: 700;
+      letter-spacing: -1px;
+    }
+    .section-line { flex: 1; height: 1px; background: var(--border); }
+
+    /* ── ABOUT ── */
+    #about { background: var(--bg2); }
+    .about-grid { display: grid; grid-template-columns: 1fr 360px; gap: 80px; align-items: start; }
+    .about-text p { color: var(--muted); line-height: 1.8; margin-bottom: 20px; }
+    .about-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+    .about-tag {
+      font-size: 12px;
+      font-family: var(--mono);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 5px 14px;
+      border-radius: 4px;
+    }
+    .about-aside {
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .aside-block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .aside-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 10px;
+    }
+    .aside-value {
+      font-family: var(--heading);
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--gold);
+    }
+    .aside-sub { font-size: 13px; color: var(--dim); margin-top: 2px; }
+
+    /* ── PROJECTS ── */
+    .projects-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border-radius: 16px; overflow: hidden; }
+    .project-card {
+      background: var(--surface);
+      padding: 28px;
+      transition: background 0.2s;
+      position: relative;
+      cursor: pointer;
+    }
+    .project-card:hover { background: var(--surface2); }
+    .project-card:hover .project-arrow { opacity: 1; transform: translateX(0); }
+    .project-arrow {
+      position: absolute; top: 24px; right: 24px;
+      color: var(--gold);
+      opacity: 0;
+      transform: translateX(-6px);
+      transition: all 0.2s;
+    }
+    .project-year {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--dim);
+      margin-bottom: 12px;
+    }
+    .project-name {
+      font-family: var(--heading);
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .project-name .gold { color: var(--gold); }
+    .project-desc {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    .project-tech { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tech-pill {
+      font-size: 11px;
+      font-family: var(--mono);
+      border: 1px solid var(--border);
+      color: var(--dim);
+      padding: 3px 9px;
+      border-radius: 4px;
+    }
+    .featured-dot {
+      display: inline-block;
+      width: 6px; height: 6px;
+      background: var(--gold);
+      border-radius: 50%;
+      margin-right: 6px;
+      vertical-align: middle;
+    }
+
+    /* ── SKILLS ── */
+    #skills { background: var(--bg2); }
+    .skills-list { display: flex; flex-direction: column; gap: 24px; }
+    .skill-row {
+      display: grid; grid-template-columns: 160px 1fr;
+      gap: 24px; align-items: start;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+    }
+    .skill-row:last-child { border-bottom: none; }
+    .skill-category {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      padding-top: 4px;
+    }
+    .skill-items { display: flex; flex-wrap: wrap; gap: 8px; }
+    .skill-item {
+      font-size: 13px;
+      font-family: var(--body);
+      color: var(--muted);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 7px 14px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .skill-item:hover { border-color: var(--gold); color: var(--gold); background: rgba(212,175,55,0.05); }
+
+    /* ── EXPERIENCE ── */
+    .exp-list { display: flex; flex-direction: column; gap: 0; }
+    .exp-item {
+      display: grid; grid-template-columns: 200px 1fr;
+      gap: 32px;
+      padding: 32px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .exp-item:first-child { border-top: 1px solid var(--border); }
+    .exp-left {}
+    .exp-period {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--dim);
+      margin-bottom: 6px;
+    }
+    .exp-company {
+      font-family: var(--heading);
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .exp-company .gold { color: var(--gold); }
+    .exp-right {}
+    .exp-role {
+      font-size: 16px;
+      font-weight: 600;
+      font-family: var(--heading);
+      margin-bottom: 10px;
+    }
+    .exp-desc {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 14px;
+    }
+    .exp-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .exp-tag {
+      font-size: 11px;
+      font-family: var(--mono);
+      border: 1px solid var(--border);
+      color: var(--dim);
+      padding: 3px 9px;
+      border-radius: 3px;
+    }
+
+    /* ── CONTACT ── */
+    #contact { background: var(--bg2); }
+    .contact-wrapper { display: grid; grid-template-columns: 1fr 400px; gap: 80px; align-items: center; }
+    .contact-heading {
+      font-family: var(--heading);
+      font-size: clamp(36px, 4vw, 52px);
+      font-weight: 700;
+      letter-spacing: -1.5px;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+    .contact-heading .gold { color: var(--gold); }
+    .contact-sub { color: var(--muted); line-height: 1.7; max-width: 420px; margin-bottom: 32px; }
+    .contact-email {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: var(--mono);
+      font-size: 15px;
+      color: var(--gold);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(212,175,55,0.3);
+      padding-bottom: 4px;
+      transition: border-color 0.2s;
+    }
+    .contact-email:hover { border-color: var(--gold); }
+    .contact-links { display: flex; flex-direction: column; gap: 12px; }
+    .contact-link {
+      display: flex; align-items: center; gap: 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 20px;
+      text-decoration: none;
+      color: var(--text);
+      transition: all 0.2s;
+    }
+    .contact-link:hover { border-color: rgba(212,175,55,0.3); }
+    .contact-link-icon {
+      width: 38px; height: 38px;
+      border-radius: 8px;
+      background: rgba(212,175,55,0.08);
+      border: 1px solid rgba(212,175,55,0.15);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--gold);
+      flex-shrink: 0;
+    }
+    .contact-link-text { flex: 1; }
+    .contact-link-label { font-size: 11px; color: var(--dim); font-family: var(--mono); }
+    .contact-link-val { font-size: 14px; color: var(--muted); margin-top: 1px; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 48px;
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 13px;
+      color: var(--dim);
+      font-family: var(--mono);
+    }
+    .footer-gold { color: var(--gold); }
+
+    /* ── ANIMATIONS ── */
+    .fade-up {
+      opacity: 0; transform: translateY(24px);
+      transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1);
+    }
+    .fade-up.visible { opacity: 1; transform: none; }
+
+    @media (max-width: 1024px) {
+      #hero { grid-template-columns: 1fr; }
+      .hero-right { display: none; }
+      .about-grid { grid-template-columns: 1fr; }
+      .projects-grid { grid-template-columns: 1fr 1fr; }
+      .exp-item { grid-template-columns: 1fr; gap: 8px; }
+      .contact-wrapper { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      nav { padding: 0 24px; }
+      .nav-links { display: none; }
+      #hero { padding: 80px 24px 48px; }
+      section { padding: 64px 24px; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .skill-row { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 8px; padding: 24px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav id="navbar">
+    <a href="#" class="nav-logo">
+      <div class="nav-logo-icon">A</div>
+      Arslan DIF
+    </a>
+    <div class="nav-links">
+      <a href="#about">À propos</a>
+      <a href="#projects">Projets</a>
+      <a href="#skills">Stack</a>
+      <a href="#experience">Parcours</a>
+      <a href="#contact" class="nav-cta">Contact</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg-lines"></div>
+    <div class="hero-bg-glow"></div>
+    <div class="hero-left">
+      <div class="hero-overline">Développeur · Fondateur · IA</div>
+      <h1 class="hero-title">
+        <span class="hero-name"><span style="animation-delay:0.05s">Arslan</span> <span style="animation-delay:0.15s">DIF</span></span><br>
+        <span style="animation: fadeSlide 0.8s 0.3s both; display:inline-block">Full Stack</span><br>
+        <span style="animation: fadeSlide 0.8s 0.45s both; display:inline-block; color:var(--muted); font-weight:400">& Ingénieur IA</span>
+      </h1>
+      <div class="hero-role-line" id="roleText">Fondateur & CTO · FIELDZ</div>
+      <p class="hero-desc">
+        Fondateur, ingénieur et étudiant en Master IA à l'USTHB. Je conçois des produits web et mobile, et j'entraîne des modèles qui tournent en production.
+      </p>
+      <div class="hero-ctas">
+        <a href="#projects" class="btn-gold">
+          Voir mes projets
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+        </a>
+        <a href="#contact" class="btn-outline-gold">Me contacter</a>
+        <a href="/cv-alternance.pdf" download class="btn-outline-gold" style="font-size:13px">
+          <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+          CV
+        </a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-card">
+        <div class="card-badge">disponible · sept. 2026 · paris</div>
+        <div class="card-avatar">🦁</div>
+        <div class="card-name">Arslan DIF</div>
+        <div class="card-subtitle">M1 IA · USTHB · Alger</div>
+        <div class="card-stats">
+          <div class="card-stat">
+            <div class="card-stat-val">12+</div>
+            <div class="card-stat-lbl">Projets</div>
+          </div>
+          <div class="card-stat">
+            <div class="card-stat-val">97.8%</div>
+            <div class="card-stat-lbl">Précision IA</div>
+          </div>
+          <div class="card-stat">
+            <div class="card-stat-val">2</div>
+            <div class="card-stat-lbl">Startups</div>
+          </div>
+          <div class="card-stat">
+            <div class="card-stat-val">4</div>
+            <div class="card-stat-lbl">Ans de code</div>
+          </div>
+        </div>
+        <div class="card-stack">
+          <span class="stack-chip">React</span>
+          <span class="stack-chip">Spring Boot</span>
+          <span class="stack-chip">PyTorch</span>
+          <span class="stack-chip">TypeScript</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-inner fade-up">
+      <div class="section-header">
+        <span class="section-num">01</span>
+        <h2 class="section-title">À propos</h2>
+        <div class="section-line"></div>
+      </div>
+      <div class="about-grid">
+        <div class="about-text">
+          <p>Je suis Arslan DIF, développeur full stack et ingénieur IA basé à Alger. Étudiant en Master 1 Systèmes Informatiques Intelligents à l'USTHB, je cherche une alternance à Paris à partir de septembre 2026.</p>
+          <p>J'ai fondé <strong style="color:var(--text)">FIELDZ</strong> et <strong style="color:var(--text)">Coiflow</strong> — deux startups tech que je développe et opère en parallèle de mes études. Mon parcours combine ingénierie logicielle, intelligence artificielle et entrepreneuriat.</p>
+          <p>Je suis passionné par la construction de systèmes qui résolvent de vrais problèmes : des modèles de classification à 97 % de précision aux applications déployées en production.</p>
+          <div class="about-tags">
+            <span class="about-tag">Disponible Sept. 2026</span>
+            <span class="about-tag">Paris</span>
+            <span class="about-tag">Alternance</span>
+            <span class="about-tag">Anglais C2</span>
+            <span class="about-tag">Bac TB 17/20</span>
+          </div>
+        </div>
+        <div class="about-aside">
+          <div class="aside-block">
+            <div class="aside-label">Meilleure précision IA</div>
+            <div class="aside-value">97.8%</div>
+            <div class="aside-sub">EuroSAT · ResNet-18</div>
+          </div>
+          <div class="aside-block">
+            <div class="aside-label">Projets réalisés</div>
+            <div class="aside-value">12+</div>
+            <div class="aside-sub">Web, Mobile, IA, Cyber</div>
+          </div>
+          <div class="aside-block">
+            <div class="aside-label">Startups fondées</div>
+            <div class="aside-value">2</div>
+            <div class="aside-sub">FIELDZ · Coiflow</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-inner fade-up">
+      <div class="section-header">
+        <span class="section-num">02</span>
+        <h2 class="section-title">Projets</h2>
+        <div class="section-line"></div>
+      </div>
+      <div class="projects-grid">
+        <div class="project-card">
+          <div class="project-arrow">→</div>
+          <div class="project-year">2025 – Présent</div>
+          <div class="project-name"><span class="gold featured-dot"></span>FIELDZ</div>
+          <div class="project-desc">Plateforme de réservation de terrains de sport. Web + mobile, système de paiement, dashboards gérant.</div>
+          <div class="project-tech"><span class="tech-pill">React</span><span class="tech-pill">Spring Boot</span><span class="tech-pill">Flutter</span></div>
+        </div>
+        <div class="project-card">
+          <div class="project-arrow">→</div>
+          <div class="project-year">2026 – Présent</div>
+          <div class="project-name"><span class="gold featured-dot"></span>Coiflow</div>
+          <div class="project-desc">SaaS de gestion pour barbershops. Réservations, caisse, statistiques, abonnements clients.</div>
+          <div class="project-tech"><span class="tech-pill">React 18</span><span class="tech-pill">TypeScript</span><span class="tech-pill">Spring Boot</span></div>
+        </div>
+        <div class="project-card">
+          <div class="project-arrow">→</div>
+          <div class="project-year">2025 – 2026</div>
+          <div class="project-name"><span class="gold featured-dot"></span>EuroSAT Classification</div>
+          <div class="project-desc">Classification d'images satellite avec ResNet-18. 97.80% accuracy sur 10 classes land-use.</div>
+          <div class="project-tech"><span class="tech-pill">PyTorch</span><span class="tech-pill">ResNet-18</span><span class="tech-pill">Python</span></div>
+        </div>
+        <div class="project-card">
+          <div class="project-arrow">→</div>
+          <div class="project-year">2026</div>
+          <div class="project-name"><span class="gold featured-dot"></span>CyberLab</div>
+          <div class="project-desc">Plateforme éducative cybersécurité — simulations phishing, injection SQL, IDS Snort.</div>
+          <div class="project-tech"><span class="tech-pill">Next.js</span><span class="tech-pill">Snort</span><span class="tech-pill">Docker</span></div>
+        </div>
+        <div class="project-card">
+          <div class="project-arrow">→</div>
+          <div class="project-year">2022 – Présent</div>
+          <div class="project-name"><span class="gold featured-dot"></span>Le Guide de la Terminale</div>
+          <div class="project-desc">Plateforme éducative bac français. 100+ élèves, 5 pays, 100% réussite.</div>
+          <div class="project-tech"><span class="tech-pill">React</span><span class="tech-pill">Node.js</span></div>
+        </div>
+        <div class="project-card">
+          <div class="project-arrow">→</div>
+          <div class="project-year">2024 – 2025</div>
+          <div class="project-name">Reconnaissance ID</div>
+          <div class="project-desc">Modèle de reconnaissance de pièces d'identité. 94% de précision en production.</div>
+          <div class="project-tech"><span class="tech-pill">TensorFlow</span><span class="tech-pill">OpenCV</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="section-inner fade-up">
+      <div class="section-header">
+        <span class="section-num">03</span>
+        <h2 class="section-title">Stack technique</h2>
+        <div class="section-line"></div>
+      </div>
+      <div class="skills-list">
+        <div class="skill-row"><span class="skill-category">Frontend</span><div class="skill-items"><span class="skill-item">React</span><span class="skill-item">Next.js</span><span class="skill-item">TypeScript</span><span class="skill-item">Tailwind CSS</span><span class="skill-item">React Native</span></div></div>
+        <div class="skill-row"><span class="skill-category">Backend</span><div class="skill-items"><span class="skill-item">Spring Boot</span><span class="skill-item">Java</span><span class="skill-item">Express.js</span><span class="skill-item">PostgreSQL</span><span class="skill-item">Supabase</span></div></div>
+        <div class="skill-row"><span class="skill-category">IA / ML</span><div class="skill-items"><span class="skill-item">PyTorch</span><span class="skill-item">TensorFlow</span><span class="skill-item">Python</span><span class="skill-item">scikit-learn</span><span class="skill-item">CNN</span></div></div>
+        <div class="skill-row"><span class="skill-category">Mobile</span><div class="skill-items"><span class="skill-item">Flutter</span><span class="skill-item">Dart</span><span class="skill-item">React Native</span></div></div>
+        <div class="skill-row"><span class="skill-category">DevOps</span><div class="skill-items"><span class="skill-item">Docker</span><span class="skill-item">Git</span><span class="skill-item">CI/CD</span><span class="skill-item">Linux</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="section-inner fade-up">
+      <div class="section-header">
+        <span class="section-num">04</span>
+        <h2 class="section-title">Parcours</h2>
+        <div class="section-line"></div>
+      </div>
+      <div class="exp-list">
+        <div class="exp-item">
+          <div class="exp-left"><div class="exp-period">2026 – Présent</div><div class="exp-company"><span class="gold">Coiflow</span></div></div>
+          <div class="exp-right"><div class="exp-role">Fondateur & Développeur Full Stack</div><div class="exp-desc">SaaS gestion barbershops. Architecture complète, auth, paiements, dashboards temps réel.</div><div class="exp-tags"><span class="exp-tag">React 18</span><span class="exp-tag">TypeScript</span><span class="exp-tag">Spring Boot</span><span class="exp-tag">Java 17</span></div></div>
+        </div>
+        <div class="exp-item">
+          <div class="exp-left"><div class="exp-period">2025 – Présent</div><div class="exp-company"><span class="gold">FIELDZ</span></div></div>
+          <div class="exp-right"><div class="exp-role">CoFondateur & CTO</div><div class="exp-desc">Plateforme réservation terrains de sport. Web + mobile, système de paiement, multi-tenant.</div><div class="exp-tags"><span class="exp-tag">React</span><span class="exp-tag">Flutter</span><span class="exp-tag">Spring Boot</span></div></div>
+        </div>
+        <div class="exp-item">
+          <div class="exp-left"><div class="exp-period">2024 – 2025</div><div class="exp-company">SARL SPINTECHS</div></div>
+          <div class="exp-right"><div class="exp-role">Chef de groupe & Dév. Full Stack (PFE)</div><div class="exp-desc">Système de gestion des visiteurs avec module IA intégré. Architecture microservices.</div><div class="exp-tags"><span class="exp-tag">Spring Boot</span><span class="exp-tag">React</span><span class="exp-tag">TensorFlow</span></div></div>
+        </div>
+        <div class="exp-item">
+          <div class="exp-left"><div class="exp-period">2023 – 2024</div><div class="exp-company">SONATRACH</div></div>
+          <div class="exp-right"><div class="exp-role">Stagiaire IT</div><div class="exp-desc">Initiation cybersécurité, réseaux, développement web. Visite Data Center.</div><div class="exp-tags"><span class="exp-tag">Cybersécurité</span><span class="exp-tag">Réseaux</span></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-inner fade-up">
+      <div class="section-header">
+        <span class="section-num">05</span>
+        <h2 class="section-title">Contact</h2>
+        <div class="section-line"></div>
+      </div>
+      <div class="contact-wrapper">
+        <div>
+          <h3 class="contact-heading">Travaillons<br><span class="gold">ensemble.</span></h3>
+          <p class="contact-sub">Un projet ? Une opportunité d'alternance à Paris ? Je suis disponible à partir de septembre 2026.</p>
+          <a href="mailto:difarslan@gmail.com" class="contact-email">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+            difarslan@gmail.com
+          </a>
+        </div>
+        <div class="contact-links">
+          <a href="mailto:difarslan@gmail.com" class="contact-link">
+            <div class="contact-link-icon"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg></div>
+            <div class="contact-link-text"><div class="contact-link-label">Email</div><div class="contact-link-val">difarslan@gmail.com</div></div>
+          </a>
+          <a href="https://www.linkedin.com/in/arslan-dif-740077287/" class="contact-link" target="_blank">
+            <div class="contact-link-icon"><svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452z"/></svg></div>
+            <div class="contact-link-text"><div class="contact-link-label">LinkedIn</div><div class="contact-link-val">arslan-dif-740077287</div></div>
+          </a>
+          <a href="https://github.com/D-Arslan" class="contact-link" target="_blank">
+            <div class="contact-link-icon"><svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg></div>
+            <div class="contact-link-text"><div class="contact-link-label">GitHub</div><div class="contact-link-val">D-Arslan</div></div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>Conçu & développé par <span class="footer-gold">Arslan DIF</span></span>
+    <span>© 2026 · <span class="footer-gold">difarslan.com</span></span>
+  </footer>
+
+  <script>
+    window.addEventListener('scroll', () => {
+      document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 20);
+    });
+
+    // Role rotation
+    const roles = ['Fondateur & CTO · FIELDZ', 'Fondateur · Coiflow', 'Étudiant M1 IA · USTHB', 'En recherche d\'alternance · Paris'];
+    let ri = 0;
+    setInterval(() => {
+      ri = (ri + 1) % roles.length;
+      const el = document.getElementById('roleText');
+      el.style.opacity = '0';
+      setTimeout(() => { el.textContent = '→ ' + roles[ri]; el.style.opacity = '1'; }, 300);
+    }, 3000);
+    document.getElementById('roleText').style.transition = 'opacity 0.3s';
+
+    // Fade-up
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+  </script>
+</body>
+</html>

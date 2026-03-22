@@ -16,7 +16,7 @@ src/
 │   ├── page.tsx          — composition des sections
 │   └── globals.css       — Tailwind v4 @theme tokens, scrollbar, selection
 ├── components/
-│   ├── Navbar.tsx         — fixe, blur au scroll, switcher FR/EN, menu mobile
+││   ├── Navbar.tsx         — fixe, blur au scroll, switcher FR/EN, menu mobile, responsive h-16 md:h-28
 │   ├── Hero.tsx           — titre, badge dispo, CTAs, carte stats, liens sociaux
 │   ├── About.tsx          — texte + photo, tags, SectionTitle (composant partagé)
 │   ├── Projects.tsx       — 12 projets, filtres par catégorie, cards Lucide icons
@@ -75,16 +75,31 @@ src/
 - **17/03/2026** — Remplacement emojis → icônes Lucide React (Projects, Skills, Education)
 - **22/03/2026** — Boutons téléchargement CV (alternance + master) dans Hero
 - **22/03/2026** — Animations scroll : hook useInView + classes CSS fade-up/stagger sur toutes les sections
-- **22/03/2026** — Logo navbar : logo7.png (transparent via remove.bg), navbar w-full h-40, logo h-36, flush à gauche
+- **22/03/2026** — Logo navbar : logo7.png (transparent via remove.bg), navbar w-full h-28, logo h-36, flush à gauche
+- **22/03/2026** — SEO : metadata Next.js (og:image, twitter card, canonical), sitemap.xml, robots.txt, metadataBase difarslan.com
+- **22/03/2026** — Responsive : Navbar h-16 md:h-28 / logo h-20 md:h-36, Hero text-4xl sm:text-5xl md:text-6xl, About gap-10 md:gap-16, grilles sm:grid-cols-2 lg:grid-cols-3
+- **22/03/2026** — Prototypes de nouveau design créés dans `prototypes/` via ui-ux-pro-max (skill copiée dans `C:/Users/hp/.claude/skills/`)
+
+## Prototypes de redesign (`prototypes/`)
+Trois directions testées avec ui-ux-pro-max (Space Grotesk + DM Sans + JetBrains Mono) :
+
+| Fichier | Palette | Signature |
+|---|---|---|
+| `proto-a-slate-emerald.html` | Slate `#0F172A` + Vert `#22C55E` | Typewriter, cursor custom, stats inline, labels `// 01 —` |
+| `proto-b-gold-noir.html` | Noir `#09090B` + Or `#D4AF37` | Hero 2 col + carte stats 🦁, layout exp horizontal, numéros dorés |
+| `proto-c-blue-motion.html` | Zinc + Bleu→Violet gradient | Bento grid projets, marquee techno, navbar pill centrée, blobs animés |
+
+**Recommandation** : Proto B (Gold Noir) — cohérence avec le logo lion, différenciation maximale, posture fondateur/ingénieur. Alternative : layout du C avec palette du B.
 
 ## Prochaines étapes
 ### Priorité haute
-- [x] **Logo** — logo7.png (D+lion+Arslan, fond transparent via remove.bg), navbar pleine largeur h-40, logo h-36
+- [x] **Logo** — logo7.png (D+lion+Arslan, fond transparent via remove.bg), navbar pleine largeur h-16 md:h-28, logo h-20 md:h-36
 - [x] **CV téléchargeable** — boutons dans Hero (cv-alternance.pdf + cv-master.pdf dans public/)
 - [x] **Animations** — hook useInView + CSS fade-up sur toutes les sections (About, Projects, Skills, Experience, Education, Contact)
-- [ ] **SEO** — og:image, sitemap.xml, robots.txt
-- [ ] **Responsive** — vérification et ajustements mobile (Hero, Projects grid, timelines)
+- [x] **SEO** — metadata Next.js (og:image, twitter card, canonical), sitemap.xml, robots.txt
+- [x] **Responsive** — Navbar, Hero, About, Projects, Skills, Experience, Education, Contact, Footer
 - [ ] **Déploiement** — mise en ligne sur Vercel + configuration domaine difarslan.com
+- [ ] **Redesign** — choisir un prototype et migrer le portfolio (Proto B recommandé)
 
 ### Priorité moyenne
 - [ ] **Modal projet** — clic sur une carte ouvre un détail étendu (description complète, screenshots/démo)

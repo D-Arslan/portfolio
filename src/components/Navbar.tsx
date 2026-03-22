@@ -33,7 +33,7 @@ export default function Navbar() {
           : "bg-transparent"
       }`}
     >
-      <div className="w-full px-6 h-28 flex items-center justify-between">
+      <div className="w-full px-6 h-16 md:h-28 flex items-center justify-between">
         {/* Logo */}
         <a href="#" className="flex items-center hover:opacity-80 transition-opacity">
           <Image
@@ -41,7 +41,7 @@ export default function Navbar() {
             alt="Arslan Dif"
             width={560}
             height={140}
-            className="h-36 w-auto object-contain"
+            className="h-20 md:h-36 w-auto object-contain"
           />
         </a>
 
