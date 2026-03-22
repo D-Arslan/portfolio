@@ -1,0 +1,78 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg:        #09090b;
+  --color-surface:   #18181b;
+  --color-surface2:  #27272a;
+  --color-border:    #3f3f46;
+  --color-text:      #fafafa;
+  --color-muted:     #a1a1aa;
+  --color-accent:    #3b82f6;
+  --color-accent-h:  #2563eb;
+
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+* {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: #fff;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-surface2);
+  border-radius: 3px;
+}
+
+/* ── Scroll animations ── */
+.fade-up {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.fade-up.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.fade-in {
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+.fade-in.in-view {
+  opacity: 1;
+}
+
+/* stagger children */
+.stagger > * {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.stagger.in-view > *:nth-child(1)  { opacity: 1; transform: none; transition-delay: 0.05s; }
+.stagger.in-view > *:nth-child(2)  { opacity: 1; transform: none; transition-delay: 0.10s; }
+.stagger.in-view > *:nth-child(3)  { opacity: 1; transform: none; transition-delay: 0.15s; }
+.stagger.in-view > *:nth-child(4)  { opacity: 1; transform: none; transition-delay: 0.20s; }
+.stagger.in-view > *:nth-child(5)  { opacity: 1; transform: none; transition-delay: 0.25s; }
+.stagger.in-view > *:nth-child(6)  { opacity: 1; transform: none; transition-delay: 0.30s; }
+.stagger.in-view > *:nth-child(7)  { opacity: 1; transform: none; transition-delay: 0.35s; }
+.stagger.in-view > *:nth-child(8)  { opacity: 1; transform: none; transition-delay: 0.40s; }
+.stagger.in-view > *:nth-child(9)  { opacity: 1; transform: none; transition-delay: 0.45s; }
+.stagger.in-view > *:nth-child(10) { opacity: 1; transform: none; transition-delay: 0.50s; }
+.stagger.in-view > *:nth-child(n+11) { opacity: 1; transform: none; transition-delay: 0.55s; }
