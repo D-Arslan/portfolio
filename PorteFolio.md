@@ -109,6 +109,10 @@ Raisons :
 - [x] **Responsive** — Navbar, Hero, About, Projects, Skills, Experience, Education, Contact, Footer
 - [x] **Déploiement** — https://portfolio-tan-one-61.vercel.app/ (Vercel, auto-deploy sur push)
 - [ ] **Domaine** — acheter difarslan.com et connecter à Vercel
+- [x] **Modal projet** — clic sur carte → modal avec description complète, stack, catégories, liens (portal React)
+- [x] **Page 404** — `src/app/not-found.tsx` custom
+- [x] **Active nav** — IntersectionObserver, highlight du lien de la section visible (rootMargin -40%/-55%)
+- [x] **Dark/light mode** — ThemeContext, toggle soleil/lune en navbar, variables CSS, persistance localStorage, respect préférence système
 - [ ] **Redesign** — choisir un prototype et migrer le portfolio (Proto B recommandé)
 
 ### Priorité moyenne
