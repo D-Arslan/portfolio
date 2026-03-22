@@ -18,12 +18,29 @@ export default function Navbar() {
   const { lang, setLang, t } = useLanguage();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState<string>("");
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  useEffect(() => {
+    const ids = NAV_LINKS.map(({ href }) => href.slice(1));
+    const observers = ids.map((id) => {
+      const el = document.getElementById(id);
+      if (!el) return null;
+      const obs = new IntersectionObserver(
+        ([entry]) => { if (entry.isIntersecting) setActiveSection(id); },
+        { rootMargin: "-40% 0px -55% 0px" }
+      );
+      obs.observe(el);
+      return obs;
+    });
+    return () => observers.forEach((obs) => obs?.disconnect());
+  }, []);
+
 
   return (
     <header
@@ -51,7 +68,11 @@ export default function Navbar() {
             <a
               key={key}
               href={href}
-              className="text-base text-[#a1a1aa] hover:text-white transition-colors"
+              className={`text-base transition-colors ${
+                activeSection === href.slice(1)
+                  ? "text-white"
+                  : "text-[#a1a1aa] hover:text-white"
+              }`}
             >
               {t(translations.nav[key])}
             </a>
@@ -116,7 +137,11 @@ export default function Navbar() {
             <a
               key={key}
               href={href}
-              className="text-sm text-[#a1a1aa] hover:text-white transition-colors py-1"
+              className={`text-sm transition-colors py-1 ${
+                activeSection === href.slice(1)
+                  ? "text-white"
+                  : "text-[#a1a1aa] hover:text-white"
+              }`}
               onClick={() => setMenuOpen(false)}
             >
               {t(translations.nav[key])}
