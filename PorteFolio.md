@@ -5,7 +5,8 @@
 - **UI** : React 19, Tailwind CSS v4, Lucide React
 - **Langage** : TypeScript
 - **Port dev** : 3002
-- **Hébergement cible** : Vercel (static) + domaine `difarslan.com`
+- **Hébergement** : Vercel (static) — URL : https://portfolio-tan-one-61.vercel.app/
+- **Domaine cible** : `difarslan.com` (à acheter sur Porkbun/Namecheap, ~8-10€/an)
 - **Langues** : Bilingue FR/EN (switcher top-right, persistance localStorage)
 
 ## Architecture
@@ -89,7 +90,15 @@ Trois directions testées avec ui-ux-pro-max (Space Grotesk + DM Sans + JetBrain
 | `proto-b-gold-noir.html` | Noir `#09090B` + Or `#D4AF37` | Hero 2 col + carte stats 🦁, layout exp horizontal, numéros dorés |
 | `proto-c-blue-motion.html` | Zinc + Bleu→Violet gradient | Bento grid projets, marquee techno, navbar pill centrée, blobs animés |
 
-**Recommandation** : Proto B (Gold Noir) — cohérence avec le logo lion, différenciation maximale, posture fondateur/ingénieur. Alternative : layout du C avec palette du B.
+**Recommandation retenue : Proto B — Gold Noir.**
+
+Raisons :
+1. **Cohérence identitaire** — Arslan = lion en turc, logo lion déjà existant. Or + noir = couleur du lion, de la royauté. Identité visuelle cohérente de bout en bout, impossible à copier.
+2. **Différenciation maximale** — 99% des portfolios dev sont bleu/violet (C) ou vert/slate (A). Le recruteur qui voit 50 portfolios par semaine se souvient du gold noir.
+3. **Correspond au profil** — Fondateur de 2 startups, candidature alternance Paris école d'élite. Le Gold Noir a une gravité et une ambition que le vert "terminal" n'a pas.
+4. **Layout le plus mature** — Structure `col gauche (date + company) / col droite (contenu)` pour l'expérience, sections numérotées en or, quote block avec bordure gauche — choix de design éditorial, pas dev portfolio standard.
+
+**Nuance** : si l'or paraît trop ostentatoire → garder le **layout du C** (bento grid + marquee + navbar pill) avec la **palette du B** (or à la place du bleu).
 
 ## Prochaines étapes
 ### Priorité haute
@@ -98,7 +107,8 @@ Trois directions testées avec ui-ux-pro-max (Space Grotesk + DM Sans + JetBrain
 - [x] **Animations** — hook useInView + CSS fade-up sur toutes les sections (About, Projects, Skills, Experience, Education, Contact)
 - [x] **SEO** — metadata Next.js (og:image, twitter card, canonical), sitemap.xml, robots.txt
 - [x] **Responsive** — Navbar, Hero, About, Projects, Skills, Experience, Education, Contact, Footer
-- [ ] **Déploiement** — mise en ligne sur Vercel + configuration domaine difarslan.com
+- [x] **Déploiement** — https://portfolio-tan-one-61.vercel.app/ (Vercel, auto-deploy sur push)
+- [ ] **Domaine** — acheter difarslan.com et connecter à Vercel
 - [ ] **Redesign** — choisir un prototype et migrer le portfolio (Proto B recommandé)
 
 ### Priorité moyenne
