@@ -2,12 +2,13 @@
 
 import { useState } from "react";
 import { useInView } from "@/hooks/useInView";
+import ProjectModal from "./ProjectModal";
 import {
   Trophy, Scissors, Satellite, ShieldAlert, BookOpen, Globe,
   CreditCard, Wallet, Code, HeartPulse, Heart, Bug, type LucideIcon,
 } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
-import { translations, projects, type Category } from "@/lib/data";
+import { translations, projects, type Category, type Project } from "@/lib/data";
 import { SectionTitle } from "./About";
 
 const FILTERS: { key: "all" | Category; labelKey: keyof typeof translations.projects.filters }[] = [
@@ -37,6 +38,7 @@ export default function Projects() {
   const { t } = useLanguage();
   const tr = translations.projects;
   const [active, setActive] = useState<"all" | Category>("all");
+  const [selected, setSelected] = useState<Project | null>(null);
   const { ref, inView } = useInView();
 
   const filtered =
@@ -69,21 +71,28 @@ export default function Projects() {
         {/* Grid */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-8">
           {filtered.map((project) => (
-            <ProjectCard key={project.id} project={project} />
+            <ProjectCard key={project.id} project={project} onClick={() => setSelected(project)} />
           ))}
         </div>
       </div>
+
+      {selected && (
+        <ProjectModal project={selected} onClose={() => setSelected(null)} />
+      )}
     </section>
   );
 }
 
-function ProjectCard({ project }: { project: typeof projects[number] }) {
+function ProjectCard({ project, onClick }: { project: typeof projects[number]; onClick: () => void }) {
   const { t } = useLanguage();
   const tr = translations.projects;
   const Icon = PROJECT_ICONS[project.id];
 
   return (
-    <div className="group flex flex-col bg-[#18181b] border border-[#3f3f46] rounded-xl p-5 hover:border-[#a1a1aa]/40 transition-all duration-200 hover:-translate-y-0.5">
+    <div
+      onClick={onClick}
+      className="group flex flex-col bg-[#18181b] border border-[#3f3f46] rounded-xl p-5 hover:border-[#a1a1aa]/40 transition-all duration-200 hover:-translate-y-0.5 cursor-pointer"
+    >
       {/* Header */}
       <div className="flex items-start justify-between mb-4">
         <div
