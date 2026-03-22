@@ -45,18 +45,35 @@ body {
 }
 
 /* ── Overrides light mode pour les couleurs hardcodées ── */
-html.light [class*="bg-[#09090b]"]   { background-color: var(--bg) !important; }
-html.light [class*="bg-[#0d0d10]"]   { background-color: var(--bg2) !important; }
-html.light [class*="bg-[#18181b]"]   { background-color: var(--surface) !important; }
-html.light [class*="bg-[#27272a]"]   { background-color: var(--surface2) !important; }
+html.light [class*="bg-[#09090b]"]     { background-color: var(--bg) !important; }
+html.light [class*="bg-[#0d0d10]"]     { background-color: var(--bg2) !important; }
+html.light [class*="bg-[#18181b]"]     { background-color: var(--surface) !important; }
+html.light [class*="bg-[#27272a]"]     { background-color: var(--surface2) !important; }
 html.light [class*="border-[#27272a]"] { border-color: var(--border) !important; }
 html.light [class*="border-[#3f3f46]"] { border-color: var(--border) !important; }
-html.light [class*="text-[#fafafa]"]  { color: var(--text) !important; }
-html.light [class*="text-[#a1a1aa]"]  { color: var(--muted) !important; }
-html.light [class*="text-[#52525b]"]  { color: var(--dim) !important; }
-html.light [class*="text-[#71717a]"]  { color: var(--dim) !important; }
-html.light [class*="bg-[#09090b]/90"] { background-color: rgba(255,255,255,0.92) !important; }
-html.light [class*="bg-[#09090b]/95"] { background-color: rgba(255,255,255,0.97) !important; }
+html.light [class*="text-[#fafafa]"]   { color: var(--text) !important; }
+html.light [class*="text-[#a1a1aa]"]   { color: var(--muted) !important; }
+html.light [class*="text-[#52525b]"]   { color: var(--dim) !important; }
+html.light [class*="text-[#71717a]"]   { color: var(--dim) !important; }
+html.light [class*="bg-[#09090b]/90"]  { background-color: rgba(255,255,255,0.92) !important; }
+html.light [class*="bg-[#09090b]/95"]  { background-color: rgba(255,255,255,0.97) !important; }
+
+/* text-white dans le contenu (pas les boutons) */
+html.light h1.text-white,
+html.light h2.text-white,
+html.light h3.text-white,
+html.light p.text-white,
+html.light span.text-white,
+html.light div.text-white  { color: var(--text) !important; }
+
+/* Stat values et labels dans la hero card */
+html.light .text-white     { color: var(--text) !important; }
+
+/* Exceptions : boutons et badges qui doivent rester blancs sur fond coloré */
+html.light .bg-\[#3b82f6\] .text-white,
+html.light .bg-\[#2563eb\] .text-white,
+html.light button.bg-\[#3b82f6\],
+html.light a.bg-\[#3b82f6\]  { color: #fff !important; }
 
 /* Scrollbar adaptatif */
 ::-webkit-scrollbar { width: 6px; }
