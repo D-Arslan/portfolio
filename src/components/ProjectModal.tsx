@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { X, Github, ExternalLink } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { translations, type Project } from "@/lib/data";
@@ -14,6 +15,9 @@ export default function ProjectModal({
 }) {
   const { t } = useLanguage();
   const tr = translations.projects;
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => { setMounted(true); }, []);
 
   // Fermeture sur Escape
   useEffect(() => {
@@ -26,7 +30,9 @@ export default function ProjectModal({
     };
   }, [onClose]);
 
-  return (
+  if (!mounted) return null;
+
+  return createPortal(
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8"
       onClick={onClose}
@@ -129,6 +135,7 @@ export default function ProjectModal({
           </div>
         )}
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
