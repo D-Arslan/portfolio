@@ -13,21 +13,26 @@
 ```
 src/
 ├── app/
-│   ├── layout.tsx        — metadata, Inter font, LanguageProvider
+│   ├── layout.tsx        — metadata, Inter font, LanguageProvider + ThemeProvider
 │   ├── page.tsx          — composition des sections
-│   └── globals.css       — Tailwind v4 @theme tokens, scrollbar, selection
+│   ├── not-found.tsx     — page 404 custom ("4 ○ 4" + lien retour accueil)
+│   └── globals.css       — CSS variables dark/light, scrollbar, animations scroll
 ├── components/
-││   ├── Navbar.tsx         — fixe, blur au scroll, switcher FR/EN, menu mobile, responsive h-16 md:h-28
+│   ├── Navbar.tsx         — fixe, blur au scroll, switcher FR/EN, toggle dark/light, active nav, menu mobile
 │   ├── Hero.tsx           — titre, badge dispo, CTAs, carte stats, liens sociaux
 │   ├── About.tsx          — texte + photo, tags, SectionTitle (composant partagé)
-│   ├── Projects.tsx       — 12 projets, filtres par catégorie, cards Lucide icons
+│   ├── Projects.tsx       — 12 projets, filtres par catégorie, cards Lucide icons, modal au clic
+│   ├── ProjectModal.tsx   — modal portal (createPortal → document.body), Escape/clic outside, stack/catégories/liens
 │   ├── Skills.tsx         — 6 groupes, icônes Lucide
 │   ├── Experience.tsx     — timeline 8 expériences
 │   ├── Education.tsx      — timeline 3 diplômes, icônes Lucide
 │   ├── Contact.tsx        — liens email / LinkedIn / GitHub
 │   └── Footer.tsx
 ├── context/
-│   └── LanguageContext.tsx — contexte FR/EN avec useLanguage() + t()
+│   ├── LanguageContext.tsx — contexte FR/EN avec useLanguage() + t()
+│   └── ThemeContext.tsx    — dark/light, persistance localStorage, respect prefers-color-scheme
+├── hooks/
+│   └── useInView.ts       — IntersectionObserver, déclenche animation une seule fois
 └── lib/
     └── data.ts            — toutes les données : projets, skills, expériences, formations, traductions
 ```
@@ -80,6 +85,13 @@ src/
 - **22/03/2026** — SEO : metadata Next.js (og:image, twitter card, canonical), sitemap.xml, robots.txt, metadataBase difarslan.com
 - **22/03/2026** — Responsive : Navbar h-16 md:h-28 / logo h-20 md:h-36, Hero text-4xl sm:text-5xl md:text-6xl, About gap-10 md:gap-16, grilles sm:grid-cols-2 lg:grid-cols-3
 - **22/03/2026** — Prototypes de nouveau design créés dans `prototypes/` via ui-ux-pro-max (skill copiée dans `C:/Users/hp/.claude/skills/`)
+- **23/03/2026** — Déploiement Vercel : https://portfolio-tan-one-61.vercel.app/ (auto-deploy sur push GitHub)
+- **23/03/2026** — Compression images : logo7.png 2.1MB → 6KB, favicon.png 2.1MB → 1KB (PIL thumbnail)
+- **23/03/2026** — Modal projet : `ProjectModal.tsx` avec `createPortal(…, document.body)` — évite les bugs de position liés aux stacking contexts CSS transforms dans la section Projects
+- **23/03/2026** — Page 404 custom : `src/app/not-found.tsx` ("4 ○ 4", bouton retour accueil)
+- **23/03/2026** — Active nav : IntersectionObserver sur chaque section, `rootMargin: "-40% 0px -55% 0px"`, lien actif en blanc
+- **23/03/2026** — Dark/light mode : `ThemeContext.tsx`, toggle soleil/lune en navbar, variables CSS `--bg/--surface/--text/…`, persistance `localStorage`, respect `prefers-color-scheme` au premier chargement
+- **23/03/2026** — Fix light mode : texte `text-white` invisible sur fond blanc → overrides CSS `html.light .text-white { color: var(--text) }` + exceptions pour boutons bleus. Approche patch (workaround hardcoded Tailwind colors) — le redesign Gold Noir utilisera des CSS variables dès le départ
 
 ## Prototypes de redesign (`prototypes/`)
 Trois directions testées avec ui-ux-pro-max (Space Grotesk + DM Sans + JetBrains Mono) :
@@ -116,10 +128,10 @@ Raisons :
 - [ ] **Redesign** — choisir un prototype et migrer le portfolio (Proto B recommandé)
 
 ### Priorité moyenne
-- [ ] **Modal projet** — clic sur une carte ouvre un détail étendu (description complète, screenshots/démo)
-- [ ] **Active nav** — highlight de la section visible au scroll (Intersection Observer)
-- [ ] **Page 404** — page d'erreur custom
-- [ ] **Dark/light mode** — toggle optionnel
+- [x] **Modal projet** — ✓ fait (voir priorité haute)
+- [x] **Active nav** — ✓ fait (voir priorité haute)
+- [x] **Page 404** — ✓ fait (voir priorité haute)
+- [x] **Dark/light mode** — ✓ fait (voir priorité haute)
 
 ### Priorité basse
 - [ ] **Blog / Articles** — section optionnelle pour écrits techniques
