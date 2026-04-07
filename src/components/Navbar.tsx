@@ -43,37 +43,36 @@ export default function Navbar() {
     return () => observers.forEach((obs) => obs?.disconnect());
   }, []);
 
-
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-[#09090b]/90 backdrop-blur-md border-b border-[#27272a]"
+          ? "bg-[var(--bg)]/95 backdrop-blur-md border-b border-[var(--border)]"
           : "bg-transparent"
       }`}
     >
-      <div className="w-full px-6 h-16 md:h-28 flex items-center justify-between">
+      <div className="w-full max-w-[1200px] mx-auto px-6 md:px-12 h-16 md:h-20 flex items-center justify-between">
         {/* Logo */}
-        <a href="#" className="flex items-center hover:opacity-80 transition-opacity">
+        <a href="#" className="flex items-center gap-2.5 hover:opacity-80 transition-opacity">
           <Image
-            src="/logo7.png"
-            alt="Arslan Dif"
+            src="/golden-removebg-preview.png"
+            alt="Arslan DIF"
             width={560}
             height={140}
-            className="h-20 md:h-36 w-auto object-contain"
+            className="h-14 md:h-20 w-auto object-contain"
           />
         </a>
 
         {/* Desktop nav */}
-        <nav className="hidden md:flex items-center gap-6">
+        <nav className="hidden md:flex items-center gap-8">
           {NAV_LINKS.map(({ key, href }) => (
             <a
               key={key}
               href={href}
-              className={`text-base transition-colors ${
+              className={`text-sm font-medium transition-colors ${
                 activeSection === href.slice(1)
-                  ? "text-white"
-                  : "text-[#a1a1aa] hover:text-white"
+                  ? "text-[var(--gold)]"
+                  : "text-[var(--muted)] hover:text-[var(--text)]"
               }`}
             >
               {t(translations.nav[key])}
@@ -81,26 +80,26 @@ export default function Navbar() {
           ))}
         </nav>
 
-        {/* Right: lang + CTA */}
+        {/* Right: lang + theme + CTA */}
         <div className="flex items-center gap-3">
           {/* Language switcher */}
-          <div className="flex items-center gap-1 bg-[#18181b] border border-[#3f3f46] rounded-full px-1 py-1">
+          <div className="flex items-center gap-1 bg-[var(--surface)] border border-[var(--border)] rounded-full px-1 py-1">
             <button
               onClick={() => setLang("fr")}
-              className={`text-xs font-medium px-2.5 py-1 rounded-full transition-all ${
+              className={`text-xs font-medium font-[family-name:var(--font-mono)] px-2.5 py-1 rounded-full transition-all ${
                 lang === "fr"
-                  ? "bg-[#3b82f6] text-white"
-                  : "text-[#a1a1aa] hover:text-white"
+                  ? "bg-[var(--gold)] text-black"
+                  : "text-[var(--muted)] hover:text-[var(--text)]"
               }`}
             >
               FR
             </button>
             <button
               onClick={() => setLang("en")}
-              className={`text-xs font-medium px-2.5 py-1 rounded-full transition-all ${
+              className={`text-xs font-medium font-[family-name:var(--font-mono)] px-2.5 py-1 rounded-full transition-all ${
                 lang === "en"
-                  ? "bg-[#3b82f6] text-white"
-                  : "text-[#a1a1aa] hover:text-white"
+                  ? "bg-[var(--gold)] text-black"
+                  : "text-[var(--muted)] hover:text-[var(--text)]"
               }`}
             >
               EN
@@ -110,7 +109,7 @@ export default function Navbar() {
           {/* Theme toggle */}
           <button
             onClick={toggleTheme}
-            className="text-[#a1a1aa] hover:text-white transition-colors"
+            className="text-[var(--muted)] hover:text-[var(--gold)] transition-colors"
             aria-label="Toggle theme"
           >
             {theme === "dark" ? (
@@ -127,14 +126,14 @@ export default function Navbar() {
           {/* Contact CTA */}
           <a
             href="#contact"
-            className="hidden md:inline-flex items-center gap-2 text-sm font-medium bg-[#3b82f6] hover:bg-[#2563eb] text-white px-4 py-2 rounded-lg transition-colors"
+            className="hidden md:inline-flex items-center gap-2 text-sm font-medium font-[family-name:var(--font-heading)] border border-[var(--gold)] text-[var(--gold)] hover:bg-[var(--gold)] hover:text-black px-5 py-2 rounded-md transition-all"
           >
-            {t(translations.hero.cta_contact)}
+            Contact
           </a>
 
           {/* Mobile hamburger */}
           <button
-            className="md:hidden text-[#a1a1aa] hover:text-white"
+            className="md:hidden text-[var(--muted)] hover:text-[var(--text)]"
             onClick={() => setMenuOpen(!menuOpen)}
             aria-label="Toggle menu"
           >
@@ -151,15 +150,15 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {menuOpen && (
-        <div className="md:hidden bg-[#09090b]/95 backdrop-blur-md border-b border-[#27272a] px-6 py-4 flex flex-col gap-3">
+        <div className="md:hidden bg-[var(--bg)]/95 backdrop-blur-md border-b border-[var(--border)] px-6 py-4 flex flex-col gap-3">
           {NAV_LINKS.map(({ key, href }) => (
             <a
               key={key}
               href={href}
               className={`text-sm transition-colors py-1 ${
                 activeSection === href.slice(1)
-                  ? "text-white"
-                  : "text-[#a1a1aa] hover:text-white"
+                  ? "text-[var(--gold)]"
+                  : "text-[var(--muted)] hover:text-[var(--text)]"
               }`}
               onClick={() => setMenuOpen(false)}
             >
@@ -168,10 +167,10 @@ export default function Navbar() {
           ))}
           <a
             href="#contact"
-            className="mt-2 text-sm font-medium text-center bg-[#3b82f6] hover:bg-[#2563eb] text-white px-4 py-2 rounded-lg transition-colors"
+            className="mt-2 text-sm font-medium text-center border border-[var(--gold)] text-[var(--gold)] hover:bg-[var(--gold)] hover:text-black px-4 py-2 rounded-md transition-all"
             onClick={() => setMenuOpen(false)}
           >
-            {t(translations.hero.cta_contact)}
+            Contact
           </a>
         </div>
       )}

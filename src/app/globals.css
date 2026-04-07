@@ -1,35 +1,43 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
 }
 
-/* ── Dark mode (défaut) ── */
+/* ── Dark mode (défaut) — Gold Noir ── */
 :root {
-  --bg:        #09090b;
-  --bg2:       #0d0d10;
-  --surface:   #18181b;
-  --surface2:  #27272a;
-  --border:    #3f3f46;
-  --text:      #fafafa;
-  --muted:     #a1a1aa;
-  --dim:       #52525b;
-  --accent:    #3b82f6;
-  --accent-h:  #2563eb;
+  --bg:        #09090B;
+  --bg2:       #0C0C0E;
+  --surface:   #111113;
+  --surface2:  #1A1A1D;
+  --border:    #2A2A2E;
+  --border-h:  #3D3D42;
+  --gold:      #D4AF37;
+  --gold-h:    #B8960A;
+  --gold-pale: #E8C547;
+  --gold-glow: rgba(212,175,55,0.12);
+  --text:      #F5F0E8;
+  --muted:     #8A8070;
+  --dim:       #4A4540;
 }
 
 /* ── Light mode ── */
 html.light {
-  --bg:        #ffffff;
-  --bg2:       #f4f4f5;
-  --surface:   #f9f9f9;
-  --surface2:  #e4e4e7;
-  --border:    #d4d4d8;
-  --text:      #09090b;
-  --muted:     #52525b;
-  --dim:       #a1a1aa;
-  --accent:    #2563eb;
-  --accent-h:  #1d4ed8;
+  --bg:        #FAFAF5;
+  --bg2:       #F0EDE5;
+  --surface:   #FFFFFF;
+  --surface2:  #E8E4DC;
+  --border:    #D4D0C8;
+  --border-h:  #B8B4AC;
+  --gold:      #B8960A;
+  --gold-h:    #96790A;
+  --gold-pale: #D4AF37;
+  --gold-glow: rgba(184,150,10,0.10);
+  --text:      #1A1814;
+  --muted:     #6B6358;
+  --dim:       #9A9488;
 }
 
 * {
@@ -42,54 +50,24 @@ body {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   transition: background-color 0.3s ease, color 0.3s ease;
+  overflow-x: hidden;
 }
 
-/* ── Overrides light mode pour les couleurs hardcodées ── */
-html.light [class*="bg-[#09090b]"]     { background-color: var(--bg) !important; }
-html.light [class*="bg-[#0d0d10]"]     { background-color: var(--bg2) !important; }
-html.light [class*="bg-[#18181b]"]     { background-color: var(--surface) !important; }
-html.light [class*="bg-[#27272a]"]     { background-color: var(--surface2) !important; }
-html.light [class*="border-[#27272a]"] { border-color: var(--border) !important; }
-html.light [class*="border-[#3f3f46]"] { border-color: var(--border) !important; }
-html.light [class*="text-[#fafafa]"]   { color: var(--text) !important; }
-html.light [class*="text-[#a1a1aa]"]   { color: var(--muted) !important; }
-html.light [class*="text-[#52525b]"]   { color: var(--dim) !important; }
-html.light [class*="text-[#71717a]"]   { color: var(--dim) !important; }
-html.light [class*="bg-[#09090b]/90"]  { background-color: rgba(255,255,255,0.92) !important; }
-html.light [class*="bg-[#09090b]/95"]  { background-color: rgba(255,255,255,0.97) !important; }
-
-/* text-white dans le contenu (pas les boutons) */
-html.light h1.text-white,
-html.light h2.text-white,
-html.light h3.text-white,
-html.light p.text-white,
-html.light span.text-white,
-html.light div.text-white  { color: var(--text) !important; }
-
-/* Stat values et labels dans la hero card */
-html.light .text-white     { color: var(--text) !important; }
-
-/* Exceptions : boutons et badges qui doivent rester blancs sur fond coloré */
-html.light .bg-\[#3b82f6\] .text-white,
-html.light .bg-\[#2563eb\] .text-white,
-html.light button.bg-\[#3b82f6\],
-html.light a.bg-\[#3b82f6\]  { color: #fff !important; }
-
-/* Scrollbar adaptatif */
+/* ── Scrollbar ── */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: var(--surface2); border-radius: 3px; }
 
 ::selection {
-  background: var(--accent);
-  color: #fff;
+  background: var(--gold);
+  color: #000;
 }
 
 /* ── Scroll animations ── */
 .fade-up {
   opacity: 0;
   transform: translateY(32px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1);
 }
 .fade-up.in-view {
   opacity: 1;
@@ -121,3 +99,14 @@ html.light a.bg-\[#3b82f6\]  { color: #fff !important; }
 .stagger.in-view > *:nth-child(9)  { opacity: 1; transform: none; transition-delay: 0.45s; }
 .stagger.in-view > *:nth-child(10) { opacity: 1; transform: none; transition-delay: 0.50s; }
 .stagger.in-view > *:nth-child(n+11) { opacity: 1; transform: none; transition-delay: 0.55s; }
+
+/* ── Hero name animation ── */
+@keyframes fadeSlide {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Pulse animation for badges ── */
+@keyframes pulse {
+  50% { opacity: 0.4; }
+}

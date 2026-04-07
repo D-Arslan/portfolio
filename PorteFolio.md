@@ -125,11 +125,12 @@ Raisons :
 - [x] **Page 404** — `src/app/not-found.tsx` custom
 - [x] **Active nav** — IntersectionObserver, highlight du lien de la section visible (rootMargin -40%/-55%)
 - [x] **Dark/light mode** — ThemeContext, toggle soleil/lune en navbar, variables CSS, persistance localStorage, respect préférence système
-- [ ] **Redesign** — choisir un prototype et migrer le portfolio (Proto B recommandé)
+- [x] **Redesign Gold Noir** — Proto B implémenté : Space Grotesk + DM Sans + JetBrains Mono, palette `#D4AF37`/`#09090B`, logos dorés (`golden-removebg-preview.png`, `golden_favicon-removebg-preview.png`), sections numérotées, layout 2 colonnes Experience/Education, cartes projets avec identité visuelle propre à chaque projet
 
 ### Priorité moyenne
 - [x] **Modal projet** — ✓ fait (voir priorité haute)
 - [x] **Active nav** — ✓ fait (voir priorité haute)
+- [ ] **Aperçu projets** — screenshots statiques dans `public/previews/[id].png`, affichés dans la modal ProjectModal (iframe écarté : bloqué par X-Frame-Options). IDs à couvrir : fieldz, coiflow, gestion-visiteurs, eurosat, cyberlab, guide-terminale, budgy, love101, sentinel2, compilateur, esante, virus-macro. **Prochaine session.**
 - [x] **Page 404** — ✓ fait (voir priorité haute)
 - [x] **Dark/light mode** — ✓ fait (voir priorité haute)
 

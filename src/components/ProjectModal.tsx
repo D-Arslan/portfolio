@@ -19,7 +19,6 @@ export default function ProjectModal({
 
   useEffect(() => { setMounted(true); }, []);
 
-  // Fermeture sur Escape
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
     document.addEventListener("keydown", onKey);
@@ -42,26 +41,26 @@ export default function ProjectModal({
 
       {/* Panel */}
       <div
-        className="relative z-10 w-full max-w-lg bg-[#18181b] border border-[#3f3f46] rounded-2xl shadow-2xl flex flex-col max-h-[90vh]"
+        className="relative z-10 w-full max-w-lg bg-[var(--surface)] border border-[var(--border)] rounded-2xl shadow-2xl flex flex-col max-h-[90vh]"
         onClick={(e) => e.stopPropagation()}
       >
+        {/* Top accent line with project color */}
+        <div className="absolute top-0 left-0 right-0 h-[2px] rounded-t-2xl" style={{ background: project.accent }} />
+
         {/* Header */}
-        <div className="flex items-start justify-between p-6 border-b border-[#27272a]">
+        <div className="flex items-start justify-between p-6 border-b border-[var(--border)]">
           <div className="flex items-center gap-3">
-            <div
-              className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
-              style={{ backgroundColor: project.accent + "20", color: project.accent }}
-            >
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ backgroundColor: project.accent + "20", border: `1px solid ${project.accent}40` }}>
               <div className="w-3 h-3 rounded-full" style={{ background: project.accent }} />
             </div>
             <div>
-              <h2 className="font-semibold text-white text-lg leading-tight">{project.title}</h2>
-              <span className="text-xs text-[#52525b]">{project.year}</span>
+              <h2 className="font-[family-name:var(--font-heading)] font-semibold text-lg leading-tight">{project.title}</h2>
+              <span className="text-xs font-[family-name:var(--font-mono)] text-[var(--dim)]">{project.year}</span>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="text-[#52525b] hover:text-white transition-colors p-1 -mr-1 -mt-1"
+            className="text-[var(--dim)] hover:text-[var(--text)] transition-colors p-1 -mr-1 -mt-1"
             aria-label="Fermer"
           >
             <X className="w-5 h-5" />
@@ -70,29 +69,25 @@ export default function ProjectModal({
 
         {/* Body */}
         <div className="overflow-y-auto p-6 flex flex-col gap-5">
-          {/* Description complète */}
-          <p className="text-[#a1a1aa] text-sm leading-relaxed">
-            {t(project.description)}
-          </p>
+          <p className="text-[var(--muted)] text-sm leading-relaxed">{t(project.description)}</p>
 
-          {/* Stack complète */}
+          {/* Stack */}
           <div>
-            <p className="text-xs text-[#52525b] uppercase tracking-wider mb-3">Stack</p>
+            <p className="text-xs font-[family-name:var(--font-mono)] text-[var(--gold)] uppercase tracking-wider mb-3">Stack</p>
             <div className="flex flex-wrap gap-2">
               {project.tech.map((tech) => (
-                <span
-                  key={tech}
-                  className="text-xs bg-[#27272a] border border-[#3f3f46] text-[#a1a1aa] px-3 py-1 rounded-md"
-                >
+                <span key={tech} className="text-xs font-[family-name:var(--font-mono)] bg-[var(--surface2)] border border-[var(--border)] text-[var(--muted)] px-3 py-1 rounded-md">
                   {tech}
                 </span>
               ))}
             </div>
           </div>
 
-          {/* Catégories */}
+          {/* Categories */}
           <div>
-            <p className="text-xs text-[#52525b] uppercase tracking-wider mb-3">Catégories</p>
+            <p className="text-xs font-[family-name:var(--font-mono)] uppercase tracking-wider mb-3" style={{ color: project.accent }}>
+              {t({ fr: "Catégories", en: "Categories" })}
+            </p>
             <div className="flex flex-wrap gap-2">
               {project.categories.map((cat) => (
                 <span
@@ -107,7 +102,7 @@ export default function ProjectModal({
           </div>
         </div>
 
-        {/* Footer — liens */}
+        {/* Footer */}
         {(project.github || project.demo) && (
           <div className="flex gap-3 p-6 pt-0">
             {project.github && (
@@ -115,7 +110,7 @@ export default function ProjectModal({
                 href={project.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex-1 inline-flex items-center justify-center gap-2 bg-[#27272a] hover:bg-[#3f3f46] text-white text-sm font-medium px-4 py-2.5 rounded-lg transition-colors"
+                className="flex-1 inline-flex items-center justify-center gap-2 bg-[var(--surface2)] hover:bg-[var(--border)] text-[var(--text)] text-sm font-medium px-4 py-2.5 rounded-lg transition-colors"
               >
                 <Github className="w-4 h-4" />
                 {t(tr.code)}
@@ -126,7 +121,8 @@ export default function ProjectModal({
                 href={project.demo}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex-1 inline-flex items-center justify-center gap-2 bg-[#3b82f6] hover:bg-[#2563eb] text-white text-sm font-medium px-4 py-2.5 rounded-lg transition-colors"
+                className="flex-1 inline-flex items-center justify-center gap-2 text-sm font-bold font-[family-name:var(--font-heading)] px-4 py-2.5 rounded-lg transition-all hover:opacity-90"
+                style={{ backgroundColor: project.accent, color: project.accentText ?? "#000" }}
               >
                 <ExternalLink className="w-4 h-4" />
                 {t(tr.demo)}

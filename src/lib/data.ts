@@ -97,7 +97,9 @@ export interface Project {
   demo?: string;
   featured: boolean;
   year: string;
-  accent: string;
+  accent: string;       // couleur principale
+  accentBg?: string;    // fond de la carte (optionnel)
+  accentText?: string;  // couleur texte sur accent (optionnel, défaut: white)
 }
 
 export const projects: Project[] = [
@@ -113,7 +115,9 @@ export const projects: Project[] = [
     github: "https://github.com/D-Arslan",
     featured: true,
     year: "2025–présent",
-    accent: "#3b82f6",
+    accent: "#1ED760",     // vert clair Fieldz
+    accentBg: "#05602B",   // vert foncé Fieldz
+    accentText: "#ffffff",
   },
   {
     id: "coiflow",
@@ -127,7 +131,9 @@ export const projects: Project[] = [
     github: "https://github.com/D-Arslan",
     featured: true,
     year: "2026–présent",
-    accent: "#8b5cf6",
+    accent: "#f59e0b",     // amber Coiflow
+    accentBg: "#1c1917",   // fond sombre Coiflow
+    accentText: "#ffffff",
   },
   {
     id: "eurosat",
@@ -141,7 +147,9 @@ export const projects: Project[] = [
     github: "https://github.com/D-Arslan/eurosat-classification",
     featured: true,
     year: "2026",
-    accent: "#10b981",
+    accent: "#22c55e",     // vert satellite/nature
+    accentBg: "#052e16",
+    accentText: "#ffffff",
   },
   {
     id: "cyberlab",
@@ -155,7 +163,9 @@ export const projects: Project[] = [
     github: "https://github.com/D-Arslan",
     featured: true,
     year: "2026",
-    accent: "#ef4444",
+    accent: "#00ff41",     // vert terminal Spoof/CyberLab
+    accentBg: "#0a0a0a",   // noir terminal
+    accentText: "#00ff41",
   },
   {
     id: "guide-terminale",
@@ -169,7 +179,9 @@ export const projects: Project[] = [
     github: "https://github.com/D-Arslan",
     featured: true,
     year: "2022–présent",
-    accent: "#f59e0b",
+    accent: "#3b82f6",
+    accentBg: "#172554",
+    accentText: "#ffffff",
   },
   {
     id: "sentinel2",
@@ -184,20 +196,24 @@ export const projects: Project[] = [
     featured: false,
     year: "2025–2026",
     accent: "#06b6d4",
+    accentBg: "#082f49",
+    accentText: "#ffffff",
   },
   {
-    id: "id-recognition",
-    title: "Reconnaissance pièces d'identité",
+    id: "gestion-visiteurs",
+    title: "Système de Gestion des Visiteurs",
     description: {
-      fr: "Modèle de reconnaissance de pièces d'identité avec TensorFlow. 94 % de précision. Intégré dans un système de gestion des visiteurs déployé en entreprise (SARL SPINTECHS).",
-      en: "Identity document recognition model with TensorFlow. 94% accuracy. Integrated into a visitor management system deployed in production (SARL SPINTECHS).",
+      fr: "Système complet de gestion des visiteurs développé en PFE chez SARL SPINTECHS. Interface admin web (React), application mobile Flutter (scan QR, badges, trilingue FR/EN/AR), borne satisfaction client avec notation 5 étoiles, et module IA de reconnaissance de pièces d'identité (TensorFlow, 94 % de précision). Backend Spring Boot avec JWT, MySQL.",
+      en: "Full visitor management system developed as a final year project at SARL SPINTECHS. Web admin dashboard (React), Flutter mobile app (QR scan, badges, FR/EN/AR), client satisfaction kiosk with 5-star rating, and an AI identity document recognition module (TensorFlow, 94% accuracy). Spring Boot backend with JWT, MySQL.",
     },
-    tech: ["TensorFlow", "Python", "Spring Boot", "PostgreSQL"],
-    categories: ["aiml"],
+    tech: ["React", "Flutter", "Spring Boot", "Java 21", "TensorFlow", "MySQL", "JWT"],
+    categories: ["fullstack", "aiml", "mobile"],
     github: "https://github.com/D-Arslan",
     featured: false,
     year: "2024–2025",
-    accent: "#10b981",
+    accent: "#ED564B",     // saumon GestionVisiteurs
+    accentBg: "#2a0f0e",
+    accentText: "#ffffff",
   },
   {
     id: "budgy",
@@ -211,7 +227,9 @@ export const projects: Project[] = [
     github: "https://github.com/D-Arslan",
     featured: false,
     year: "2025–2026",
-    accent: "#f59e0b",
+    accent: "#43C59E",     // teal Budgi
+    accentBg: "#1E3A34",   // ink Budgi
+    accentText: "#ffffff",
   },
   {
     id: "compilateur",
@@ -224,7 +242,9 @@ export const projects: Project[] = [
     categories: ["fullstack"],
     featured: false,
     year: "2024–2025",
-    accent: "#6366f1",
+    accent: "#a3a3a3",     // gris neutre — compilateur, pas de charte
+    accentBg: "#171717",
+    accentText: "#ffffff",
   },
   {
     id: "esante",
@@ -237,7 +257,9 @@ export const projects: Project[] = [
     categories: ["fullstack"],
     featured: false,
     year: "2023–2024",
-    accent: "#ec4899",
+    accent: "#34d399",     // vert santé/médical
+    accentBg: "#064e3b",
+    accentText: "#ffffff",
   },
   {
     id: "love101",
@@ -250,7 +272,9 @@ export const projects: Project[] = [
     categories: ["fullstack"],
     featured: false,
     year: "2026",
-    accent: "#f43f5e",
+    accent: "#e11d48",     // rose-rouge Love101 (template Valentine)
+    accentBg: "#4c0519",
+    accentText: "#ffffff",
   },
   {
     id: "virus-macro",
@@ -263,7 +287,9 @@ export const projects: Project[] = [
     categories: ["cyber"],
     featured: false,
     year: "2024–2025",
-    accent: "#ef4444",
+    accent: "#ff4444",     // rouge Spoof
+    accentBg: "#1a0000",
+    accentText: "#ffffff",
   },
 ];
 
