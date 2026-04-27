@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
@@ -86,7 +86,7 @@ export default function ProjectModal({
           {/* Categories */}
           <div>
             <p className="text-xs font-[family-name:var(--font-mono)] uppercase tracking-wider mb-3" style={{ color: project.accent }}>
-              {t({ fr: "Catégories", en: "Categories" })}
+              {t({ fr: "CatÃ©gories", en: "Categories" })}
             </p>
             <div className="flex flex-wrap gap-2">
               {project.categories.map((cat) => (
@@ -135,3 +135,4 @@ export default function ProjectModal({
     document.body
   );
 }
+

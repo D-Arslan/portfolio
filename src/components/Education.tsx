@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { GraduationCap, Award, BookOpen, type LucideIcon } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
@@ -7,8 +7,8 @@ import { SectionHeader } from "./About";
 import { useInView } from "@/hooks/useInView";
 
 const ICONS: Record<string, LucideIcon> = {
-  "USTHB – Alger": GraduationCap,
-  "Académie Aix-Marseille": Award,
+  "USTHB â€“ Alger": GraduationCap,
+  "AcadÃ©mie Aix-Marseille": Award,
 };
 
 export default function Education() {
@@ -17,7 +17,7 @@ export default function Education() {
 
   return (
     <section ref={ref} id="education" className={`py-24 bg-[var(--bg2)] fade-up${inView ? " in-view" : ""}`}>
-      <div className="max-w-[1100px] mx-auto px-6 md:px-12">
+      <div className="max-w-[1400px] mx-auto px-6 md:px-12">
         <SectionHeader num="05" title={t(translations.education.title)} />
 
         <div className="flex flex-col mt-14">
@@ -57,3 +57,4 @@ export default function Education() {
     </section>
   );
 }
+

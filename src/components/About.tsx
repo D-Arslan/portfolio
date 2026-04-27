@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Image from "next/image";
 import { useLanguage } from "@/context/LanguageContext";
@@ -12,7 +12,7 @@ export default function About() {
 
   return (
     <section ref={ref} id="about" className={`py-24 bg-[var(--bg2)] fade-up${inView ? " in-view" : ""}`}>
-      <div className="max-w-[1100px] mx-auto px-6 md:px-12">
+      <div className="max-w-[1400px] mx-auto px-6 md:px-12">
         <SectionHeader num="01" title={t(tr.title)} />
 
         <div className="grid md:grid-cols-[1fr_360px] gap-12 md:gap-20 items-start mt-14">
@@ -64,9 +64,9 @@ export default function About() {
             </div>
 
             {/* Stats blocks */}
-            <AsideBlock label={t({ fr: "Meilleure précision IA", en: "Best AI accuracy" })} value="97.8%" sub="EuroSAT · ResNet-18" />
-            <AsideBlock label={t({ fr: "Projets réalisés", en: "Projects completed" })} value="12+" sub={t({ fr: "Web, Mobile, IA, Cyber", en: "Web, Mobile, AI, Cyber" })} />
-            <AsideBlock label={t({ fr: "Startups fondées", en: "Startups founded" })} value="2" sub="FIELDZ · Coiflow" />
+            <AsideBlock label={t({ fr: "Meilleure prÃ©cision IA", en: "Best AI accuracy" })} value="97.8%" sub="EuroSAT Â· ResNet-18" />
+            <AsideBlock label={t({ fr: "Projets rÃ©alisÃ©s", en: "Projects completed" })} value="12+" sub={t({ fr: "Web, Mobile, IA, Cyber", en: "Web, Mobile, AI, Cyber" })} />
+            <AsideBlock label={t({ fr: "Startups fondÃ©es", en: "Startups founded" })} value="2" sub="FIELDZ Â· Coiflow" />
           </div>
         </div>
       </div>
@@ -93,3 +93,4 @@ export function SectionHeader({ num, title }: { num: string; title: string }) {
     </div>
   );
 }
+

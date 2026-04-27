@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Image from "next/image";
 import { useLanguage } from "@/context/LanguageContext";
@@ -24,7 +24,7 @@ export default function Hero() {
         />
       </div>
 
-      <div className="max-w-[1100px] mx-auto px-6 md:px-12 w-full py-24 md:py-32">
+      <div className="max-w-[1400px] mx-auto px-6 md:px-12 w-full py-24 md:py-32">
         <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
           {/* Left: Text */}
           <div className="flex flex-col gap-6">
@@ -32,7 +32,7 @@ export default function Hero() {
             <div className="inline-flex items-center gap-2.5 w-fit">
               <span className="w-6 h-px bg-[var(--gold)] opacity-50" />
               <span className="text-xs font-[family-name:var(--font-mono)] text-[var(--gold)] uppercase tracking-[3px]">
-                {t({ fr: "Développeur · Fondateur · IA", en: "Developer · Founder · AI" })}
+                {t({ fr: "DÃ©veloppeur Â· Fondateur Â· IA", en: "Developer Â· Founder Â· AI" })}
               </span>
               <span className="w-6 h-px bg-[var(--gold)] opacity-50" />
             </div>
@@ -52,15 +52,15 @@ export default function Hero() {
                 </span>
                 <br />
                 <span className="text-[var(--muted)] font-normal inline-block" style={{ animation: "fadeSlide 0.8s 0.45s both" }}>
-                  &amp; {t({ fr: "Ingénieur IA", en: "AI Engineer" })}
+                  &amp; {t({ fr: "IngÃ©nieur IA", en: "AI Engineer" })}
                 </span>
               </h1>
             </div>
 
             {/* Role line */}
             <div className="flex items-center gap-2 font-[family-name:var(--font-mono)] text-sm text-[var(--muted)]">
-              <span className="text-[var(--gold)]">→</span>
-              {t({ fr: "Fondateur & CTO · FIELDZ", en: "Founder & CTO · FIELDZ" })}
+              <span className="text-[var(--gold)]">â†’</span>
+              {t({ fr: "Fondateur & CTO Â· FIELDZ", en: "Founder & CTO Â· FIELDZ" })}
             </div>
 
             {/* Description */}
@@ -120,7 +120,7 @@ export default function Hero() {
               {/* Badge */}
               <div className="inline-flex items-center gap-1.5 font-[family-name:var(--font-mono)] text-xs text-[var(--gold)] bg-[var(--gold-glow)] border border-[var(--gold)]/20 rounded-full px-3 py-1.5 mb-5">
                 <span className="w-1.5 h-1.5 bg-[var(--gold)] rounded-full animate-pulse" />
-                {t({ fr: "disponible · sept. 2026 · paris", en: "available · sept. 2026 · paris" })}
+                {t({ fr: "disponible Â· sept. 2026 Â· paris", en: "available Â· sept. 2026 Â· paris" })}
               </div>
 
               {/* Avatar */}
@@ -135,12 +135,12 @@ export default function Hero() {
               </div>
 
               <div className="font-[family-name:var(--font-heading)] text-[22px] font-bold mb-1">Arslan DIF</div>
-              <div className="text-sm font-[family-name:var(--font-mono)] text-[var(--muted)] mb-6">M1 IA · USTHB · Alger</div>
+              <div className="text-sm font-[family-name:var(--font-mono)] text-[var(--muted)] mb-6">M1 IA Â· USTHB Â· Alger</div>
 
               {/* Stats grid */}
               <div className="grid grid-cols-2 gap-4 mb-6">
                 <StatCard value="12+" label={{ fr: "Projets", en: "Projects" }} />
-                <StatCard value="97.8%" label={{ fr: "Précision IA", en: "AI accuracy" }} />
+                <StatCard value="97.8%" label={{ fr: "PrÃ©cision IA", en: "AI accuracy" }} />
                 <StatCard value="2" label={{ fr: "Startups", en: "Startups" }} />
                 <StatCard value="4" label={{ fr: "Ans de code", en: "Years coding" }} />
               </div>
@@ -177,3 +177,4 @@ function StatCard({ value, label }: { value: string; label: { fr: string; en: st
     </div>
   );
 }
+

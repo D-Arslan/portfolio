@@ -110,3 +110,36 @@ body {
 @keyframes pulse {
   50% { opacity: 0.4; }
 }
+
+/* ── Blog modal content ── */
+.blog-content h3 {
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text);
+  margin: 1.8rem 0 0.5rem;
+  letter-spacing: -0.01em;
+}
+.blog-content p { margin-bottom: 1rem; }
+.blog-content strong { color: var(--text); font-weight: 600; }
+.blog-content code {
+  font-family: var(--font-mono);
+  font-size: 0.82em;
+  background: var(--surface2);
+  padding: 0.15em 0.4em;
+  border-radius: 3px;
+  color: var(--gold);
+}
+.blog-content ul {
+  padding-left: 1.3rem;
+  margin-bottom: 1rem;
+}
+.blog-content ul li { margin-bottom: 0.4rem; }
+.blog-content blockquote {
+  border-left: 3px solid var(--gold);
+  padding-left: 1.2rem;
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: var(--muted);
+  opacity: 0.85;
+}

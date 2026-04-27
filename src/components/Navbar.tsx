@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
@@ -7,12 +7,14 @@ import { useTheme } from "@/context/ThemeContext";
 import { translations } from "@/lib/data";
 
 const NAV_LINKS = [
-  { key: "about",      href: "#about" },
-  { key: "projects",   href: "#projects" },
-  { key: "skills",     href: "#skills" },
-  { key: "experience", href: "#experience" },
-  { key: "education",  href: "#education" },
-  { key: "contact",    href: "#contact" },
+  { key: "about",          href: "#about" },
+  { key: "projects",       href: "#projects" },
+  { key: "skills",         href: "#skills" },
+  { key: "experience",     href: "#experience" },
+  { key: "education",      href: "#education" },
+  { key: "blog",           href: "#blog" },
+  { key: "certifications", href: "#certifications" },
+  { key: "contact",        href: "#contact" },
 ] as const;
 
 export default function Navbar() {
@@ -177,3 +179,4 @@ export default function Navbar() {
     </header>
   );
 }
+

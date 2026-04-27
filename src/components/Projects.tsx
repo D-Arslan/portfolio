@@ -1,37 +1,26 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { useInView } from "@/hooks/useInView";
 import ProjectModal from "./ProjectModal";
-import {
-  Trophy, Scissors, Satellite, ShieldAlert, BookOpen, Globe,
-  Wallet, Code, HeartPulse, Heart, Bug, Users, type LucideIcon,
-} from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { translations, projects, type Category, type Project } from "@/lib/data";
 import { SectionHeader } from "./About";
 
 const FILTERS: { key: "all" | Category; labelKey: keyof typeof translations.projects.filters }[] = [
-  { key: "all",       labelKey: "all" },
-  { key: "fullstack", labelKey: "fullstack" },
-  { key: "aiml",      labelKey: "aiml" },
-  { key: "mobile",    labelKey: "mobile" },
-  { key: "cyber",     labelKey: "cyber" },
+  { key: "all",        labelKey: "all" },
+  { key: "production", labelKey: "production" },
+  { key: "fullstack",  labelKey: "fullstack" },
+  { key: "aiml",       labelKey: "aiml" },
+  { key: "mobile",     labelKey: "mobile" },
+  { key: "cyber",      labelKey: "cyber" },
 ];
 
-const PROJECT_ICONS: Record<string, LucideIcon> = {
-  fieldz:                Trophy,
-  coiflow:               Scissors,
-  eurosat:               Satellite,
-  cyberlab:              ShieldAlert,
-  "guide-terminale":     BookOpen,
-  sentinel2:             Globe,
-  "gestion-visiteurs":   Users,
-  budgy:                 Wallet,
-  compilateur:           Code,
-  esante:                HeartPulse,
-  love101:               Heart,
-  "virus-macro":         Bug,
+const THUMB_URLS: Record<string, string> = {
+  fieldz:   "https://fieldz.pro/",
+  coiflow:  "https://www.coiflow.com/",
+  cyberlab: "https://cyberlab-uxey.onrender.com/",
+  love101:  "https://love101-red.vercel.app/fr",
 };
 
 export default function Projects() {
@@ -48,7 +37,7 @@ export default function Projects() {
 
   return (
     <section ref={ref} id="projects" className={`py-24 fade-up${inView ? " in-view" : ""}`}>
-      <div className="max-w-[1100px] mx-auto px-6 md:px-12">
+      <div className="max-w-[1400px] mx-auto px-6 md:px-12">
         <SectionHeader num="02" title={t(tr.title)} />
 
         {/* Filters */}
@@ -57,7 +46,7 @@ export default function Projects() {
             <button
               key={key}
               onClick={() => setActive(key)}
-              className={`text-sm font-[family-name:var(--font-mono)] px-4 py-1.5 rounded-md border transition-all ${
+              className={`text-sm font-[family-name:var(--font-mono)] px-4 py-1.5 rounded-full border transition-all ${
                 active === key
                   ? "bg-[var(--gold)] border-[var(--gold)] text-black font-medium"
                   : "border-[var(--border)] text-[var(--muted)] hover:border-[var(--gold)] hover:text-[var(--gold)]"
@@ -68,10 +57,15 @@ export default function Projects() {
           ))}
         </div>
 
-        {/* Grid — 3 cols, 1px gap, rounded container */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-[var(--border)] rounded-2xl overflow-hidden mt-8">
-          {filtered.map((project) => (
-            <ProjectCard key={project.id} project={project} onClick={() => setSelected(project)} />
+        {/* Grid */}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
+          {filtered.map((project, i) => (
+            <ProjectCard
+              key={project.id}
+              project={project}
+              index={i}
+              onClick={() => setSelected(project)}
+            />
           ))}
         </div>
       </div>
@@ -83,70 +77,90 @@ export default function Projects() {
   );
 }
 
-function ProjectCard({ project, onClick }: { project: typeof projects[number]; onClick: () => void }) {
+function ProjectCard({
+  project,
+  index,
+  onClick,
+}: {
+  project: Project;
+  index: number; // position in filtered list, used for num display
+  onClick: () => void;
+}) {
   const { t } = useLanguage();
-  const Icon = PROJECT_ICONS[project.id];
-  const bg = project.accentBg ?? "var(--surface)";
-  const accent = project.accent;
-  const textColor = project.accentText ?? "#ffffff";
+  const thumbUrl = THUMB_URLS[project.id];
+  const mshots = thumbUrl
+    ? `https://s.wordpress.com/mshots/v1/${encodeURIComponent(thumbUrl)}?w=1280&h=800`
+    : null;
 
   return (
     <div
       onClick={onClick}
-      className="group relative p-7 transition-all duration-300 cursor-pointer overflow-hidden"
-      style={{ backgroundColor: bg }}
+      className="group bg-[var(--surface)] border border-[var(--border)] rounded-xl overflow-hidden cursor-pointer transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_20px_48px_var(--shadow)] hover:border-[var(--gold)]"
+      style={{ animationDelay: `${index * 50}ms` }}
     >
-      {/* Subtle top accent line */}
-      <div className="absolute top-0 left-0 right-0 h-[2px] opacity-60 transition-opacity group-hover:opacity-100" style={{ background: accent }} />
-
-      {/* Hover glow */}
-      <div
-        className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-300 pointer-events-none"
-        style={{ background: `radial-gradient(ellipse at top left, ${accent}, transparent 70%)` }}
-      />
-
-      {/* Arrow on hover */}
-      <span
-        className="absolute top-6 right-6 opacity-0 -translate-x-1.5 transition-all group-hover:opacity-100 group-hover:translate-x-0 text-sm"
-        style={{ color: accent }}
-      >→</span>
-
-      {/* Icon + Year row */}
-      <div className="flex items-center gap-2.5 mb-4">
-        {Icon && (
-          <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style={{ backgroundColor: accent + "25", color: accent }}>
-            <Icon className="w-4 h-4" />
-          </div>
+      {/* Thumbnail */}
+      <div className="h-[160px] relative overflow-hidden bg-[var(--bg2)]">
+        {mshots ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={mshots}
+            alt={project.title}
+            loading="lazy"
+            className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.04]"
+            onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
+          />
+        ) : (
+          <>
+            <div className="absolute inset-0" style={{
+              backgroundImage: "repeating-linear-gradient(135deg, transparent, transparent 10px, color-mix(in srgb, var(--muted) 7%, transparent) 10px, color-mix(in srgb, var(--muted) 7%, transparent) 11px)"
+            }} />
+            <div className="absolute inset-0 flex items-center justify-center font-[family-name:var(--font-mono)] text-xs text-[var(--dim)] tracking-widest px-4 text-center">
+              {project.title}
+            </div>
+          </>
         )}
-        <span className="text-xs font-[family-name:var(--font-mono)] opacity-50" style={{ color: textColor }}>{project.year}</span>
-      </div>
-
-      {/* Name */}
-      <div className="font-[family-name:var(--font-heading)] text-lg font-semibold mb-2.5 flex items-center gap-2" style={{ color: textColor }}>
-        {project.featured && <span className="w-1.5 h-1.5 rounded-full inline-block flex-shrink-0" style={{ background: accent }} />}
-        {project.title}
-      </div>
-
-      {/* Description */}
-      <p className="text-sm leading-relaxed mb-5 line-clamp-3 opacity-70" style={{ color: textColor }}>
-        {t(project.description)}
-      </p>
-
-      {/* Tech pills */}
-      <div className="flex flex-wrap gap-1.5">
-        {project.tech.slice(0, 4).map((tech) => (
-          <span
-            key={tech}
-            className="text-xs font-[family-name:var(--font-mono)] px-2.5 py-0.5 rounded border"
-            style={{ borderColor: accent + "40", color: accent }}
+        {/* Live link badge */}
+        {thumbUrl && (
+          <a
+            href={thumbUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
+            className="absolute bottom-2 right-2 z-10 flex items-center gap-1 px-2 py-0.5 bg-[var(--bg)] border border-[var(--border)] rounded font-[family-name:var(--font-mono)] text-[10px] text-[var(--muted)] no-underline opacity-0 translate-y-1 transition-all group-hover:opacity-100 group-hover:translate-y-0 hover:border-[var(--gold)] hover:text-[var(--gold)] backdrop-blur-sm"
           >
-            {tech}
-          </span>
-        ))}
-        {project.tech.length > 4 && (
-          <span className="text-xs px-1 opacity-50" style={{ color: textColor }}>+{project.tech.length - 4}</span>
+            Voir le site â†—
+          </a>
         )}
+      </div>
+
+      {/* Body */}
+      <div className="p-4">
+        <div className="font-[family-name:var(--font-mono)] text-[10px] text-[var(--dim)] mb-1.5">{String(index + 1).padStart(2, "0")}</div>
+        <div className="font-[family-name:var(--font-heading)] text-sm font-semibold mb-1 leading-snug text-[var(--text)]">
+          {project.title}
+        </div>
+        <p className="text-xs leading-relaxed text-[var(--muted)] mb-3 line-clamp-2">
+          {t(project.description)}
+        </p>
+        <div className="flex flex-wrap gap-1">
+          {project.tech.slice(0, 3).map((tech, j) => (
+            <span
+              key={tech}
+              className={`text-[10px] font-[family-name:var(--font-mono)] px-1.5 py-0.5 rounded border ${
+                j === 0
+                  ? "bg-[var(--gold-glow)] text-[var(--gold)] border-[var(--gold)]/25"
+                  : "bg-[var(--bg2)] text-[var(--dim)] border-[var(--border)]"
+              }`}
+            >
+              {tech}
+            </span>
+          ))}
+          {project.tech.length > 3 && (
+            <span className="text-[10px] text-[var(--dim)] px-1">+{project.tech.length - 3}</span>
+          )}
+        </div>
       </div>
     </div>
   );
 }
+
