@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { GraduationCap, Award, BookOpen, type LucideIcon } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
@@ -7,8 +7,8 @@ import { SectionHeader } from "./About";
 import { useInView } from "@/hooks/useInView";
 
 const ICONS: Record<string, LucideIcon> = {
-  "USTHB â€“ Alger": GraduationCap,
-  "AcadÃ©mie Aix-Marseille": Award,
+  “USTHB – Alger”: GraduationCap,
+  “Académie Aix-Marseille”: Award,
 };
 
 export default function Education() {

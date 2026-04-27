@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Image from "next/image";
 import { useInView } from "@/hooks/useInView";
@@ -64,7 +64,7 @@ export default function Certifications() {
                       onClick={(e) => e.stopPropagation()}
                       className="font-[family-name:var(--font-mono)] text-[10px] text-[var(--muted)] hover:text-[var(--gold)] transition-colors underline underline-offset-2"
                     >
-                      {t(tr.verify)} â†—
+                      {t(tr.verify)} ↗
                     </a>
                   )}
                 </div>

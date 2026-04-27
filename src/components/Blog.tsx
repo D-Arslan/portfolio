@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
@@ -101,7 +101,7 @@ function FeaturedCard({ post, onOpen }: { post: BlogPost; onOpen: () => void }) 
         </h3>
         <p className="text-sm text-[var(--muted)] leading-relaxed">{t(post.excerpt)}</p>
         <span className="text-sm font-medium text-[var(--gold)] flex items-center gap-1.5 transition-all group-hover:gap-3">
-          {t(tr.readMore)} <span>â†’</span>
+          {t(tr.readMore)} <span>→</span>
         </span>
       </div>
     </div>
@@ -139,7 +139,7 @@ function BlogCard({ post, onOpen }: { post: BlogPost; onOpen: () => void }) {
 
       <div className="flex items-center justify-between">
         <span className="font-[family-name:var(--font-mono)] text-[10px] text-[var(--muted)]">{post.date}</span>
-        <span className="text-xs text-[var(--gold)] opacity-0 group-hover:opacity-100 transition-opacity">â†’</span>
+        <span className="text-xs text-[var(--gold)] opacity-0 group-hover:opacity-100 transition-opacity">→</span>
       </div>
     </div>
   );

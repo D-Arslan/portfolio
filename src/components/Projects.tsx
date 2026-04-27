@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState } from "react";
 import { useInView } from "@/hooks/useInView";
@@ -128,7 +128,7 @@ function ProjectCard({
             onClick={(e) => e.stopPropagation()}
             className="absolute bottom-2 right-2 z-10 flex items-center gap-1 px-2 py-0.5 bg-[var(--bg)] border border-[var(--border)] rounded font-[family-name:var(--font-mono)] text-[10px] text-[var(--muted)] no-underline opacity-0 translate-y-1 transition-all group-hover:opacity-100 group-hover:translate-y-0 hover:border-[var(--gold)] hover:text-[var(--gold)] backdrop-blur-sm"
           >
-            Voir le site â†—
+            Voir le site ↗
           </a>
         )}
       </div>

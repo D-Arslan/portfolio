@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Image from "next/image";
 import { useLanguage } from "@/context/LanguageContext";
@@ -64,9 +64,9 @@ export default function About() {
             </div>
 
             {/* Stats blocks */}
-            <AsideBlock label={t({ fr: "Meilleure prÃ©cision IA", en: "Best AI accuracy" })} value="97.8%" sub="EuroSAT Â· ResNet-18" />
-            <AsideBlock label={t({ fr: "Projets rÃ©alisÃ©s", en: "Projects completed" })} value="12+" sub={t({ fr: "Web, Mobile, IA, Cyber", en: "Web, Mobile, AI, Cyber" })} />
-            <AsideBlock label={t({ fr: "Startups fondÃ©es", en: "Startups founded" })} value="2" sub="FIELDZ Â· Coiflow" />
+            <AsideBlock label={t({ fr: "Meilleure précision IA", en: "Best AI accuracy" })} value="97.8%" sub="EuroSAT · ResNet-18" />
+            <AsideBlock label={t({ fr: "Projets réalisés", en: "Projects completed" })} value="12+" sub={t({ fr: "Web, Mobile, IA, Cyber", en: "Web, Mobile, AI, Cyber" })} />
+            <AsideBlock label={t({ fr: "Startups fondées", en: "Startups founded" })} value="2" sub="FIELDZ · Coiflow" />
           </div>
         </div>
       </div>
