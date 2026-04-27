@@ -7,8 +7,8 @@ import { SectionHeader } from "./About";
 import { useInView } from "@/hooks/useInView";
 
 const ICONS: Record<string, LucideIcon> = {
-  “USTHB – Alger”: GraduationCap,
-  “Académie Aix-Marseille”: Award,
+  "USTHB – Alger": GraduationCap,
+  "Académie Aix-Marseille": Award,
 };
 
 export default function Education() {
@@ -57,4 +57,3 @@ export default function Education() {
     </section>
   );
 }
-
