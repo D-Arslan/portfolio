@@ -14,6 +14,7 @@ const FILTERS: { key: "all" | Category; labelKey: keyof typeof translations.proj
   { key: "aiml",       labelKey: "aiml" },
   { key: "mobile",     labelKey: "mobile" },
   { key: "cyber",      labelKey: "cyber" },
+  { key: "academic",   labelKey: "academic" },
 ];
 
 const THUMB_URLS: Record<string, string> = {
