@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=Hanken+Grotesk:wght@300;400;500;600&family=Newsreader:ital,opsz,wght@1,6..72,300;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+body{margin:0;background:#ECE6DA;color:#201D18;font-family:'Hanken Grotesk',system-ui,sans-serif;font-size:16px;line-height:1.55;}
+@keyframes pmarq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+[data-marquee]{animation:pmarq 40s linear infinite;}
+:focus-visible{outline:2px solid #201D18;outline-offset:3px;}
+::selection{background:#E0D3DB;color:#201D18;}
+button{font-family:inherit}
+.p-nav-desk{display:none}
+.p-nav-toggle{display:inline-flex}
+.p-hero{display:grid;grid-template-columns:1fr;gap:40px;align-items:center}
+.p-two{display:grid;grid-template-columns:1fr;gap:32px;align-items:center}
+@media(min-width:900px){
+  .p-nav-desk{display:flex}
+  .p-nav-toggle{display:none}
+  .p-hero{grid-template-columns:1.02fr 0.98fr;gap:clamp(32px,5vw,72px)}
+  .p-two{grid-template-columns:1fr 1fr;gap:clamp(32px,5vw,72px)}
+  .p-alt:nth-child(even) .p-alt-media{order:2}
+}
+@media (prefers-reduced-motion: reduce){[data-marquee]{animation:none}html{scroll-behavior:auto}}
+</style>
+</helmet>
+
+<div style="min-height:100vh;display:flex;flex-direction:column;overflow-x:hidden;">
+
+<sc-if value="{{ showMarquee }}" hint-placeholder-val="{{ true }}">
+<div style="overflow:hidden;background:#201D18;color:#ECE6DA;border-bottom:1px solid rgba(236,230,218,0.14);" aria-hidden="true">
+  <div data-marquee style="display:flex;width:max-content;white-space:nowrap;">
+    <div style="display:flex;align-items:center;padding:9px 0;">
+      <sc-for list="{{ marqueeItems }}" as="m" hint-placeholder-count="5">
+        <span style="font-size:12px;letter-spacing:0.16em;text-transform:uppercase;padding:0 22px;font-weight:300;">{{ m }}</span>
+        <span style="font-size:9px;opacity:0.7;color:{{ accent }};">✦</span>
+      </sc-for>
+    </div>
+    <div style="display:flex;align-items:center;padding:9px 0;">
+      <sc-for list="{{ marqueeItems }}" as="m" hint-placeholder-count="5">
+        <span style="font-size:12px;letter-spacing:0.16em;text-transform:uppercase;padding:0 22px;font-weight:300;">{{ m }}</span>
+        <span style="font-size:9px;opacity:0.7;color:{{ accent }};">✦</span>
+      </sc-for>
+    </div>
+  </div>
+</div>
+</sc-if>
+
+<header style="position:sticky;top:0;z-index:40;background:rgba(236,230,218,0.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(32,29,24,0.1);">
+  <div style="max-width:1280px;margin:0 auto;padding:0 clamp(20px,5vw,64px);height:70px;display:flex;align-items:center;justify-content:space-between;gap:20px;">
+    <button onClick="{{ goHome }}" aria-label="posé, retour à l’accueil" style="background:none;border:none;cursor:pointer;padding:6px 2px;font-family:'Schibsted Grotesk',sans-serif;font-weight:500;font-size:24px;letter-spacing:-0.02em;color:#201D18;">posé<span style="color:{{ accent }};">.</span></button>
+    <nav class="p-nav-desk" aria-label="Navigation principale" style="align-items:center;gap:34px;">
+      <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="5">
+        <button onClick="{{ item.onClick }}" style="background:none;border:none;cursor:pointer;padding:4px 0;position:relative;font-size:14px;letter-spacing:0.01em;color:#201D18;">
+          {{ item.label }}
+          <sc-if value="{{ item.active }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;left:0;right:0;bottom:-6px;height:1.5px;background:{{ accent }};"></span></sc-if>
+        </button>
+      </sc-for>
+    </nav>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <button onClick="{{ openEssai }}" style="background:#201D18;color:#F1ECE2;border:none;cursor:pointer;padding:12px 22px;font-size:13.5px;letter-spacing:0.02em;border-radius:1px;white-space:nowrap;" style-hover="background:#3A342B;">réserver un essai</button>
+      <button class="p-nav-toggle" onClick="{{ toggleNav }}" aria-label="Ouvrir le menu" aria-expanded="{{ mobileNavOpen }}" style="background:none;border:1px solid rgba(32,29,24,0.28);cursor:pointer;width:42px;height:42px;align-items:center;justify-content:center;border-radius:1px;flex-direction:column;gap:5px;">
+        <span style="width:16px;height:1.5px;background:#201D18;display:block;"></span>
+        <span style="width:16px;height:1.5px;background:#201D18;display:block;"></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<sc-if value="{{ mobileNavOpen }}" hint-placeholder-val="{{ false }}">
+<div style="position:fixed;inset:0;z-index:60;background:#ECE6DA;display:flex;flex-direction:column;padding:24px clamp(20px,6vw,40px);" role="dialog" aria-label="Menu">
+  <div style="display:flex;align-items:center;justify-content:space-between;height:46px;">
+    <span style="font-family:'Schibsted Grotesk',sans-serif;font-weight:500;font-size:24px;letter-spacing:-0.02em;">posé<span style="color:{{ accent }};">.</span></span>
+    <button onClick="{{ toggleNav }}" aria-label="Fermer le menu" style="background:none;border:1px solid rgba(32,29,24,0.28);cursor:pointer;width:42px;height:42px;border-radius:1px;font-size:20px;line-height:1;color:#201D18;">✕</button>
+  </div>
+  <nav style="display:flex;flex-direction:column;gap:6px;margin-top:40px;" aria-label="Navigation mobile">
+    <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="5">
+      <button onClick="{{ item.onClick }}" style="background:none;border:none;border-bottom:1px solid rgba(32,29,24,0.12);cursor:pointer;text-align:left;padding:18px 0;font-family:'Schibsted Grotesk',sans-serif;font-size:30px;font-weight:400;color:#201D18;">{{ item.label }}</button>
+    </sc-for>
+  </nav>
+  <button onClick="{{ openEssai }}" style="margin-top:auto;background:#201D18;color:#F1ECE2;border:none;cursor:pointer;padding:18px;font-size:15px;border-radius:1px;">réserver un cours d’essai</button>
+</div>
+</sc-if>
+
+<main style="flex:1;">
+
+<!-- ================= ACCUEIL ================= -->
+<sc-if value="{{ isAccueil }}" hint-placeholder-val="{{ true }}">
+<div>
+  <section style="max-width:1280px;margin:0 auto;padding:clamp(48px,8vw,104px) clamp(20px,5vw,64px) clamp(40px,6vw,80px);">
+    <div class="p-hero">
+      <div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:26px;">
+          <span style="width:7px;height:7px;background:{{ accent }};border-radius:50%;"></span>
+          <span style="font-size:12.5px;letter-spacing:0.2em;text-transform:uppercase;color:#4A453C;">studio pilates — hydra, alger</span>
+        </div>
+        <h1 style="font-family:'Schibsted Grotesk',sans-serif;font-weight:400;font-size:clamp(44px,7.2vw,92px);line-height:0.98;letter-spacing:-0.035em;margin:0 0 26px;">le mouvement juste,<br><em style="font-family:'Newsreader',serif;font-style:italic;font-weight:300;">sans le bruit</em>.</h1>
+        <p style="max-width:440px;font-size:17px;line-height:1.65;color:#4A453C;margin:0 0 34px;">Reformer, tapis, barre — des cours en petit comité pensés pour un corps plus fort et un esprit plus clair. On avance lentement, précisément, à Hydra.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;">
+          <button onClick="{{ openEssai }}" style="background:#201D18;color:#F1ECE2;border:none;cursor:pointer;padding:16px 30px;font-size:15px;border-radius:1px;" style-hover="background:#3A342B;">réserver un essai — {{ trialPrice }} DA</button>
+          <button onClick="{{ goPlanning }}" style="background:none;color:#201D18;border:1px solid rgba(32,29,24,0.3);cursor:pointer;padding:15px 28px;font-size:15px;border-radius:1px;" style-hover="border-color:#201D18;background:rgba(32,29,24,0.04);">voir le planning →</button>
+        </div>
+      </div>
+      <div style="position:relative;width:100%;padding-bottom:10px;">
+        <div style="width:76%;aspect-ratio:3/4;margin-left:auto;">
+          <img src="assets/exercice.png" alt="Élève en étirement latéral sur un reformer, lumière naturelle" style="width:100%;height:100%;object-fit:cover;display:block;">
+        </div>
+        <div style="position:absolute;left:0;bottom:-6%;width:50%;aspect-ratio:4/5;border:7px solid #ECE6DA;box-shadow:0 20px 50px -20px rgba(32,29,24,0.35);">
+          <img src="assets/machine.png" alt="Détail des ressorts et sangles d’un reformer dans la lumière du matin" style="width:100%;height:100%;object-fit:cover;display:block;">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="border-top:1px solid rgba(32,29,24,0.1);border-bottom:1px solid rgba(32,29,24,0.1);">
+    <div style="max-width:1280px;margin:0 auto;padding:clamp(28px,4vw,44px) clamp(20px,5vw,64px);display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:28px;">
+      <div><div style="font-family:'Schibsted Grotesk',sans-serif;font-size:clamp(30px,4vw,46px);letter-spacing:-0.02em;">6</div><div style="font-size:13.5px;color:#4A453C;letter-spacing:0.02em;">disciplines au studio</div></div>
+      <div><div style="font-family:'Schibsted Grotesk',sans-serif;font-size:clamp(30px,4vw,46px);letter-spacing:-0.02em;">8</div><div style="font-size:13.5px;color:#4A453C;letter-spacing:0.02em;">élèves max. par cours</div></div>
+      <div><div style="font-family:'Schibsted Grotesk',sans-serif;font-size:clamp(30px,4vw,46px);letter-spacing:-0.02em;">4</div><div style="font-size:13.5px;color:#4A453C;letter-spacing:0.02em;">instructrices certifiées</div></div>
+      <div><div style="font-family:'Schibsted Grotesk',sans-serif;font-size:clamp(30px,4vw,46px);letter-spacing:-0.02em;">4,9<span style="color:{{ accent }};">★</span></div><div style="font-size:13.5px;color:#4A453C;letter-spacing:0.02em;">note moyenne · 214 avis</div></div>
+    </div>
+  </section>
+
+  <section style="max-width:980px;margin:0 auto;padding:clamp(64px,10vw,128px) clamp(20px,5vw,64px);text-align:center;">
+    <span style="font-size:12.5px;letter-spacing:0.2em;text-transform:uppercase;color:#9A7C90;">notre approche</span>
+    <p style="font-family:'Schibsted Grotesk',sans-serif;font-weight:400;font-size:clamp(24px,3.4vw,40px);line-height:1.28;letter-spacing:-0.02em;margin:22px 0 0;">Des séances lentes, précises, exigeantes. Pas de miroirs saturés d’écrans, pas de musique qui hurle — <em style="font-family:'Newsreader',serif;font-style:italic;font-weight:300;color:#6B5A66;">juste vous, votre souffle et le geste juste.</em></p>
+  </section>
+
+  <!-- disciplines preview -->
+  <section style="max-width:1280px;margin:0 auto;padding:0 clamp(20px,5vw,64px) clamp(64px,10vw,120px);">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-bottom:40px;border-bottom:1px solid rgba(32,29,24,0.12);padding-bottom:22px;">
+      <div>
+        <span style="font-size:12.5px;letter-spacing:0.2em;text-transform:uppercase;color:#9A7C90;">les cours</span>
+        <h2 style="font-family:'Schibsted Grotesk',sans-serif;font-weight:400;font-size:clamp(30px,4.4vw,52px);letter-spacing:-0.025em;margin:12px 0 0;">six façons de bouger</h2>
+      </div>
+      <button onClick="{{ goCours }}" style="background:none;border:none;cursor:pointer;color:#201D18;font-size:14.5px;border-bottom:1px solid #201D18;padding-bottom:3px;">tout découvrir →</button>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1px;background:rgba(32,29,24,0.1);border:1px solid rgba(32,29,24,0.1);">
+      <sc-for list="{{ disciplines }}" as="d" hint-placeholder-count="6">
+        <button onClick="{{ goCours }}" style="text-align:left;background:#ECE6DA;border:none;cursor:pointer;padding:30px 28px 34px;display:flex;flex-direction:column;gap:8px;min-height:190px;" style-hover="background:#F1ECE2;">
+          <span style="font-family:ui-monospace,monospace;font-size:12px;color:#9A7C90;letter-spacing:0.1em;">{{ d.num }}</span>
+          <span style="font-family:'Schibsted Grotesk',sans-serif;font-size:26px;letter-spacing:-0.015em;margin-top:4px;">{{ d.nom }}</span>
+          <span style="font-family:'Newsreader',serif;font-style:italic;font-size:16px;color:#6B5A66;">{{ d.tagline }}</span>
+          <span style="margin-top:auto;font-size:13px;color:#4A453C;letter-spacing:0.02em;">{{ d.duree }} · {{ d.niveau }}</span>
+        </button>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- moment fort teaser -->
+  <section style="background:#201D18;color:#ECE6DA;">
+    <div style="max-width:1280px;margin:0 auto;padding:clamp(56px,9vw,112px) clamp(20px,5vw,64px);" class="p-two">
+      <div>
+        <span style="font-size:12.5px;letter-spacing:0.2em;text-transform:uppercase;color:{{ accent }};">réservation en ligne</span>
+        <h2 style="font-family:'Schibsted Grotesk',sans-serif;font-weight:400;font-size:clamp(30px,4.6vw,56px);letter-spacing:-0.025em;line-height:1.02;margin:16px 0 20px;">le planning de la semaine, <em style="font-family:'Newsreader',serif;font-style:italic;font-weight:300;">en un geste</em></h2>
+        <p style="max-width:420px;color:rgba(236,230,218,0.72);font-size:16.5px;line-height:1.65;margin:0 0 30px;">Choisissez votre jour, votre créneau, votre coach. Les places restantes sont mises à jour en direct. Première fois ? Réservez un cours d’essai.</p>
+        <button onClick="{{ goPlanning }}" style="background:#ECE6DA;color:#201D18;border:none;cursor:pointer;padding:16px 30px;font-size:15px;border-radius:1px;" style-hover="background:#fff;">ouvrir le planning →</button>
+      </div>
+      <div style="border:1px solid rgba(236,230,218,0.16);background:rgba(236,230,218,0.03);">
+        <div style="padding:16px 22px;border-bottom:1px solid rgba(236,230,218,0.14);display:flex;justify-content:space-between;font-size:13px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(236,230,218,0.6);"><span>mercredi</span><span>3 créneaux</span></div>
+        <sc-for list="{{ teaser }}" as="t" hint-placeholder-count="3">
+          <div style="display:flex;align-items:center;gap:16px;padding:17px 22px;border-bottom:1px solid rgba(236,230,218,0.1);">
+            <span style="font-family:'Schibsted Grotesk',sans-serif;font-size:17px;font-variant-numeric:tabular-nums;min-width:52px;">{{ t.heure }}</span>
+            <div style="flex:1;"><div style="font-size:15.5px;">{{ t.discipline }}</div><div style="font-size:12.5px;color:rgba(236,230,218,0.55);">{{ t.coach }} · {{ t.niveau }}</div></div>
+            <span style="font-size:12.5px;color:{{ accent }};">{{ t.places }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- instructrices -->
+  <section style="max-width:1280px;margin:0 auto;padding:clamp(64px,10vw,120px) clamp(20px,5vw,64px);">
+    <span style="font-size:12.5px;letter-spacing:0.2em;text-transform:uppercase;color:#9A7C90;">l’équipe</span>
+    <h2 style="font-family:'Schibsted Grotesk',sans-serif;font-weight:400;font-size:clamp(30px,4.4vw,52px);letter-spacing:-0.025em;margin:12px 0 44px;">celles qui vous guident</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:clamp(20px,3vw,40px);">
+      <sc-for list="{{ instructrices }}" as="p" hint-placeholder-count="4">
+        <div>
+          <div style="aspect-ratio:3/4;margin-bottom:16px;background:#DFD7C7;">{{ p.imgEl }}</div>
+          <div style="font-family:'Schibsted Grotesk',sans-serif;font-size:20px;letter-spacing:-0.01em;">{{ p.nom }}</div>
+          <div style="font-size:13px;letter-spacing:0.04em;text-transform:uppercase;color:#9A7C90;margin:5px 0 10px;">{{ p.specialite }}</div>
+          <p style="font-size:14.5px;line-height:1.6;color:#4A453C;margin:0;">{{ p.bio }}</p>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- avis -->
+  <section style="border-top:1px solid rgba(32,29,24,0.1);">
+    <div style="max-width:1280px;margin:0 auto;padding:clamp(56px,9vw,110px) clamp(20px,5vw,64px);">
+      <span style="font-size:12.5px;letter-spacing:0.2em;text-transform:uppercase;color:#9A7C90;">elles en parlent</span>
+      <h2 style="font-family:'Schibsted Grotesk',sans-serif;font-weight:400;font-size:clamp(28px,4vw,48px);letter-spacing:-0.025em;margin:12px 0 42px;">un studio que l’on recommande</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:22px;">
+        <sc-for list="{{ reviews }}" as="r" hint-placeholder-count="4">
+          <figure style="margin:0;background:#F1ECE2;border:1px solid rgba(32,29,24,0.08);padding:26px 24px;display:flex;flex-direction:column;gap:14px;">
+            <span style="color:{{ accent }};letter-spacing:0.14em;font-size:14px;" aria-label="{{ r.note }} sur 5">{{ r.starsStr }}</span>
+            <blockquote style="margin:0;font-size:15.5px;line-height:1.6;color:#2A2620;">« {{ r.texte }} »</blockquote>
+            <figcaption style="margin-top:auto;font-size:13px;color:#4A453C;">{{ r.nom }} — {{ r.cours }}</figcaption>
+          </figure>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- essai CTA -->
+  <section style="max-width:1280px;margin:0 auto;padding:0 clamp(20px,5vw,64px) clamp(64px,10vw,120px);">
+    <div style="background:#E0D3DB;border:1px solid rgba(32,29,24,0.08);padding:clamp(40px,6vw,72px) clamp(24px,5vw,64px);text-align:center;">
+      <h2 style="font-family:'Schibsted Grotesk',sans-serif;font-weight:400;font-size:clamp(28px,4.4vw,52px);letter-spacing:-0.025em;margin:0 0 14px;">votre premier cours à {{ trialPrice }} DA</h2>
+      <p style="max-width:460px;margin:0 auto 30px;color:#4A453C;font-size:16.5px;">Sans engagement, matériel fourni. Venez sentir la différence d’un vrai studio.</p>
+      <button onClick="{{ openEssai }}" style="background:#201D18;color:#F1ECE2;border:none;cursor:pointer;padding:16px 34px;font-size:15px;border-radius:1px;" style-hover="background:#3A342B;">réserver mon essai</button>
+    </div>
+  </section>
+</div>
+</sc-if>
+
+<!-- ================= COURS ================= -->
+<sc-if value="{{ isCours }}" hint-placeholder-val="{{ false }}">
+<div>
+  <section style="max-width:1280px;margin:0 auto;padding:clamp(52px,7vw,96px) clamp(20px,5vw,64px) clamp(24px,4vw,48px);">
+    <span style="font-size:12.5px;letter-spacing:0.2em;text-transform:uppercase;color:#9A7C90;">les cours</span>
+    <h1 style="font-family:'Schibsted Grotesk',sans-serif;font-weight:400;font-size:clamp(40px,6.2vw,84px);letter-spacing:-0.035em;line-height:1;margin:16px 0 20px;">six disciplines, <em style="font-family:'Newsreader',serif;font-style:italic;font-weight:300;">une exigence</em></h1>
+    <p style="max-width:520px;font-size:17px;line-height:1.65;color:#4A453C;margin:0;">Chaque format a sa raison d’être. Débutante ou confirmée, il y a un cours pour vous — et une instructrice pour l’enseigner comme il faut.</p>
+  </section>
+  <section style="max-width:1280px;margin:0 auto;padding:clamp(24px,4vw,48px) clamp(20px,5vw,64px) clamp(64px,9vw,120px);display:flex;flex-direction:column;gap:clamp(48px,7vw,96px);">
+    <sc-for list="{{ disciplines }}" as="d" hint-placeholder-count="6">
+      <article class="p-two p-alt" style="border-top:1px solid rgba(32,29,24,0.12);padding-top:clamp(28px,4vw,48px);">
+        <div class="p-alt-media" style="aspect-ratio:5/4;background:#DFD7C7;">{{ d.imgEl }}</div>
+        <div>
+          <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:8px;">
+            <span style="font-family:ui-monospace,monospace;font-size:13px;color:#9A7C90;letter-spacing:0.1em;">{{ d.num }}</span>
+            <span style="font-family:'Newsreader',serif;font-style:italic;font-size:17px;color:#6B5A66;">{{ d.tagline }}</span>
+          </div>
+          <h2 style="font-family:'Schibsted Grotesk',sans-serif;font-weight:400;font-size:clamp(30px,4.2vw,48px);letter-spacing:-0.025em;margin:0 0 16px;">{{ d.nom }}</h2>
+          <p style="font-size:16.5px;line-height:1.65;color:#4A453C;margin:0 0 22px;max-width:460px;">{{ d.desc }}</p>
+          <div style="display:flex;gap:24px;flex-wrap:wrap;margin-bottom:26px;">
+            <div><div style="font-size:11.5px;letter-spacing:0.14em;text-transform:uppercase;color:#9A7C90;margin-bottom:4px;">durée</div><div style="font-size:15px;">{{ d.duree }}</div></div>
+            <div><div style="font-size:11.5px;letter-spacing:0.14em;text-transform:uppercase;color:#9A7C90;margin-bottom:4px;">niveau</div><div style="font-size:15px;">{{ d.niveau }}</div></div>
+            <div><div style="font-size:11.5px;letter-spacing:0.14em;text-transform:uppercase;color:#9A7C90;margin-bottom:4px;">à partir de</div><div style="font-size:15px;">{{ d.prix }} DA</div></div>
+          </div>
+          <button onClick="{{ d.onClick }}" style="background:#201D18;color:#F1ECE2;border:none;cursor:pointer;padding:14px 28px;font-size:14.5px;border-radius:1px;white-space:nowrap;" style-hover="background:#3A342B;">réserver ce cours</button>
+        </div>
+      </article>
+    </sc-for>
+  </section>
+</div>
+</sc-if>
+
+<!-- ================= PLANNING (moment fort) ================= -->
+<sc-if value="{{ isPlanning }}" hint-placeholder-val="{{ false }}">
+<div>
+  <section style="max-width:1080px;margin:0 auto;padding:clamp(52px,7vw,96px) clamp(20px,5vw,64px) clamp(20px,3vw,36px);">
+    <span style="font-size:12.5px;letter-spacing:0.2em;text-transform:uppercase;color:#9A7C90;">planning · semaine du 6 juillet</span>
+    <h1 style="font-family:'Schibsted Grotesk',sans-serif;font-weight:400;font-size:clamp(40px,6vw,80px);letter-spacing:-0.035em;line-height:1;margin:16px 0 14px;">réservez votre cours</h1>
+    <p style="max-width:520px;font-size:16.5px;line-height:1.6;color:#4A453C;margin:0;">Sélectionnez un jour, puis un créneau. Les places restantes sont indiquées en direct.</p>
+  </section>
+  <section style="max-width:1080px;margin:0 auto;padding:0 clamp(20px,5vw,64px) clamp(64px,9vw,120px);">
+    <div role="tablist" aria-label="Jours de la semaine" style="display:flex;gap:6px;overflow-x:auto;border-bottom:1px solid rgba(32,29,24,0.12);padding-bottom:0;margin-bottom:8px;">
+      <sc-for list="{{ dayTabs }}" as="tab" hint-placeholder-count="7">
+        <button role="tab" aria-selected="{{ tab.active }}" onClick="{{ tab.onClick }}" style="background:none;border:none;cursor:pointer;padding:14px 16px;font-size:15px;white-space:nowrap;color:#201D18;position:relative;text-transform:capitalize;" style-hover="color:#000;">
+          {{ tab.label }}
+          <sc-if value="{{ tab.active }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;left:8px;right:8px;bottom:-1px;height:2px;background:#201D18;"></span></sc-if>
+        </button>
+      </sc-for>
+    </div>
+
+    <sc-if value="{{ dayClosed }}" hint-placeholder-val="{{ false }}">
+      <div style="text-align:center;padding:clamp(48px,8vw,96px) 20px;border:1px dashed rgba(32,29,24,0.2);margin-top:24px;">
+        <div style="font-family:'Newsreader',serif;font-style:italic;font-size:clamp(26px,4vw,40px);color:#6B5A66;">le studio se repose</div>
+        <p style="color:#4A453C;margin:12px 0 0;">Fermé le vendredi. On se retrouve dès samedi matin.</p>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ hasSessions }}" hint-placeholder-val="{{ true }}">
+    <div role="tabpanel" style="margin-top:12px;">
+      <sc-for list="{{ sessions }}" as="s" hint-placeholder-count="5">
+        <div style="display:flex;align-items:center;flex-wrap:wrap;gap:14px 20px;padding:22px 4px;border-bottom:1px solid rgba(32,29,24,0.1);">
+          <div style="min-width:60px;font-family:'Schibsted Grotesk',sans-serif;font-size:20px;font-variant-numeric:tabular-nums;letter-spacing:-0.01em;">{{ s.heure }}</div>
+          <div style="flex:1;min-width:180px;">
+            <div style="font-size:17px;letter-spacing:-0.005em;">{{ s.discipline }}</div>
+            <div style="font-size:13.5px;color:#4A453C;margin-top:2px;">{{ s.coach }} · {{ s.niveau }} · {{ s.duree }}</div>
+          </div>
+          <div style="min-width:110px;font-size:13.5px;color:#6B5A66;">{{ s.placesLabel }}</div>
+          <sc-if value="{{ s.dispo }}" hint-placeholder-val="{{ true }}">
+            <button onClick="{{ s.onClick }}" style="background:#201D18;color:#F1ECE2;border:none;cursor:pointer;padding:12px 24px;font-size:14px;border-radius:1px;" style-hover="background:#3A342B;">réserver</button>
+          </sc-if>
+          <sc-if value="{{ s.complet }}" hint-placeholder-val="{{ false }}">
+            <span style="padding:12px 24px;font-size:14px;color:#8A8172;border:1px solid rgba(32,29,24,0.14);">complet</span>
+          </sc-if>
+        </div>
+      </sc-for>
+    </div>
+    </sc-if>
+  </section>
+</div>
+</sc-if>
+
+<!-- ================= TARIFS ================= -->
+<sc-if value="{{ isTarifs }}" hint-placeholder-val="{{ false }}">
+<div>
+  <section style="max-width:1280px;margin:0 auto;padding:clamp(52px,7vw,96px) clamp(20px,5vw,64px) clamp(28px,4vw,52px);text-align:center;">
+    <span style="font-size:12.5px;letter-spacing:0.2em;text-transform:uppercase;color:#9A7C90;">tarifs</span>
+    <h1 style="font-family:'Schibsted Grotesk',sans-serif;font-weight:400;font-size:clamp(40px,6vw,80px);letter-spacing:-0.035em;line-height:1;margin:16px 0 16px;">choisissez votre <em style="font-family:'Newsreader',serif;font-style:italic;font-weight:300;">rythme</em></h1>
+    <p style="max-width:480px;margin:0 auto;font-size:16.5px;line-height:1.6;color:#4A453C;">Sans engagement. Tarifs en dinars algériens, matériel toujours inclus.</p>
+  </section>
+  <section style="max-width:1160px;margin:0 auto;padding:0 clamp(20px,5vw,64px) clamp(40px,6vw,72px);display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:20px;align-items:start;">
+    <sc-for list="{{ formules }}" as="f" hint-placeholder-count="3">
+      <div style="border:1px solid {{ f.borderCol }};background:{{ f.bg }};padding:34px 30px 36px;display:flex;flex-direction:column;min-height:440px;position:relative;">
+        <sc-if value="{{ f.highlight }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;top:-11px;left:30px;background:{{ accent }};color:#201D18;font-size:11.5px;letter-spacing:0.12em;text-transform:uppercase;padding:5px 12px;">le plus choisi</span></sc-if>
+        <div style="font-family:'Schibsted Grotesk',sans-serif;font-size:24px;letter-spacing:-0.01em;">{{ f.nom }}</div>
+        <p style="font-size:14.5px;color:#4A453C;margin:8px 0 22px;min-height:42px;">{{ f.desc }}</p>
+        <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:26px;">
+          <span style="font-family:'Schibsted Grotesk',sans-serif;font-size:clamp(38px,5vw,54px);letter-spacing:-0.03em;">{{ f.prix }}</span>
+          <span style="font-size:14px;color:#4A453C;">DA · {{ f.unite }}</span>
+        </div>
+        <ul style="list-style:none;margin:0 0 28px;padding:0;display:flex;flex-direction:column;gap:12px;">
+          <sc-for list="{{ f.features }}" as="feat" hint-placeholder-count="4">
+            <li style="display:flex;gap:11px;align-items:flex-start;font-size:14.5px;color:#2A2620;"><span style="color:{{ accent }};flex-shrink:0;">—</span><span>{{ feat }}</span></li>
+          </sc-for>
+        </ul>
+        <button onClick="{{ f.onClick }}" style="margin-top:auto;background:{{ f.btnBg }};color:{{ f.btnFg }};border:1px solid #201D18;cursor:pointer;padding:15px;font-size:14.5px;border-radius:1px;width:100%;" style-hover="opacity:0.88;">{{ f.cta }}</button>
+      </div>
+    </sc-for>
+  </section>
+  <section style="max-width:820px;margin:0 auto;padding:clamp(20px,3vw,40px) clamp(20px,5vw,64px) clamp(64px,9vw,120px);">
+    <h2 style="font-family:'Schibsted Grotesk',sans-serif;font-weight:400;font-size:clamp(24px,3.2vw,34px);letter-spacing:-0.02em;margin:0 0 24px;">bon à savoir</h2>
+    <sc-for list="{{ faq }}" as="q" hint-placeholder-count="4">
+      <details style="border-bottom:1px solid rgba(32,29,24,0.12);padding:6px 0;">
+        <summary style="cursor:pointer;list-style:none;padding:16px 0;font-size:16.5px;display:flex;justify-content:space-between;gap:16px;align-items:center;">{{ q.q }}<span style="color:{{ accent }};font-size:20px;">+</span></summary>
+        <p style="margin:0 0 18px;color:#4A453C;font-size:15px;line-height:1.65;max-width:640px;">{{ q.a }}</p>
+      </details>
+    </sc-for>
+  </section>
+</div>
+</sc-if>
+
+<!-- ================= CONTACT ================= -->
+<sc-if value="{{ isContact }}" hint-placeholder-val="{{ false }}">
+<div>
+  <section style="max-width:1280px;margin:0 auto;padding:clamp(52px,7vw,96px) clamp(20px,5vw,64px) clamp(28px,4vw,52px);">
+    <span style="font-size:12.5px;letter-spacing:0.2em;text-transform:uppercase;color:#9A7C90;">contact</span>
+    <h1 style="font-family:'Schibsted Grotesk',sans-serif;font-weight:400;font-size:clamp(40px,6vw,80px);letter-spacing:-0.035em;line-height:1;margin:16px 0 0;">écrivez-nous</h1>
+  </section>
+  <section style="max-width:1280px;margin:0 auto;padding:0 clamp(20px,5vw,64px) clamp(64px,9vw,120px);" class="p-two" >
+    <div>
+      <sc-if value="{{ contactSent }}" hint-placeholder-val="{{ false }}">
+        <div style="border:1px solid rgba(32,29,24,0.14);background:#F1ECE2;padding:44px 36px;">
+          <div style="font-family:'Schibsted Grotesk',sans-serif;font-size:30px;letter-spacing:-0.02em;margin-bottom:12px;">message envoyé ✦</div>
+          <p style="color:#4A453C;font-size:16px;margin:0;">Merci ! Nous revenons vers vous sous 24 h ouvrées. À très vite au studio.</p>
+        </div>
+      </sc-if>
+      <sc-if value="{{ contactOpen }}" hint-placeholder-val="{{ true }}">
+      <form onSubmit="{{ submitContact }}" style="display:flex;flex-direction:column;gap:18px;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <label style="display:flex;flex-direction:column;gap:7px;font-size:13px;letter-spacing:0.06em;text-transform:uppercase;color:#4A453C;">nom complet
+            <input value="{{ contact.nom }}" onInput="{{ onCtNom }}" required type="text" placeholder="ex. Amel Khelifi" style="border:none;border-bottom:1px solid rgba(32,29,24,0.28);background:transparent;padding:11px 2px;font-family:inherit;font-size:16px;color:#201D18;text-transform:none;letter-spacing:0;">
+          </label>
+          <label style="display:flex;flex-direction:column;gap:7px;font-size:13px;letter-spacing:0.06em;text-transform:uppercase;color:#4A453C;">téléphone
+            <input value="{{ contact.tel }}" onInput="{{ onCtTel }}" type="tel" placeholder="0X XX XX XX XX" style="border:none;border-bottom:1px solid rgba(32,29,24,0.28);background:transparent;padding:11px 2px;font-family:inherit;font-size:16px;color:#201D18;text-transform:none;letter-spacing:0;">
+          </label>
+        </div>
+        <label style="display:flex;flex-direction:column;gap:7px;font-size:13px;letter-spacing:0.06em;text-transform:uppercase;color:#4A453C;">e-mail
+          <input value="{{ contact.email }}" onInput="{{ onCtEmail }}" required type="email" placeholder="vous@exemple.dz" style="border:none;border-bottom:1px solid rgba(32,29,24,0.28);background:transparent;padding:11px 2px;font-family:inherit;font-size:16px;color:#201D18;text-transform:none;letter-spacing:0;">
+        </label>
+        <label style="display:flex;flex-direction:column;gap:7px;font-size:13px;letter-spacing:0.06em;text-transform:uppercase;color:#4A453C;">sujet
+          <select value="{{ contact.sujet }}" onChange="{{ onCtSujet }}" style="border:none;border-bottom:1px solid rgba(32,29,24,0.28);background:transparent;padding:11px 2px;font-family:inherit;font-size:16px;color:#201D18;text-transform:none;letter-spacing:0;">
+            <option>Cours d’essai</option>
+            <option>Renseignement sur les cours</option>
+            <option>Cours privé / duo</option>
+            <option>Entreprise / groupe</option>
+            <option>Autre</option>
+          </select>
+        </label>
+        <label style="display:flex;flex-direction:column;gap:7px;font-size:13px;letter-spacing:0.06em;text-transform:uppercase;color:#4A453C;">message
+          <textarea value="{{ contact.message }}" onInput="{{ onCtMsg }}" required rows="4" placeholder="Dites-nous en quelques mots…" style="border:1px solid rgba(32,29,24,0.28);background:transparent;padding:12px;font-family:inherit;font-size:16px;color:#201D18;resize:vertical;text-transform:none;letter-spacing:0;"></textarea>
+        </label>
+        <label style="display:flex;gap:11px;align-items:flex-start;font-size:13.5px;color:#4A453C;cursor:pointer;">
+          <input type="checkbox" checked="{{ contact.consent }}" onChange="{{ onCtConsent }}" required style="margin-top:3px;width:17px;height:17px;flex-shrink:0;accent-color:#201D18;">
+          <span>J’accepte que mes données soient utilisées pour traiter ma demande, conformément à la <button type="button" onClick="{{ goPrivacy }}" style="background:none;border:none;padding:0;cursor:pointer;color:#201D18;text-decoration:underline;font-size:13.5px;">politique de confidentialité</button>.</span>
+        </label>
+        <button type="submit" disabled="{{ contactDisabled }}" style="align-self:flex-start;background:#201D18;color:#F1ECE2;border:none;cursor:pointer;padding:15px 32px;font-size:15px;border-radius:1px;opacity:{{ contactOpacity }};" style-hover="background:#3A342B;">envoyer le message</button>
+      </form>
+      </sc-if>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:26px;">
+      <div style="aspect-ratio:16/10;"><img src="assets/contact.png" alt="Entrée du studio posé, façade discrète et végétalisée à Hydra, Alger" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:22px;">
+        <div><div style="font-size:11.5px;letter-spacing:0.14em;text-transform:uppercase;color:#9A7C90;margin-bottom:7px;">adresse</div><div style="font-size:15px;line-height:1.55;">14, chemin des Glycines<br>Hydra — 16035 Alger</div></div>
+        <div><div style="font-size:11.5px;letter-spacing:0.14em;text-transform:uppercase;color:#9A7C90;margin-bottom:7px;">horaires</div><div style="font-size:15px;line-height:1.55;">Dim–Jeu · 7h30–20h30<br>Sam · 9h–17h<br>Ven · fermé</div></div>
+        <div><div style="font-size:11.5px;letter-spacing:0.14em;text-transform:uppercase;color:#9A7C90;margin-bottom:7px;">téléphone</div><div style="font-size:15px;line-height:1.55;">+213 _ __ __ __ __</div></div>
+        <div><div style="font-size:11.5px;letter-spacing:0.14em;text-transform:uppercase;color:#9A7C90;margin-bottom:7px;">e-mail & réseaux</div><div style="font-size:15px;line-height:1.55;">bonjour@pose-studio.dz<br>@pose.studio</div></div>
+      </div>
+    </div>
+  </section>
+</div>
+</sc-if>
+
+<!-- ================= MENTIONS LÉGALES ================= -->
+<sc-if value="{{ isMentions }}" hint-placeholder-val="{{ false }}">
+<section style="max-width:780px;margin:0 auto;padding:clamp(52px,7vw,96px) clamp(20px,5vw,64px) clamp(64px,9vw,120px);">
+  <span style="font-size:12.5px;letter-spacing:0.2em;text-transform:uppercase;color:#9A7C90;">informations légales</span>
+  <h1 style="font-family:'Schibsted Grotesk',sans-serif;font-weight:400;font-size:clamp(32px,4.6vw,52px);letter-spacing:-0.03em;margin:14px 0 34px;">mentions légales</h1>
+  <div style="display:flex;flex-direction:column;gap:26px;font-size:15px;line-height:1.7;color:#3A352E;">
+    <div><h2 style="font-family:'Schibsted Grotesk',sans-serif;font-weight:500;font-size:18px;margin:0 0 8px;color:#201D18;">Éditeur du site</h2><p style="margin:0;">posé — studio de pilates. SARL au capital de 1 000 000 DA. Siège : 14, chemin des Glycines, Hydra, 16035 Alger, Algérie. RC n° 16/00-XXXXXXX B 24. NIF : XXXXXXXXXXXXXXX. Directrice de la publication : Nadia Belhadj.</p></div>
+    <div><h2 style="font-family:'Schibsted Grotesk',sans-serif;font-weight:500;font-size:18px;margin:0 0 8px;color:#201D18;">Hébergement</h2><p style="margin:0;">Site hébergé par un prestataire d’hébergement web. Les coordonnées complètes de l’hébergeur sont disponibles sur simple demande à bonjour@pose-studio.dz.</p></div>
+    <div><h2 style="font-family:'Schibsted Grotesk',sans-serif;font-weight:500;font-size:18px;margin:0 0 8px;color:#201D18;">Propriété intellectuelle</h2><p style="margin:0;">L’ensemble des contenus (textes, visuels, identité graphique) présents sur ce site est protégé. Toute reproduction sans autorisation écrite préalable est interdite. Ce site est une démonstration : les visuels sont des emplacements réservés.</p></div>
+    <div><h2 style="font-family:'Schibsted Grotesk',sans-serif;font-weight:500;font-size:18px;margin:0 0 8px;color:#201D18;">Contact</h2><p style="margin:0;">Pour toute question : bonjour@pose-studio.dz · +213 _ __ __ __ __.</p></div>
+  </div>
+  <button onClick="{{ goHome }}" style="margin-top:40px;background:none;border:1px solid rgba(32,29,24,0.3);cursor:pointer;padding:13px 24px;font-size:14.5px;border-radius:1px;color:#201D18;">← retour à l’accueil</button>
+</section>
+</sc-if>
+
+<!-- ================= CONFIDENTIALITÉ ================= -->
+<sc-if value="{{ isPrivacy }}" hint-placeholder-val="{{ false }}">
+<section style="max-width:780px;margin:0 auto;padding:clamp(52px,7vw,96px) clamp(20px,5vw,64px) clamp(64px,9vw,120px);">
+  <span style="font-size:12.5px;letter-spacing:0.2em;text-transform:uppercase;color:#9A7C90;">vos données</span>
+  <h1 style="font-family:'Schibsted Grotesk',sans-serif;font-weight:400;font-size:clamp(32px,4.6vw,52px);letter-spacing:-0.03em;margin:14px 0 34px;">politique de confidentialité</h1>
+  <div style="display:flex;flex-direction:column;gap:26px;font-size:15px;line-height:1.7;color:#3A352E;">
+    <div><h2 style="font-family:'Schibsted Grotesk',sans-serif;font-weight:500;font-size:18px;margin:0 0 8px;color:#201D18;">Données collectées</h2><p style="margin:0;">Nous collectons uniquement les données que vous nous transmettez via les formulaires (réservation, contact) : nom, e-mail, téléphone et message. Aucune donnée sensible n’est demandée.</p></div>
+    <div><h2 style="font-family:'Schibsted Grotesk',sans-serif;font-weight:500;font-size:18px;margin:0 0 8px;color:#201D18;">Finalité</h2><p style="margin:0;">Ces informations servent exclusivement à traiter vos demandes de réservation et à vous recontacter. Elles ne sont ni revendues, ni cédées à des tiers.</p></div>
+    <div><h2 style="font-family:'Schibsted Grotesk',sans-serif;font-weight:500;font-size:18px;margin:0 0 8px;color:#201D18;">Cookies</h2><p style="margin:0;">Le site utilise des cookies de mesure d’audience, déposés uniquement après votre consentement via le bandeau prévu à cet effet. Vous pouvez refuser sans que cela n’altère votre navigation.</p></div>
+    <div><h2 style="font-family:'Schibsted Grotesk',sans-serif;font-weight:500;font-size:18px;margin:0 0 8px;color:#201D18;">Vos droits</h2><p style="margin:0;">Vous disposez d’un droit d’accès, de rectification et de suppression de vos données. Pour l’exercer, écrivez-nous à bonjour@pose-studio.dz. Les données sont conservées 24 mois maximum après le dernier contact.</p></div>
+  </div>
+  <button onClick="{{ goHome }}" style="margin-top:40px;background:none;border:1px solid rgba(32,29,24,0.3);cursor:pointer;padding:13px 24px;font-size:14.5px;border-radius:1px;color:#201D18;">← retour à l’accueil</button>
+</section>
+</sc-if>
+
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer style="background:#201D18;color:#ECE6DA;">
+  <div style="max-width:1280px;margin:0 auto;padding:clamp(56px,7vw,88px) clamp(20px,5vw,64px) 36px;">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:40px;">
+      <div style="grid-column:1 / -1;max-width:360px;">
+        <div style="font-family:'Schibsted Grotesk',sans-serif;font-weight:500;font-size:30px;letter-spacing:-0.02em;">posé<span style="color:{{ accent }};">.</span></div>
+        <p style="color:rgba(236,230,218,0.6);font-size:15px;line-height:1.6;margin:12px 0 0;">Studio de pilates à Hydra, Alger. Reformer, tapis, barre — en petit comité, avec exigence et douceur.</p>
+      </div>
+      <div>
+        <div style="font-size:11.5px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(236,230,218,0.5);margin-bottom:16px;">navigation</div>
+        <div style="display:flex;flex-direction:column;gap:11px;align-items:flex-start;">
+          <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="5">
+            <button onClick="{{ item.onClick }}" style="background:none;border:none;cursor:pointer;color:rgba(236,230,218,0.82);font-size:14.5px;padding:0;text-align:left;" style-hover="color:#fff;">{{ item.label }}</button>
+          </sc-for>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:11.5px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(236,230,218,0.5);margin-bottom:16px;">horaires</div>
+        <div style="font-size:14.5px;line-height:1.8;color:rgba(236,230,218,0.82);">Dim–Jeu · 7h30–20h30<br>Samedi · 9h–17h<br>Vendredi · fermé</div>
+      </div>
+      <div>
+        <div style="font-size:11.5px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(236,230,218,0.5);margin-bottom:16px;">nous trouver</div>
+        <div style="font-size:14.5px;line-height:1.8;color:rgba(236,230,218,0.82);">14, chemin des Glycines<br>Hydra — Alger<br>+213 _ __ __ __ __<br>@pose.studio</div>
+      </div>
+    </div>
+    <div style="margin-top:52px;padding-top:24px;border-top:1px solid rgba(236,230,218,0.14);display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;align-items:center;">
+      <div style="display:flex;flex-wrap:wrap;gap:20px;font-size:13px;">
+        <button onClick="{{ goMentions }}" style="background:none;border:none;cursor:pointer;color:rgba(236,230,218,0.6);font-size:13px;padding:0;" style-hover="color:#fff;">mentions légales</button>
+        <button onClick="{{ goPrivacy }}" style="background:none;border:none;cursor:pointer;color:rgba(236,230,218,0.6);font-size:13px;padding:0;" style-hover="color:#fff;">politique de confidentialité</button>
+        <span style="color:rgba(236,230,218,0.4);">© 2026 posé — studio</span>
+      </div>
+      <div style="font-size:12.5px;color:rgba(236,230,218,0.5);">Réalisé par Arslan DIF — <a href="https://difarslan.com" target="_blank" rel="noopener" style="color:rgba(236,230,218,0.75);text-decoration:none;border-bottom:1px solid rgba(236,230,218,0.3);">difarslan.com</a></div>
+    </div>
+  </div>
+</footer>
+
+<!-- ================= COOKIE BANNER ================= -->
+<sc-if value="{{ cookieOpen }}" hint-placeholder-val="{{ false }}">
+<div role="region" aria-label="Consentement aux cookies" style="position:fixed;left:0;right:0;bottom:0;z-index:70;padding:16px clamp(16px,4vw,32px);display:flex;justify-content:center;">
+  <div style="max-width:860px;width:100%;background:#201D18;color:#ECE6DA;border:1px solid rgba(236,230,218,0.16);padding:22px 24px;display:flex;flex-wrap:wrap;align-items:center;gap:18px;box-shadow:0 20px 50px -20px rgba(0,0,0,0.5);">
+    <p style="flex:1;min-width:220px;margin:0;font-size:14px;line-height:1.6;color:rgba(236,230,218,0.82);">Nous utilisons des cookies pour mesurer l’audience et améliorer votre expérience. Vous pouvez accepter ou refuser. <button onClick="{{ goPrivacy }}" style="background:none;border:none;padding:0;cursor:pointer;color:#ECE6DA;text-decoration:underline;font-size:14px;">En savoir plus</button></p>
+    <div style="display:flex;gap:10px;flex-shrink:0;">
+      <button onClick="{{ refuseCookies }}" style="background:none;border:1px solid rgba(236,230,218,0.35);color:#ECE6DA;cursor:pointer;padding:12px 22px;font-size:14px;border-radius:1px;" style-hover="border-color:#fff;">Refuser</button>
+      <button onClick="{{ acceptCookies }}" style="background:#ECE6DA;color:#201D18;border:none;cursor:pointer;padding:12px 22px;font-size:14px;border-radius:1px;" style-hover="background:#fff;">Tout accepter</button>
+    </div>
+  </div>
+</div>
+</sc-if>
+
+<!-- ================= BOOKING MODAL ================= -->
+<sc-if value="{{ bookingOpen }}" hint-placeholder-val="{{ false }}">
+<div style="position:fixed;inset:0;z-index:80;background:rgba(32,29,24,0.5);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);display:flex;align-items:flex-end;justify-content:center;padding:0;" onClick="{{ closeBooking }}">
+  <div role="dialog" aria-modal="true" aria-label="Réservation" onClick="{{ stop }}" style="background:#ECE6DA;width:100%;max-width:520px;max-height:92vh;overflow-y:auto;border:1px solid rgba(32,29,24,0.14);">
+    <div style="position:sticky;top:0;background:#ECE6DA;display:flex;align-items:center;justify-content:space-between;padding:20px clamp(22px,4vw,32px);border-bottom:1px solid rgba(32,29,24,0.1);">
+      <span style="font-family:'Schibsted Grotesk',sans-serif;font-size:20px;letter-spacing:-0.01em;">réserver</span>
+      <button onClick="{{ closeBooking }}" aria-label="Fermer" style="background:none;border:1px solid rgba(32,29,24,0.24);cursor:pointer;width:38px;height:38px;border-radius:1px;font-size:18px;color:#201D18;">✕</button>
+    </div>
+    <div style="padding:clamp(22px,4vw,32px);">
+
+      <sc-if value="{{ bkStep1 }}" hint-placeholder-val="{{ true }}">
+      <div>
+        <div style="border:1px solid rgba(32,29,24,0.14);background:#F1ECE2;padding:22px;margin-bottom:24px;">
+          <div style="font-family:'Schibsted Grotesk',sans-serif;font-size:22px;letter-spacing:-0.01em;margin-bottom:14px;">{{ bkDiscipline }}</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;font-size:14px;">
+            <div><div style="font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:#9A7C90;margin-bottom:3px;">jour</div><div style="text-transform:capitalize;">{{ bkJour }}</div></div>
+            <div><div style="font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:#9A7C90;margin-bottom:3px;">heure</div><div>{{ bkHeure }}</div></div>
+            <div><div style="font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:#9A7C90;margin-bottom:3px;">coach</div><div>{{ bkCoach }}</div></div>
+            <div><div style="font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:#9A7C90;margin-bottom:3px;">tarif</div><div>{{ bkPrix }}</div></div>
+          </div>
+        </div>
+        <label style="display:flex;gap:11px;align-items:flex-start;font-size:14.5px;color:#3A352E;cursor:pointer;background:#E0D3DB;padding:16px;margin-bottom:24px;">
+          <input type="checkbox" checked="{{ booking.form.essai }}" onChange="{{ onBkEssai }}" style="margin-top:2px;width:17px;height:17px;flex-shrink:0;accent-color:#201D18;">
+          <span>C’est mon premier cours — appliquer le tarif découverte à {{ trialPrice }} DA.</span>
+        </label>
+        <button onClick="{{ bookingContinue }}" style="width:100%;background:#201D18;color:#F1ECE2;border:none;cursor:pointer;padding:16px;font-size:15px;border-radius:1px;" style-hover="background:#3A342B;">continuer →</button>
+      </div>
+      </sc-if>
+
+      <sc-if value="{{ bkStep2 }}" hint-placeholder-val="{{ false }}">
+      <div>
+        <p style="font-size:14px;color:#4A453C;margin:0 0 20px;">Vos coordonnées pour <strong style="color:#201D18;font-weight:600;">{{ bkDiscipline }}</strong> · {{ bkJour }} {{ bkHeure }}.</p>
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+            <label style="display:flex;flex-direction:column;gap:6px;font-size:12.5px;letter-spacing:0.05em;text-transform:uppercase;color:#4A453C;">prénom
+              <input value="{{ booking.form.prenom }}" onInput="{{ onBkPrenom }}" type="text" style="border:none;border-bottom:1px solid rgba(32,29,24,0.28);background:transparent;padding:10px 2px;font-family:inherit;font-size:16px;color:#201D18;text-transform:none;letter-spacing:0;">
+            </label>
+            <label style="display:flex;flex-direction:column;gap:6px;font-size:12.5px;letter-spacing:0.05em;text-transform:uppercase;color:#4A453C;">nom
+              <input value="{{ booking.form.nom }}" onInput="{{ onBkNom }}" type="text" style="border:none;border-bottom:1px solid rgba(32,29,24,0.28);background:transparent;padding:10px 2px;font-family:inherit;font-size:16px;color:#201D18;text-transform:none;letter-spacing:0;">
+            </label>
+          </div>
+          <label style="display:flex;flex-direction:column;gap:6px;font-size:12.5px;letter-spacing:0.05em;text-transform:uppercase;color:#4A453C;">e-mail
+            <input value="{{ booking.form.email }}" onInput="{{ onBkEmail }}" type="email" style="border:none;border-bottom:1px solid rgba(32,29,24,0.28);background:transparent;padding:10px 2px;font-family:inherit;font-size:16px;color:#201D18;text-transform:none;letter-spacing:0;">
+          </label>
+          <label style="display:flex;flex-direction:column;gap:6px;font-size:12.5px;letter-spacing:0.05em;text-transform:uppercase;color:#4A453C;">téléphone
+            <input value="{{ booking.form.tel }}" onInput="{{ onBkTel }}" type="tel" placeholder="0X XX XX XX XX" style="border:none;border-bottom:1px solid rgba(32,29,24,0.28);background:transparent;padding:10px 2px;font-family:inherit;font-size:16px;color:#201D18;text-transform:none;letter-spacing:0;">
+          </label>
+          <label style="display:flex;gap:11px;align-items:flex-start;font-size:13.5px;color:#4A453C;cursor:pointer;">
+            <input type="checkbox" checked="{{ booking.form.consent }}" onChange="{{ onBkConsent }}" style="margin-top:3px;width:17px;height:17px;flex-shrink:0;accent-color:#201D18;">
+            <span>J’accepte que mes données soient utilisées pour gérer ma réservation (<button type="button" onClick="{{ goPrivacy }}" style="background:none;border:none;padding:0;cursor:pointer;color:#201D18;text-decoration:underline;font-size:13.5px;">confidentialité</button>).</span>
+          </label>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:26px;">
+          <button onClick="{{ bookingBack }}" style="background:none;border:1px solid rgba(32,29,24,0.3);color:#201D18;cursor:pointer;padding:15px 22px;font-size:14.5px;border-radius:1px;">←</button>
+          <button onClick="{{ submitBooking }}" disabled="{{ bkDisabled }}" style="flex:1;background:#201D18;color:#F1ECE2;border:none;cursor:pointer;padding:15px;font-size:15px;border-radius:1px;opacity:{{ bkOpacity }};" style-hover="background:#3A342B;">confirmer la réservation</button>
+        </div>
+      </div>
+      </sc-if>
+
+      <sc-if value="{{ bkStep3 }}" hint-placeholder-val="{{ false }}">
+      <div style="text-align:center;padding:14px 0 8px;">
+        <div style="width:54px;height:54px;border-radius:50%;background:#E0D3DB;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:24px;color:#201D18;">✦</div>
+        <div style="font-family:'Schibsted Grotesk',sans-serif;font-size:28px;letter-spacing:-0.02em;margin-bottom:12px;">c’est réservé</div>
+        <p style="font-size:15px;color:#4A453C;line-height:1.6;margin:0 0 8px;">Merci {{ booking.form.prenom }} ! Votre place pour <strong style="color:#201D18;">{{ bkDiscipline }}</strong> ({{ bkJour }} · {{ bkHeure }}) est confirmée.</p>
+        <p style="font-size:14px;color:#6B5A66;margin:0 0 26px;">Un e-mail de confirmation part vers {{ bkEmailShown }}.</p>
+        <button onClick="{{ closeBooking }}" style="background:#201D18;color:#F1ECE2;border:none;cursor:pointer;padding:15px 32px;font-size:15px;border-radius:1px;" style-hover="background:#3A342B;">parfait, merci</button>
+      </div>
+      </sc-if>
+
+    </div>
+  </div>
+</div>
+</sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#A98CA0&quot;,&quot;options&quot;:[&quot;#A98CA0&quot;,&quot;#9AA98C&quot;,&quot;#8C93A9&quot;,&quot;#B79A86&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Identité&quot;},&quot;showMarquee&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Identité&quot;},&quot;trialPrice&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;1 500&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Contenu&quot;}}">
+class Component extends DCLogic {
+  state = {
+    view: 'accueil',
+    mobileNavOpen: false,
+    selectedDay: 2,
+    booking: { open:false, step:1, session:null, form:{prenom:'',nom:'',email:'',tel:'',essai:false,consent:false} },
+    contact: { nom:'', email:'', tel:'', sujet:'Cours d’essai', message:'', consent:false, sent:false },
+    cookie: 'unset'
+  };
+
+  days = ['lundi','mardi','mercredi','jeudi','vendredi','samedi','dimanche'];
+
+  disciplines = [
+    { nom:'Reformer', tagline:'le grand classique', duree:'50 min', niveau:'tous niveaux', prix:'2 200', slot:'cours — reformer',
+      desc:'Le travail sur machine à ressorts, pour un renforcement profond et un gainage maîtrisé. Chaque mouvement est guidé, précis, sans impact sur les articulations.' },
+    { nom:'Tapis', tagline:'au sol, l’essentiel', duree:'45 min', niveau:'débutant à confirmé', prix:'1 500', slot:'cours — tapis (mat)',
+      desc:'Le pilates originel, au poids du corps. On y construit la posture, la respiration et une ceinture abdominale solide, séance après séance.' },
+    { nom:'Barre', tagline:'tonicité & maintien', duree:'50 min', niveau:'intermédiaire', prix:'1 800', slot:'cours — barre',
+      desc:'La rencontre de la barre classique et du pilates. Des séries courtes et rythmées pour sculpter en finesse et gagner en maintien.' },
+    { nom:'Prénatal', tagline:'accompagner la grossesse', duree:'45 min', niveau:'adapté', prix:'1 800', slot:'cours — prénatal',
+      desc:'Un cours pensé pour les futures mamans : mobilité du bassin, respiration et douceur, adapté à chaque trimestre par une instructrice formée.' },
+    { nom:'Duo / Privé', tagline:'sur-mesure', duree:'55 min', niveau:'personnalisé', prix:'4 500', slot:'cours — duo / privé',
+      desc:'Seule ou à deux, avec une instructrice pour vous. Le format idéal pour débuter en confiance ou travailler un objectif bien précis.' },
+    { nom:'Mobilité', tagline:'récupérer, relâcher', duree:'40 min', niveau:'tous niveaux', prix:'1 500', slot:'cours — mobilité',
+      desc:'Un travail articulaire lent et profond, pour dénouer les tensions et gagner en amplitude. Parfait en récupération ou en fin de semaine.' }
+  ];
+
+  instructrices = [
+    { nom:'Nadia Belhadj', specialite:'Reformer · post-partum', slot:'portrait — nadia', bio:'Formée à Paris, Nadia a fondé posé après dix ans en salle. Elle aime les séances lentes et exigeantes.' },
+    { nom:'Lina Chérifi', specialite:'Barre · mobilité', slot:'portrait — lina', bio:'Ancienne danseuse, Lina apporte au studio sa précision et son sens du rythme. Ses cours barre sont complets.' },
+    { nom:'Yasmine Ould-Ali', specialite:'Tapis · prénatal', slot:'portrait — yasmine', bio:'Yasmine accompagne les femmes à chaque étape. Sa pédagogie douce rassure débutantes et futures mamans.' },
+    { nom:'Sofia Meziane', specialite:'Reformer · privé', slot:'portrait — sofia', bio:'Passionnée d’anatomie, Sofia conçoit des programmes privés sur-mesure. Rien n’échappe à son œil.' }
+  ];
+
+  formules = [
+    { key:'decouverte', nom:'Découverte', prix:'1 500', unite:'le cours', highlight:false, cta:'réserver un essai',
+      desc:'Votre premier cours d’essai, tous formats.', features:['1 cours au choix','Reformer inclus','Matériel fourni','Sans engagement'] },
+    { key:'carte10', nom:'Carte 10', prix:'22 000', unite:'10 cours', highlight:true, cta:'choisir la carte 10',
+      desc:'La formule souple, à votre rythme.', features:['10 cours au choix','Valable 3 mois','Réservation prioritaire','Transférable une fois'] },
+    { key:'illimite', nom:'Illimité', prix:'14 000', unite:'par mois', highlight:false, cta:'passer en illimité',
+      desc:'Pour celles qui viennent (presque) tous les jours.', features:['Cours collectifs illimités','Tous formats inclus','−15 % sur les privés','1 invitée / mois'] }
+  ];
+
+  reviews = [
+    { nom:'Amel K.', note:5, cours:'Reformer', texte:'Le studio le plus apaisant d’Alger. On sort de chaque cours grandie, alignée, vraiment posée.' },
+    { nom:'Inès B.', note:5, cours:'Barre', texte:'Des instructrices d’un niveau rare. Lina corrige chaque détail, on progresse à vue d’œil.' },
+    { nom:'Rania M.', note:5, cours:'Prénatal', texte:'J’ai suivi le prénatal jusqu’au 8e mois. Bienveillance totale, je recommande à toutes les futures mamans.' },
+    { nom:'Sarah D.', note:4, cours:'Tapis', texte:'Cadre magnifique à Hydra, matériel neuf. Réservez tôt, les créneaux partent vite !' }
+  ];
+
+  faq = [
+    { q:'Faut-il de l’expérience pour commencer ?', a:'Pas du tout. La majorité de nos élèves débutent au studio. Choisissez un cours « tous niveaux » ou « débutant », et nos instructrices adaptent chaque exercice.' },
+    { q:'Que dois-je apporter ?', a:'Une tenue confortable et des chaussettes antidérapantes (en vente au studio). Le reste — reformer, tapis, petit matériel — est fourni.' },
+    { q:'Puis-je annuler une réservation ?', a:'Oui, jusqu’à 12 h avant le cours, sans frais. Passé ce délai, le cours est décompté de votre carte.' },
+    { q:'Les cartes ont-elles une date de validité ?', a:'La Carte 10 est valable 3 mois à compter du premier cours. La formule Illimité se renouvelle chaque mois, sans engagement.' }
+  ];
+
+  planning = {
+    lundi:[
+      {heure:'07:30',discipline:'Reformer',coach:'Nadia',niveau:'Tous niveaux',duree:'50 min',places:2,total:8},
+      {heure:'09:00',discipline:'Tapis',coach:'Yasmine',niveau:'Débutant',duree:'45 min',places:6,total:12},
+      {heure:'12:15',discipline:'Reformer',coach:'Sofia',niveau:'Intermédiaire',duree:'50 min',places:0,total:8},
+      {heure:'17:30',discipline:'Barre',coach:'Lina',niveau:'Intermédiaire',duree:'50 min',places:4,total:12},
+      {heure:'19:00',discipline:'Reformer',coach:'Nadia',niveau:'Avancé',duree:'50 min',places:1,total:8}
+    ],
+    mardi:[
+      {heure:'08:00',discipline:'Mobilité',coach:'Lina',niveau:'Tous niveaux',duree:'40 min',places:5,total:10},
+      {heure:'10:00',discipline:'Reformer',coach:'Sofia',niveau:'Débutant',duree:'50 min',places:3,total:8},
+      {heure:'12:15',discipline:'Barre',coach:'Lina',niveau:'Tous niveaux',duree:'50 min',places:7,total:12},
+      {heure:'18:00',discipline:'Reformer',coach:'Nadia',niveau:'Intermédiaire',duree:'50 min',places:0,total:8},
+      {heure:'19:30',discipline:'Prénatal',coach:'Yasmine',niveau:'Adapté',duree:'45 min',places:4,total:8}
+    ],
+    mercredi:[
+      {heure:'07:30',discipline:'Reformer',coach:'Nadia',niveau:'Tous niveaux',duree:'50 min',places:3,total:8},
+      {heure:'09:30',discipline:'Tapis',coach:'Yasmine',niveau:'Intermédiaire',duree:'45 min',places:8,total:12},
+      {heure:'12:15',discipline:'Reformer',coach:'Sofia',niveau:'Avancé',duree:'50 min',places:1,total:8},
+      {heure:'17:00',discipline:'Barre',coach:'Lina',niveau:'Débutant',duree:'50 min',places:6,total:12},
+      {heure:'18:30',discipline:'Reformer',coach:'Sofia',niveau:'Intermédiaire',duree:'50 min',places:2,total:8}
+    ],
+    jeudi:[
+      {heure:'08:00',discipline:'Mobilité',coach:'Lina',niveau:'Tous niveaux',duree:'40 min',places:4,total:10},
+      {heure:'10:00',discipline:'Reformer',coach:'Nadia',niveau:'Intermédiaire',duree:'50 min',places:0,total:8},
+      {heure:'12:15',discipline:'Prénatal',coach:'Yasmine',niveau:'Adapté',duree:'45 min',places:5,total:8},
+      {heure:'17:30',discipline:'Reformer',coach:'Sofia',niveau:'Tous niveaux',duree:'50 min',places:3,total:8},
+      {heure:'19:00',discipline:'Barre',coach:'Lina',niveau:'Intermédiaire',duree:'50 min',places:2,total:12}
+    ],
+    vendredi:[],
+    samedi:[
+      {heure:'09:00',discipline:'Reformer',coach:'Nadia',niveau:'Tous niveaux',duree:'50 min',places:2,total:8},
+      {heure:'10:30',discipline:'Tapis',coach:'Yasmine',niveau:'Débutant',duree:'45 min',places:9,total:12},
+      {heure:'12:00',discipline:'Barre',coach:'Lina',niveau:'Tous niveaux',duree:'50 min',places:5,total:12},
+      {heure:'14:00',discipline:'Duo / Privé',coach:'Sofia',niveau:'Personnalisé',duree:'55 min',places:1,total:2}
+    ],
+    dimanche:[
+      {heure:'09:00',discipline:'Reformer',coach:'Sofia',niveau:'Débutant',duree:'50 min',places:4,total:8},
+      {heure:'10:30',discipline:'Mobilité',coach:'Lina',niveau:'Tous niveaux',duree:'40 min',places:6,total:10},
+      {heure:'12:00',discipline:'Reformer',coach:'Nadia',niveau:'Intermédiaire',duree:'50 min',places:1,total:8},
+      {heure:'16:00',discipline:'Tapis',coach:'Yasmine',niveau:'Tous niveaux',duree:'45 min',places:7,total:12},
+      {heure:'17:30',discipline:'Reformer',coach:'Sofia',niveau:'Avancé',duree:'50 min',places:0,total:8}
+    ]
+  };
+
+  emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  componentDidMount(){
+    try { const v = localStorage.getItem('pose_cookie'); if (v === 'accepted' || v === 'refused') this.setState({ cookie:v }); } catch(e){}
+  }
+
+  setView = (v) => { this.setState({ view:v, mobileNavOpen:false }); try { window.scrollTo(0,0); } catch(e){} };
+  toggleNav = () => this.setState(s => ({ mobileNavOpen: !s.mobileNavOpen }));
+
+  openBooking = (session) => this.setState({ booking:{ open:true, step:1, session, form:{prenom:'',nom:'',email:'',tel:'',essai: !!(session && session.essai), consent:false} } });
+  closeBooking = () => this.setState(s => ({ booking:{ ...s.booking, open:false } }));
+  bookingContinue = () => this.setState(s => ({ booking:{ ...s.booking, step:2 } }));
+  bookingBack = () => this.setState(s => ({ booking:{ ...s.booking, step:1 } }));
+  submitBooking = () => { if (this.bookingValid()) this.setState(s => ({ booking:{ ...s.booking, step:3 } })); };
+  bookingValid = () => { const f = this.state.booking.form; return !!(f.prenom.trim() && f.nom.trim() && this.emailRe.test(f.email) && f.tel.trim() && f.consent); };
+  setBk = (field, val) => this.setState(s => ({ booking:{ ...s.booking, form:{ ...s.booking.form, [field]:val } } }));
+
+  contactValid = () => { const c = this.state.contact; return !!(c.nom.trim() && this.emailRe.test(c.email) && c.message.trim() && c.consent); };
+  setCt = (field, val) => this.setState(s => ({ contact:{ ...s.contact, [field]:val } }));
+  submitContact = (e) => { if (e && e.preventDefault) e.preventDefault(); if (this.contactValid()) this.setState(s => ({ contact:{ ...s.contact, sent:true } })); };
+
+  acceptCookies = () => { try { localStorage.setItem('pose_cookie','accepted'); } catch(e){} this.setState({ cookie:'accepted' }); };
+  refuseCookies = () => { try { localStorage.setItem('pose_cookie','refused'); } catch(e){} this.setState({ cookie:'refused' }); };
+
+  renderVals(){
+    const st = this.state;
+    const view = st.view;
+    const accent = this.props.accent || '#A98CA0';
+    const showMarquee = this.props.showMarquee !== false;
+    const trialPrice = this.props.trialPrice || '1 500';
+
+    const navBase = [['accueil','accueil'],['cours','cours'],['planning','planning'],['tarifs','tarifs'],['contact','contact']];
+    const navItems = navBase.map(([key,label]) => ({ key, label, active:key===view, onClick:()=>this.setView(key) }));
+
+    const coverStyle = { width:'100%', height:'100%', objectFit:'cover', display:'block' };
+    const coursImgs = ['assets/cours-reformer.png','assets/cours-tapis.png','assets/cours-barre.png','assets/cours-prenatal.png','assets/cours-duo.png','assets/cours-mobilite.png'];
+    const disciplines = this.disciplines.map((d,i)=>{
+      const alt = 'Cours de '+d.nom+' au studio posé, Hydra';
+      return { ...d, num:String(i+1).padStart(2,'0'),
+        imgEl: React.createElement('img',{ src:coursImgs[i], alt, style:coverStyle }),
+        onClick:()=>this.openBooking({ discipline:d.nom, coach:'à définir', jour:'à définir', heure:'à définir', prix:d.prix, essai:false }) };
+    });
+    const instImgs = ['assets/inst-nadia.png','assets/inst-lina.png','assets/inst-yasmine.png','assets/inst-sofia.png'];
+    const instructrices = this.instructrices.map((p,i)=>({ ...p,
+      imgEl: React.createElement('img',{ src:instImgs[i], alt:'Portrait de '+p.nom+', instructrice au studio posé', style:coverStyle }) }));
+
+    const formules = this.formules.map(f=>({
+      ...f,
+      bg: f.highlight ? '#F1ECE2' : 'transparent',
+      borderCol: f.highlight ? accent : 'rgba(32,29,24,0.16)',
+      btnBg: f.highlight ? '#201D18' : 'transparent',
+      btnFg: f.highlight ? '#F1ECE2' : '#201D18',
+      onClick:()=>this.openBooking({ discipline: f.key==='decouverte' ? 'Cours d’essai' : f.nom, coach:'à définir', jour:'à définir', heure:'à définir', essai: f.key==='decouverte' })
+    }));
+
+    const reviews = this.reviews.map(r=>({ ...r, starsStr:'★'.repeat(r.note)+'☆'.repeat(5-r.note) }));
+
+    const dayLabels = { lundi:'lundi', mardi:'mardi', mercredi:'mercredi', jeudi:'jeudi', vendredi:'vendredi', samedi:'samedi', dimanche:'dimanche' };
+    const dayTabs = this.days.map((d,i)=>({ label:dayLabels[d], active:i===st.selectedDay, onClick:()=>this.setState({ selectedDay:i }) }));
+    const curDay = this.days[st.selectedDay];
+    const rawSessions = this.planning[curDay] || [];
+    const sessions = rawSessions.map(s=>{
+      const complet = s.places === 0;
+      return { ...s, complet, dispo:!complet,
+        placesLabel: complet ? 'complet' : (s.places + ' place' + (s.places>1?'s':'') + ' restante' + (s.places>1?'s':'')),
+        onClick:()=>this.openBooking({ discipline:s.discipline, coach:s.coach, jour:curDay, heure:s.heure, niveau:s.niveau, duree:s.duree, essai:false })
+      };
+    });
+    const dayClosed = curDay === 'vendredi';
+
+    const b = st.booking;
+    const sess = b.session || {};
+    const bkPrix = sess.essai || b.form.essai ? (trialPrice + ' DA (essai)') : (sess.prix ? ('à partir de ' + sess.prix + ' DA') : 'inclus dans votre formule');
+
+    const c = st.contact;
+
+    return {
+      accent, showMarquee, trialPrice,
+      isAccueil:view==='accueil', isCours:view==='cours', isPlanning:view==='planning',
+      isTarifs:view==='tarifs', isContact:view==='contact', isMentions:view==='mentions', isPrivacy:view==='privacy',
+      mobileNavOpen: st.mobileNavOpen, toggleNav:this.toggleNav,
+      navItems,
+      goHome:()=>this.setView('accueil'), goCours:()=>this.setView('cours'), goPlanning:()=>this.setView('planning'),
+      goTarifs:()=>this.setView('tarifs'), goContact:()=>this.setView('contact'),
+      goMentions:()=>this.setView('mentions'), goPrivacy:()=>this.setView('privacy'),
+      openEssai:()=>this.openBooking({ discipline:'Cours d’essai', coach:'à définir', jour:'à définir', heure:'à définir', essai:true }),
+      marqueeItems:['reformer · tapis · barre · prénatal', 'cours d’essai — ' + trialPrice + ' da', 'nouveau planning · été 2026', 'studio à hydra, alger', 'réservation en ligne'],
+      disciplines, formules, reviews, faq:this.faq, instructrices,
+      teaser:[
+        {heure:'07:30',discipline:'Reformer',coach:'Nadia',niveau:'Tous niveaux',places:'3 places'},
+        {heure:'12:15',discipline:'Reformer',coach:'Sofia',niveau:'Avancé',places:'1 place'},
+        {heure:'17:00',discipline:'Barre',coach:'Lina',niveau:'Débutant',places:'6 places'}
+      ],
+      dayTabs, sessions, dayClosed, hasSessions: !dayClosed && sessions.length>0,
+      cookieOpen: st.cookie === 'unset', acceptCookies:this.acceptCookies, refuseCookies:this.refuseCookies,
+      // contact
+      contact:c, contactSent:c.sent, contactOpen:!c.sent,
+      onCtNom:e=>this.setCt('nom',e.target.value), onCtEmail:e=>this.setCt('email',e.target.value),
+      onCtTel:e=>this.setCt('tel',e.target.value), onCtSujet:e=>this.setCt('sujet',e.target.value),
+      onCtMsg:e=>this.setCt('message',e.target.value), onCtConsent:e=>this.setCt('consent',e.target.checked),
+      submitContact:this.submitContact, contactDisabled:!this.contactValid(), contactOpacity:this.contactValid()?1:0.5,
+      // booking
+      bookingOpen:b.open, booking:b, closeBooking:this.closeBooking, stop:(e)=>{ e.stopPropagation(); },
+      bkStep1:b.step===1, bkStep2:b.step===2, bkStep3:b.step===3,
+      bkDiscipline:sess.discipline || 'Cours d’essai', bkJour:sess.jour || 'à définir', bkHeure:sess.heure || 'à définir',
+      bkCoach:sess.coach || 'à définir', bkPrix, bkEmailShown:b.form.email || 'votre adresse',
+      bookingContinue:this.bookingContinue, bookingBack:this.bookingBack, submitBooking:this.submitBooking,
+      bkDisabled:!this.bookingValid(), bkOpacity:this.bookingValid()?1:0.5,
+      onBkPrenom:e=>this.setBk('prenom',e.target.value), onBkNom:e=>this.setBk('nom',e.target.value),
+      onBkEmail:e=>this.setBk('email',e.target.value), onBkTel:e=>this.setBk('tel',e.target.value),
+      onBkEssai:e=>this.setBk('essai',e.target.checked), onBkConsent:e=>this.setBk('consent',e.target.checked)
+    };
+  }
+}
+</script>
+</body>
+</html>

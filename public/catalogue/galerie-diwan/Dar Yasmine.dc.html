@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{--accent:#b5613e;--accent-strong:#8f4a2e;--sand:#f6f1e9;--sand-2:#ede3d4;--sand-3:#e3d6c1;--paper:#fbf8f2;--ink:#26221c;--ink-2:#6a6155;--line:rgba(38,34,28,.12);--pine:#20302a;}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--sand);color:var(--ink);font-family:'Instrument Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased;font-size:16px;line-height:1.62}
+  h1,h2,h3,h4{margin:0;font-weight:500}
+  p{margin:0}
+  a{color:inherit}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:3px}
+  button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+  input,textarea,select{font-family:inherit;font-size:15px;color:var(--ink)}
+  ::selection{background:var(--accent);color:#fff}
+  @keyframes dyfade{from{transform:translateY(12px)}to{transform:none}}
+  @keyframes dypop{from{transform:scale(.98)}to{transform:none}}
+  @media (prefers-reduced-motion: reduce){*{animation:none!important;transition-duration:.001ms!important;scroll-behavior:auto!important}}
+</style>
+</helmet>
+
+<div style="min-height:100vh;display:flex;flex-direction:column">
+
+  <sc-if value="{{ promo }}" hint-placeholder-val="{{ true }}">
+    <div style="background:var(--pine);color:#f6f1e9;text-align:center;font-size:13px;letter-spacing:.02em;padding:9px 16px">
+      <span style="opacity:.85">Offre d'ouverture&nbsp;— </span><strong style="font-weight:600">-15%</strong><span style="opacity:.85"> dès 3 nuits réservées avant le 31 août&nbsp;· code&nbsp;</span><strong style="font-weight:600;letter-spacing:.08em">YASMINE15</strong>
+    </div>
+  </sc-if>
+
+  <!-- ============ HEADER ============ -->
+  <header style="position:sticky;top:0;z-index:40;background:rgba(246,241,233,.86);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)">
+    <div style="max-width:1220px;margin:0 auto;padding:0 24px;height:74px;display:flex;align-items:center;justify-content:space-between;gap:20px">
+      <button onClick="{{ navHome }}" aria-label="Dar Yasmine, accueil" style="display:flex;align-items:center;gap:11px;background:none">
+        <span style="width:38px;height:38px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;flex:none">Y</span>
+        <span style="display:flex;flex-direction:column;line-height:1;text-align:left">
+          <span style="font-family:'Cormorant Garamond',serif;font-size:23px;font-weight:600;letter-spacing:.01em">Dar Yasmine</span>
+          <span style="font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink-2);margin-top:3px">Maison d'hôtes · Alger</span>
+        </span>
+      </button>
+
+      <nav aria-label="Navigation principale" style="display:flex;align-items:center;gap:6px" class="dy-desknav">
+        <button onClick="{{ navHome }}" style="{{ nav.accueil }}" style-hover="color:var(--ink)">Accueil</button>
+        <button onClick="{{ navRooms }}" style="{{ nav.chambres }}" style-hover="color:var(--ink)">Chambres</button>
+        <button onClick="{{ navStory }}" style="{{ nav.histoire }}" style-hover="color:var(--ink)">La maison</button>
+        <button onClick="{{ navReviews }}" style="{{ nav.avis }}" style-hover="color:var(--ink)">Avis</button>
+        <button onClick="{{ navContact }}" style="{{ nav.contact }}" style-hover="color:var(--ink)">Contact</button>
+      </nav>
+
+      <div style="display:flex;align-items:center;gap:12px">
+        <button onClick="{{ navReserve }}" style="display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#fff;font-weight:600;font-size:14px;padding:11px 20px;border-radius:100px;transition:background .2s" style-hover="background:var(--accent-strong)" class="dy-reservebtn">Réserver</button>
+        <button onClick="{{ toggleMenu }}" aria-label="Ouvrir le menu" class="dy-burger" style="display:none;width:42px;height:42px;border:1px solid var(--line);border-radius:10px;align-items:center;justify-content:center">
+          <span style="display:block;width:18px;height:2px;background:var(--ink);box-shadow:0 -6px var(--ink),0 6px var(--ink)"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;inset:0;z-index:60;background:var(--sand);animation:dyfade .25s ease;display:flex;flex-direction:column;padding:24px">
+      <div style="display:flex;justify-content:space-between;align-items:center;height:50px">
+        <span style="font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:600">Dar Yasmine</span>
+        <button onClick="{{ closeMenu }}" aria-label="Fermer le menu" style="font-size:26px;width:44px;height:44px">✕</button>
+      </div>
+      <nav style="display:flex;flex-direction:column;gap:2px;margin-top:30px">
+        <button onClick="{{ navHome }}" style="text-align:left;font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:500;padding:14px 0;border-bottom:1px solid var(--line)">Accueil</button>
+        <button onClick="{{ navRooms }}" style="text-align:left;font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:500;padding:14px 0;border-bottom:1px solid var(--line)">Chambres</button>
+        <button onClick="{{ navStory }}" style="text-align:left;font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:500;padding:14px 0;border-bottom:1px solid var(--line)">La maison</button>
+        <button onClick="{{ navReviews }}" style="text-align:left;font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:500;padding:14px 0;border-bottom:1px solid var(--line)">Avis</button>
+        <button onClick="{{ navContact }}" style="text-align:left;font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:500;padding:14px 0;border-bottom:1px solid var(--line)">Contact</button>
+      </nav>
+      <button onClick="{{ navReserve }}" style="margin-top:26px;background:var(--accent);color:#fff;font-weight:600;font-size:17px;padding:16px;border-radius:14px">Réserver un séjour</button>
+    </div>
+  </sc-if>
+
+  <main style="flex:1">
+
+    <!-- ================= ACCUEIL ================= -->
+    <sc-if value="{{ isAccueil }}" hint-placeholder-val="{{ true }}">
+    <div style="animation:dyfade .5s ease">
+      <!-- HERO -->
+      <section style="max-width:1220px;margin:0 auto;padding:clamp(28px,5vw,64px) 24px clamp(32px,4vw,56px)">
+        <div class="dy-herogrid" style="display:grid;grid-template-columns:1.02fr 1fr;gap:clamp(28px,4vw,64px);align-items:center">
+          <div>
+            <span style="display:inline-flex;align-items:center;gap:9px;font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-strong);font-weight:600">
+              <span style="width:26px;height:1px;background:var(--accent)"></span>Bologhine · baie d'Alger
+            </span>
+            <h1 style="font-family:'Cormorant Garamond',serif;font-weight:600;font-size:clamp(46px,7vw,84px);line-height:.98;margin:20px 0 0;letter-spacing:-.01em">Dormir face<br>à la Méditerranée.</h1>
+            <p style="max-width:490px;margin:22px 0 0;font-size:17.5px;color:var(--ink-2);line-height:1.6">Une maison d'hôtes de huit chambres nichée dans les hauteurs d'Alger. Terrasses ombragées, zelliges anciens, petit-déjeuner maison — et la baie qui s'étire jusqu'à l'horizon.</p>
+            <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:30px">
+              <button onClick="{{ navReserve }}" style="background:var(--accent);color:#fff;font-weight:600;font-size:15px;padding:15px 28px;border-radius:100px;transition:background .2s" style-hover="background:var(--accent-strong)">Vérifier les disponibilités</button>
+              <button onClick="{{ navRooms }}" style="border:1px solid var(--ink);color:var(--ink);font-weight:600;font-size:15px;padding:15px 28px;border-radius:100px;transition:all .2s;background:transparent" style-hover="background:var(--ink);color:var(--sand)">Découvrir les chambres</button>
+            </div>
+            <div style="display:flex;align-items:center;gap:14px;margin-top:34px">
+              <div style="display:flex;color:var(--accent);font-size:16px;letter-spacing:2px">★★★★★</div>
+              <span style="font-size:14px;color:var(--ink-2)"><strong style="color:var(--ink);font-weight:600">{{ avgNote }}/5</strong> · {{ reviewCount }} avis voyageurs</span>
+            </div>
+          </div>
+          <div style="position:relative">
+            <div role="img" aria-label="Terrasse de Dar Yasmine surplombant la baie d'Alger au coucher du soleil" style="aspect-ratio:4/5;border-radius:20px;overflow:hidden;background:linear-gradient(155deg,#e9dcc6,#d9c3a0 55%,#c9ae86);box-shadow:0 30px 70px -30px rgba(38,34,28,.45);display:flex;align-items:flex-end;padding:16px">
+              <span style="font:500 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.03em;color:#6d5c40;background:rgba(251,248,242,.72);padding:6px 9px;border-radius:7px">PHOTO · terrasse au crépuscule</span>
+            </div>
+            <div style="position:absolute;left:-14px;bottom:34px;background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:15px 18px;box-shadow:0 18px 40px -20px rgba(38,34,28,.35);animation:dypop .6s .3s both">
+              <div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)">À partir de</div>
+              <div style="font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:600;line-height:1;margin-top:4px">9 500 <span style="font-size:16px">DA</span></div>
+              <div style="font-size:12.5px;color:var(--ink-2);margin-top:2px">la nuit · petit-déjeuner inclus</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FACTS -->
+      <section style="border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--paper)">
+        <div style="max-width:1220px;margin:0 auto;padding:0 24px">
+          <div class="dy-facts" style="display:grid;grid-template-columns:repeat(4,1fr)">
+            <div style="padding:26px 20px;border-right:1px solid var(--line)"><div style="font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:600;line-height:1">8</div><div style="font-size:13.5px;color:var(--ink-2);margin-top:4px">chambres & suites</div></div>
+            <div style="padding:26px 20px;border-right:1px solid var(--line)"><div style="font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:600;line-height:1">180°</div><div style="font-size:13.5px;color:var(--ink-2);margin-top:4px">vue sur la baie</div></div>
+            <div style="padding:26px 20px;border-right:1px solid var(--line)"><div style="font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:600;line-height:1">10&nbsp;min</div><div style="font-size:13.5px;color:var(--ink-2);margin-top:4px">de la Casbah</div></div>
+            <div style="padding:26px 20px"><div style="font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:600;line-height:1">1912</div><div style="font-size:13.5px;color:var(--ink-2);margin-top:4px">maison d'époque</div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- INTRO -->
+      <section style="max-width:1220px;margin:0 auto;padding:clamp(48px,7vw,96px) 24px">
+        <div class="dy-introgrid" style="display:grid;grid-template-columns:1fr 1.05fr;gap:clamp(32px,5vw,72px);align-items:center">
+          <div role="img" aria-label="Patio intérieur aux zelliges bleus et fontaine en pierre" style="aspect-ratio:5/6;border-radius:20px;background:linear-gradient(150deg,#dfe7e0,#c9d7cd 55%,#b6c8bc);display:flex;align-items:flex-end;padding:16px">
+            <span style="font:500 11px/1 ui-monospace,Menlo,monospace;color:#586b5f;background:rgba(251,248,242,.72);padding:6px 9px;border-radius:7px">PHOTO · patio & zelliges</span>
+          </div>
+          <div>
+            <span style="font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-strong);font-weight:600">La maison</span>
+            <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(34px,4.6vw,56px);font-weight:500;line-height:1.04;margin:16px 0 0">Une demeure algéroise,<br>ouverte sur la mer.</h2>
+            <p style="font-size:17px;color:var(--ink-2);margin-top:22px;max-width:520px">Derrière ses murs chaulés, Dar Yasmine cultive l'art de recevoir à l'algéroise&nbsp;: le café servi sous la treille, les zelliges patinés par un siècle, le silence des ruelles de Bologhine. Chaque chambre a été restaurée à la main, avec les artisans de la Casbah.</p>
+            <div style="display:flex;flex-wrap:wrap;gap:26px;margin-top:30px">
+              <div style="max-width:190px"><div style="font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600">Petit-déjeuner maison</div><p style="font-size:14px;color:var(--ink-2);margin-top:5px">Msemen, confitures d'agrumes, miel de Kabylie.</p></div>
+              <div style="max-width:190px"><div style="font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600">Terrasse panoramique</div><p style="font-size:14px;color:var(--ink-2);margin-top:5px">Le thé à la menthe, face au port.</p></div>
+            </div>
+            <button onClick="{{ navStory }}" style="margin-top:30px;font-weight:600;font-size:15px;color:var(--accent-strong);display:inline-flex;align-items:center;gap:8px;background:none;border-bottom:1px solid var(--accent);padding-bottom:3px">Notre histoire →</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- CHAMBRES PREVIEW -->
+      <section style="background:var(--sand-2);border-top:1px solid var(--line)">
+        <div style="max-width:1220px;margin:0 auto;padding:clamp(48px,7vw,90px) 24px">
+          <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap">
+            <div>
+              <span style="font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-strong);font-weight:600">Nos chambres</span>
+              <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(34px,4.6vw,52px);font-weight:500;line-height:1.05;margin:14px 0 0">Huit refuges, huit ambiances</h2>
+            </div>
+            <button onClick="{{ navRooms }}" style="font-weight:600;font-size:15px;color:var(--ink);border-bottom:1px solid var(--ink);padding-bottom:3px;background:none">Toutes les chambres →</button>
+          </div>
+          <div class="dy-roomgrid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-top:38px">
+            <sc-for list="{{ roomsPreview }}" as="room" hint-placeholder-count="4">
+              <article style="background:var(--paper);border-radius:16px;overflow:hidden;border:1px solid var(--line);display:flex;flex-direction:column;transition:transform .25s,box-shadow .25s" style-hover="transform:translateY(-4px);box-shadow:0 22px 44px -26px rgba(38,34,28,.4)">
+                <button onClick="{{ room.open }}" aria-label="{{ room.ariaOpen }}" style="display:block;text-align:left;background:none">
+                  <div role="img" aria-label="{{ room.alt }}" style="aspect-ratio:4/3;background:{{ room.swatch }};display:flex;align-items:flex-end;padding:12px">
+                    <span style="font:500 10px/1 ui-monospace,Menlo,monospace;color:rgba(38,34,28,.5);background:rgba(251,248,242,.7);padding:5px 7px;border-radius:6px">PHOTO · {{ room.nom }}</span>
+                  </div>
+                </button>
+                <div style="padding:16px 16px 18px;display:flex;flex-direction:column;flex:1">
+                  <div style="font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)">{{ room.type }}</div>
+                  <h3 style="font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:600;margin-top:3px">{{ room.nom }}</h3>
+                  <div style="font-size:13.5px;color:var(--ink-2);margin-top:6px">{{ room.meta }}</div>
+                  <div style="display:flex;align-items:baseline;justify-content:space-between;margin-top:14px;padding-top:14px;border-top:1px solid var(--line)">
+                    <div><span style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600">{{ room.prixFmt }}</span> <span style="font-size:12.5px;color:var(--ink-2)">/ nuit</span></div>
+                    <button onClick="{{ room.open }}" style="font-size:13.5px;font-weight:600;color:var(--accent-strong)">Voir →</button>
+                  </div>
+                </div>
+              </article>
+            </sc-for>
+          </div>
+        </div>
+      </section>
+
+      <!-- MOMENT FORT teaser -->
+      <section style="max-width:1220px;margin:0 auto;padding:clamp(48px,7vw,96px) 24px">
+        <div style="background:var(--pine);color:#f2ede3;border-radius:24px;padding:clamp(30px,5vw,60px);display:grid;grid-template-columns:1.1fr 1fr;gap:40px;align-items:center" class="dy-cta">
+          <div>
+            <span style="font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:#d9a888;font-weight:600">Réservation directe</span>
+            <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(32px,4.4vw,50px);font-weight:500;line-height:1.05;margin:14px 0 0">Réservez en trois minutes,<br>sans intermédiaire.</h2>
+            <p style="color:rgba(242,237,227,.72);margin-top:18px;max-width:440px;font-size:16px">Choisissez vos dates, comparez les chambres disponibles, réglez sur place. Meilleur tarif garanti et annulation gratuite jusqu'à 48h avant l'arrivée.</p>
+            <button onClick="{{ navReserve }}" style="margin-top:28px;background:var(--accent);color:#fff;font-weight:600;font-size:15px;padding:15px 30px;border-radius:100px;transition:background .2s" style-hover="background:var(--accent-strong)">Commencer ma réservation</button>
+          </div>
+          <div style="display:grid;gap:12px">
+            <div style="display:flex;gap:14px;align-items:flex-start"><span style="font-family:'Cormorant Garamond',serif;color:#d9a888;font-size:26px;font-weight:600;line-height:1;flex:none">01</span><div><div style="font-weight:600">Vos dates & voyageurs</div><div style="font-size:13.5px;color:rgba(242,237,227,.6)">Calendrier des disponibilités en temps réel.</div></div></div>
+            <div style="display:flex;gap:14px;align-items:flex-start;border-top:1px solid rgba(242,237,227,.14);padding-top:12px"><span style="font-family:'Cormorant Garamond',serif;color:#d9a888;font-size:26px;font-weight:600;line-height:1;flex:none">02</span><div><div style="font-weight:600">Le choix de la chambre</div><div style="font-size:13.5px;color:rgba(242,237,227,.6)">Tarif total calculé instantanément.</div></div></div>
+            <div style="display:flex;gap:14px;align-items:flex-start;border-top:1px solid rgba(242,237,227,.14);padding-top:12px"><span style="font-family:'Cormorant Garamond',serif;color:#d9a888;font-size:26px;font-weight:600;line-height:1;flex:none">03</span><div><div style="font-weight:600">Confirmation immédiate</div><div style="font-size:13.5px;color:rgba(242,237,227,.6)">Référence de réservation par e-mail.</div></div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- AVIS PREVIEW -->
+      <section style="border-top:1px solid var(--line);background:var(--paper)">
+        <div style="max-width:1220px;margin:0 auto;padding:clamp(48px,7vw,90px) 24px">
+          <div style="text-align:center;max-width:620px;margin:0 auto">
+            <span style="font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-strong);font-weight:600">Ils ont séjourné chez nous</span>
+            <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(32px,4.4vw,50px);font-weight:500;line-height:1.05;margin:14px 0 0">{{ avgNote }} / 5 en moyenne</h2>
+          </div>
+          <div class="dy-avisgrid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:40px">
+            <sc-for list="{{ reviewsPreview }}" as="rev" hint-placeholder-count="3">
+              <figure style="margin:0;background:var(--sand);border:1px solid var(--line);border-radius:16px;padding:24px;display:flex;flex-direction:column">
+                <div style="color:var(--accent);letter-spacing:2px;font-size:14px">{{ rev.stars }}</div>
+                <blockquote style="margin:14px 0 0;font-family:'Cormorant Garamond',serif;font-size:21px;line-height:1.4;font-weight:500">« {{ rev.court }} »</blockquote>
+                <figcaption style="margin-top:auto;padding-top:18px;font-size:13.5px;color:var(--ink-2)"><strong style="color:var(--ink);font-weight:600">{{ rev.nom }}</strong> · {{ rev.ville }}<br>{{ rev.dateFmt }}</figcaption>
+              </figure>
+            </sc-for>
+          </div>
+          <div style="text-align:center;margin-top:32px"><button onClick="{{ navReviews }}" style="font-weight:600;font-size:15px;border-bottom:1px solid var(--ink);padding-bottom:3px">Lire tous les avis →</button></div>
+        </div>
+      </section>
+    </div>
+    </sc-if>
+
+    <!-- ================= CHAMBRES ================= -->
+    <sc-if value="{{ isChambres }}" hint-placeholder-val="{{ false }}">
+    <section style="max-width:1220px;margin:0 auto;padding:clamp(32px,5vw,64px) 24px;animation:dyfade .45s ease">
+      <span style="font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-strong);font-weight:600">Séjourner</span>
+      <h1 style="font-family:'Cormorant Garamond',serif;font-size:clamp(40px,6vw,72px);font-weight:600;line-height:1;margin:14px 0 0">Nos chambres & suites</h1>
+      <p style="max-width:560px;margin:18px 0 0;font-size:17px;color:var(--ink-2)">Huit chambres uniques, toutes climatisées, avec salle de bain privative et petit-déjeuner maison inclus. Les tarifs sont indiqués par nuit, taxe de séjour en sus.</p>
+      <div class="dy-roomgrid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:40px">
+        <sc-for list="{{ rooms }}" as="room" hint-placeholder-count="8">
+          <article style="background:var(--paper);border-radius:18px;overflow:hidden;border:1px solid var(--line);display:flex;flex-direction:column;transition:transform .25s,box-shadow .25s" style-hover="transform:translateY(-4px);box-shadow:0 24px 46px -26px rgba(38,34,28,.4)">
+            <button onClick="{{ room.open }}" aria-label="{{ room.ariaOpen }}" style="display:block;text-align:left;background:none;position:relative">
+              <div role="img" aria-label="{{ room.alt }}" style="aspect-ratio:16/11;background:{{ room.swatch }};display:flex;align-items:flex-end;padding:12px">
+                <span style="font:500 10px/1 ui-monospace,Menlo,monospace;color:rgba(38,34,28,.5);background:rgba(251,248,242,.7);padding:5px 7px;border-radius:6px">PHOTO · {{ room.nom }}</span>
+              </div>
+              <sc-if value="{{ room.vueMer }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;top:12px;left:12px;background:rgba(32,48,42,.9);color:#f2ede3;font-size:11px;font-weight:600;letter-spacing:.04em;padding:5px 10px;border-radius:100px">Vue mer</span></sc-if>
+            </button>
+            <div style="padding:20px;display:flex;flex-direction:column;flex:1">
+              <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px">
+                <div style="font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)">{{ room.type }}</div>
+                <div style="font-size:12.5px;color:var(--ink-2)">{{ room.capaciteFmt }}</div>
+              </div>
+              <h3 style="font-family:'Cormorant Garamond',serif;font-size:27px;font-weight:600;margin-top:4px">{{ room.nom }}</h3>
+              <p style="font-size:14px;color:var(--ink-2);margin-top:8px;line-height:1.55">{{ room.court }}</p>
+              <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:14px">
+                <sc-for list="{{ room.tags }}" as="tag" hint-placeholder-count="3"><span style="font-size:12px;color:var(--ink-2);background:var(--sand-2);padding:4px 10px;border-radius:100px">{{ tag }}</span></sc-for>
+              </div>
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-top:18px;padding-top:16px;border-top:1px solid var(--line)">
+                <div><span style="font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:600">{{ room.prixFmt }}</span> <span style="font-size:12.5px;color:var(--ink-2)">/ nuit</span></div>
+                <button onClick="{{ room.reserve }}" style="background:var(--accent);color:#fff;font-weight:600;font-size:13.5px;padding:10px 18px;border-radius:100px;transition:background .2s" style-hover="background:var(--accent-strong)">Réserver</button>
+              </div>
+            </div>
+          </article>
+        </sc-for>
+      </div>
+    </section>
+    </sc-if>
+
+    <!-- ================= DÉTAIL CHAMBRE ================= -->
+    <sc-if value="{{ isDetail }}" hint-placeholder-val="{{ false }}">
+    <section style="max-width:1220px;margin:0 auto;padding:clamp(24px,4vw,44px) 24px clamp(48px,6vw,80px);animation:dyfade .45s ease">
+      <button onClick="{{ navRooms }}" style="font-size:14px;color:var(--ink-2);display:inline-flex;align-items:center;gap:7px;margin-bottom:24px" style-hover="color:var(--ink)">← Toutes les chambres</button>
+      <div class="dy-detailgrid" style="display:grid;grid-template-columns:1.5fr .9fr;gap:clamp(28px,4vw,48px);align-items:start">
+        <div>
+          <div role="img" aria-label="{{ currentRoom.alt }}" style="aspect-ratio:16/10;border-radius:20px;background:{{ currentRoom.swatch }};display:flex;align-items:flex-end;padding:16px">
+            <span style="font:500 11px/1 ui-monospace,Menlo,monospace;color:rgba(38,34,28,.5);background:rgba(251,248,242,.72);padding:6px 9px;border-radius:7px">PHOTO · {{ currentRoom.nom }} — vue principale</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:12px">
+            <div role="img" aria-label="{{ currentRoom.nom }}, salle de bain" style="aspect-ratio:4/3;border-radius:12px;background:linear-gradient(150deg,#e6ddcd,#d6c6ac);display:flex;align-items:flex-end;padding:9px"><span style="font:500 9px/1 ui-monospace,Menlo,monospace;color:rgba(38,34,28,.45)">salle de bain</span></div>
+            <div role="img" aria-label="{{ currentRoom.nom }}, coin salon" style="aspect-ratio:4/3;border-radius:12px;background:linear-gradient(150deg,#dfe7e0,#c8d6cc);display:flex;align-items:flex-end;padding:9px"><span style="font:500 9px/1 ui-monospace,Menlo,monospace;color:rgba(38,34,28,.45)">coin salon</span></div>
+            <div role="img" aria-label="{{ currentRoom.nom }}, détail zellige" style="aspect-ratio:4/3;border-radius:12px;background:linear-gradient(150deg,#e9dcc6,#cdb389);display:flex;align-items:flex-end;padding:9px"><span style="font:500 9px/1 ui-monospace,Menlo,monospace;color:rgba(38,34,28,.45)">détail</span></div>
+          </div>
+
+          <div style="margin-top:34px">
+            <div style="font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)">{{ currentRoom.type }}</div>
+            <h1 style="font-family:'Cormorant Garamond',serif;font-size:clamp(38px,5vw,60px);font-weight:600;line-height:1;margin:6px 0 0">{{ currentRoom.nom }}</h1>
+            <p style="font-size:17px;color:var(--ink-2);margin-top:18px;line-height:1.65;max-width:640px">{{ currentRoom.description }}</p>
+
+            <h2 style="font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:600;margin-top:34px">Équipements</h2>
+            <ul style="list-style:none;padding:0;margin:16px 0 0;display:grid;grid-template-columns:1fr 1fr;gap:10px 24px">
+              <sc-for list="{{ currentRoom.equipements }}" as="eq" hint-placeholder-count="6">
+                <li style="display:flex;align-items:center;gap:10px;font-size:15px;color:var(--ink)"><span style="color:var(--accent);flex:none">✦</span>{{ eq }}</li>
+              </sc-for>
+            </ul>
+          </div>
+        </div>
+
+        <aside style="position:sticky;top:96px;background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:24px;box-shadow:0 20px 44px -30px rgba(38,34,28,.4)">
+          <div style="display:flex;align-items:baseline;gap:8px"><span style="font-family:'Cormorant Garamond',serif;font-size:38px;font-weight:600;line-height:1">{{ currentRoom.prixFmt }}</span><span style="font-size:14px;color:var(--ink-2)">/ nuit</span></div>
+          <div style="font-size:13px;color:var(--ink-2);margin-top:4px">Petit-déjeuner maison inclus · taxe de séjour 150 DA / pers / nuit</div>
+          <dl style="margin:22px 0 0;display:grid;gap:0;border-top:1px solid var(--line)">
+            <div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--line)"><dt style="color:var(--ink-2);font-size:14px">Capacité</dt><dd style="margin:0;font-weight:600;font-size:14px">{{ currentRoom.capaciteFmt }}</dd></div>
+            <div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--line)"><dt style="color:var(--ink-2);font-size:14px">Superficie</dt><dd style="margin:0;font-weight:600;font-size:14px">{{ currentRoom.taille }} m²</dd></div>
+            <div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--line)"><dt style="color:var(--ink-2);font-size:14px">Étage</dt><dd style="margin:0;font-weight:600;font-size:14px">{{ currentRoom.etageFmt }}</dd></div>
+            <div style="display:flex;justify-content:space-between;padding:12px 0"><dt style="color:var(--ink-2);font-size:14px">Vue</dt><dd style="margin:0;font-weight:600;font-size:14px">{{ currentRoom.vue }}</dd></div>
+          </dl>
+          <button onClick="{{ currentRoom.reserve }}" style="width:100%;margin-top:18px;background:var(--accent);color:#fff;font-weight:600;font-size:16px;padding:16px;border-radius:14px;transition:background .2s" style-hover="background:var(--accent-strong)">Réserver cette chambre</button>
+          <div style="text-align:center;font-size:12.5px;color:var(--ink-2);margin-top:12px">Annulation gratuite jusqu'à 48h avant</div>
+        </aside>
+      </div>
+    </section>
+    </sc-if>
+
+    <!-- ================= RÉSERVATION (MOMENT FORT) ================= -->
+    <sc-if value="{{ isReserver }}" hint-placeholder-val="{{ false }}">
+    <section style="max-width:1120px;margin:0 auto;padding:clamp(28px,4vw,52px) 24px clamp(48px,6vw,80px);animation:dyfade .45s ease">
+      <div style="text-align:center;max-width:640px;margin:0 auto">
+        <span style="font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-strong);font-weight:600">Réservation directe</span>
+        <h1 style="font-family:'Cormorant Garamond',serif;font-size:clamp(38px,5.5vw,62px);font-weight:600;line-height:1;margin:12px 0 0">Réserver votre séjour</h1>
+      </div>
+
+      <!-- progress -->
+      <div style="display:flex;justify-content:center;margin:34px 0 8px">
+        <ol style="list-style:none;display:flex;align-items:center;gap:0;padding:0;margin:0;flex-wrap:wrap;justify-content:center">
+          <sc-for list="{{ progress }}" as="p" hint-placeholder-count="4">
+            <li style="display:flex;align-items:center;gap:10px">
+              <span style="width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:600;flex:none;{{ p.circle }}">{{ p.mark }}</span>
+              <span style="font-size:13.5px;font-weight:500;{{ p.label }}">{{ p.name }}</span>
+              <sc-if value="{{ p.hasBar }}" hint-placeholder-val="{{ false }}"><span style="width:34px;height:1px;background:var(--line);margin:0 12px"></span></sc-if>
+            </li>
+          </sc-for>
+        </ol>
+      </div>
+
+      <div class="dy-bookgrid" style="display:grid;grid-template-columns:1.55fr .95fr;gap:28px;margin-top:24px;align-items:start">
+        <div style="background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:clamp(20px,3vw,32px);min-height:360px">
+
+          <!-- STEP 1 : DATES -->
+          <sc-if value="{{ isStep1 }}" hint-placeholder-val="{{ true }}">
+          <div style="animation:dyfade .3s ease">
+            <h2 style="font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:600">Vos dates de séjour</h2>
+            <p style="font-size:14px;color:var(--ink-2);margin-top:4px">Sélectionnez votre date d'arrivée puis de départ.</p>
+
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-top:24px">
+              <button onClick="{{ prevMonth }}" aria-label="Mois précédent" style="width:40px;height:40px;border:1px solid var(--line);border-radius:10px;font-size:18px" style-hover="background:var(--sand-2)">‹</button>
+              <div style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600">{{ calTitle }}</div>
+              <button onClick="{{ nextMonth }}" aria-label="Mois suivant" style="width:40px;height:40px;border:1px solid var(--line);border-radius:10px;font-size:18px" style-hover="background:var(--sand-2)">›</button>
+            </div>
+
+            <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-top:16px">
+              <sc-for list="{{ weekdays }}" as="wd" hint-placeholder-count="7"><div style="text-align:center;font-size:11px;font-weight:600;letter-spacing:.04em;color:var(--ink-2);padding-bottom:6px">{{ wd }}</div></sc-for>
+              <sc-for list="{{ calCells }}" as="c" hint-placeholder-count="42">
+                <button onClick="{{ c.onClick }}" aria-label="{{ c.aria }}" style="{{ c.style }}">{{ c.label }}</button>
+              </sc-for>
+            </div>
+
+            <div style="display:flex;gap:16px;margin-top:22px;flex-wrap:wrap">
+              <div style="flex:1;min-width:130px;border:1px solid var(--line);border-radius:12px;padding:12px 14px"><div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)">Arrivée</div><div style="font-weight:600;margin-top:3px">{{ arrivalFmt }}</div></div>
+              <div style="flex:1;min-width:130px;border:1px solid var(--line);border-radius:12px;padding:12px 14px"><div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)">Départ</div><div style="font-weight:600;margin-top:3px">{{ departureFmt }}</div></div>
+            </div>
+
+            <div style="margin-top:20px">
+              <div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)">Voyageurs</div>
+              <div style="display:flex;align-items:center;gap:16px;margin-top:8px">
+                <button onClick="{{ decGuests }}" aria-label="Retirer un voyageur" style="width:40px;height:40px;border:1px solid var(--line);border-radius:10px;font-size:20px" style-hover="background:var(--sand-2)">−</button>
+                <span style="font-weight:600;font-size:18px;min-width:90px;text-align:center">{{ guestsFmt }}</span>
+                <button onClick="{{ incGuests }}" aria-label="Ajouter un voyageur" style="width:40px;height:40px;border:1px solid var(--line);border-radius:10px;font-size:20px" style-hover="background:var(--sand-2)">+</button>
+              </div>
+            </div>
+
+            <div style="display:flex;justify-content:flex-end;margin-top:26px">
+              <button onClick="{{ goStep2 }}" style="{{ nextBtn1 }}">Choisir une chambre →</button>
+            </div>
+          </div>
+          </sc-if>
+
+          <!-- STEP 2 : CHAMBRE -->
+          <sc-if value="{{ isStep2 }}" hint-placeholder-val="{{ false }}">
+          <div style="animation:dyfade .3s ease">
+            <h2 style="font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:600">Chambres disponibles</h2>
+            <p style="font-size:14px;color:var(--ink-2);margin-top:4px">{{ availabilityLine }}</p>
+            <div style="display:flex;flex-direction:column;gap:12px;margin-top:20px">
+              <sc-for list="{{ availableRooms }}" as="room" hint-placeholder-count="4">
+                <button onClick="{{ room.select }}" style="{{ room.cardStyle }}">
+                  <div role="img" aria-label="{{ room.alt }}" style="width:96px;height:80px;border-radius:12px;background:{{ room.swatch }};flex:none"></div>
+                  <div style="flex:1;text-align:left">
+                    <div style="font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-2)">{{ room.type }}</div>
+                    <div style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;line-height:1.1">{{ room.nom }}</div>
+                    <div style="font-size:12.5px;color:var(--ink-2);margin-top:3px">{{ room.meta }}</div>
+                  </div>
+                  <div style="text-align:right;flex:none">
+                    <div><span style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600">{{ room.prixFmt }}</span></div>
+                    <div style="font-size:12px;color:var(--ink-2)">/ nuit</div>
+                    <div style="font-size:12.5px;font-weight:600;margin-top:8px;{{ room.pickLabelStyle }}">{{ room.pickLabel }}</div>
+                  </div>
+                </button>
+              </sc-for>
+              <sc-if value="{{ noRooms }}" hint-placeholder-val="{{ false }}">
+                <div style="text-align:center;padding:30px;color:var(--ink-2)">Aucune chambre disponible pour ces dates. Essayez d'autres dates.</div>
+              </sc-if>
+            </div>
+            <div style="display:flex;justify-content:space-between;margin-top:26px">
+              <button onClick="{{ backStep }}" style="border:1px solid var(--line);padding:13px 22px;border-radius:100px;font-weight:600;font-size:14px" style-hover="background:var(--sand-2)">← Dates</button>
+              <button onClick="{{ goStep3 }}" style="{{ nextBtn2 }}">Continuer →</button>
+            </div>
+          </div>
+          </sc-if>
+
+          <!-- STEP 3 : INFOS + RGPD -->
+          <sc-if value="{{ isStep3 }}" hint-placeholder-val="{{ false }}">
+          <div style="animation:dyfade .3s ease">
+            <h2 style="font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:600">Vos informations</h2>
+            <p style="font-size:14px;color:var(--ink-2);margin-top:4px">Nous vous enverrons la confirmation par e-mail.</p>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:22px" class="dy-formgrid">
+              <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600">Prénom
+                <input value="{{ form.prenom }}" onInput="{{ onPrenom }}" placeholder="Amel" style="{{ fieldStyle.prenom }}">
+                <sc-if value="{{ errShow.prenom }}" hint-placeholder-val="{{ false }}"><span style="color:#b23b3b;font-weight:500;font-size:12px">Champ requis</span></sc-if>
+              </label>
+              <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600">Nom
+                <input value="{{ form.nom }}" onInput="{{ onNom }}" placeholder="Benali" style="{{ fieldStyle.nom }}">
+                <sc-if value="{{ errShow.nom }}" hint-placeholder-val="{{ false }}"><span style="color:#b23b3b;font-weight:500;font-size:12px">Champ requis</span></sc-if>
+              </label>
+              <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600">E-mail
+                <input value="{{ form.email }}" onInput="{{ onEmail }}" type="email" placeholder="amel.benali@email.dz" style="{{ fieldStyle.email }}">
+                <sc-if value="{{ errShow.email }}" hint-placeholder-val="{{ false }}"><span style="color:#b23b3b;font-weight:500;font-size:12px">E-mail invalide</span></sc-if>
+              </label>
+              <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600">Téléphone
+                <input value="{{ form.tel }}" onInput="{{ onTel }}" type="tel" placeholder="+213 …" style="{{ fieldStyle.tel }}">
+                <sc-if value="{{ errShow.tel }}" hint-placeholder-val="{{ false }}"><span style="color:#b23b3b;font-weight:500;font-size:12px">Champ requis</span></sc-if>
+              </label>
+            </div>
+            <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600;margin-top:16px">Demandes particulières (facultatif)
+              <textarea value="{{ form.message }}" onInput="{{ onMsg }}" rows="3" placeholder="Arrivée tardive, lit bébé, allergies…" style="border:1px solid var(--line);border-radius:12px;padding:12px 14px;resize:vertical;background:var(--sand)"></textarea>
+            </label>
+
+            <div style="margin-top:20px;display:flex;flex-direction:column;gap:12px">
+              <label style="display:flex;gap:11px;align-items:flex-start;font-size:13.5px;line-height:1.45;cursor:pointer">
+                <input type="checkbox" checked="{{ form.cgv }}" onChange="{{ toggleCgv }}" style="width:18px;height:18px;margin-top:2px;flex:none;accent-color:var(--accent)">
+                <span>J'accepte les <button onClick="{{ navMentions }}" style="color:var(--accent-strong);text-decoration:underline;background:none">conditions de réservation</button> et la politique d'annulation. <span style="color:#b23b3b">*</span></span>
+              </label>
+              <label style="display:flex;gap:11px;align-items:flex-start;font-size:13.5px;line-height:1.45;cursor:pointer">
+                <input type="checkbox" checked="{{ form.data }}" onChange="{{ toggleData }}" style="width:18px;height:18px;margin-top:2px;flex:none;accent-color:var(--accent)">
+                <span>J'autorise Dar Yasmine à traiter mes données pour gérer ma réservation, conformément à la <button onClick="{{ navConfid }}" style="color:var(--accent-strong);text-decoration:underline;background:none">politique de confidentialité</button>. <span style="color:#b23b3b">*</span></span>
+              </label>
+              <label style="display:flex;gap:11px;align-items:flex-start;font-size:13.5px;line-height:1.45;cursor:pointer;color:var(--ink-2)">
+                <input type="checkbox" checked="{{ form.news }}" onChange="{{ toggleNews }}" style="width:18px;height:18px;margin-top:2px;flex:none;accent-color:var(--accent)">
+                <span>Je souhaite recevoir les actualités et offres de la maison (facultatif).</span>
+              </label>
+              <sc-if value="{{ errShow.consent }}" hint-placeholder-val="{{ false }}"><span style="color:#b23b3b;font-weight:500;font-size:12.5px">Merci d'accepter les conditions et la politique de confidentialité.</span></sc-if>
+            </div>
+
+            <div style="display:flex;justify-content:space-between;margin-top:26px">
+              <button onClick="{{ backStep }}" style="border:1px solid var(--line);padding:13px 22px;border-radius:100px;font-weight:600;font-size:14px" style-hover="background:var(--sand-2)">← Chambre</button>
+              <button onClick="{{ goStep4 }}" style="background:var(--accent);color:#fff;padding:13px 26px;border-radius:100px;font-weight:600;font-size:14px" style-hover="background:var(--accent-strong)">Vérifier ma réservation →</button>
+            </div>
+          </div>
+          </sc-if>
+
+          <!-- STEP 4 : RÉCAP -->
+          <sc-if value="{{ isStep4 }}" hint-placeholder-val="{{ false }}">
+          <div style="animation:dyfade .3s ease">
+            <h2 style="font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:600">Récapitulatif</h2>
+            <p style="font-size:14px;color:var(--ink-2);margin-top:4px">Vérifiez les détails avant de confirmer.</p>
+            <dl style="margin:22px 0 0;border-top:1px solid var(--line)">
+              <div style="display:flex;justify-content:space-between;padding:13px 0;border-bottom:1px solid var(--line)"><dt style="color:var(--ink-2)">Client</dt><dd style="margin:0;font-weight:600">{{ recap.client }}</dd></div>
+              <div style="display:flex;justify-content:space-between;padding:13px 0;border-bottom:1px solid var(--line)"><dt style="color:var(--ink-2)">Chambre</dt><dd style="margin:0;font-weight:600">{{ recap.room }}</dd></div>
+              <div style="display:flex;justify-content:space-between;padding:13px 0;border-bottom:1px solid var(--line)"><dt style="color:var(--ink-2)">Séjour</dt><dd style="margin:0;font-weight:600;text-align:right">{{ recap.dates }}</dd></div>
+              <div style="display:flex;justify-content:space-between;padding:13px 0;border-bottom:1px solid var(--line)"><dt style="color:var(--ink-2)">Voyageurs</dt><dd style="margin:0;font-weight:600">{{ guestsFmt }}</dd></div>
+            </dl>
+            <div style="background:var(--sand);border-radius:14px;padding:18px;margin-top:18px">
+              <div style="display:flex;justify-content:space-between;padding:6px 0;font-size:14px"><span style="color:var(--ink-2)">{{ recap.nightsLine }}</span><span>{{ subtotalFmt }}</span></div>
+              <div style="display:flex;justify-content:space-between;padding:6px 0;font-size:14px"><span style="color:var(--ink-2)">Taxe de séjour</span><span>{{ taxeFmt }}</span></div>
+              <div style="display:flex;justify-content:space-between;padding:12px 0 0;margin-top:6px;border-top:1px solid var(--line);font-size:18px;font-weight:600"><span>Total</span><span style="font-family:'Cormorant Garamond',serif;font-size:24px">{{ totalFmt }}</span></div>
+            </div>
+            <div style="font-size:12.5px;color:var(--ink-2);margin-top:10px">Paiement sur place à l'arrivée · aucune carte requise pour réserver.</div>
+            <div style="display:flex;justify-content:space-between;margin-top:24px">
+              <button onClick="{{ backStep }}" style="border:1px solid var(--line);padding:13px 22px;border-radius:100px;font-weight:600;font-size:14px" style-hover="background:var(--sand-2)">← Modifier</button>
+              <button onClick="{{ confirmBooking }}" style="background:var(--pine);color:#f2ede3;padding:13px 30px;border-radius:100px;font-weight:600;font-size:15px" style-hover="background:#182620">Confirmer la réservation</button>
+            </div>
+          </div>
+          </sc-if>
+
+          <!-- STEP 5 : CONFIRMATION -->
+          <sc-if value="{{ isStep5 }}" hint-placeholder-val="{{ false }}">
+          <div style="text-align:center;padding:20px 10px;animation:dypop .4s ease">
+            <div style="width:64px;height:64px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;font-size:32px;margin:0 auto">✓</div>
+            <h2 style="font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:600;margin-top:18px">Réservation confirmée</h2>
+            <p style="color:var(--ink-2);margin-top:8px;max-width:440px;margin-left:auto;margin-right:auto">Merci {{ form.prenom }}. Un e-mail de confirmation vient d'être envoyé à <strong style="color:var(--ink)">{{ form.email }}</strong>.</p>
+            <div style="display:inline-block;margin-top:22px;background:var(--sand);border:1px dashed var(--accent);border-radius:14px;padding:16px 26px">
+              <div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)">Référence</div>
+              <div style="font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:600;letter-spacing:.05em;margin-top:2px">{{ bookingRef }}</div>
+            </div>
+            <div style="margin-top:18px;font-size:14px;color:var(--ink-2)">{{ recap.room }} · {{ recap.dates }} · {{ totalFmt }}</div>
+            <div style="display:flex;gap:12px;justify-content:center;margin-top:28px;flex-wrap:wrap">
+              <button onClick="{{ navHome }}" style="border:1px solid var(--ink);padding:13px 26px;border-radius:100px;font-weight:600;font-size:14px" style-hover="background:var(--ink);color:var(--sand)">Retour à l'accueil</button>
+              <button onClick="{{ restartBooking }}" style="background:var(--accent);color:#fff;padding:13px 26px;border-radius:100px;font-weight:600;font-size:14px" style-hover="background:var(--accent-strong)">Nouvelle réservation</button>
+            </div>
+          </div>
+          </sc-if>
+
+        </div>
+
+        <!-- SUMMARY -->
+        <sc-if value="{{ showSummary }}" hint-placeholder-val="{{ true }}">
+        <aside style="background:var(--pine);color:#f2ede3;border-radius:20px;padding:24px;position:sticky;top:96px">
+          <div style="font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:#d9a888;font-weight:600">Votre séjour</div>
+          <div role="img" aria-label="{{ summaryAlt }}" style="aspect-ratio:16/9;border-radius:12px;background:{{ summarySwatch }};margin-top:14px"></div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:600;margin-top:14px">{{ summaryRoom }}</div>
+          <dl style="margin:14px 0 0;font-size:14px">
+            <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(242,237,227,.14)"><dt style="color:rgba(242,237,227,.65)">Arrivée</dt><dd style="margin:0">{{ arrivalFmt }}</dd></div>
+            <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(242,237,227,.14)"><dt style="color:rgba(242,237,227,.65)">Départ</dt><dd style="margin:0">{{ departureFmt }}</dd></div>
+            <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(242,237,227,.14)"><dt style="color:rgba(242,237,227,.65)">Voyageurs</dt><dd style="margin:0">{{ guestsFmt }}</dd></div>
+            <div style="display:flex;justify-content:space-between;padding:8px 0"><dt style="color:rgba(242,237,227,.65)">Nuits</dt><dd style="margin:0">{{ nightsFmt }}</dd></div>
+          </dl>
+          <div style="display:flex;justify-content:space-between;align-items:baseline;margin-top:14px;padding-top:14px;border-top:1px solid rgba(242,237,227,.2)">
+            <span style="font-size:14px;color:rgba(242,237,227,.75)">Total estimé</span>
+            <span style="font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:600">{{ totalFmt }}</span>
+          </div>
+          <div style="font-size:12px;color:rgba(242,237,227,.55);margin-top:6px">Taxe de séjour incluse · paiement sur place</div>
+        </aside>
+        </sc-if>
+      </div>
+    </section>
+    </sc-if>
+
+    <!-- ================= HISTOIRE ================= -->
+    <sc-if value="{{ isHistoire }}" hint-placeholder-val="{{ false }}">
+    <div style="animation:dyfade .45s ease">
+      <section style="max-width:900px;margin:0 auto;padding:clamp(36px,6vw,80px) 24px 0;text-align:center">
+        <span style="font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-strong);font-weight:600">La maison</span>
+        <h1 style="font-family:'Cormorant Garamond',serif;font-size:clamp(40px,6vw,74px);font-weight:600;line-height:1.02;margin:16px 0 0">Un siècle de vie<br>au-dessus de la baie</h1>
+        <p style="max-width:600px;margin:22px auto 0;font-size:18px;color:var(--ink-2)">Depuis 1912, cette maison veille sur Bologhine. Nous l'avons réveillée en 2021, pierre après pierre, pour en faire un lieu où l'on ralentit.</p>
+      </section>
+      <section style="max-width:1220px;margin:0 auto;padding:clamp(36px,5vw,64px) 24px">
+        <div role="img" aria-label="Façade chaulée de Dar Yasmine et sa treille de jasmin" style="aspect-ratio:21/9;border-radius:22px;background:linear-gradient(150deg,#e9dcc6,#d3bd97 60%,#c2a97f);display:flex;align-items:flex-end;padding:18px"><span style="font:500 11px/1 ui-monospace,Menlo,monospace;color:#6d5c40;background:rgba(251,248,242,.72);padding:6px 9px;border-radius:7px">PHOTO · façade & treille de jasmin</span></div>
+      </section>
+      <section style="max-width:1220px;margin:0 auto;padding:0 24px clamp(48px,6vw,90px)">
+        <div class="dy-storygrid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:26px">
+          <div><h3 style="font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:600">La restauration</h3><p style="color:var(--ink-2);margin-top:10px;font-size:15px;line-height:1.6">Deux ans de travail avec les maâlem de la Casbah. Zelliges reposés un à un, boiseries de cèdre huilées, tomettes d'origine préservées.</p></div>
+          <div><h3 style="font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:600">La table</h3><p style="color:var(--ink-2);margin-top:10px;font-size:15px;line-height:1.6">Un petit-déjeuner qui change chaque matin&nbsp;: msemen tièdes, fromages fermiers, agrumes du jardin et le café de Yasmine, notre hôtesse.</p></div>
+          <div><h3 style="font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:600">L'esprit</h3><p style="color:var(--ink-2);margin-top:10px;font-size:15px;line-height:1.6">Huit chambres seulement, pour que chaque hôte soit reçu comme un proche. On vous conseille les bonnes adresses, on organise vos visites.</p></div>
+        </div>
+        <div style="background:var(--sand-2);border:1px solid var(--line);border-radius:20px;padding:clamp(28px,4vw,48px);margin-top:44px;text-align:center">
+          <blockquote style="font-family:'Cormorant Garamond',serif;font-size:clamp(24px,3.4vw,38px);font-weight:500;line-height:1.3;max-width:780px;margin:0 auto">« Nous ne louons pas des chambres. Nous partageons une maison, une ville, une manière de prendre le temps. »</blockquote>
+          <div style="margin-top:20px;font-size:14px;color:var(--ink-2)">Yasmine & Karim Haddad · hôtes</div>
+        </div>
+      </section>
+    </div>
+    </sc-if>
+
+    <!-- ================= AVIS ================= -->
+    <sc-if value="{{ isAvis }}" hint-placeholder-val="{{ false }}">
+    <section style="max-width:1220px;margin:0 auto;padding:clamp(32px,5vw,64px) 24px clamp(48px,6vw,80px);animation:dyfade .45s ease">
+      <div class="dy-avishead" style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center">
+        <div>
+          <span style="font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-strong);font-weight:600">Avis voyageurs</span>
+          <h1 style="font-family:'Cormorant Garamond',serif;font-size:clamp(40px,6vw,72px);font-weight:600;line-height:1;margin:14px 0 0">Ce qu'ils en disent</h1>
+          <p style="max-width:480px;margin:18px 0 0;font-size:17px;color:var(--ink-2)">Avis collectés auprès de nos hôtes après leur séjour. Note moyenne de {{ avgNote }} sur 5 pour {{ reviewCount }} séjours.</p>
+        </div>
+        <div style="background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:26px">
+          <div style="display:flex;align-items:baseline;gap:12px"><span style="font-family:'Cormorant Garamond',serif;font-size:56px;font-weight:600;line-height:1">{{ avgNote }}</span><div><div style="color:var(--accent);letter-spacing:2px">★★★★★</div><div style="font-size:13px;color:var(--ink-2);margin-top:2px">{{ reviewCount }} avis</div></div></div>
+          <div style="margin-top:18px;display:flex;flex-direction:column;gap:7px">
+            <sc-for list="{{ distribution }}" as="d" hint-placeholder-count="5">
+              <div style="display:flex;align-items:center;gap:10px;font-size:12.5px"><span style="width:36px;color:var(--ink-2)">{{ d.label }}</span><span style="flex:1;height:7px;border-radius:100px;background:var(--sand-2);overflow:hidden"><span style="display:block;height:100%;background:var(--accent);width:{{ d.width }}"></span></span><span style="width:28px;text-align:right;color:var(--ink-2)">{{ d.count }}</span></div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+      <div class="dy-avisgrid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:44px">
+        <sc-for list="{{ reviews }}" as="rev" hint-placeholder-count="9">
+          <figure style="margin:0;background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:24px;display:flex;flex-direction:column">
+            <div style="display:flex;justify-content:space-between;align-items:center"><div style="color:var(--accent);letter-spacing:2px;font-size:14px">{{ rev.stars }}</div><span style="font-size:12px;color:var(--ink-2);background:var(--sand-2);padding:3px 9px;border-radius:100px">{{ rev.chambre }}</span></div>
+            <blockquote style="margin:14px 0 0;font-size:15px;line-height:1.6;color:var(--ink)">{{ rev.texte }}</blockquote>
+            <figcaption style="margin-top:auto;padding-top:18px;font-size:13.5px;color:var(--ink-2);display:flex;align-items:center;gap:11px">
+              <span style="width:36px;height:36px;border-radius:50%;background:var(--sand-3);color:var(--ink);display:grid;place-items:center;font-weight:600;flex:none">{{ rev.initiales }}</span>
+              <span><strong style="color:var(--ink);font-weight:600">{{ rev.nom }}</strong> · {{ rev.ville }}<br>{{ rev.dateFmt }}</span>
+            </figcaption>
+          </figure>
+        </sc-for>
+      </div>
+    </section>
+    </sc-if>
+
+    <!-- ================= CONTACT ================= -->
+    <sc-if value="{{ isContact }}" hint-placeholder-val="{{ false }}">
+    <section style="max-width:1220px;margin:0 auto;padding:clamp(32px,5vw,64px) 24px clamp(48px,6vw,80px);animation:dyfade .45s ease">
+      <span style="font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-strong);font-weight:600">Nous écrire</span>
+      <h1 style="font-family:'Cormorant Garamond',serif;font-size:clamp(40px,6vw,72px);font-weight:600;line-height:1;margin:14px 0 0">Contact & accès</h1>
+      <div class="dy-contactgrid" style="display:grid;grid-template-columns:1.1fr 1fr;gap:clamp(28px,4vw,56px);margin-top:36px;align-items:start">
+        <div>
+          <sc-if value="{{ contactSent }}" hint-placeholder-val="{{ false }}">
+            <div style="background:var(--paper);border:1px solid var(--accent);border-radius:18px;padding:32px;text-align:center;animation:dypop .4s ease">
+              <div style="width:56px;height:56px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;font-size:28px;margin:0 auto">✓</div>
+              <h2 style="font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:600;margin-top:14px">Message envoyé</h2>
+              <p style="color:var(--ink-2);margin-top:8px">Merci, nous vous répondons sous 24h.</p>
+            </div>
+          </sc-if>
+          <sc-if value="{{ contactForm }}" hint-placeholder-val="{{ true }}">
+          <form onSubmit="{{ submitContact }}" style="background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:clamp(20px,3vw,30px)">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px" class="dy-formgrid">
+              <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600">Nom complet
+                <input value="{{ cForm.nom }}" onInput="{{ onCNom }}" placeholder="Votre nom" style="{{ cFieldStyle.nom }}">
+              </label>
+              <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600">E-mail
+                <input value="{{ cForm.email }}" onInput="{{ onCEmail }}" type="email" placeholder="vous@email.dz" style="{{ cFieldStyle.email }}">
+              </label>
+            </div>
+            <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600;margin-top:16px">Sujet
+              <select value="{{ cForm.sujet }}" onChange="{{ onCSujet }}" style="border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:var(--sand)">
+                <option>Demande de réservation</option>
+                <option>Privatisation / événement</option>
+                <option>Question sur un séjour</option>
+                <option>Autre</option>
+              </select>
+            </label>
+            <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600;margin-top:16px">Message
+              <textarea value="{{ cForm.message }}" onInput="{{ onCMsg }}" rows="5" placeholder="Comment pouvons-nous vous aider ?" style="{{ cFieldStyle.message }}"></textarea>
+            </label>
+            <label style="display:flex;gap:11px;align-items:flex-start;font-size:13.5px;line-height:1.45;cursor:pointer;margin-top:16px">
+              <input type="checkbox" checked="{{ cForm.consent }}" onChange="{{ toggleCConsent }}" style="width:18px;height:18px;margin-top:2px;flex:none;accent-color:var(--accent)">
+              <span>J'accepte que mes données soient utilisées pour traiter ma demande (<button type="button" onClick="{{ navConfid }}" style="color:var(--accent-strong);text-decoration:underline;background:none">politique de confidentialité</button>). <span style="color:#b23b3b">*</span></span>
+            </label>
+            <sc-if value="{{ cErrShow }}" hint-placeholder-val="{{ false }}"><div style="color:#b23b3b;font-weight:500;font-size:12.5px;margin-top:10px">Merci de remplir les champs requis et d'accepter la politique de confidentialité.</div></sc-if>
+            <button type="submit" style="width:100%;margin-top:20px;background:var(--accent);color:#fff;font-weight:600;font-size:15px;padding:15px;border-radius:14px" style-hover="background:var(--accent-strong)">Envoyer le message</button>
+          </form>
+          </sc-if>
+        </div>
+        <div>
+          <div role="img" aria-label="Carte de situation de Dar Yasmine à Bologhine, Alger" style="aspect-ratio:4/3;border-radius:18px;background:linear-gradient(150deg,#dfe7e0,#c6d4ca);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center">
+            <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(38,34,28,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(38,34,28,.06) 1px,transparent 1px);background-size:36px 36px"></div>
+            <div style="position:relative;text-align:center"><div style="width:20px;height:20px;border-radius:50%;background:var(--accent);border:4px solid #fff;box-shadow:0 4px 12px rgba(0,0,0,.25);margin:0 auto"></div><span style="display:inline-block;margin-top:8px;font:500 11px/1 ui-monospace,Menlo,monospace;color:#586b5f;background:rgba(251,248,242,.8);padding:5px 9px;border-radius:7px">CARTE · Bologhine, Alger</span></div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:2px;margin-top:22px">
+            <div style="display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--line)"><span style="color:var(--accent);flex:none">✦</span><div><div style="font-weight:600">Adresse</div><div style="color:var(--ink-2);font-size:14.5px">14, rue des Frères Oughlissi<br>Bologhine, 16000 Alger — Algérie</div></div></div>
+            <div style="display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--line)"><span style="color:var(--accent);flex:none">✦</span><div><div style="font-weight:600">Téléphone</div><div style="color:var(--ink-2);font-size:14.5px">+213 _ __ __ __ __</div></div></div>
+            <div style="display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--line)"><span style="color:var(--accent);flex:none">✦</span><div><div style="font-weight:600">E-mail</div><div style="color:var(--ink-2);font-size:14.5px">bonjour@daryasmine.dz</div></div></div>
+            <div style="display:flex;gap:14px;padding:16px 0"><span style="color:var(--accent);flex:none">✦</span><div><div style="font-weight:600">Réception</div><div style="color:var(--ink-2);font-size:14.5px">Tous les jours · 8h – 22h<br>Arrivées à partir de 14h · départs avant 11h</div></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    </sc-if>
+
+    <!-- ================= MENTIONS LÉGALES ================= -->
+    <sc-if value="{{ isMentions }}" hint-placeholder-val="{{ false }}">
+    <section style="max-width:760px;margin:0 auto;padding:clamp(32px,5vw,64px) 24px clamp(48px,6vw,80px);animation:dyfade .45s ease">
+      <h1 style="font-family:'Cormorant Garamond',serif;font-size:clamp(36px,5vw,58px);font-weight:600;line-height:1">Mentions légales & conditions</h1>
+      <div style="color:var(--ink-2);font-size:15.5px;line-height:1.7;margin-top:24px;display:flex;flex-direction:column;gap:22px">
+        <div><h2 style="font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--ink);font-weight:600">Éditeur du site</h2><p style="margin-top:8px">Maison d'hôtes Dar Yasmine — 14, rue des Frères Oughlissi, Bologhine, 16000 Alger, Algérie. Registre du commerce n° 16/00-XXXXXXX. Directeur de la publication&nbsp;: Karim Haddad.</p></div>
+        <div><h2 style="font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--ink);font-weight:600">Hébergement</h2><p style="margin-top:8px">Ce site de démonstration est hébergé à des fins de présentation. Les informations, tarifs et disponibilités présentés sont fictifs.</p></div>
+        <div><h2 style="font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--ink);font-weight:600">Conditions de réservation</h2><p style="margin-top:8px">Les tarifs sont indiqués en dinars algériens (DA), par chambre et par nuit, petit-déjeuner inclus. La taxe de séjour (150 DA / personne / nuit) s'ajoute au montant. Le règlement s'effectue sur place à l'arrivée.</p></div>
+        <div><h2 style="font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--ink);font-weight:600">Annulation</h2><p style="margin-top:8px">Annulation gratuite jusqu'à 48h avant la date d'arrivée. Passé ce délai, la première nuit est due. En cas de non-présentation, la totalité du séjour peut être facturée.</p></div>
+        <div><h2 style="font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--ink);font-weight:600">Propriété intellectuelle</h2><p style="margin-top:8px">L'ensemble des contenus de ce site est protégé. Toute reproduction sans autorisation est interdite.</p></div>
+      </div>
+      <button onClick="{{ navHome }}" style="margin-top:34px;font-weight:600;font-size:15px;border-bottom:1px solid var(--ink);padding-bottom:3px">← Retour à l'accueil</button>
+    </section>
+    </sc-if>
+
+    <!-- ================= CONFIDENTIALITÉ ================= -->
+    <sc-if value="{{ isConfidentialite }}" hint-placeholder-val="{{ false }}">
+    <section style="max-width:760px;margin:0 auto;padding:clamp(32px,5vw,64px) 24px clamp(48px,6vw,80px);animation:dyfade .45s ease">
+      <h1 style="font-family:'Cormorant Garamond',serif;font-size:clamp(36px,5vw,58px);font-weight:600;line-height:1">Politique de confidentialité</h1>
+      <div style="color:var(--ink-2);font-size:15.5px;line-height:1.7;margin-top:24px;display:flex;flex-direction:column;gap:22px">
+        <div><h2 style="font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--ink);font-weight:600">Données collectées</h2><p style="margin-top:8px">Lors d'une réservation ou d'une demande de contact, nous collectons&nbsp;: nom, prénom, e-mail, téléphone et les informations relatives à votre séjour. Ces données sont strictement nécessaires au traitement de votre demande.</p></div>
+        <div><h2 style="font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--ink);font-weight:600">Finalité</h2><p style="margin-top:8px">Vos données servent uniquement à gérer votre réservation, vous contacter et — si vous y avez consenti — vous adresser nos actualités. Elles ne sont jamais revendues.</p></div>
+        <div><h2 style="font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--ink);font-weight:600">Conservation</h2><p style="margin-top:8px">Les données de réservation sont conservées trois ans après votre dernier séjour, puis supprimées ou anonymisées.</p></div>
+        <div><h2 style="font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--ink);font-weight:600">Vos droits</h2><p style="margin-top:8px">Vous disposez d'un droit d'accès, de rectification, d'effacement et d'opposition sur vos données. Pour l'exercer, écrivez à <strong style="color:var(--ink)">confidentialite@daryasmine.dz</strong>.</p></div>
+        <div><h2 style="font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--ink);font-weight:600">Cookies</h2><p style="margin-top:8px">Ce site utilise uniquement des cookies techniques nécessaires à son fonctionnement, et — avec votre accord — des cookies de mesure d'audience. Vous pouvez modifier votre choix à tout moment.</p><button onClick="{{ reopenCookies }}" style="margin-top:10px;font-weight:600;color:var(--accent-strong);border-bottom:1px solid var(--accent);padding-bottom:2px;background:none">Gérer mes préférences cookies</button></div>
+      </div>
+      <button onClick="{{ navHome }}" style="margin-top:34px;font-weight:600;font-size:15px;border-bottom:1px solid var(--ink);padding-bottom:3px">← Retour à l'accueil</button>
+    </section>
+    </sc-if>
+
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer style="background:var(--pine);color:#e9e2d5;margin-top:auto">
+    <div style="max-width:1220px;margin:0 auto;padding:clamp(44px,5vw,72px) 24px 28px">
+      <div class="dy-footgrid" style="display:grid;grid-template-columns:1.5fr 1fr 1fr 1.2fr;gap:36px">
+        <div>
+          <div style="display:flex;align-items:center;gap:11px"><span style="width:38px;height:38px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600">Y</span><span style="font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:600">Dar Yasmine</span></div>
+          <p style="color:rgba(233,226,213,.6);font-size:14.5px;margin-top:16px;max-width:280px;line-height:1.6">Maison d'hôtes de charme dans les hauteurs de Bologhine, face à la baie d'Alger. Huit chambres, une terrasse, une table.</p>
+          <div style="display:flex;color:var(--accent);letter-spacing:2px;margin-top:16px">★★★★★ <span style="color:rgba(233,226,213,.6);letter-spacing:normal;margin-left:8px;font-size:14px">{{ avgNote }}/5</span></div>
+        </div>
+        <div>
+          <div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(233,226,213,.5);font-weight:600">Naviguer</div>
+          <div style="display:flex;flex-direction:column;gap:11px;margin-top:16px;font-size:14.5px">
+            <button onClick="{{ navRooms }}" style="text-align:left;background:none;color:rgba(233,226,213,.85)" style-hover="color:#fff">Chambres</button>
+            <button onClick="{{ navReserve }}" style="text-align:left;background:none;color:rgba(233,226,213,.85)" style-hover="color:#fff">Réserver</button>
+            <button onClick="{{ navStory }}" style="text-align:left;background:none;color:rgba(233,226,213,.85)" style-hover="color:#fff">La maison</button>
+            <button onClick="{{ navReviews }}" style="text-align:left;background:none;color:rgba(233,226,213,.85)" style-hover="color:#fff">Avis</button>
+            <button onClick="{{ navContact }}" style="text-align:left;background:none;color:rgba(233,226,213,.85)" style-hover="color:#fff">Contact</button>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(233,226,213,.5);font-weight:600">Légal</div>
+          <div style="display:flex;flex-direction:column;gap:11px;margin-top:16px;font-size:14.5px">
+            <button onClick="{{ navMentions }}" style="text-align:left;background:none;color:rgba(233,226,213,.85)" style-hover="color:#fff">Mentions légales</button>
+            <button onClick="{{ navConfid }}" style="text-align:left;background:none;color:rgba(233,226,213,.85)" style-hover="color:#fff">Confidentialité</button>
+            <button onClick="{{ reopenCookies }}" style="text-align:left;background:none;color:rgba(233,226,213,.85)" style-hover="color:#fff">Préférences cookies</button>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(233,226,213,.5);font-weight:600">Nous trouver</div>
+          <div style="margin-top:16px;font-size:14.5px;color:rgba(233,226,213,.75);line-height:1.7">14, rue des Frères Oughlissi<br>Bologhine, 16000 Alger<br>+213 _ __ __ __ __<br>bonjour@daryasmine.dz</div>
+        </div>
+      </div>
+      <div style="border-top:1px solid rgba(233,226,213,.16);margin-top:40px;padding-top:22px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap">
+        <span style="font-size:13px;color:rgba(233,226,213,.5)">© 2026 Dar Yasmine — Site de démonstration. Contenus fictifs.</span>
+        <a href="https://difarslan.com" target="_blank" rel="noopener" style="font-size:13px;color:rgba(233,226,213,.7);text-decoration:none;border-bottom:1px solid rgba(233,226,213,.3);padding-bottom:2px" style-hover="color:#fff">Réalisé par Arslan DIF — difarslan.com</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============ COOKIE BANNER ============ -->
+  <sc-if value="{{ cookieVisible }}" hint-placeholder-val="{{ false }}">
+    <div role="dialog" aria-label="Préférences cookies" style="position:fixed;left:16px;right:16px;bottom:16px;z-index:70;max-width:820px;margin:0 auto;background:var(--paper);border:1px solid var(--line);border-radius:18px;box-shadow:0 24px 60px -24px rgba(38,34,28,.5);padding:22px 24px;animation:dyfade .4s ease">
+      <div class="dy-cookie" style="display:flex;gap:22px;align-items:center;justify-content:space-between;flex-wrap:wrap">
+        <div style="flex:1;min-width:260px">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600">Un peu de discrétion</div>
+          <p style="font-size:14px;color:var(--ink-2);margin-top:6px;line-height:1.5">Nous utilisons des cookies techniques indispensables et, avec votre accord, des cookies de mesure d'audience. Consultez notre <button onClick="{{ navConfid }}" style="color:var(--accent-strong);text-decoration:underline;background:none">politique de confidentialité</button>.</p>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <button onClick="{{ refuseCookies }}" style="border:1px solid var(--ink);color:var(--ink);font-weight:600;font-size:14px;padding:12px 22px;border-radius:100px;background:transparent" style-hover="background:var(--sand-2)">Refuser</button>
+          <button onClick="{{ acceptCookies }}" style="background:var(--accent);color:#fff;font-weight:600;font-size:14px;padding:12px 22px;border-radius:100px" style-hover="background:var(--accent-strong)">Tout accepter</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+</div>
+
+<helmet>
+<style>
+  @media (max-width: 900px){
+    .dy-desknav{display:none!important}
+    .dy-burger{display:flex!important}
+    .dy-herogrid,.dy-introgrid,.dy-detailgrid,.dy-bookgrid,.dy-cta,.dy-avishead,.dy-contactgrid{grid-template-columns:1fr!important}
+    .dy-roomgrid{grid-template-columns:1fr 1fr!important}
+    .dy-avisgrid,.dy-storygrid{grid-template-columns:1fr!important}
+    .dy-facts{grid-template-columns:1fr 1fr!important}
+  }
+  @media (max-width: 620px){
+    .dy-roomgrid{grid-template-columns:1fr!important}
+    .dy-formgrid{grid-template-columns:1fr!important}
+    .dy-reservebtn{display:none!important}
+  }
+</style>
+</helmet>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:&quot;100%&quot;,&quot;height&quot;:880},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#b5613e&quot;,&quot;options&quot;:[&quot;#b5613e&quot;,&quot;#2f6e5b&quot;,&quot;#7a3b4a&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Identité&quot;},&quot;promo&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Contenu&quot;}}">
+class Component extends DCLogic {
+  constructor(props){
+    super(props);
+    const strongMap = {'#b5613e':'#8f4a2e','#2f6e5b':'#234f42','#7a3b4a':'#5c2b37'};
+    this.strongMap = strongMap;
+    this.MONTHS = ['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+    this.MONTHS_SHORT = ['janv.','févr.','mars','avr.','mai','juin','juil.','août','sept.','oct.','nov.','déc.'];
+    this.TODAY = '2026-07-01';
+
+    this.roomsData = [
+      {id:'yasmine', nom:'Yasmine', type:'Suite vue baie', prix:22000, cap:2, taille:32, etage:2, vue:'Baie d\u2019Alger', vueMer:true, swatch:'linear-gradient(150deg,#e9dcc6,#d3bd97 60%,#c2a97f)',
+        court:'Notre plus belle suite, terrasse privée face au large et lit à baldaquin en cèdre.',
+        description:'Perchée au dernier étage, la suite Yasmine ouvre sur une terrasse privée d\u2019où la baie d\u2019Alger se déploie du port jusqu\u2019à la pointe Pescade. Lit à baldaquin habillé de lin, salle de bain en tadelakt, et le silence des hauteurs. C\u2019est ici que le soleil se couche le mieux.',
+        booked:[['2026-07-08','2026-07-14'],['2026-08-01','2026-08-05']],
+        equip:['Terrasse privée vue mer','Lit king-size à baldaquin','Salle de bain en tadelakt','Climatisation réversible','Wi-Fi fibre','Peignoirs & linge de bain','Coffre-fort','Petit-déjeuner inclus']},
+      {id:'casbah', nom:'Casbah', type:'Chambre patrimoine', prix:14000, cap:2, taille:24, etage:1, vue:'Patio & ville', vueMer:false, swatch:'linear-gradient(150deg,#e6dccb,#cdb389)',
+        court:'Zelliges d\u2019origine et boiseries anciennes, l\u2019âme de la vieille ville.',
+        description:'La chambre Casbah célèbre l\u2019artisanat algérois&nbsp;: zelliges bleus reposés à la main, plafond de cèdre sculpté, moucharabieh d\u2019époque. Une fenêtre donne sur le patio à fontaine. Un cocon patrimonial au cœur de la maison.',
+        booked:[['2026-07-20','2026-07-25']],
+        equip:['Zelliges & boiseries d\u2019origine','Lit queen-size','Salle de bain privative','Climatisation','Wi-Fi fibre','Vue sur le patio','Petit-déjeuner inclus']},
+      {id:'corail', nom:'Corail', type:'Chambre double', prix:12500, cap:2, taille:20, etage:1, vue:'Jardin', vueMer:false, swatch:'linear-gradient(150deg,#ecd9cb,#d8b79f)',
+        court:'Lumineuse et douce, ouverte sur la roseraie du jardin.',
+        description:'Tons corail et lin écru, la chambre respire la douceur. Ses portes-fenêtres donnent sur la roseraie où l\u2019on prend le café le matin. Idéale pour un séjour à deux, calme et lumineux.',
+        booked:[],
+        equip:['Accès jardin','Lit queen-size','Salle de bain privative','Climatisation','Wi-Fi fibre','Petit-déjeuner inclus']},
+      {id:'zellige', nom:'Zellige', type:'Chambre familiale', prix:18000, cap:4, taille:30, etage:2, vue:'Ville & mer', vueMer:true, swatch:'linear-gradient(150deg,#dfe7e0,#bdd0c4)',
+        court:'Spacieuse et modulable, pensée pour les familles.',
+        description:'Deux espaces nuit séparés par une arche en plâtre sculpté, jusqu\u2019à quatre voyageurs. Aperçu de mer depuis la fenêtre principale, coin lecture et grande salle de bain. La chambre préférée des familles.',
+        booked:[['2026-07-03','2026-07-06']],
+        equip:['Jusqu\u2019à 4 personnes','Un lit double + deux lits simples','Aperçu mer','Grande salle de bain','Climatisation','Wi-Fi fibre','Petit-déjeuner inclus']},
+      {id:'olea', nom:'Oléa', type:'Chambre jardin', prix:11000, cap:2, taille:22, etage:0, vue:'Oliveraie', vueMer:false, swatch:'linear-gradient(150deg,#e2e6d5,#c4cba9)',
+        court:'De plain-pied, sous les oliviers centenaires.',
+        description:'Au rez-de-jardin, la chambre Oléa s\u2019ouvre de plain-pied sur l\u2019oliveraie. Fraîche en été, parfumée au printemps. Accessible sans escalier, elle convient aux séjours prolongés.',
+        booked:[['2026-07-15','2026-07-19']],
+        equip:['Accès de plain-pied','Terrasse sous les oliviers','Lit queen-size','Salle de bain privative','Climatisation','Wi-Fi fibre','Petit-déjeuner inclus']},
+      {id:'amande', nom:'Amande', type:'Chambre simple', prix:9500, cap:1, taille:16, etage:1, vue:'Patio', vueMer:false, swatch:'linear-gradient(150deg,#ede3d4,#d6c3ac)',
+        court:'Compacte et raffinée, pour le voyageur solo.',
+        description:'Pensée pour une personne, la chambre Amande fait le pari de l\u2019essentiel bien fait&nbsp;: literie soignée, bureau, et une fenêtre sur le patio. Le meilleur rapport pour un séjour solo à Alger.',
+        booked:[['2026-08-10','2026-08-12']],
+        equip:['Lit simple confort','Bureau de travail','Salle de bain privative','Climatisation','Wi-Fi fibre','Petit-déjeuner inclus']},
+      {id:'sirocco', nom:'Sirocco', type:'Suite terrasse', prix:20000, cap:3, taille:34, etage:2, vue:'Baie d\u2019Alger', vueMer:true, swatch:'linear-gradient(150deg,#e9dcc6,#cbb083)',
+        court:'Grande suite d\u2019angle et sa terrasse au soleil couchant.',
+        description:'Suite d\u2019angle baignée de lumière, avec salon attenant et vaste terrasse plein ouest. Jusqu\u2019à trois voyageurs. Le vent du sirocco n\u2019y apporte que la chaleur des soirées d\u2019été.',
+        booked:[['2026-07-10','2026-07-13']],
+        equip:['Terrasse d\u2019angle vue mer','Salon attenant','Lit king-size + canapé-lit','Salle de bain en tadelakt','Climatisation','Wi-Fi fibre','Petit-déjeuner inclus']},
+      {id:'menthe', nom:'Menthe', type:'Double supérieure', prix:13500, cap:2, taille:23, etage:1, vue:'Jardin & patio', vueMer:false, swatch:'linear-gradient(150deg,#dde8dd,#bcd0bf)',
+        court:'Fraîche et végétale, sur le patio à fontaine.',
+        description:'Palette de verts doux et coton lavé, la chambre Menthe donne sur le patio où murmure la fontaine. Une adresse rafraîchissante pour les nuits d\u2019été algéroises.',
+        booked:[],
+        equip:['Vue sur patio à fontaine','Lit queen-size','Salle de bain privative','Climatisation','Wi-Fi fibre','Petit-déjeuner inclus']}
+    ];
+
+    this.reviewsData = [
+      {nom:'Amel B.', ville:'Oran', note:5, date:'2026-06-14', chambre:'Suite Yasmine', texte:'Un séjour hors du temps. La terrasse au coucher du soleil vaut à elle seule le déplacement, et l\u2019accueil de Yasmine est d\u2019une gentillesse rare.', court:'Un séjour hors du temps, la terrasse vaut le déplacement.'},
+      {nom:'Julien M.', ville:'Lyon', note:5, date:'2026-06-02', chambre:'Chambre Casbah', texte:'On se croirait invités chez des amis. Le petit-déjeuner maison est un festin, et la maison est d\u2019une beauté à couper le souffle.', court:'On se croirait invités chez des amis. Petit-déjeuner divin.'},
+      {nom:'Nadia L.', ville:'Alger', note:5, date:'2026-05-21', chambre:'Suite Sirocco', texte:'Une parenthèse magnifique à deux pas de chez moi. Les zelliges, le calme, la vue&#8230; tout est soigné jusqu\u2019au moindre détail.', court:'Une parenthèse magnifique, soignée jusqu\u2019au moindre détail.'},
+      {nom:'Karim T.', ville:'Constantine', note:4, date:'2026-05-08', chambre:'Chambre Corail', texte:'Très belle maison, chambre lumineuse et calme. Un léger bruit de rue le matin, mais le charme des lieux fait tout oublier.', court:'Très belle maison, chambre lumineuse. Le charme fait tout oublier.'},
+      {nom:'Sofia R.', ville:'Marseille', note:5, date:'2026-04-27', chambre:'Chambre Zellige', texte:'Parfait en famille&nbsp;: la chambre familiale est spacieuse et nos enfants ont adoré le patio. Emplacement idéal pour visiter la Casbah.', court:'Parfait en famille, spacieux et idéalement situé.'},
+      {nom:'Yacine H.', ville:'Alger', note:5, date:'2026-04-11', chambre:'Suite Yasmine', texte:'Le luxe discret d\u2019une vraie maison algéroise. On reviendra sans hésiter, probablement chaque printemps.', court:'Le luxe discret d\u2019une vraie maison algéroise.'},
+      {nom:'Claire D.', ville:'Paris', note:5, date:'2026-03-29', chambre:'Chambre Menthe', texte:'La fontaine du patio, l\u2019odeur du jasmin, le thé à la menthe&#8230; une expérience sensorielle complète. Merci pour tout.', court:'Le jasmin, la fontaine, le thé&#8230; une expérience complète.'},
+      {nom:'Riad K.', ville:'Béjaïa', note:4, date:'2026-03-15', chambre:'Chambre Oléa', texte:'Chambre de plain-pied très agréable et calme, ouverte sur les oliviers. Un vrai havre de paix. Rapport qualité-prix excellent.', court:'Un vrai havre de paix, rapport qualité-prix excellent.'},
+      {nom:'Inès F.', ville:'Tunis', note:5, date:'2026-02-20', chambre:'Chambre Amande', texte:'Voyageant seule, je me suis sentie totalement chez moi et en sécurité. Petite chambre, grand cœur. Je recommande les yeux fermés.', court:'Voyageant seule, je me suis sentie totalement chez moi.'}
+    ];
+
+    this.state = {
+      view:'accueil', currentRoomId:null, menuOpen:false,
+      step:1, calYear:2026, calMonth:6, arrival:null, departure:null, guests:2, selectedRoomId:null,
+      form:{prenom:'', nom:'', email:'', tel:'', message:'', cgv:false, data:false, news:false},
+      errors:{}, triedNext3:false, bookingRef:null,
+      cForm:{nom:'', email:'', sujet:'Demande de réservation', message:'', consent:false},
+      cTried:false, contactSent:false,
+      cookie: (typeof localStorage!=='undefined' ? localStorage.getItem('dy_cookie') : null)
+    };
+  }
+
+  componentDidMount(){ this.applyAccent(); }
+  componentDidUpdate(prev){ if(prev.accent !== this.props.accent) this.applyAccent(); }
+  applyAccent(){
+    const a = this.props.accent || '#b5613e';
+    const s = this.strongMap[a] || '#8f4a2e';
+    const root = document.documentElement;
+    root.style.setProperty('--accent', a);
+    root.style.setProperty('--accent-strong', s);
+  }
+
+  fmt(n){ return Number(n).toLocaleString('fr-FR'); }
+  fmtDA(n){ return this.fmt(n) + ' DA'; }
+  pad(n){ return String(n).padStart(2,'0'); }
+  isoOf(d){ return d.getFullYear()+'-'+this.pad(d.getMonth()+1)+'-'+this.pad(d.getDate()); }
+  parseIso(s){ const [y,m,d]=s.split('-').map(Number); return new Date(y,m-1,d); }
+  fmtDate(iso){ if(!iso) return '— sélectionner'; const d=this.parseIso(iso); return d.getDate()+' '+this.MONTHS_SHORT[d.getMonth()]+' '+d.getFullYear(); }
+  nights(){ if(!this.state.arrival||!this.state.departure) return 0; return Math.round((this.parseIso(this.state.departure)-this.parseIso(this.state.arrival))/86400000); }
+  datesValid(){ return this.state.arrival && this.state.departure && this.state.departure>this.state.arrival; }
+  stars(n){ return '★★★★★'.slice(0,n) + '☆☆☆☆☆'.slice(0,5-n); }
+  roomById(id){ return this.roomsData.find(r=>r.id===id); }
+  isAvailable(room){ if(!this.datesValid()) return true; const a=this.state.arrival, d=this.state.departure; return !room.booked.some(([s,e])=> a<e && d>s); }
+
+  // nav
+  setView(v){ this.setState({view:v, menuOpen:false}); if(typeof window!=='undefined') window.scrollTo({top:0,left:0}); }
+  openRoom(id){ this.setState({view:'detail', currentRoomId:id, menuOpen:false}); if(typeof window!=='undefined') window.scrollTo({top:0}); }
+  startBooking(id){ this.setState(s=>({view:'reserver', menuOpen:false, selectedRoomId:id||s.selectedRoomId, step: (s.step>=5?1:s.step)})); if(typeof window!=='undefined') window.scrollTo({top:0}); }
+
+  // calendar
+  prevMonth(){ this.setState(s=>{ let m=s.calMonth-1,y=s.calYear; if(m<0){m=11;y--;} if(y<2026 || (y===2026&&m<6)) return {}; return {calMonth:m,calYear:y}; }); }
+  nextMonth(){ this.setState(s=>{ let m=s.calMonth+1,y=s.calYear; if(m>11){m=0;y++;} if(y>2027) return {}; return {calMonth:m,calYear:y}; }); }
+  selectDay(iso){ this.setState(s=>{ if(!s.arrival || (s.arrival && s.departure)) return {arrival:iso, departure:null}; if(iso>s.arrival) return {departure:iso}; return {arrival:iso, departure:null}; }); }
+  incGuests(){ this.setState(s=>({guests:Math.min(6,s.guests+1)})); }
+  decGuests(){ this.setState(s=>({guests:Math.max(1,s.guests-1)})); }
+
+  goStep2(){ if(this.datesValid()) this.setState({step:2}); }
+  selectBookingRoom(id){ this.setState({selectedRoomId:id}); }
+  goStep3(){ const r=this.roomById(this.state.selectedRoomId); if(r && this.isAvailable(r)) this.setState({step:3}); }
+  validate3(){ const f=this.state.form; const e={}; if(!f.prenom.trim())e.prenom=1; if(!f.nom.trim())e.nom=1; if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(f.email))e.email=1; if(!f.tel.trim())e.tel=1; if(!f.cgv||!f.data)e.consent=1; return e; }
+  goStep4(){ const e=this.validate3(); this.setState({errors:e, triedNext3:true}); if(Object.keys(e).length===0) this.setState({step:4}); }
+  backStep(){ this.setState(s=>({step:Math.max(1,s.step-1)})); }
+  confirmBooking(){ const ref='DY-2026-'+Math.floor(1000+Math.random()*9000); this.setState({bookingRef:ref, step:5}); if(typeof window!=='undefined') window.scrollTo({top:0}); }
+  restartBooking(){ this.setState({step:1, arrival:null, departure:null, selectedRoomId:null, guests:2, bookingRef:null, triedNext3:false, errors:{}, form:{prenom:'',nom:'',email:'',tel:'',message:'',cgv:false,data:false,news:false}}); }
+
+  setForm(k,v){ this.setState(s=>({form:{...s.form,[k]:v}})); }
+  setC(k,v){ this.setState(s=>({cForm:{...s.cForm,[k]:v}})); }
+  submitContact(e){ if(e&&e.preventDefault)e.preventDefault(); const f=this.state.cForm; const ok=f.nom.trim()&&/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(f.email)&&f.message.trim()&&f.consent; this.setState({cTried:true}); if(ok) this.setState({contactSent:true}); }
+
+  acceptCookies(){ if(typeof localStorage!=='undefined') localStorage.setItem('dy_cookie','all'); this.setState({cookie:'all'}); }
+  refuseCookies(){ if(typeof localStorage!=='undefined') localStorage.setItem('dy_cookie','refused'); this.setState({cookie:'refused'}); }
+  reopenCookies(){ this.setState({cookie:null}); }
+
+  navStyle(active){ const base='background:none;font-size:14.5px;font-weight:500;padding:8px 12px;border-radius:8px;transition:color .2s;'; return base + (active?'color:var(--accent-strong)':'color:var(--ink-2)'); }
+
+  renderVals(){
+    const s=this.state;
+    const nights=this.nights();
+    const selRoom=this.roomById(s.selectedRoomId);
+    const guestsFmt = s.guests + (s.guests>1?' voyageurs':' voyageur');
+
+    // rooms display
+    const decorate=(r)=>({
+      ...r,
+      prixFmt:this.fmtDA(r.prix),
+      capaciteFmt: r.cap + (r.cap>1?' personnes':' personne'),
+      meta: r.taille+' m² · '+r.cap+' pers · '+(r.etage===0?'rez-de-jardin':(r.etage+(r.etage===1?'ᵉʳ':'ᵉ')+' étage')),
+      etageFmt: r.etage===0?'Rez-de-jardin':(r.etage+(r.etage===1?'ᵉʳ':'ᵉ')+' étage'),
+      alt:'Chambre '+r.nom+' — '+r.type+' à Dar Yasmine',
+      ariaOpen:'Voir la chambre '+r.nom,
+      tags:[r.taille+' m²', (r.cap>1?r.cap+' pers.':'1 pers.'), r.vueMer?'Vue mer':r.vue],
+      open:()=>this.openRoom(r.id),
+      reserve:()=>this.startBooking(r.id)
+    });
+    const rooms=this.roomsData.map(decorate);
+    const roomsPreview=rooms.slice(0,4);
+    const current=s.currentRoomId?decorate(this.roomById(s.currentRoomId)):rooms[0];
+
+    // reviews
+    const decoRev=(r)=>{ const d=this.parseIso(r.date); return {...r, stars:this.stars(r.note), noteFmt:r.note.toFixed(1).replace('.',','), dateFmt:d.getDate()+' '+this.MONTHS[d.getMonth()]+' '+d.getFullYear(), initiales:r.nom.split(' ').map(x=>x[0]).join('').slice(0,2)}; };
+    const reviews=this.reviewsData.map(decoRev);
+    const avg=(this.reviewsData.reduce((a,r)=>a+r.note,0)/this.reviewsData.length);
+    const avgNote=avg.toFixed(1).replace('.',',');
+    const dist=[5,4,3,2,1].map(star=>{ const c=this.reviewsData.filter(r=>r.note===star).length; return {label:star+' ★', count:c, width:Math.round(c/this.reviewsData.length*100)+'%'}; });
+
+    // calendar
+    const first=new Date(s.calYear,s.calMonth,1);
+    const startIdx=(first.getDay()+6)%7;
+    const cells=[];
+    for(let i=0;i<42;i++){
+      const off=i-startIdx;
+      const d=new Date(s.calYear,s.calMonth,off+1);
+      const iso=this.isoOf(d);
+      const muted=d.getMonth()!==s.calMonth;
+      const disabled=iso<this.TODAY;
+      const isStart=iso===s.arrival, isEnd=iso===s.departure;
+      const inRange=s.arrival&&s.departure&&iso>s.arrival&&iso<s.departure;
+      let st='height:42px;border-radius:10px;font-size:14px;background:none;border:none;transition:background .15s;display:flex;align-items:center;justify-content:center;';
+      if(disabled){ st+='color:rgba(38,34,28,.28);cursor:default;'; }
+      else if(isStart||isEnd){ st+='background:var(--accent);color:#fff;font-weight:600;cursor:pointer;'; }
+      else if(inRange){ st+='background:rgba(181,97,62,.16);color:var(--ink);cursor:pointer;'; }
+      else if(muted){ st+='color:rgba(38,34,28,.35);cursor:pointer;'; }
+      else { st+='color:var(--ink);cursor:pointer;'; }
+      cells.push({label:d.getDate(), iso, style:st, aria:(disabled?'Indisponible ':'')+d.getDate()+' '+this.MONTHS[d.getMonth()], onClick: disabled?(()=>{}):(()=>this.selectDay(iso))});
+    }
+
+    // availability
+    const availAll = this.datesValid()? rooms.filter(r=>this.isAvailable(this.roomById(r.id))) : rooms;
+    const availableRooms = availAll.filter(r=>r.cap>=1).map(r=>{
+      const sel=r.id===s.selectedRoomId;
+      return {...r, selected:sel,
+        cardStyle:'display:flex;gap:16px;align-items:center;text-align:left;width:100%;padding:14px;border-radius:14px;background:'+(sel?'rgba(181,97,62,.08)':'var(--sand)')+';border:1.5px solid '+(sel?'var(--accent)':'var(--line)')+';transition:border-color .2s,background .2s;',
+        pickLabel: sel?'✓ Sélectionnée':'Choisir',
+        pickLabelStyle: sel?'color:var(--accent-strong)':'color:var(--ink-2)',
+        select:()=>this.selectBookingRoom(r.id)};
+    });
+    const availabilityLine = this.datesValid()? (availableRooms.length+' chambre'+(availableRooms.length>1?'s':'')+' disponible'+(availableRooms.length>1?'s':'')+' du '+this.fmtDate(s.arrival)+' au '+this.fmtDate(s.departure)) : 'Sélectionnez vos dates pour voir les disponibilités.';
+
+    // pricing
+    const roomPrice=selRoom?selRoom.prix:0;
+    const subtotal=roomPrice*nights;
+    const taxe=nights*s.guests*150;
+    const total=subtotal+taxe;
+
+    // progress
+    const steps=['Dates','Chambre','Vos infos','Confirmation'];
+    const curStep=Math.min(s.step,4);
+    const progress=steps.map((name,i)=>{ const n=i+1; const done=curStep>n||s.step===5; const active=curStep===n&&s.step!==5; return {name, num:n, mark:done?'✓':String(n), hasBar:i<steps.length-1,
+      circle: (done?'background:var(--accent);color:#fff;': active?'background:var(--ink);color:var(--sand);':'background:var(--sand-2);color:var(--ink-2);'),
+      label: (active||done)?'color:var(--ink)':'color:var(--ink-2)'}; });
+
+    // field styles
+    const fBase='border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:var(--sand);';
+    const fErr='border:1px solid #b23b3b;border-radius:12px;padding:12px 14px;background:#fbeaea;';
+    const showE=(k)=> s.triedNext3 && s.errors[k];
+    const fieldStyle={ prenom:showE('prenom')?fErr:fBase, nom:showE('nom')?fErr:fBase, email:showE('email')?fErr:fBase, tel:showE('tel')?fErr:fBase };
+    const errShow={ prenom:!!showE('prenom'), nom:!!showE('nom'), email:!!showE('email'), tel:!!showE('tel'), consent:!!(s.triedNext3&&s.errors.consent) };
+
+    // contact field styles
+    const cBad=(cond)=> s.cTried && cond;
+    const cFieldStyle={ nom:cBad(!s.cForm.nom.trim())?fErr:fBase, email:cBad(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(s.cForm.email))?fErr:fBase, message:cBad(!s.cForm.message.trim())?(fErr+'resize:vertical;'):(fBase+'resize:vertical;') };
+    const cErrShow = s.cTried && !(s.cForm.nom.trim()&&/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(s.cForm.email)&&s.cForm.message.trim()&&s.cForm.consent);
+
+    // summary
+    const summaryRoom = selRoom?selRoom.nom:'Chambre à choisir';
+    const showSummary = s.step<5;
+
+    // next button styles
+    const enabled='background:var(--accent);color:#fff;padding:13px 26px;border-radius:100px;font-weight:600;font-size:14px;cursor:pointer;';
+    const disabled='background:var(--sand-3);color:var(--ink-2);padding:13px 26px;border-radius:100px;font-weight:600;font-size:14px;cursor:not-allowed;';
+    const nextBtn1 = this.datesValid()?enabled:disabled;
+    const nextBtn2 = (selRoom&&this.isAvailable(selRoom))?enabled:disabled;
+
+    return {
+      promo: this.props.promo !== false,
+      view:s.view, menuOpen:s.menuOpen,
+      isAccueil:s.view==='accueil', isChambres:s.view==='chambres', isDetail:s.view==='detail',
+      isReserver:s.view==='reserver', isHistoire:s.view==='histoire', isAvis:s.view==='avis',
+      isContact:s.view==='contact', isMentions:s.view==='mentions', isConfidentialite:s.view==='confid',
+      nav:{ accueil:this.navStyle(s.view==='accueil'), chambres:this.navStyle(s.view==='chambres'||s.view==='detail'), histoire:this.navStyle(s.view==='histoire'), avis:this.navStyle(s.view==='avis'), contact:this.navStyle(s.view==='contact') },
+      navHome:()=>this.setView('accueil'), navRooms:()=>this.setView('chambres'), navStory:()=>this.setView('histoire'),
+      navReviews:()=>this.setView('avis'), navContact:()=>this.setView('contact'), navReserve:()=>this.startBooking(null),
+      navMentions:()=>this.setView('mentions'), navConfid:()=>this.setView('confid'),
+      toggleMenu:()=>this.setState(st=>({menuOpen:!st.menuOpen})), closeMenu:()=>this.setState({menuOpen:false}),
+
+      rooms, roomsPreview, currentRoom:current,
+      reviews, reviewsPreview:reviews.slice(0,3), avgNote, reviewCount:this.reviewsData.length, distribution:dist,
+
+      step:s.step, isStep1:s.step===1, isStep2:s.step===2, isStep3:s.step===3, isStep4:s.step===4, isStep5:s.step===5,
+      progress,
+      calTitle: this.MONTHS[s.calMonth].charAt(0).toUpperCase()+this.MONTHS[s.calMonth].slice(1)+' '+s.calYear,
+      weekdays:['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'], calCells:cells,
+      prevMonth:()=>this.prevMonth(), nextMonth:()=>this.nextMonth(),
+      arrivalFmt:this.fmtDate(s.arrival), departureFmt:this.fmtDate(s.departure),
+      guests:s.guests, guestsFmt, incGuests:()=>this.incGuests(), decGuests:()=>this.decGuests(),
+      nightsFmt: nights+(nights>1?' nuits':' nuit'),
+      availableRooms, availabilityLine, noRooms: this.datesValid()&&availableRooms.length===0,
+      selectedRoom:selRoom||null,
+      subtotalFmt:this.fmtDA(subtotal), taxeFmt:this.fmtDA(taxe), totalFmt:this.fmtDA(total),
+      goStep2:()=>this.goStep2(), goStep3:()=>this.goStep3(), goStep4:()=>this.goStep4(),
+      backStep:()=>this.backStep(), confirmBooking:()=>this.confirmBooking(), restartBooking:()=>this.restartBooking(),
+      nextBtn1, nextBtn2, bookingRef:s.bookingRef,
+      form:s.form, fieldStyle, errShow,
+      onPrenom:e=>this.setForm('prenom',e.target.value), onNom:e=>this.setForm('nom',e.target.value),
+      onEmail:e=>this.setForm('email',e.target.value), onTel:e=>this.setForm('tel',e.target.value), onMsg:e=>this.setForm('message',e.target.value),
+      toggleCgv:e=>this.setForm('cgv',e.target.checked), toggleData:e=>this.setForm('data',e.target.checked), toggleNews:e=>this.setForm('news',e.target.checked),
+      recap:{ client:(s.form.prenom+' '+s.form.nom).trim()||'—', room:selRoom?selRoom.nom+' · '+selRoom.type:'—', dates:this.fmtDate(s.arrival)+' → '+this.fmtDate(s.departure), nightsLine:(selRoom?this.fmtDA(selRoom.prix):'—')+' × '+nights+(nights>1?' nuits':' nuit') },
+      showSummary, summaryRoom, summarySwatch:selRoom?selRoom.swatch:'linear-gradient(150deg,#e9dcc6,#d3bd97)', summaryAlt:selRoom?('Chambre '+selRoom.nom):'Chambre',
+
+      contactSent:s.contactSent, contactForm:!s.contactSent,
+      cForm:s.cForm, cFieldStyle, cErrShow,
+      onCNom:e=>this.setC('nom',e.target.value), onCEmail:e=>this.setC('email',e.target.value), onCSujet:e=>this.setC('sujet',e.target.value), onCMsg:e=>this.setC('message',e.target.value),
+      toggleCConsent:e=>this.setC('consent',e.target.checked), submitContact:e=>this.submitContact(e),
+
+      cookieVisible: s.cookie===null,
+      acceptCookies:()=>this.acceptCookies(), refuseCookies:()=>this.refuseCookies(), reopenCookies:()=>this.reopenCookies()
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:#F4F3F0;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  ::selection{background:#1B34E8;color:#F4F3F0}
+  :focus-visible{outline:2px solid #1B34E8;outline-offset:3px}
+  input,button,textarea,select{font-family:inherit}
+  @keyframes nrRise{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+  @keyframes nrFade{from{opacity:0}to{opacity:1}}
+  @keyframes nrMarq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  @keyframes nrPop{0%{opacity:0;transform:scale(.85)}60%{transform:scale(1.06)}100%{opacity:1;transform:scale(1)}}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto}
+    *{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important}
+  }
+  @media (max-width: 980px){
+    [data-hero]{grid-template-columns:1fr !important;gap:30px !important}
+    [data-hero-aside]{justify-self:start !important;margin-top:0 !important}
+    [data-spread]{grid-template-columns:1fr !important;gap:0 !important}
+    [data-spread-gutter]{display:none !important}
+    [data-editorial]{grid-template-columns:1fr !important;gap:30px !important}
+    [data-checkout]{grid-template-columns:1fr !important;gap:36px !important}
+  }
+  @media (max-width: 860px){
+    [data-desknav]{display:none !important}
+    [data-burger]{display:flex !important}
+  }
+  @media (max-width: 720px){
+    [data-col-grid]{grid-template-columns:1fr 1fr !important}
+    [data-feat-grid]{grid-template-columns:1fr 1fr !important}
+    [data-foot-grid]{grid-template-columns:1fr 1fr !important}
+  }
+  @media (max-width: 480px){
+    [data-col-grid]{grid-template-columns:1fr !important}
+    [data-feat-grid]{grid-template-columns:1fr !important}
+  }
+</style>
+<script src="image-slot.js"></script>
+</helmet>
+
+<div style="--paper:#F4F3F0;--ink:#0B0B0B;--cobalt:#1B34E8;--mute:#8C8C86;--line:rgba(11,11,11,.16);--line2:rgba(11,11,11,.08);--card:#E9E7E1;background:var(--paper);color:var(--ink);font-family:'Archivo',system-ui,sans-serif;min-height:100vh;position:relative;overflow-x:hidden;font-size:16px;line-height:1.5">
+
+  <!-- MARQUEE TOPBAR -->
+  <div aria-hidden="true" style="background:var(--ink);color:var(--paper);overflow:hidden;white-space:nowrap;padding:8px 0;font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:600">
+    <div style="display:inline-flex;animation:nrMarq 28s linear infinite">
+      <span style="display:inline-flex;gap:22px;padding-right:22px"><span>Livraison dans les 58 wilayas</span><span style="color:var(--cobalt)">◆</span><span>Petites séries · éditions limitées</span><span style="color:var(--cobalt)">◆</span><span>Fait à Alger</span><span style="color:var(--cobalt)">◆</span><span>Retours sous 14 jours</span><span style="color:var(--cobalt)">◆</span></span>
+      <span style="display:inline-flex;gap:22px;padding-right:22px"><span>Livraison dans les 58 wilayas</span><span style="color:var(--cobalt)">◆</span><span>Petites séries · éditions limitées</span><span style="color:var(--cobalt)">◆</span><span>Fait à Alger</span><span style="color:var(--cobalt)">◆</span><span>Retours sous 14 jours</span><span style="color:var(--cobalt)">◆</span></span>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header style="position:sticky;top:0;z-index:60;background:color-mix(in srgb, var(--paper) 90%, transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--ink)">
+    <div style="max-width:1320px;margin:0 auto;padding:0 24px;height:66px;display:flex;align-items:center;justify-content:space-between;gap:20px">
+      <a href="#" onClick="{{ navHome }}" aria-label="NOOR — accueil" style="font-family:'Syne',sans-serif;font-weight:800;font-size:28px;letter-spacing:.04em;text-decoration:none;color:var(--ink);line-height:1">NOOR<span style="color:var(--cobalt)">.</span></a>
+
+      <nav aria-label="Navigation principale" style="display:flex;align-items:center;gap:34px">
+        <div style="display:flex;gap:30px;align-items:center" data-desknav="true">
+          <sc-for list="{{ navLinks }}" as="link" hint-placeholder-count="3">
+            <a href="#" onClick="{{ link.go }}" style="text-decoration:none;color:var(--ink);font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;padding:4px 0;border-bottom:2px solid transparent" style-hover="border-bottom-color:var(--cobalt)">{{ link.label }}</a>
+          </sc-for>
+        </div>
+        <button onClick="{{ openCart }}" aria-label="Ouvrir le panier" style="background:none;border:none;cursor:pointer;font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);display:flex;align-items:center;gap:7px;padding:0">
+          Panier
+          <span style="min-width:22px;height:22px;padding:0 6px;background:var(--cobalt);color:var(--paper);border-radius:20px;display:inline-flex;align-items:center;justify-content:center;font-size:11px">{{ cartCount }}</span>
+        </button>
+        <button onClick="{{ toggleMobile }}" aria-label="Menu" aria-expanded="{{ mobileOpen }}" style="display:none;background:none;border:1px solid var(--ink);width:40px;height:40px;cursor:pointer;flex-direction:column;gap:4px;align-items:center;justify-content:center" data-burger="true">
+          <span aria-hidden="true" style="width:18px;height:2px;background:var(--ink);display:block"></span>
+          <span aria-hidden="true" style="width:18px;height:2px;background:var(--ink);display:block"></span>
+        </button>
+      </nav>
+    </div>
+    <sc-if value="{{ mobileOpen }}" hint-placeholder-val="{{ false }}">
+      <div style="border-top:1px solid var(--ink);background:var(--paper);padding:12px 24px 20px;animation:nrFade .2s ease">
+        <sc-for list="{{ navLinks }}" as="link" hint-placeholder-count="3">
+          <a href="#" onClick="{{ link.go }}" style="display:block;text-decoration:none;color:var(--ink);font-family:'Syne',sans-serif;font-weight:700;font-size:30px;padding:8px 0;border-bottom:1px solid var(--line2)">{{ link.label }}</a>
+        </sc-for>
+      </div>
+    </sc-if>
+  </header>
+
+  <main data-current-route="{{ route }}">
+
+  <!-- ===================== ACCUEIL ===================== -->
+  <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+  <div data-screen-label="Accueil">
+    <!-- HERO -->
+    <section style="max-width:1320px;margin:0 auto;padding:60px 24px 30px">
+      <div style="display:grid;grid-template-columns:1.65fr .95fr;gap:48px;align-items:start" data-hero="true">
+        <div style="animation:nrRise .7s ease both">
+          <div style="font-size:12px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--mute);margin-bottom:26px;display:flex;gap:14px;flex-wrap:wrap"><span>Collection № 04</span><span style="color:var(--cobalt)">—</span><span>Les Vents · Été 2026</span></div>
+          <h1 style="font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(52px,10.5vw,148px);line-height:.86;letter-spacing:-.02em;margin:0 0 30px">Habiller<br>le <span style="color:var(--cobalt)">mouvement</span>.</h1>
+          <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center">
+            <button onClick="{{ navCollection }}" style="background:var(--ink);color:var(--paper);border:none;font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;padding:16px 30px;cursor:pointer;transition:background .25s ease" style-hover="background:var(--cobalt)">Voir la collection →</button>
+            <span style="font-size:13px;color:var(--mute);max-width:34ch">8 pièces · tailles S–XL · confectionnées en petites séries dans notre atelier d'Alger.</span>
+          </div>
+        </div>
+        <aside data-hero-aside="true" style="justify-self:end;margin-top:60px;width:100%;max-width:320px;animation:nrRise .7s .12s ease both">
+          <div style="font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--cobalt);margin-bottom:12px">En vedette</div>
+          <a href="#" onClick="{{ featureOpen }}" style="text-decoration:none;color:var(--ink);display:block" style-hover="opacity:.92">
+            <div style="position:relative;aspect-ratio:3/4;overflow:hidden;background:var(--card)">
+              <image-slot id="ph-sirocco" src="uploads/noor-sirocco.png" shape="rect" fit="cover" placeholder="Manteau Sirocco · photo studio 3:4" style="position:absolute;inset:0;width:100%;height:100%;display:block"></image-slot>
+              <span style="position:absolute;top:14px;left:14px;font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--paper);background:var(--cobalt);padding:4px 8px;pointer-events:none">360°</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:baseline;margin-top:14px;gap:12px">
+              <span style="font-family:'Syne',sans-serif;font-weight:700;font-size:19px">Manteau Sirocco</span>
+              <span style="font-size:14px;font-weight:500;white-space:nowrap">28 500 DA</span>
+            </div>
+          </a>
+        </aside>
+      </div>
+      <div style="display:flex;gap:28px;flex-wrap:wrap;border-top:1px solid var(--ink);margin-top:44px;padding-top:16px;font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)">
+        <span>01 — Laines & cotons naturels</span><span>02 — Coupes non genrées</span><span>03 — Édition limitée, numérotée</span>
+      </div>
+    </section>
+
+    <!-- EXTRAIT COLLECTION -->
+    <section style="max-width:1320px;margin:0 auto;padding:44px 24px">
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:30px">
+        <h2 style="font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(30px,4.5vw,54px);line-height:.95;margin:0">Extrait de<br>la collection</h2>
+        <a href="#" onClick="{{ navCollection }}" style="font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);text-decoration:none;border-bottom:2px solid var(--cobalt);padding-bottom:3px;white-space:nowrap">Les 8 pièces →</a>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px" data-feat-grid="true">
+        <sc-for list="{{ featured }}" as="p" hint-placeholder-count="4">
+          <a href="#" onClick="{{ p.open }}" style="text-decoration:none;color:var(--ink);display:block;transform:translateY({{ p.offset }})" style-hover="opacity:.94">
+            <div style="aspect-ratio:3/4;background:var(--card);position:relative;overflow:hidden">
+              <image-slot id="{{ p.slotId }}" src="{{ p.slotSrc }}" shape="rect" fit="cover" placeholder="{{ p.slotPh }}" style="position:absolute;inset:0;width:100%;height:100%;display:block"></image-slot>
+              <span style="position:absolute;top:12px;left:12px;font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--paper);background:rgba(11,11,11,.55);padding:3px 7px;pointer-events:none">{{ p.cat }}</span>
+            </div>
+            <div style="margin-top:12px">
+              <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px"><span style="font-family:'Syne',sans-serif;font-weight:700;font-size:16px">{{ p.name }}</span><span style="font-size:13px;font-weight:500;white-space:nowrap">{{ p.priceLabel }}</span></div>
+              <div style="font-size:12px;color:var(--mute);margin-top:2px">{{ p.material }}</div>
+            </div>
+          </a>
+        </sc-for>
+      </div>
+    </section>
+
+    <!-- EDITORIAL BAND -->
+    <section style="background:var(--ink);color:var(--paper);margin-top:40px">
+      <div style="max-width:1320px;margin:0 auto;padding:84px 24px;display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center" data-editorial="true">
+        <div>
+          <div style="font-size:12px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--cobalt);margin-bottom:24px">La Maison</div>
+          <p style="font-family:'Syne',sans-serif;font-weight:700;font-size:clamp(26px,3.4vw,42px);line-height:1.12;margin:0 0 26px">« On ne dessine pas des saisons. On dessine des pièces qu'on gardera dix ans. »</p>
+          <a href="#" onClick="{{ navMaison }}" style="font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--paper);text-decoration:none;border-bottom:2px solid var(--cobalt);padding-bottom:3px">Notre démarche →</a>
+        </div>
+        <image-slot id="ph-atelier-studio" src="uploads/noor-atelier-studio.png" shape="rect" fit="cover" placeholder="L'atelier NOOR · photo d'ambiance 4:3" style="display:block;width:100%;aspect-ratio:4/3"></image-slot>
+      </div>
+    </section>
+
+    <!-- WORDMARK MARQUEE -->
+    <section aria-hidden="true" style="overflow:hidden;white-space:nowrap;padding:34px 0;border-bottom:1px solid var(--ink)">
+      <div style="display:inline-flex;animation:nrMarq 30s linear infinite;font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(60px,12vw,150px);line-height:1;letter-spacing:-.02em">
+        <span style="display:inline-flex;gap:40px;padding-right:40px"><span>NOOR</span><span style="color:var(--cobalt)">—</span><span>LES VENTS</span><span style="color:var(--cobalt)">—</span><span>NOOR</span><span style="color:var(--cobalt)">—</span><span>LES VENTS</span><span style="color:var(--cobalt)">—</span></span>
+        <span style="display:inline-flex;gap:40px;padding-right:40px"><span>NOOR</span><span style="color:var(--cobalt)">—</span><span>LES VENTS</span><span style="color:var(--cobalt)">—</span><span>NOOR</span><span style="color:var(--cobalt)">—</span><span>LES VENTS</span><span style="color:var(--cobalt)">—</span></span>
+      </div>
+    </section>
+  </div>
+  </sc-if>
+
+  <!-- ===================== COLLECTION ===================== -->
+  <sc-if value="{{ isCollection }}" hint-placeholder-val="{{ false }}">
+  <div data-screen-label="Collection" style="animation:nrFade .3s ease">
+    <section style="max-width:1320px;margin:0 auto;padding:56px 24px 20px">
+      <div style="font-size:12px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--mute);margin-bottom:16px">Collection № 04 — Les Vents</div>
+      <h1 style="font-family:'Syne';font-weight:800;font-size:clamp(48px,9vw,120px);line-height:.86;letter-spacing:-.02em;margin:0 0 26px">La collection</h1>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;border-top:1px solid var(--ink);padding-top:18px">
+        <sc-for list="{{ catChips }}" as="c" hint-placeholder-count="6">
+          <button onClick="{{ c.select }}" style="border:1px solid {{ c.chipBorder }};background:{{ c.chipBg }};color:{{ c.chipColor }};font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:9px 16px;cursor:pointer;transition:all .2s ease" style-hover="border-color:var(--ink)">{{ c.label }}</button>
+        </sc-for>
+      </div>
+    </section>
+    <section style="max-width:1320px;margin:0 auto;padding:24px 24px 80px">
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:22px" data-col-grid="true">
+        <sc-for list="{{ collectionItems }}" as="p" hint-placeholder-count="8">
+          <a href="#" onClick="{{ p.open }}" style="text-decoration:none;color:var(--ink);display:block;transform:translateY({{ p.offset }})" style-hover="opacity:.94">
+            <div style="aspect-ratio:3/4;background:var(--card);position:relative;overflow:hidden">
+              <image-slot id="{{ p.slotId }}" src="{{ p.slotSrc }}" shape="rect" fit="cover" placeholder="{{ p.slotPh }}" style="position:absolute;inset:0;width:100%;height:100%;display:block"></image-slot>
+              <span style="position:absolute;top:12px;left:12px;font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--paper);background:rgba(11,11,11,.55);padding:3px 7px;pointer-events:none">{{ p.cat }}</span>
+              <span style="position:absolute;top:12px;right:12px;font-size:9px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--paper);background:var(--cobalt);padding:3px 6px;pointer-events:none">360°</span>
+            </div>
+            <div style="margin-top:12px">
+              <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px"><span style="font-family:'Syne';font-weight:700;font-size:16px">{{ p.name }}</span><span style="font-size:13px;font-weight:500;white-space:nowrap">{{ p.priceLabel }}</span></div>
+              <div style="font-size:12px;color:var(--mute);margin-top:2px">{{ p.material }}</div>
+            </div>
+          </a>
+        </sc-for>
+      </div>
+    </section>
+  </div>
+  </sc-if>
+
+  <!-- ===================== PRODUIT (double page + 360°) ===================== -->
+  <sc-if value="{{ isProduct }}" hint-placeholder-val="{{ false }}">
+  <div data-screen-label="Produit" style="animation:nrFade .3s ease">
+    <section style="max-width:1320px;margin:0 auto;padding:26px 24px 12px">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:16px;font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)">
+        <div><a href="#" onClick="{{ navCollection }}" style="color:var(--mute);text-decoration:none" style-hover="color:var(--ink)">Collection</a> &nbsp;/&nbsp; <span style="color:var(--ink)">{{ pName }}</span></div>
+        <span>Planche — {{ pCat }}</span>
+      </div>
+    </section>
+
+    <section style="max-width:1320px;margin:0 auto;padding:6px 24px 70px">
+      <div style="display:grid;grid-template-columns:1fr 1px 1fr;gap:44px;align-items:start;border-top:1px solid var(--ink);padding-top:34px" data-spread="true">
+
+        <!-- LEFT PAGE : viewer 360° -->
+        <div style="position:relative">
+          <div style="position:absolute;top:-24px;left:0;font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)">Recto — p.01</div>
+          <div ref="{{ viewerRef }}" onPointerDown="{{ spinDown }}" style="position:relative;aspect-ratio:4/5;background:var(--card);border:1px solid var(--line);overflow:hidden;cursor:{{ viewerCursor }};touch-action:none;user-select:none">
+            <div style="{{ spinInnerStyle }}"></div>
+            <div style="{{ seamStyle }}"></div>
+            <div aria-hidden="true" style="position:absolute;left:22%;right:22%;bottom:9%;height:16px;border-radius:50%;background:rgba(0,0,0,.18);filter:blur(6px)"></div>
+            <div style="position:absolute;top:14px;left:14px;display:flex;flex-direction:column;gap:6px;align-items:flex-start">
+              <span style="font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--paper);background:var(--cobalt);padding:5px 9px">Vue 360°</span>
+              <span style="font-size:10px;letter-spacing:.04em;color:var(--ink);background:color-mix(in srgb,var(--paper) 82%,transparent);padding:4px 8px">↔ Glissez pour tourner</span>
+            </div>
+            <span style="position:absolute;top:14px;right:14px;font-family:'Syne';font-weight:700;font-size:15px;color:var(--ink);background:color-mix(in srgb,var(--paper) 82%,transparent);padding:5px 10px">{{ spinAngleLabel }}°</span>
+            <div style="position:absolute;bottom:14px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:4px;background:var(--paper);border:1px solid var(--ink);padding:4px">
+              <button onClick="{{ zoomOut }}" aria-label="Dézoomer" style="width:30px;height:30px;border:none;background:none;cursor:pointer;font-size:18px;line-height:1;color:var(--ink)">−</button>
+              <span style="font-size:11px;font-weight:600;min-width:44px;text-align:center;letter-spacing:.04em">{{ zoomLabel }}</span>
+              <button onClick="{{ zoomIn }}" aria-label="Zoomer" style="width:30px;height:30px;border:none;background:none;cursor:pointer;font-size:18px;line-height:1;color:var(--ink)">+</button>
+              <span aria-hidden="true" style="width:1px;height:20px;background:var(--line)"></span>
+              <button onClick="{{ resetView }}" aria-label="Réinitialiser la vue" style="height:30px;border:none;background:none;cursor:pointer;font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);padding:0 8px">Reset</button>
+            </div>
+          </div>
+          <p style="font-size:11px;line-height:1.5;color:var(--mute);margin:12px 0 0">Molette pour zoomer · glissez horizontalement pour faire pivoter · les nuanciers changent la couleur en direct. <span style="color:var(--ink)">Aperçu de démonstration</span> — à remplacer par les vraies vues 360° du vêtement.</p>
+        </div>
+
+        <div aria-hidden="true" data-spread-gutter="true" style="background:var(--line);align-self:stretch"></div>
+
+        <!-- RIGHT PAGE : info + achat -->
+        <div style="position:relative">
+          <div style="position:absolute;top:-24px;right:0;font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)">Verso — p.02</div>
+          <div style="font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--cobalt);margin-bottom:14px">{{ pCat }} · Édition limitée</div>
+          <h1 style="font-family:'Syne';font-weight:800;font-size:clamp(34px,4.6vw,58px);line-height:.94;letter-spacing:-.01em;margin:0 0 14px">{{ pName }}</h1>
+          <div style="font-size:22px;font-weight:500;margin-bottom:22px">{{ pPrice }}</div>
+          <p style="font-size:15.5px;line-height:1.6;color:var(--ink);margin:0 0 30px;max-width:46ch">{{ pDesc }}</p>
+
+          <div style="font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin-bottom:12px">Couleur — {{ selColorName }}</div>
+          <div style="display:flex;gap:12px;margin-bottom:28px">
+            <sc-for list="{{ colorOptions }}" as="c" hint-placeholder-count="3">
+              <button onClick="{{ c.select }}" aria-label="Couleur {{ c.name }}" aria-pressed="{{ c.selected }}" title="{{ c.name }}" style="width:38px;height:38px;border-radius:50%;background:{{ c.hex }};border:{{ c.ringW }} solid {{ c.ring }};cursor:pointer;padding:0;outline-offset:3px"></button>
+            </sc-for>
+          </div>
+
+          <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px">
+            <span style="font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)">Taille</span>
+            <span style="font-size:11px;color:var(--mute)">Guide des tailles</span>
+          </div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <sc-for list="{{ sizeOptions }}" as="s" hint-placeholder-count="4">
+              <button onClick="{{ s.select }}" aria-pressed="{{ s.selected }}" style="min-width:56px;padding:14px 8px;border:1.5px solid {{ s.border }};background:{{ s.bg }};color:{{ s.color }};font-size:14px;font-weight:600;cursor:pointer;transition:all .2s ease" style-hover="border-color:var(--ink)">{{ s.sz }}</button>
+            </sc-for>
+          </div>
+          <sc-if value="{{ productError }}" hint-placeholder-val="{{ false }}">
+            <p role="alert" style="color:var(--cobalt);font-size:13px;font-weight:600;margin:12px 0 0">{{ productError }}</p>
+          </sc-if>
+
+          <button onClick="{{ addToCart }}" style="width:100%;margin-top:24px;background:var(--ink);color:var(--paper);border:none;font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;padding:19px;cursor:pointer;transition:background .25s ease" style-hover="background:var(--cobalt)">Ajouter au panier — {{ pPrice }}</button>
+
+          <div style="margin-top:16px;display:flex;gap:18px;font-size:12px;color:var(--mute);flex-wrap:wrap"><span>✦ Fait à Alger</span><span>✦ Livraison 58 wilayas</span><span>✦ Retours 14 j</span></div>
+
+          <div style="margin-top:30px;border-top:1px solid var(--line)">
+            <sc-for list="{{ details }}" as="d" hint-placeholder-count="3">
+              <div style="border-bottom:1px solid var(--line)">
+                <button onClick="{{ d.toggle }}" aria-expanded="{{ d.open }}" style="width:100%;display:flex;justify-content:space-between;align-items:center;gap:12px;background:none;border:none;cursor:pointer;padding:16px 0;font-size:14px;font-weight:600;color:var(--ink);text-align:left;font-family:inherit">{{ d.title }}<span style="font-size:18px;color:var(--cobalt)">{{ d.sign }}</span></button>
+                <sc-if value="{{ d.open }}" hint-placeholder-val="{{ false }}">
+                  <p style="font-size:14px;line-height:1.6;color:var(--mute);margin:0 0 16px;max-width:48ch">{{ d.body }}</p>
+                </sc-if>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  </sc-if>
+
+  <!-- ===================== LA MAISON ===================== -->
+  <sc-if value="{{ isMaison }}" hint-placeholder-val="{{ false }}">
+  <div data-screen-label="La Maison" style="animation:nrFade .3s ease">
+    <section style="max-width:1100px;margin:0 auto;padding:60px 24px 20px">
+      <div style="font-size:12px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--mute);margin-bottom:20px">La Maison</div>
+      <h1 style="font-family:'Syne';font-weight:800;font-size:clamp(40px,7vw,96px);line-height:.9;letter-spacing:-.02em;margin:0 0 30px">Le vêtement<br>comme <span style="color:var(--cobalt)">archive</span>.</h1>
+      <p style="font-size:19px;line-height:1.6;color:var(--ink);max-width:60ch">NOOR est un atelier de mode fondé à Alger en 2019. Nous dessinons des pièces non genrées, en petites séries numérotées, à contre-courant des saisons. Chaque collection porte le nom des vents — Sirocco, Chergui, Zéphyr — parce qu'un bon vêtement accompagne le mouvement sans jamais l'entraver.</p>
+    </section>
+    <section style="max-width:1320px;margin:0 auto;padding:36px 24px">
+      <image-slot id="ph-atelier-coupe" src="uploads/noor-atelier-coupe.png" shape="rect" fit="cover" placeholder="La table de coupe · photo panoramique 16:6" style="display:block;width:100%;height:min(52vw,380px)"></image-slot>
+    </section>
+    <section style="max-width:1100px;margin:0 auto;padding:40px 24px">
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--ink);border:1px solid var(--ink)" data-editorial="true">
+        <div style="background:var(--paper);padding:32px 28px">
+          <div style="font-family:'Syne';font-weight:800;font-size:34px;color:var(--cobalt);line-height:1;margin-bottom:14px">01</div>
+          <h3 style="font-family:'Syne';font-weight:700;font-size:19px;margin:0 0 10px">Petites séries</h3>
+          <p style="font-size:14.5px;line-height:1.6;color:var(--mute);margin:0">Chaque modèle est produit en quantité limitée, numéroté, puis retiré. Ni surproduction, ni soldes.</p>
+        </div>
+        <div style="background:var(--paper);padding:32px 28px">
+          <div style="font-family:'Syne';font-weight:800;font-size:34px;color:var(--cobalt);line-height:1;margin-bottom:14px">02</div>
+          <h3 style="font-family:'Syne';font-weight:700;font-size:19px;margin:0 0 10px">Matières justes</h3>
+          <p style="font-size:14.5px;line-height:1.6;color:var(--mute);margin:0">Laines, cotons et twills sélectionnés pour vieillir bien. On préfère la densité d'un tissu à la nouveauté d'un imprimé.</p>
+        </div>
+        <div style="background:var(--paper);padding:32px 28px">
+          <div style="font-family:'Syne';font-weight:800;font-size:34px;color:var(--cobalt);line-height:1;margin-bottom:14px">03</div>
+          <h3 style="font-family:'Syne';font-weight:700;font-size:19px;margin:0 0 10px">Fait à Alger</h3>
+          <p style="font-size:14.5px;line-height:1.6;color:var(--mute);margin:0">Coupe, montage et finitions dans notre atelier d'Alger-Centre, par une équipe de six personnes.</p>
+        </div>
+      </div>
+    </section>
+    <section style="max-width:1100px;margin:0 auto;padding:20px 24px 40px">
+      <div style="display:flex;gap:40px;flex-wrap:wrap;border-top:1px solid var(--ink);padding-top:26px">
+        <div><div style="font-family:'Syne';font-weight:800;font-size:44px;line-height:1">2019</div><div style="font-size:12px;color:var(--mute);letter-spacing:.06em">Année de fondation</div></div>
+        <div><div style="font-family:'Syne';font-weight:800;font-size:44px;line-height:1">58</div><div style="font-size:12px;color:var(--mute);letter-spacing:.06em">Wilayas livrées</div></div>
+        <div><div style="font-family:'Syne';font-weight:800;font-size:44px;line-height:1">04</div><div style="font-size:12px;color:var(--mute);letter-spacing:.06em">Collections « Vents »</div></div>
+        <div><div style="font-family:'Syne';font-weight:800;font-size:44px;line-height:1">100%</div><div style="font-size:12px;color:var(--mute);letter-spacing:.06em">Confection locale</div></div>
+      </div>
+    </section>
+    <section style="max-width:1100px;margin:0 auto;padding:20px 24px 90px">
+      <button onClick="{{ navCollection }}" style="background:var(--cobalt);color:var(--paper);border:none;font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;padding:17px 34px;cursor:pointer">Découvrir la collection →</button>
+    </section>
+  </div>
+  </sc-if>
+
+  <!-- ===================== CONTACT ===================== -->
+  <sc-if value="{{ isContact }}" hint-placeholder-val="{{ false }}">
+  <div data-screen-label="Contact" style="animation:nrFade .3s ease">
+    <section style="max-width:1100px;margin:0 auto;padding:60px 24px 90px">
+      <div style="font-size:12px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--mute);margin-bottom:20px">Contact</div>
+      <h1 style="font-family:'Syne';font-weight:800;font-size:clamp(44px,7vw,96px);line-height:.88;letter-spacing:-.02em;margin:0 0 44px">Écrivez-nous</h1>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:56px" data-checkout="true">
+        <div>
+          <div style="padding:16px 0;border-bottom:1px solid var(--line)"><div style="font-size:10px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);margin-bottom:6px">Atelier & showroom</div><div style="font-family:'Syne';font-weight:700;font-size:21px">7, rue Larbi Ben M'hidi</div><div style="font-size:13px;color:var(--mute);margin-top:3px">Alger-Centre, 16000 · sur rendez-vous</div></div>
+          <div style="padding:16px 0;border-bottom:1px solid var(--line)"><div style="font-size:10px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);margin-bottom:6px">Téléphone</div><div style="font-family:'Syne';font-weight:700;font-size:21px">+213 _ __ __ __ __</div></div>
+          <div style="padding:16px 0;border-bottom:1px solid var(--line)"><div style="font-size:10px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);margin-bottom:6px">E-mail</div><div style="font-family:'Syne';font-weight:700;font-size:21px">bonjour@noor.dz</div></div>
+          <div style="padding:16px 0"><div style="font-size:10px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);margin-bottom:6px">Horaires showroom</div><div style="font-size:15px;line-height:1.6">Du dimanche au jeudi · 10h – 18h<br><span style="color:var(--mute)">Vendredi & samedi sur rendez-vous</span></div></div>
+        </div>
+        <div>
+          <sc-if value="{{ contactDone }}" hint-placeholder-val="{{ false }}">
+            <div style="border:1px solid var(--ink);padding:40px;text-align:center;animation:nrRise .4s ease both">
+              <div aria-hidden="true" style="width:60px;height:60px;margin:0 auto 18px;background:var(--cobalt);color:var(--paper);display:flex;align-items:center;justify-content:center;font-size:28px">✓</div>
+              <h2 style="font-family:'Syne';font-weight:800;font-size:26px;margin:0 0 10px">Message envoyé</h2>
+              <p style="font-size:14px;color:var(--mute);margin:0">Merci, nous vous répondons sous 24 h ouvrées.</p>
+            </div>
+          </sc-if>
+          <sc-if value="{{ contactFormOpen }}" hint-placeholder-val="{{ true }}">
+          <div style="border:1px solid var(--ink);padding:30px">
+            <label style="display:block;margin-bottom:16px"><span style="font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);display:block;margin-bottom:7px">Nom complet *</span><input name="name" value="{{ ct.name }}" onInput="{{ onCtField }}" type="text" style="width:100%;padding:13px 14px;border:1.5px solid var(--line);background:var(--paper);font-size:15px;color:var(--ink)" style-focus="border-color:var(--cobalt)"></label>
+            <label style="display:block;margin-bottom:16px"><span style="font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);display:block;margin-bottom:7px">E-mail *</span><input name="email" value="{{ ct.email }}" onInput="{{ onCtField }}" type="email" style="width:100%;padding:13px 14px;border:1.5px solid var(--line);background:var(--paper);font-size:15px;color:var(--ink)" style-focus="border-color:var(--cobalt)"></label>
+            <label style="display:block;margin-bottom:16px"><span style="font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);display:block;margin-bottom:7px">Message *</span><textarea name="message" onInput="{{ onCtField }}" rows="4" style="width:100%;padding:13px 14px;border:1.5px solid var(--line);background:var(--paper);font-size:15px;color:var(--ink);resize:vertical;font-family:inherit">{{ ct.message }}</textarea></label>
+            <label style="display:flex;gap:12px;align-items:flex-start;margin-bottom:20px;cursor:pointer"><input name="cconsent" checked="{{ ct.consent }}" onChange="{{ onCtConsent }}" type="checkbox" style="width:20px;height:20px;flex:none;margin-top:2px;accent-color:var(--cobalt);cursor:pointer"><span style="font-size:13px;line-height:1.5;color:var(--mute)">J'accepte d'être recontacté(e) par NOOR concernant ma demande. *</span></label>
+            <sc-if value="{{ contactError }}" hint-placeholder-val="{{ false }}"><p role="alert" style="color:var(--cobalt);font-size:13.5px;font-weight:600;margin:0 0 16px">{{ contactError }}</p></sc-if>
+            <button onClick="{{ sendContact }}" style="width:100%;background:var(--ink);color:var(--paper);border:none;font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;padding:16px;cursor:pointer;transition:background .25s ease" style-hover="background:var(--cobalt)">Envoyer</button>
+          </div>
+          </sc-if>
+        </div>
+      </div>
+    </section>
+  </div>
+  </sc-if>
+
+  <!-- ===================== LÉGAL / RGPD ===================== -->
+  <sc-if value="{{ isLegal }}" hint-placeholder-val="{{ false }}">
+  <div data-screen-label="Mentions légales" style="animation:nrFade .3s ease">
+    <section style="max-width:760px;margin:0 auto;padding:60px 24px 90px">
+      <div style="font-size:12px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--mute);margin-bottom:18px">Informations légales</div>
+      <h1 style="font-family:'Syne';font-weight:800;font-size:clamp(34px,5vw,58px);line-height:.92;letter-spacing:-.01em;margin:0 0 40px">Mentions légales,<br>confidentialité & retours</h1>
+
+      <div style="border-top:1px solid var(--ink);padding-top:20px;margin-bottom:32px">
+        <h2 style="font-family:'Syne';font-weight:700;font-size:22px;margin:0 0 12px">Éditeur</h2>
+        <p style="font-size:15px;line-height:1.7;color:var(--mute);margin:0">NOOR — Atelier de mode (SARL).<br>7, rue Larbi Ben M'hidi, Alger-Centre, 16000.<br>RC : 16/00-XXXXXXX B 26 · NIF : XXXXXXXXXXXXXXX.<br>Tél. : +213 _ __ __ __ __ · bonjour@noor.dz</p>
+      </div>
+      <div style="border-top:1px solid var(--line);padding-top:20px;margin-bottom:32px">
+        <h2 style="font-family:'Syne';font-weight:700;font-size:22px;margin:0 0 12px">Livraison & retours</h2>
+        <p style="font-size:15px;line-height:1.7;color:var(--mute);margin:0">Livraison dans les 58 wilayas sous 48 à 72 h. Deux options : à domicile (600 DA) ou en point relais (400 DA). Paiement à la livraison ou par carte. Retours et échanges gratuits sous 14 jours, article non porté, étiquette d'origine attachée.</p>
+      </div>
+      <div style="border-top:1px solid var(--line);padding-top:20px;margin-bottom:32px">
+        <h2 style="font-family:'Syne';font-weight:700;font-size:22px;margin:0 0 12px">Données personnelles</h2>
+        <p style="font-size:15px;line-height:1.7;color:var(--mute);margin:0">Les informations collectées lors d'une commande ou d'un message (nom, téléphone, e-mail, adresse) servent uniquement au traitement de votre demande et à la livraison. Elles ne sont ni vendues ni cédées à des tiers, et sont conservées le temps strictement nécessaire.</p>
+      </div>
+      <div style="border-top:1px solid var(--line);padding-top:20px;margin-bottom:32px">
+        <h2 style="font-family:'Syne';font-weight:700;font-size:22px;margin:0 0 12px">Vos droits</h2>
+        <p style="font-size:15px;line-height:1.7;color:var(--mute);margin:0">Conformément à la loi 18-07 relative à la protection des données à caractère personnel, vous disposez d'un droit d'accès, de rectification et de suppression de vos données. Écrivez à bonjour@noor.dz pour l'exercer.</p>
+      </div>
+      <div style="border-top:1px solid var(--line);padding-top:20px;margin-bottom:32px">
+        <h2 style="font-family:'Syne';font-weight:700;font-size:22px;margin:0 0 12px">Cookies</h2>
+        <p style="font-size:15px;line-height:1.7;color:var(--mute);margin:0">Ce site utilise des cookies de mesure d'audience et de fonctionnement (panier). Vous pouvez accepter, refuser ou modifier votre choix à tout moment via « Cookies » en pied de page.</p>
+      </div>
+      <p style="font-size:11px;color:var(--mute);letter-spacing:.04em;margin-top:40px">Dernière mise à jour : 1er juillet 2026 · Données factices — site de démonstration.</p>
+    </section>
+  </div>
+  </sc-if>
+
+  <!-- ===================== CHECKOUT ===================== -->
+  <sc-if value="{{ isCheckout }}" hint-placeholder-val="{{ false }}">
+  <div data-screen-label="Commande" style="animation:nrFade .3s ease">
+
+    <sc-if value="{{ orderDone }}" hint-placeholder-val="{{ false }}">
+      <section style="max-width:620px;margin:0 auto;padding:70px 24px 100px;text-align:center;animation:nrRise .5s ease both">
+        <div aria-hidden="true" style="width:78px;height:78px;margin:0 auto 24px;background:var(--cobalt);color:var(--paper);display:flex;align-items:center;justify-content:center;font-size:38px;animation:nrPop .5s ease both">✓</div>
+        <h1 style="font-family:'Syne';font-weight:800;font-size:clamp(34px,5vw,52px);line-height:.95;margin:0 0 14px">Commande confirmée</h1>
+        <p style="font-size:16px;color:var(--mute);margin:0 0 30px">Merci {{ orderFirstName }} ! Votre commande <strong style="color:var(--ink)">{{ orderRef }}</strong> est enregistrée. Nous vous appelons pour confirmer la livraison.</p>
+        <button onClick="{{ backToShop }}" style="background:var(--ink);color:var(--paper);border:none;font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;padding:16px 32px;cursor:pointer" style-hover="background:var(--cobalt)">Retour à la collection</button>
+      </section>
+    </sc-if>
+
+    <sc-if value="{{ orderActive }}" hint-placeholder-val="{{ true }}">
+    <section style="max-width:1160px;margin:0 auto;padding:56px 24px 90px">
+      <div style="font-size:12px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--mute);margin-bottom:16px">Panier / Commande</div>
+      <h1 style="font-family:'Syne';font-weight:800;font-size:clamp(38px,6vw,80px);line-height:.9;letter-spacing:-.02em;margin:0 0 40px">Finaliser</h1>
+
+      <sc-if value="{{ checkoutEmpty }}" hint-placeholder-val="{{ false }}">
+        <div style="text-align:center;padding:60px 20px;border:1px solid var(--line)">
+          <p style="font-family:'Syne';font-weight:700;font-size:24px;margin:0 0 10px">Votre panier est vide</p>
+          <button onClick="{{ navCollection }}" style="margin-top:12px;background:var(--ink);color:var(--paper);border:none;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:14px 26px;cursor:pointer">Voir la collection</button>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ cartHasItems }}" hint-placeholder-val="{{ true }}">
+      <div style="display:grid;grid-template-columns:1.3fr .9fr;gap:56px;align-items:start" data-checkout="true">
+        <!-- FORM -->
+        <div>
+          <h2 style="font-family:'Syne';font-weight:700;font-size:22px;margin:0 0 18px;padding-bottom:12px;border-bottom:1px solid var(--ink)">Coordonnées</h2>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px" data-col-grid="true">
+            <label style="display:block"><span style="font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);display:block;margin-bottom:7px">Prénom *</span><input name="firstName" value="{{ cform.firstName }}" onInput="{{ onCoField }}" type="text" autocomplete="given-name" style="width:100%;padding:13px 14px;border:1.5px solid var(--line);background:var(--paper);font-size:15px;color:var(--ink)" style-focus="border-color:var(--cobalt)"></label>
+            <label style="display:block"><span style="font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);display:block;margin-bottom:7px">Nom *</span><input name="lastName" value="{{ cform.lastName }}" onInput="{{ onCoField }}" type="text" autocomplete="family-name" style="width:100%;padding:13px 14px;border:1.5px solid var(--line);background:var(--paper);font-size:15px;color:var(--ink)" style-focus="border-color:var(--cobalt)"></label>
+            <label style="display:block"><span style="font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);display:block;margin-bottom:7px">Téléphone *</span><input name="phone" value="{{ cform.phone }}" onInput="{{ onCoField }}" type="tel" inputmode="tel" placeholder="0__ __ __ __ __" style="width:100%;padding:13px 14px;border:1.5px solid var(--line);background:var(--paper);font-size:15px;color:var(--ink)" style-focus="border-color:var(--cobalt)"></label>
+            <label style="display:block"><span style="font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);display:block;margin-bottom:7px">E-mail</span><input name="email" value="{{ cform.email }}" onInput="{{ onCoField }}" type="email" placeholder="vous@exemple.dz" style="width:100%;padding:13px 14px;border:1.5px solid var(--line);background:var(--paper);font-size:15px;color:var(--ink)" style-focus="border-color:var(--cobalt)"></label>
+          </div>
+
+          <h2 style="font-family:'Syne';font-weight:700;font-size:22px;margin:34px 0 18px;padding-bottom:12px;border-bottom:1px solid var(--ink)">Livraison</h2>
+          <label style="display:block;margin-bottom:16px"><span style="font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);display:block;margin-bottom:7px">Adresse *</span><input name="address" value="{{ cform.address }}" onInput="{{ onCoField }}" type="text" autocomplete="street-address" placeholder="N°, rue, quartier…" style="width:100%;padding:13px 14px;border:1.5px solid var(--line);background:var(--paper);font-size:15px;color:var(--ink)" style-focus="border-color:var(--cobalt)"></label>
+          <label style="display:block;margin-bottom:22px"><span style="font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);display:block;margin-bottom:7px">Wilaya *</span>
+            <select name="wilaya" value="{{ cform.wilaya }}" onChange="{{ onCoField }}" style="width:100%;padding:13px 14px;border:1.5px solid var(--line);background:var(--paper);font-size:15px;color:var(--ink);cursor:pointer" style-focus="border-color:var(--cobalt)">
+              <option value="">Sélectionnez votre wilaya…</option>
+              <sc-for list="{{ wilayaList }}" as="w" hint-placeholder-count="8"><option value="{{ w }}">{{ w }}</option></sc-for>
+            </select>
+          </label>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px" data-col-grid="true">
+            <button onClick="{{ setDeliveryDom }}" aria-pressed="{{ deliveryDom }}" style="text-align:left;border:1.5px solid {{ deliveryDom ? 'var(--ink)' : 'var(--line)' }};background:{{ deliveryDom ? 'color-mix(in srgb, var(--cobalt) 8%, var(--paper))' : 'var(--paper)' }};padding:16px;cursor:pointer">
+              <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-weight:600;font-size:15px">À domicile</span><span style="font-size:14px;font-weight:600">600 DA</span></div>
+              <div style="font-size:12px;color:var(--mute);margin-top:4px">Livré chez vous · 48–72 h</div>
+            </button>
+            <button onClick="{{ setDeliveryRelais }}" aria-pressed="{{ deliveryRelais }}" style="text-align:left;border:1.5px solid {{ deliveryRelais ? 'var(--ink)' : 'var(--line)' }};background:{{ deliveryRelais ? 'color-mix(in srgb, var(--cobalt) 8%, var(--paper))' : 'var(--paper)' }};padding:16px;cursor:pointer">
+              <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-weight:600;font-size:15px">Point relais</span><span style="font-size:14px;font-weight:600">400 DA</span></div>
+              <div style="font-size:12px;color:var(--mute);margin-top:4px">Retrait en agence · 48 h</div>
+            </button>
+          </div>
+
+          <label style="display:flex;gap:12px;align-items:flex-start;margin-bottom:20px;cursor:pointer"><input name="consent" checked="{{ cform.consent }}" onChange="{{ onCoConsent }}" type="checkbox" style="width:20px;height:20px;flex:none;margin-top:2px;accent-color:var(--cobalt);cursor:pointer"><span style="font-size:13px;line-height:1.5;color:var(--mute)">J'accepte que mes données soient utilisées pour traiter et livrer ma commande, conformément à la <a href="#" onClick="{{ navLegal }}" style="color:var(--cobalt)">politique de confidentialité</a>. *</span></label>
+          <sc-if value="{{ checkoutError }}" hint-placeholder-val="{{ false }}"><p role="alert" style="color:var(--cobalt);font-size:13.5px;font-weight:600;margin:0 0 16px">{{ checkoutError }}</p></sc-if>
+        </div>
+
+        <!-- SUMMARY -->
+        <aside style="border:1px solid var(--ink);padding:26px;position:sticky;top:90px">
+          <h2 style="font-family:'Syne';font-weight:700;font-size:20px;margin:0 0 18px">Votre commande</h2>
+          <sc-for list="{{ checkoutItems }}" as="it" hint-placeholder-count="2">
+            <div style="display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--line2)">
+              <div aria-hidden="true" style="width:44px;height:58px;flex:none;background:{{ it.tile }}"></div>
+              <div style="flex:1;min-width:0"><div style="font-family:'Syne';font-weight:700;font-size:14px">{{ it.name }}</div><div style="font-size:11px;color:var(--mute);margin-top:2px">T. {{ it.size }} · {{ it.color }} · ×{{ it.qty }}</div></div>
+              <span style="font-size:13px;font-weight:500;white-space:nowrap">{{ it.lineLabel }}</span>
+            </div>
+          </sc-for>
+          <div style="display:flex;justify-content:space-between;font-size:14px;margin-top:16px;color:var(--mute)"><span>Sous-total</span><span>{{ subtotalCheckout }}</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:14px;margin-top:8px;color:var(--mute)"><span>Livraison</span><span>{{ shippingLabel }}</span></div>
+          <div style="display:flex;justify-content:space-between;font-family:'Syne';font-weight:800;font-size:20px;margin-top:16px;padding-top:16px;border-top:1px solid var(--ink)"><span>Total</span><span>{{ totalLabel }}</span></div>
+          <button onClick="{{ placeOrder }}" style="width:100%;margin-top:20px;background:var(--cobalt);color:var(--paper);border:none;font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;padding:17px;cursor:pointer" style-hover="opacity:.92">Confirmer la commande</button>
+          <p style="font-size:11px;color:var(--mute);text-align:center;margin:12px 0 0;line-height:1.5">Paiement à la livraison disponible · démonstration, aucune transaction réelle</p>
+        </aside>
+      </div>
+      </sc-if>
+    </section>
+    </sc-if>
+  </div>
+  </sc-if>
+
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer style="background:var(--paper);border-top:1px solid var(--ink)">
+    <div style="max-width:1320px;margin:0 auto;padding:60px 24px 30px">
+      <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:36px;padding-bottom:44px" data-foot-grid="true">
+        <div>
+          <div style="font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);margin-bottom:14px">Newsletter</div>
+          <p style="font-size:14px;color:var(--ink);margin:0 0 14px;max-width:32ch">Les nouvelles pièces, en avant-première. Pas plus d'un e-mail par mois.</p>
+          <div style="display:flex;border:1px solid var(--ink);max-width:320px">
+            <input aria-label="Votre e-mail" type="email" placeholder="vous@exemple.dz" style="flex:1;border:none;background:none;padding:12px 14px;font-size:14px;color:var(--ink);min-width:0">
+            <button style="background:var(--ink);color:var(--paper);border:none;padding:0 18px;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;cursor:pointer">OK</button>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);margin-bottom:14px">Boutique</div>
+          <sc-for list="{{ navLinks }}" as="link" hint-placeholder-count="3">
+            <a href="#" onClick="{{ link.go }}" style="display:block;color:var(--ink);text-decoration:none;font-size:14px;padding:5px 0" style-hover="color:var(--cobalt)">{{ link.label }}</a>
+          </sc-for>
+        </div>
+        <div>
+          <div style="font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);margin-bottom:14px">Aide</div>
+          <a href="#" onClick="{{ navContact }}" style="display:block;color:var(--ink);text-decoration:none;font-size:14px;padding:5px 0" style-hover="color:var(--cobalt)">Contact</a>
+          <a href="#" onClick="{{ navLegal }}" style="display:block;color:var(--ink);text-decoration:none;font-size:14px;padding:5px 0" style-hover="color:var(--cobalt)">Livraison & retours</a>
+          <button onClick="{{ openCookies }}" style="display:block;background:none;border:none;color:var(--ink);text-decoration:none;font-size:14px;padding:5px 0;cursor:pointer;font-family:inherit" style-hover="color:var(--cobalt)">Cookies</button>
+        </div>
+        <div>
+          <div style="font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);margin-bottom:14px">Atelier</div>
+          <p style="font-size:14px;line-height:1.7;color:var(--ink);margin:0">7, rue Larbi Ben M'hidi<br>Alger-Centre, 16000<br>+213 _ __ __ __ __<br>bonjour@noor.dz</p>
+        </div>
+      </div>
+    </div>
+    <!-- GIANT WORDMARK -->
+    <div aria-hidden="true" style="overflow:hidden;line-height:.78;padding:0 12px">
+      <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(90px,25vw,380px);letter-spacing:-.03em;color:var(--ink);white-space:nowrap;text-align:center">NOOR<span style="color:var(--cobalt)">.</span></div>
+    </div>
+    <div style="max-width:1320px;margin:0 auto;padding:20px 24px 30px;display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap;border-top:1px solid var(--line)">
+      <div style="display:flex;gap:20px;flex-wrap:wrap;font-size:12px">
+        <a href="#" onClick="{{ navLegal }}" style="color:var(--mute);text-decoration:none" style-hover="color:var(--ink)">Mentions légales</a>
+        <a href="#" onClick="{{ navLegal }}" style="color:var(--mute);text-decoration:none" style-hover="color:var(--ink)">Confidentialité</a>
+      </div>
+      <div style="font-size:12px;color:var(--mute)">Réalisé par <a href="https://difarslan.com" target="_blank" rel="noopener" style="color:var(--cobalt);text-decoration:none" style-hover="text-decoration:underline">Arslan DIF — difarslan.com</a></div>
+    </div>
+  </footer>
+
+  <!-- ===================== CART DRAWER ===================== -->
+  <sc-if value="{{ cartOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;inset:0;z-index:80;animation:nrFade .2s ease">
+      <div onClick="{{ closeCart }}" aria-hidden="true" style="position:absolute;inset:0;background:rgba(11,11,11,.4)"></div>
+      <aside role="dialog" aria-label="Panier" style="position:absolute;top:0;right:0;bottom:0;width:min(440px,100%);background:var(--paper);border-left:1px solid var(--ink);display:flex;flex-direction:column;animation:nrRise .3s ease both">
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:22px 24px;border-bottom:1px solid var(--ink)">
+          <span style="font-family:'Syne',sans-serif;font-weight:800;font-size:22px">Panier ({{ cartCount }})</span>
+          <button onClick="{{ closeCart }}" aria-label="Fermer" style="background:none;border:none;font-size:24px;cursor:pointer;line-height:1;color:var(--ink)">×</button>
+        </div>
+        <div style="flex:1;overflow-y:auto;padding:8px 24px">
+          <sc-if value="{{ cartEmpty }}" hint-placeholder-val="{{ true }}">
+            <div style="text-align:center;padding:60px 20px;color:var(--mute)">
+              <p style="font-family:'Syne',sans-serif;font-weight:700;font-size:22px;color:var(--ink);margin:0 0 10px">Votre panier est vide</p>
+              <p style="font-size:14px;margin:0 0 22px">Découvrez la collection Les Vents.</p>
+              <button onClick="{{ cartToCollection }}" style="background:var(--ink);color:var(--paper);border:none;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:14px 24px;cursor:pointer">Voir les pièces</button>
+            </div>
+          </sc-if>
+          <sc-for list="{{ cartItems }}" as="it" hint-placeholder-count="2">
+            <div style="display:flex;gap:14px;padding:18px 0;border-bottom:1px solid var(--line2)">
+              <div aria-hidden="true" style="width:64px;height:84px;flex:none;background:{{ it.tile }}"></div>
+              <div style="flex:1;min-width:0">
+                <div style="display:flex;justify-content:space-between;gap:10px"><span style="font-family:'Syne',sans-serif;font-weight:700;font-size:15px">{{ it.name }}</span><button onClick="{{ it.remove }}" aria-label="Retirer" style="background:none;border:none;color:var(--mute);cursor:pointer;font-size:16px;line-height:1;padding:0" style-hover="color:var(--cobalt)">×</button></div>
+                <div style="font-size:12px;color:var(--mute);margin:3px 0 10px">Taille {{ it.size }} · {{ it.color }}</div>
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                  <div style="display:flex;align-items:center;border:1px solid var(--line)">
+                    <button onClick="{{ it.dec }}" aria-label="Moins" style="width:28px;height:28px;background:none;border:none;cursor:pointer;font-size:15px;color:var(--ink)">–</button>
+                    <span style="width:26px;text-align:center;font-size:13px">{{ it.qty }}</span>
+                    <button onClick="{{ it.inc }}" aria-label="Plus" style="width:28px;height:28px;background:none;border:none;cursor:pointer;font-size:15px;color:var(--ink)">+</button>
+                  </div>
+                  <span style="font-size:14px;font-weight:500">{{ it.lineLabel }}</span>
+                </div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+        <sc-if value="{{ cartHasItems }}" hint-placeholder-val="{{ false }}">
+          <div style="border-top:1px solid var(--ink);padding:20px 24px">
+            <div style="display:flex;justify-content:space-between;font-size:15px;margin-bottom:16px"><span style="color:var(--mute)">Sous-total</span><span style="font-weight:600">{{ subtotalLabel }}</span></div>
+            <button onClick="{{ goCheckout }}" style="width:100%;background:var(--cobalt);color:var(--paper);border:none;font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;padding:16px;cursor:pointer">Passer commande →</button>
+          </div>
+        </sc-if>
+      </aside>
+    </div>
+  </sc-if>
+
+  <!-- ===================== COOKIE BANNER ===================== -->
+  <sc-if value="{{ showCookie }}" hint-placeholder-val="{{ false }}">
+    <div role="dialog" aria-label="Cookies" style="position:fixed;left:16px;right:16px;bottom:16px;z-index:90;max-width:500px;background:var(--ink);color:var(--paper);padding:22px 24px;animation:nrRise .4s ease both">
+      <p style="font-size:13.5px;line-height:1.55;margin:0 0 16px">Nous utilisons des cookies pour la mesure d'audience et le bon fonctionnement du panier. <a href="#" onClick="{{ navLegal }}" style="color:var(--cobalt)">En savoir plus</a>.</p>
+      <div style="display:flex;gap:10px">
+        <button onClick="{{ acceptCookies }}" style="flex:1;background:var(--cobalt);color:var(--paper);border:none;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:12px;cursor:pointer">Accepter</button>
+        <button onClick="{{ refuseCookies }}" style="flex:1;background:none;color:var(--paper);border:1px solid var(--paper);font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:12px;cursor:pointer">Refuser</button>
+      </div>
+    </div>
+  </sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = {
+    route: 'home',
+    mobileOpen: false,
+    cookie: undefined,
+    cartOpen: false,
+    cart: [], // {id,size,color,colorHex,qty}
+    // product view
+    currentId: null,
+    selSize: null,
+    selColor: null,
+    spinAngle: 0,
+    zoom: 1,
+    dragging: false,
+    productError: '',
+    openDetail: null,
+    // checkout
+    cform: { firstName: '', lastName: '', phone: '', email: '', address: '', wilaya: '', delivery: 'domicile', consent: false },
+    checkoutError: '',
+    orderDone: false,
+    orderRef: '',
+    contact: { name: '', email: '', message: '', consent: false },
+    contactError: '',
+    contactDone: false,
+    catFilter: 'Tout',
+  };
+
+  componentDidMount() {
+    let c = null; try { c = localStorage.getItem('noor_cookie'); } catch (e) {}
+    this.setState({ cookie: c || null });
+    this._moveH = (e) => {
+      if (!this._drag) return;
+      const dx = e.clientX - this._drag.startX;
+      let a = this._drag.startAngle - dx;
+      a = ((a % 360) + 360) % 360;
+      this.setState({ spinAngle: a });
+    };
+    this._upH = () => { if (this._drag) { this._drag = null; this.setState({ dragging: false }); } };
+    window.addEventListener('pointermove', this._moveH);
+    window.addEventListener('pointerup', this._upH);
+  }
+  componentWillUnmount() {
+    window.removeEventListener('pointermove', this._moveH);
+    window.removeEventListener('pointerup', this._upH);
+  }
+
+  onWheelNative = (e) => {
+    e.preventDefault();
+    const d = e.deltaY > 0 ? -0.18 : 0.18;
+    this.setState(s => ({ zoom: Math.min(2.6, Math.max(1, +(s.zoom + d).toFixed(2))) }));
+  };
+
+  go(route) { this.setState({ route, mobileOpen: false, cartOpen: false }); try { window.scrollTo({ top: 0 }); } catch (e) {} }
+
+  shade(hex, pct) {
+    hex = hex.replace('#', '');
+    if (hex.length === 3) hex = hex.split('').map(x => x + x).join('');
+    const n = parseInt(hex, 16);
+    let r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255;
+    const t = pct < 0 ? 0 : 255, p = Math.abs(pct) / 100;
+    r = Math.round((t - r) * p + r); g = Math.round((t - g) * p + g); b = Math.round((t - b) * p + b);
+    return `rgb(${r},${g},${b})`;
+  }
+  fmt(n) { return n.toLocaleString('fr-FR') + ' DA'; }
+
+  products() {
+    if (this._products) return this._products;
+    const C = { encre: { name: 'Encre', hex: '#1A1A1A' }, craie: { name: 'Craie', hex: '#E7E3D8' }, cobalt: { name: 'Cobalt', hex: '#1B34E8' }, gres: { name: 'Grès', hex: '#B7A48C' }, rouille: { name: 'Rouille', hex: '#A6512E' }, olive: { name: 'Olive', hex: '#5E6247' }, terre: { name: 'Terre', hex: '#6E5A46' } };
+    this._products = [
+      { id: 'sirocco', name: 'Manteau Sirocco', cat: 'Manteaux', material: 'Laine vierge 100%', coupe: 'Oversize, épaules tombantes', price: 28500, sizes: ['S', 'M', 'L', 'XL'], colors: [C.encre, C.craie, C.cobalt], desc: "Un manteau enveloppant taillé dans une laine vierge dense, pensé pour durer bien au-delà d'une saison. Sa coupe oversize se porte aussi bien ouverte sur une chemise que ceinturée." },
+      { id: 'meridiem', name: 'Blazer Meridiem', cat: 'Vestes', material: 'Laine froide', coupe: 'Ajustée', price: 19800, sizes: ['S', 'M', 'L', 'XL'], colors: [C.encre, C.gres], desc: "Le blazer de tous les jours : structuré aux épaules, léger sur le dos, doublé de bemberg respirant. Une pièce d'atelier qui traverse les rendez-vous comme les dîners." },
+      { id: 'nefoud', name: 'Robe Néfoud', cat: 'Robes', material: 'Coton lavé', coupe: 'Droite, mi-longue', price: 16500, sizes: ['S', 'M', 'L', 'XL'], colors: [C.craie, C.encre, C.rouille], desc: "Une robe droite en coton lavé au tombé souple, sans doublure. Poches profondes, boutons de corozo : la simplicité travaillée dans le détail." },
+      { id: 'zephyr', name: 'Chemise Zéphyr', cat: 'Chemises', material: 'Popeline de coton', coupe: 'Classique', price: 9800, sizes: ['S', 'M', 'L', 'XL'], colors: [C.craie, C.cobalt, C.olive], desc: "La chemise blanche revisitée en popeline de coton à armure serrée. Col italien, patte cachée : nette le jour, décontractée le soir, col ouvert." },
+      { id: 'khamsin', name: 'Pantalon Khamsin', cat: 'Pantalons', material: 'Gabardine de coton', coupe: 'Large, taille haute', price: 13500, sizes: ['S', 'M', 'L', 'XL'], colors: [C.encre, C.terre], desc: "Un pantalon large à pinces, taille haute, qui tombe droit sur la chaussure. La gabardine de coton garde le pli sans jamais rigidifier la silhouette." },
+      { id: 'ghibli', name: 'Pull Ghibli', cat: 'Maille', material: 'Laine mérinos', coupe: 'Col roulé', price: 14200, sizes: ['S', 'M', 'L', 'XL'], colors: [C.craie, C.encre, C.cobalt], desc: "Un col roulé en pure laine mérinos, maille fine et chaude, sans grattage. Se glisse sous le Meridiem l'hiver, se porte seul à la mi-saison." },
+      { id: 'alize', name: 'Jupe Alizé', cat: 'Jupes', material: 'Twill de laine', coupe: 'Midi, taille haute', price: 11900, sizes: ['S', 'M', 'L', 'XL'], colors: [C.encre, C.gres], desc: "Une jupe midi en twill de laine, léger mouvement à la marche grâce à un pli creux dans le dos. Fermeture invisible, finitions surpiquées main." },
+      { id: 'chergui', name: 'Trench Chergui', cat: 'Manteaux', material: 'Coton ciré', coupe: 'Longue, ceinturée', price: 32000, sizes: ['S', 'M', 'L', 'XL'], colors: [C.craie, C.encre, C.olive], desc: "Le trench long en coton ciré déperlant, notre pièce la plus travaillée. Martingale, pattes d'épaule, ceinture à boucle métal : l'imperméable qu'on transmet." },
+    ];
+    return this._products;
+  }
+
+  wilayas() {
+    return ['01 — Adrar', '02 — Chlef', '03 — Laghouat', '04 — Oum El Bouaghi', '05 — Batna', '06 — Béjaïa', '07 — Biskra', '08 — Béchar', '09 — Blida', '10 — Bouira', '11 — Tamanrasset', '12 — Tébessa', '13 — Tlemcen', '14 — Tiaret', '15 — Tizi Ouzou', '16 — Alger', '17 — Djelfa', '18 — Jijel', '19 — Sétif', '20 — Saïda', '21 — Skikda', '22 — Sidi Bel Abbès', '23 — Annaba', '24 — Guelma', '25 — Constantine', '26 — Médéa', '27 — Mostaganem', "28 — M'Sila", '29 — Mascara', '30 — Ouargla', '31 — Oran', '32 — El Bayadh', '33 — Illizi', '34 — Bordj Bou Arréridj', '35 — Boumerdès', '36 — El Tarf', '37 — Tindouf', '38 — Tissemsilt', '39 — El Oued', '40 — Khenchela', '41 — Souk Ahras', '42 — Tipaza', '43 — Mila', '44 — Aïn Defla', '45 — Naâma', '46 — Aïn Témouchent', '47 — Ghardaïa', '48 — Relizane', '49 — Timimoun', '50 — Bordj Badji Mokhtar', '51 — Ouled Djellal', '52 — Béni Abbès', '53 — In Salah', '54 — In Guezzam', '55 — Touggourt', '56 — Djanet', "57 — El M'Ghair", '58 — El Meniaa'];
+  }
+
+  tileFor(p) {
+    // deterministic N&B tile gradient per product
+    const map = { Manteaux: '#1C1C1C', Vestes: '#242424', Robes: '#2B2B2B', Chemises: '#33332F', Pantalons: '#222', Maille: '#2A2A2A', Jupes: '#282828' };
+    const base = map[p.cat] || '#222';
+    return `linear-gradient(160deg, ${this.shade(base, 22)}, ${base})`;
+  }
+
+  openProduct(id) {
+    const p = this.products().find(x => x.id === id);
+    this.setState({ route: 'product', currentId: id, selSize: null, selColor: p.colors[0].name, spinAngle: 0, zoom: 1, productError: '', openDetail: null, cartOpen: false, mobileOpen: false });
+    try { window.scrollTo({ top: 0 }); } catch (e) {}
+  }
+
+  renderVals() {
+    const S = this.state;
+    const nav = (r) => (e) => { if (e) e.preventDefault(); this.go(r); };
+    const prods = this.products();
+    const withPhoto = new Set(['sirocco', 'meridiem', 'nefoud', 'zephyr', 'khamsin', 'ghibli', 'alize', 'chergui']);
+
+    const navLinks = [
+      { label: 'Collection', key: 'collection' },
+      { label: 'La Maison', key: 'maison' },
+      { label: 'Contact', key: 'contact' },
+    ].map(l => ({ ...l, go: nav(l.key) }));
+
+    const cardData = (p, offset) => ({
+      id: p.id, name: p.name, cat: p.cat, material: p.material,
+      priceLabel: this.fmt(p.price),
+      tile: this.tileFor(p),
+      alt: `${p.name}, ${p.material}, coupe ${p.coupe}`,
+      badgeColor: 'rgba(255,255,255,.7)',
+      slotId: 'ph-' + p.id,
+      slotPh: p.name + ' · photo studio 3:4',
+      slotSrc: withPhoto.has(p.id) ? ('uploads/noor-' + p.id + '.png') : '',
+      offset: offset || '0px',
+      open: (e) => { if (e) e.preventDefault(); this.openProduct(p.id); },
+    });
+
+    const offsets = ['0px', '34px', '0px', '34px'];
+    const featured = ['meridiem', 'nefoud', 'ghibli', 'alize'].map((id, i) => cardData(prods.find(p => p.id === id), offsets[i]));
+
+    // cart derived
+    const cartItems = S.cart.map((c, idx) => {
+      const p = prods.find(x => x.id === c.id);
+      return {
+        ...c, name: p.name, tile: this.tileFor(p),
+        lineLabel: this.fmt(p.price * c.qty),
+        inc: () => this.setState(s => ({ cart: s.cart.map((x, i) => i === idx ? { ...x, qty: x.qty + 1 } : x) })),
+        dec: () => this.setState(s => ({ cart: s.cart.map((x, i) => i === idx ? { ...x, qty: Math.max(1, x.qty - 1) } : x) })),
+        remove: () => this.setState(s => ({ cart: s.cart.filter((x, i) => i !== idx) })),
+      };
+    });
+    const cartCount = S.cart.reduce((a, c) => a + c.qty, 0);
+    const subtotal = S.cart.reduce((a, c) => { const p = prods.find(x => x.id === c.id); return a + p.price * c.qty; }, 0);
+
+    // cookies
+    const setConsent = (v) => { try { localStorage.setItem('noor_cookie', v); } catch (e) {} this.setState({ cookie: v }); };
+
+    const base = {
+      route: S.route,
+      isHome: S.route === 'home', isCollection: S.route === 'collection', isProduct: S.route === 'product',
+      isMaison: S.route === 'maison', isContact: S.route === 'contact', isLegal: S.route === 'legal', isCheckout: S.route === 'checkout',
+      mobileOpen: S.mobileOpen, toggleMobile: () => this.setState(s => ({ mobileOpen: !s.mobileOpen })),
+      navLinks,
+      navHome: nav('home'), navCollection: nav('collection'), navMaison: nav('maison'), navContact: nav('contact'), navLegal: nav('legal'),
+      featureOpen: (e) => { if (e) e.preventDefault(); this.openProduct('sirocco'); },
+      featured,
+      // cart
+      cartCount, cartOpen: S.cartOpen, openCart: () => this.setState({ cartOpen: true }), closeCart: () => this.setState({ cartOpen: false }),
+      cartItems, cartEmpty: S.cart.length === 0, cartHasItems: S.cart.length > 0,
+      subtotalLabel: this.fmt(subtotal),
+      cartToCollection: nav('collection'),
+      goCheckout: () => this.go('checkout'),
+      // cookies
+      showCookie: S.cookie === null,
+      acceptCookies: () => setConsent('accepted'), refuseCookies: () => setConsent('refused'),
+      openCookies: () => this.setState({ cookie: null }),
+    };
+
+    // ---- product view derived ----
+    const p = prods.find(x => x.id === S.currentId);
+    if (p) {
+      const selColorObj = p.colors.find(c => c.name === S.selColor) || p.colors[0];
+      const hex = selColorObj.hex;
+      const rad = S.spinAngle * Math.PI / 180;
+      const hi = 50 + Math.cos(rad) * 34;
+      base.product = p;
+      base.pName = p.name; base.pCat = p.cat; base.pMaterial = p.material; base.pCoupe = p.coupe;
+      base.pPrice = this.fmt(p.price); base.pDesc = p.desc;
+      base.pTile = this.tileFor(p);
+      base.spinAngleLabel = String(Math.round(S.spinAngle)).padStart(3, '0');
+      base.dragging = S.dragging;
+      base.zoomLabel = Math.round(S.zoom * 100) + '%';
+      base.viewerRef = (node) => { if (node && !node.__wb) { node.__wb = true; node.addEventListener('wheel', this.onWheelNative, { passive: false }); } };
+      base.spinDown = (e) => { this._drag = { startX: e.clientX, startAngle: S.spinAngle }; this.setState({ dragging: true }); };
+      base.spinInnerStyle = {
+        position: 'absolute', inset: '14%', borderRadius: '10px 10px 4px 4px',
+        transform: `scale(${S.zoom})`, transition: S.dragging ? 'none' : 'transform .2s ease',
+        background: `linear-gradient(100deg, ${this.shade(hex, -26)} 0%, ${this.shade(hex, 16)} ${hi}%, ${this.shade(hex, -32)} 100%)`,
+        boxShadow: 'inset 0 0 60px rgba(0,0,0,.28)',
+      };
+      base.seamStyle = { position: 'absolute', top: '10%', bottom: '10%', left: `${50 + Math.sin(rad) * 8}%`, width: '1.5px', background: 'rgba(255,255,255,.12)', transform: 'translateX(-50%)' };
+      base.zoomIn = () => this.setState(s => ({ zoom: Math.min(2.6, +(s.zoom + 0.25).toFixed(2)) }));
+      base.zoomOut = () => this.setState(s => ({ zoom: Math.max(1, +(s.zoom - 0.25).toFixed(2)) }));
+      base.resetView = () => this.setState({ spinAngle: 0, zoom: 1 });
+      base.viewerCursor = S.dragging ? 'grabbing' : 'grab';
+
+      base.colorOptions = p.colors.map(c => {
+        const sel = c.name === S.selColor;
+        return { name: c.name, hex: c.hex, selected: sel, ring: sel ? 'var(--cobalt)' : 'var(--line)', ringW: sel ? '2px' : '1px', select: () => this.setState({ selColor: c.name }) };
+      });
+      base.sizeOptions = p.sizes.map(sz => {
+        const sel = sz === S.selSize;
+        return { sz, selected: sel, bg: sel ? 'var(--ink)' : 'transparent', color: sel ? 'var(--paper)' : 'var(--ink)', border: sel ? 'var(--ink)' : 'var(--line)', select: () => this.setState({ selSize: sz, productError: '' }) };
+      });
+      base.selColorName = selColorObj.name;
+      base.productError = S.productError;
+      base.details = [
+        { key: 'matiere', title: 'Matière & entretien', body: `${p.material}. Nettoyage à sec recommandé. Confectionné en petite série dans notre atelier d'Alger.`, open: S.openDetail === 'matiere' },
+        { key: 'coupe', title: 'Coupe & taille', body: `Coupe ${p.coupe.toLowerCase()}. Le modèle mesure 1,78 m et porte une taille M. Un guide des tailles détaillé est disponible sur demande.`, open: S.openDetail === 'coupe' },
+        { key: 'livraison', title: 'Livraison & retours', body: `Livraison 48–72 h dans les 58 wilayas. Domicile (600 DA) ou point relais (400 DA). Retours gratuits sous 14 jours.`, open: S.openDetail === 'livraison' },
+      ].map(d => ({ ...d, toggle: () => this.setState(s => ({ openDetail: s.openDetail === d.key ? null : d.key })), sign: d.open ? '−' : '+' }));
+
+      base.addToCart = () => {
+        if (!S.selSize) { this.setState({ productError: 'Merci de choisir une taille.' }); return; }
+        const key = p.id + '|' + S.selSize + '|' + S.selColor;
+        this.setState(s => {
+          const existing = s.cart.find(c => (c.id + '|' + c.size + '|' + c.color) === key);
+          let cart;
+          if (existing) cart = s.cart.map(c => (c.id + '|' + c.size + '|' + c.color) === key ? { ...c, qty: c.qty + 1 } : c);
+          else cart = [...s.cart, { id: p.id, size: S.selSize, color: S.selColor, colorHex: hex, qty: 1 }];
+          return { cart, cartOpen: true };
+        });
+      };
+    }
+
+    // ---- collection derived ----
+    const cats = ['Tout'];
+    prods.forEach(pp => { if (!cats.includes(pp.cat)) cats.push(pp.cat); });
+    const cf = S.catFilter || 'Tout';
+    base.catChips = cats.map(c => { const active = cf === c; return { label: c, active, select: () => this.setState({ catFilter: c }), chipBg: active ? 'var(--ink)' : 'transparent', chipColor: active ? 'var(--paper)' : 'var(--ink)', chipBorder: active ? 'var(--ink)' : 'var(--line)' }; });
+    const colFiltered = prods.filter(pp => cf === 'Tout' || pp.cat === cf);
+    base.collectionItems = colFiltered.map((pp, i) => cardData(pp, ['0px', '30px', '0px', '30px'][i % 4]));
+
+    // ---- checkout derived ----
+    const shipping = S.cform.delivery === 'domicile' ? 600 : 400;
+    const total = subtotal + (S.cart.length ? shipping : 0);
+    base.cform = S.cform;
+    base.wilayaList = this.wilayas();
+    base.checkoutItems = cartItems;
+    base.checkoutEmpty = S.cart.length === 0;
+    base.subtotalCheckout = this.fmt(subtotal);
+    base.shippingLabel = this.fmt(shipping);
+    base.totalLabel = this.fmt(total);
+    base.deliveryDom = S.cform.delivery === 'domicile';
+    base.deliveryRelais = S.cform.delivery === 'relais';
+    base.setDeliveryDom = () => this.setState(s => ({ cform: { ...s.cform, delivery: 'domicile' } }));
+    base.setDeliveryRelais = () => this.setState(s => ({ cform: { ...s.cform, delivery: 'relais' } }));
+    base.onCoField = (e) => { const { name, value } = e.target; this.setState(s => ({ cform: { ...s.cform, [name]: value }, checkoutError: '' })); };
+    base.onCoConsent = (e) => { const v = e.target.checked; this.setState(s => ({ cform: { ...s.cform, consent: v }, checkoutError: '' })); };
+    base.checkoutError = S.checkoutError;
+    base.orderDone = S.orderDone;
+    base.orderActive = !S.orderDone;
+    base.orderRef = S.orderRef;
+    base.orderFirstName = S.cform.firstName;
+    base.placeOrder = () => {
+      const f = S.cform;
+      if (!f.firstName.trim() || !f.lastName.trim()) { this.setState({ checkoutError: 'Indiquez votre prénom et nom.' }); return; }
+      if (!f.phone.trim()) { this.setState({ checkoutError: 'Un téléphone est nécessaire pour la livraison.' }); return; }
+      if (!f.address.trim()) { this.setState({ checkoutError: 'Indiquez une adresse de livraison.' }); return; }
+      if (!f.wilaya) { this.setState({ checkoutError: 'Sélectionnez votre wilaya.' }); return; }
+      if (!f.consent) { this.setState({ checkoutError: 'Merci d\u2019accepter le traitement de vos données pour la commande.' }); return; }
+      const ref = 'NR-' + Math.random().toString(36).slice(2, 7).toUpperCase();
+      this.setState({ orderDone: true, orderRef: ref, cart: [] });
+      try { window.scrollTo({ top: 0 }); } catch (e) {}
+    };
+    base.backToShop = () => { this.setState({ orderDone: false, cform: { firstName: '', lastName: '', phone: '', email: '', address: '', wilaya: '', delivery: 'domicile', consent: false } }); this.go('collection'); };
+
+    // ---- contact derived ----
+    base.ct = S.contact;
+    base.onCtField = (e) => { const { name, value } = e.target; this.setState(s => ({ contact: { ...s.contact, [name]: value }, contactError: '' })); };
+    base.onCtConsent = (e) => { const v = e.target.checked; this.setState(s => ({ contact: { ...s.contact, consent: v }, contactError: '' })); };
+    base.contactError = S.contactError;
+    base.contactDone = S.contactDone;
+    base.contactFormOpen = !S.contactDone;
+    base.sendContact = () => { const f = S.contact; if (!f.name.trim() || !f.email.trim() || !f.message.trim()) { this.setState({ contactError: 'Merci de remplir tous les champs.' }); return; } if (!f.consent) { this.setState({ contactError: 'Merci d\u2019accepter d\u2019être recontacté(e).' }); return; } this.setState({ contactDone: true }); };
+
+    return base;
+  }
+}
+</script>
+</body>
+</html>

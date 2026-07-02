@@ -834,7 +834,7 @@ mgr.addAxiom(onto, f.getOWLEquivalentClassesAxiom(Rapper,
       en: "Modular Node.js architecture, Snort rule engine in JS, and lessons learned deploying on Render.",
     },
     featured: false,
-    icon: "/spoof/logo.svg",
+    icon: "🛡️",
     content: {
       fr: `<h3>L'idée</h3><p>CyberLab est une plateforme éducative qui simule trois familles d'attaques de manière sécurisée : <strong>phishing</strong>, <strong>injection SQL</strong>, et <strong>détection d'intrusion</strong>. Pas de victime réelle, pas de cible externe — un bac à sable pour comprendre comment chaque attaque marche, puis comment s'en défendre.</p><h3>L'architecture modulaire</h3><p>Un seul backend Node + Express qui charge ses modules dynamiquement :</p><pre><code>Spoof/
 ├── server.js        # Express, monte chaque module sur son préfixe
@@ -1093,20 +1093,28 @@ export const services: Service[] = [
 // ─── CATALOGUE (démos HTML statiques dans /public/catalogue) ──────────────────
 
 export interface CatalogueItem {
-  slug: string; // fichier dans /catalogue
+  slug: string; // dossier ou fichier dans /catalogue
   name: string;
   category: { fr: string; en: string };
-  accent: string;
+  theme: { fr: string; en: string };
 }
 
+const THEME = {
+  dining:     { fr: "Restauration",            en: "Dining" },
+  retail:     { fr: "Commerce & mode",         en: "Retail & fashion" },
+  culture:    { fr: "Culture & art",           en: "Culture & art" },
+  wellness:   { fr: "Bien-être & loisirs",     en: "Wellness & leisure" },
+  ticketing:  { fr: "Billetterie & événements", en: "Ticketing & events" },
+} as const;
+
 export const catalogue: CatalogueItem[] = [
-  { slug: "le-lynde.html",         name: "Le Lynde",      category: { fr: "Restaurant · Sushi & buffet", en: "Restaurant · Sushi & buffet" }, accent: "#E11D48" },
-  { slug: "marsa.html",            name: "MARSA",         category: { fr: "Restaurant",                  en: "Restaurant" },                  accent: "#0EA5E9" },
-  { slug: "dar-el-bahr.html",      name: "Dar el Bahr",   category: { fr: "Restaurant",                  en: "Restaurant" },                  accent: "#0D9488" },
-  { slug: "cine-lumina.html",      name: "Cine Lumina",   category: { fr: "Cinéma",                      en: "Cinema" },                      accent: "#8B5CF6" },
-  { slug: "galerie-diwan.html",    name: "Galerie Diwan", category: { fr: "Galerie d'art",               en: "Art gallery" },                 accent: "#D4AF37" },
-  { slug: "noor.html",             name: "NOOR",          category: { fr: "Boutique de vêtements",       en: "Clothing store" },              accent: "#EC4899" },
-  { slug: "sirocco.html",          name: "Sirocco",       category: { fr: "Sorties & loisirs",           en: "Outings & leisure" },           accent: "#F59E0B" },
-  { slug: "pose-pilates.html",     name: "posé",          category: { fr: "Studio de pilates",           en: "Pilates studio" },              accent: "#10B981" },
-  { slug: "yalla-billetterie.html", name: "Yalla",        category: { fr: "Billetterie & événements",    en: "Ticketing & events" },          accent: "#6366F1" },
+  { slug: "le-lynde.html",            name: "Le Lynde",      category: { fr: "Restaurant · Sushi & buffet", en: "Restaurant · Sushi & buffet" }, theme: THEME.dining },
+  { slug: "marsa/index.html",         name: "MARSA",         category: { fr: "Restaurant",                  en: "Restaurant" },                  theme: THEME.dining },
+  { slug: "dar-el-bahr/index.html",   name: "Dar el Bahr",   category: { fr: "Restaurant",                  en: "Restaurant" },                  theme: THEME.dining },
+  { slug: "noor/index.html",          name: "NOOR",          category: { fr: "Boutique de vêtements",       en: "Clothing store" },              theme: THEME.retail },
+  { slug: "cine-lumina/index.html",   name: "Cine Lumina",   category: { fr: "Cinéma",                      en: "Cinema" },                      theme: THEME.culture },
+  { slug: "galerie-diwan/index.html", name: "Galerie Diwan", category: { fr: "Galerie d'art",               en: "Art gallery" },                 theme: THEME.culture },
+  { slug: "sirocco/index.html",       name: "Sirocco",       category: { fr: "Sorties & loisirs",           en: "Outings & leisure" },           theme: THEME.wellness },
+  { slug: "pose-pilates/index.html",  name: "posé",          category: { fr: "Studio de pilates",           en: "Pilates studio" },              theme: THEME.wellness },
+  { slug: "yalla/index.html",         name: "Yalla",         category: { fr: "Billetterie & événements",    en: "Ticketing & events" },          theme: THEME.ticketing },
 ];

@@ -1,9 +1,17 @@
 "use client";
 
 import Link from "next/link";
+import { Globe, LayoutDashboard, Smartphone, Brain, type LucideIcon } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
-import { translations, services, catalogue } from "@/lib/data";
+import { translations, services, catalogue, type CatalogueItem } from "@/lib/data";
 import QuoteForm from "./QuoteForm";
+
+const SERVICE_ICONS: Record<string, LucideIcon> = {
+  vitrine: Globe,
+  webapp: LayoutDashboard,
+  mobile: Smartphone,
+  ia: Brain,
+};
 
 export default function ServicesContent() {
   const { t } = useLanguage();
@@ -15,6 +23,14 @@ export default function ServicesContent() {
     { t: tr.process.s3_t, d: tr.process.s3_d },
     { t: tr.process.s4_t, d: tr.process.s4_d },
   ];
+
+  // Regroupe les exemples par thème, en conservant l'ordre du tableau
+  const themeGroups = catalogue.reduce<{ theme: CatalogueItem["theme"]; items: CatalogueItem[] }[]>((acc, item) => {
+    const g = acc.find((x) => x.theme.fr === item.theme.fr);
+    if (g) g.items.push(item);
+    else acc.push({ theme: item.theme, items: [item] });
+    return acc;
+  }, []);
 
   return (
     <main className="pt-24 md:pt-28">
@@ -69,12 +85,17 @@ export default function ServicesContent() {
                   className="absolute top-0 left-0 right-0 h-[3px] scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"
                   style={{ background: s.accent }}
                 />
-                <div
-                  className="w-14 h-14 rounded-xl flex items-center justify-center text-2xl mb-5"
-                  style={{ backgroundColor: s.accent + "18", border: `1px solid ${s.accent}33` }}
-                >
-                  {s.icon}
-                </div>
+                {(() => {
+                  const Icon = SERVICE_ICONS[s.id] ?? Globe;
+                  return (
+                    <div
+                      className="w-14 h-14 rounded-xl flex items-center justify-center mb-5"
+                      style={{ backgroundColor: s.accent + "18", border: `1px solid ${s.accent}33` }}
+                    >
+                      <Icon className="w-6 h-6" style={{ color: s.accent }} strokeWidth={1.75} />
+                    </div>
+                  );
+                })()}
 
                 <div className="flex items-center justify-between gap-3 mb-2">
                   <h2 className="font-[family-name:var(--font-heading)] text-xl font-semibold text-[var(--text)]">
@@ -113,45 +134,44 @@ export default function ServicesContent() {
             </h2>
             <div className="flex-1 h-px bg-[var(--border)]" />
           </div>
-          <p className="text-sm text-[var(--muted)] mb-10 max-w-2xl">{t(tr.examples_sub)}</p>
+          <p className="text-sm text-[var(--muted)] mb-12 max-w-2xl">{t(tr.examples_sub)}</p>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {catalogue.map((item) => (
-              <a
-                key={item.slug}
-                href={`/catalogue/${item.slug}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group relative bg-[var(--surface)] border border-[var(--border)] rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:border-[var(--gold)] hover:shadow-[0_16px_40px_rgba(0,0,0,0.25)]"
-              >
-                {/* Visual band */}
-                <div className="relative h-[150px] flex items-center justify-center overflow-hidden bg-[var(--bg2)]">
-                  <div className="absolute inset-0 opacity-[0.05]" style={{
-                    backgroundImage: "repeating-linear-gradient(135deg, transparent, transparent 10px, var(--text) 10px, var(--text) 11px)",
-                  }} />
-                  <div
-                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                    style={{ background: `radial-gradient(circle at 50% 40%, ${item.accent}22, transparent 70%)` }}
-                  />
-                  <span
-                    className="relative font-[family-name:var(--font-heading)] text-2xl font-bold tracking-tight"
-                    style={{ color: item.accent }}
-                  >
-                    {item.name}
+          <div className="flex flex-col gap-12">
+            {themeGroups.map((group) => (
+              <div key={group.theme.fr}>
+                {/* Sous-titre de thème */}
+                <div className="flex items-center gap-3 mb-5">
+                  <h3 className="font-[family-name:var(--font-mono)] text-xs tracking-[.14em] uppercase text-[var(--gold)]">
+                    {t(group.theme)}
+                  </h3>
+                  <div className="flex-1 h-px bg-[var(--border)]" />
+                  <span className="font-[family-name:var(--font-mono)] text-[11px] text-[var(--dim)]">
+                    {group.items.length}
                   </span>
                 </div>
 
-                {/* Body */}
-                <div className="p-5 flex items-center justify-between gap-3">
-                  <div>
-                    <div className="font-[family-name:var(--font-heading)] text-sm font-semibold text-[var(--text)]">{item.name}</div>
-                    <div className="text-xs text-[var(--muted)] mt-0.5">{t(item.category)}</div>
-                  </div>
-                  <span className="flex-shrink-0 font-[family-name:var(--font-mono)] text-[11px] text-[var(--muted)] group-hover:text-[var(--gold)] transition-colors whitespace-nowrap">
-                    {t(tr.view_demo)} ↗
-                  </span>
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {group.items.map((item) => (
+                    <a
+                      key={item.slug}
+                      href={`/catalogue/${item.slug}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group flex items-center justify-between gap-4 bg-[var(--surface)] border border-[var(--border)] rounded-xl px-5 py-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-[var(--gold)] hover:shadow-[0_12px_28px_rgba(0,0,0,0.22)]"
+                    >
+                      <div className="min-w-0">
+                        <div className="font-[family-name:var(--font-heading)] text-base font-semibold text-[var(--text)] group-hover:text-[var(--gold)] transition-colors truncate">
+                          {item.name}
+                        </div>
+                        <div className="text-xs text-[var(--muted)] mt-0.5 truncate">{t(item.category)}</div>
+                      </div>
+                      <span className="flex-shrink-0 font-[family-name:var(--font-mono)] text-[11px] text-[var(--dim)] group-hover:text-[var(--gold)] transition-all whitespace-nowrap">
+                        {t(tr.view_demo)} <span className="inline-block transition-transform group-hover:translate-x-0.5">↗</span>
+                      </span>
+                    </a>
+                  ))}
                 </div>
-              </a>
+              </div>
             ))}
           </div>
 

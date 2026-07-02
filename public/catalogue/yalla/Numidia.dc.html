@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:#15110B;color:#F0E7D7;font-family:'Hanken Grotesk',system-ui,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  ::selection{background:#C9A25E;color:#15110B}
+  *:focus-visible{outline:2px solid #C9A25E;outline-offset:3px}
+  a{color:inherit}
+  [data-desktop-nav]{display:flex}
+  [data-hamburger]{display:none}
+  [data-hide-sm]{display:inline-flex}
+  @media(max-width:900px){
+    [data-desktop-nav]{display:none}
+    [data-hamburger]{display:inline-flex}
+  }
+  @media(max-width:640px){[data-hide-sm]{display:none}}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+  @keyframes slotIn{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:none}}
+  @keyframes overlayIn{from{opacity:0}to{opacity:1}}
+  @keyframes panelIn{from{opacity:0;transform:translateY(18px) scale(.99)}to{opacity:1;transform:none}}
+  [data-hscroll]{scrollbar-width:thin;scrollbar-color:rgba(201,162,94,0.45) transparent}
+  [data-hscroll]::-webkit-scrollbar{height:6px}
+  [data-hscroll]::-webkit-scrollbar-thumb{background:rgba(201,162,94,0.45);border-radius:3px}
+  @media(prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    *{animation:none!important;transition:none!important}
+  }
+</style>
+</helmet>
+
+<header style="position:sticky;top:0;z-index:60;background:rgba(21,17,11,0.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(239,230,214,0.10)">
+  <div style="max-width:1240px;margin:0 auto;padding:0 clamp(18px,5vw,64px);height:72px;display:flex;align-items:center;justify-content:space-between;gap:24px">
+    <a href="#accueil" style="text-decoration:none;display:flex;align-items:baseline;gap:9px">
+      <span style="font-family:'Cormorant',serif;font-weight:600;font-size:27px;letter-spacing:.01em;color:#F0E7D7">Numidia</span>
+      <span style="font-family:'Hanken Grotesk',sans-serif;font-weight:600;font-size:9px;letter-spacing:.30em;text-transform:uppercase;color:#C9A25E">Alger</span>
+    </a>
+    <nav data-desktop-nav aria-label="Navigation principale" style="align-items:center;gap:34px">
+      <a href="#histoire" style="text-decoration:none;font-weight:500;font-size:14px;letter-spacing:.01em;color:rgba(240,231,215,0.76)" style-hover="color:#F0E7D7">La maison</a>
+      <a href="#carte" style="text-decoration:none;font-weight:500;font-size:14px;letter-spacing:.01em;color:rgba(240,231,215,0.76)" style-hover="color:#F0E7D7">La carte</a>
+      <a href="#lieu" style="text-decoration:none;font-weight:500;font-size:14px;letter-spacing:.01em;color:rgba(240,231,215,0.76)" style-hover="color:#F0E7D7">Le lieu</a>
+      <a href="#avis" style="text-decoration:none;font-weight:500;font-size:14px;letter-spacing:.01em;color:rgba(240,231,215,0.76)" style-hover="color:#F0E7D7">Avis</a>
+      <a href="#infos" style="text-decoration:none;font-weight:500;font-size:14px;letter-spacing:.01em;color:rgba(240,231,215,0.76)" style-hover="color:#F0E7D7">Infos</a>
+    </nav>
+    <div style="display:flex;align-items:center;gap:14px">
+      <a data-hide-sm href="tel:+213000000000" style="text-decoration:none;font-weight:500;font-size:13px;letter-spacing:.02em;color:rgba(240,231,215,0.7);align-items:center" style-hover="color:#C9A25E">+213 _ __ __ __ __</a>
+      <a href="#reserver" style="display:inline-flex;align-items:center;justify-content:center;height:42px;padding:0 20px;background:#C9A25E;color:#1A140C;font-weight:600;font-size:13.5px;letter-spacing:.02em;text-decoration:none;transition:background .18s ease" style-hover="background:#E0BE7E">Réserver</a>
+      <button data-hamburger onClick="{{ toggleMenu }}" aria-label="Ouvrir le menu" style="width:44px;height:44px;align-items:center;justify-content:center;flex-direction:column;gap:5px;background:transparent;border:1px solid rgba(239,230,214,0.18);cursor:pointer">
+        <span style="display:block;width:18px;height:1.5px;background:#F0E7D7"></span>
+        <span style="display:block;width:18px;height:1.5px;background:#F0E7D7"></span>
+        <span style="display:block;width:18px;height:1.5px;background:#F0E7D7"></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<sc-if value="{{ mobileMenu }}" hint-placeholder-val="{{ false }}">
+  <div role="dialog" aria-label="Menu" style="position:fixed;inset:0;z-index:80;background:#15110B;animation:overlayIn .25s ease;display:flex;flex-direction:column;padding:22px clamp(18px,6vw,40px)">
+    <div style="display:flex;align-items:center;justify-content:space-between;height:50px">
+      <span style="font-family:'Cormorant',serif;font-weight:600;font-size:26px">Numidia</span>
+      <button onClick="{{ navClose }}" aria-label="Fermer le menu" style="width:44px;height:44px;background:transparent;border:1px solid rgba(239,230,214,0.18);color:#F0E7D7;font-size:20px;cursor:pointer">✕</button>
+    </div>
+    <nav style="display:flex;flex-direction:column;gap:6px;margin-top:34px">
+      <a href="#histoire" onClick="{{ navClose }}" style="text-decoration:none;font-family:'Cormorant',serif;font-size:34px;color:#F0E7D7;padding:8px 0;border-bottom:1px solid rgba(239,230,214,0.08)">La maison</a>
+      <a href="#carte" onClick="{{ navClose }}" style="text-decoration:none;font-family:'Cormorant',serif;font-size:34px;color:#F0E7D7;padding:8px 0;border-bottom:1px solid rgba(239,230,214,0.08)">La carte</a>
+      <a href="#lieu" onClick="{{ navClose }}" style="text-decoration:none;font-family:'Cormorant',serif;font-size:34px;color:#F0E7D7;padding:8px 0;border-bottom:1px solid rgba(239,230,214,0.08)">Le lieu</a>
+      <a href="#avis" onClick="{{ navClose }}" style="text-decoration:none;font-family:'Cormorant',serif;font-size:34px;color:#F0E7D7;padding:8px 0;border-bottom:1px solid rgba(239,230,214,0.08)">Avis</a>
+      <a href="#infos" onClick="{{ navClose }}" style="text-decoration:none;font-family:'Cormorant',serif;font-size:34px;color:#F0E7D7;padding:8px 0;border-bottom:1px solid rgba(239,230,214,0.08)">Infos pratiques</a>
+    </nav>
+    <a href="#reserver" onClick="{{ navClose }}" style="margin-top:auto;display:inline-flex;align-items:center;justify-content:center;height:54px;background:#C9A25E;color:#1A140C;font-weight:600;font-size:16px;text-decoration:none">Réserver une table</a>
+    <a href="tel:+213000000000" style="text-align:center;margin-top:16px;text-decoration:none;font-size:14px;color:rgba(240,231,215,0.7)">+213 _ __ __ __ __</a>
+  </div>
+</sc-if>
+
+<section id="accueil" data-screen-label="Accueil" style="position:relative;min-height:90vh;display:flex;align-items:center;background:radial-gradient(120% 90% at 80% 12%,rgba(201,162,94,0.16),transparent 55%),radial-gradient(90% 90% at 8% 92%,rgba(181,97,60,0.11),transparent 52%),#15110B;overflow:hidden">
+  <div style="max-width:1240px;margin:0 auto;padding:clamp(80px,12vh,140px) clamp(18px,5vw,64px);width:100%">
+    <div style="display:inline-flex;align-items:center;gap:12px;margin-bottom:26px;animation:fadeUp .7s ease both">
+      <span style="width:26px;height:1px;background:#C9A25E"></span>
+      <span style="font-weight:600;font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:#C9A25E">Table gastronomique · Hydra, Alger</span>
+    </div>
+    <h1 style="margin:0;max-width:16ch;font-family:'Cormorant',serif;font-weight:400;font-size:clamp(48px,8.5vw,104px);line-height:1.02;letter-spacing:-.01em;color:#F0E7D7;animation:fadeUp .8s ease .05s both">La Méditerranée, <em style="font-style:italic;color:#C9A25E">réinventée</em> chaque soir.</h1>
+    <p style="margin:30px 0 0;max-width:52ch;font-size:clamp(16px,2vw,19px);line-height:1.7;color:rgba(240,231,215,0.72);animation:fadeUp .8s ease .12s both">Une cuisine du marché signée par le chef Réda Bensalah, où les produits d'Algérie rencontrent les gestes de la haute gastronomie. Sept services, une terrasse ouverte sur la baie d'Alger.</p>
+    <div style="display:flex;flex-wrap:wrap;gap:14px;margin-top:38px;animation:fadeUp .8s ease .18s both">
+      <a href="#reserver" style="display:inline-flex;align-items:center;justify-content:center;gap:9px;height:54px;padding:0 30px;background:#C9A25E;color:#1A140C;font-weight:600;font-size:15px;letter-spacing:.02em;text-decoration:none;transition:background .18s ease" style-hover="background:#E0BE7E">Réserver une table <span style="font-size:17px">→</span></a>
+      <a href="#carte" style="display:inline-flex;align-items:center;justify-content:center;height:54px;padding:0 30px;border:1px solid rgba(239,230,214,0.24);color:#F0E7D7;font-weight:500;font-size:15px;letter-spacing:.02em;text-decoration:none;transition:border-color .18s ease" style-hover="border-color:#C9A25E">Découvrir la carte</a>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:28px;margin-top:52px;padding-top:26px;border-top:1px solid rgba(239,230,214,0.10);animation:fadeUp .8s ease .24s both">
+      <div><div style="font-family:'Cormorant',serif;font-size:26px;color:#C9A25E">4,8/5</div><div style="font-size:12.5px;letter-spacing:.04em;color:rgba(240,231,215,0.55)">214 avis vérifiés</div></div>
+      <div><div style="font-family:'Cormorant',serif;font-size:26px;color:#C9A25E">Depuis 2016</div><div style="font-size:12.5px;letter-spacing:.04em;color:rgba(240,231,215,0.55)">Sur les hauteurs d'Alger</div></div>
+      <div><div style="font-family:'Cormorant',serif;font-size:26px;color:#C9A25E">Mar. — Dim.</div><div style="font-size:12.5px;letter-spacing:.04em;color:rgba(240,231,215,0.55)">Déjeuner & dîner</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="histoire" data-screen-label="La maison" style="padding:clamp(70px,10vw,140px) 0;border-top:1px solid rgba(239,230,214,0.08)">
+  <div style="max-width:1240px;margin:0 auto;padding:0 clamp(18px,5vw,64px);display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(40px,6vw,90px);align-items:start">
+    <div>
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:22px"><span style="font-weight:600;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#C9A25E">01 — La maison</span></div>
+      <h2 style="margin:0;font-family:'Cormorant',serif;font-weight:400;font-size:clamp(34px,5vw,58px);line-height:1.08;color:#F0E7D7">Recevoir comme on <em style="font-style:italic;color:#C9A25E">honore</em>.</h2>
+    </div>
+    <div>
+      <p style="margin:0 0 22px;font-size:clamp(16px,1.7vw,18px);line-height:1.75;color:rgba(240,231,215,0.78)">Née d'une maison familiale d'El Biar, Numidia s'est installée en 2016 sur les hauteurs de Hydra, dans une villa des années 1930 restaurée avec patience. Ici, le service se pense comme un rituel : chaque table est dressée à la main, chaque plat raconte un terroir algérien.</p>
+      <p style="margin:0 0 32px;font-size:clamp(16px,1.7vw,18px);line-height:1.75;color:rgba(240,231,215,0.78)">Le chef Réda Bensalah compose une carte courte, au gré du marché de Bou Ismaïl et des maraîchers de la Mitidja. Le résultat : une cuisine précise, généreuse, résolument méditerranéenne.</p>
+      <blockquote style="margin:0;padding-left:22px;border-left:2px solid #C9A25E">
+        <p style="margin:0;font-family:'Cormorant',serif;font-style:italic;font-size:clamp(22px,3vw,30px);line-height:1.35;color:#F0E7D7">« On ne cuisine pas pour épater. On cuisine pour que l'on se souvienne de la soirée. »</p>
+        <footer style="margin-top:14px;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:#C9A25E">Réda Bensalah — Chef & fondateur</footer>
+      </blockquote>
+    </div>
+  </div>
+</section>
+
+<section id="carte" data-screen-label="La carte" style="padding:clamp(70px,10vw,140px) 0;background:#1A150E;border-top:1px solid rgba(239,230,214,0.08)">
+  <div style="max-width:1240px;margin:0 auto;padding:0 clamp(18px,5vw,64px)">
+    <div style="max-width:620px;margin-bottom:clamp(44px,6vw,70px)">
+      <div style="margin-bottom:20px"><span style="font-weight:600;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#C9A25E">02 — La carte</span></div>
+      <h2 style="margin:0 0 18px;font-family:'Cormorant',serif;font-weight:400;font-size:clamp(34px,5vw,58px);line-height:1.06;color:#F0E7D7">À la carte, ou <em style="font-style:italic;color:#C9A25E">confié</em> au chef.</h2>
+      <p style="margin:0;font-size:16px;line-height:1.7;color:rgba(240,231,215,0.7)">La carte évolue chaque semaine. Voici la sélection du moment.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;margin-bottom:clamp(48px,7vw,80px)">
+      <div style="grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:24px;padding:clamp(26px,4vw,42px);background:linear-gradient(135deg,rgba(201,162,94,0.12),rgba(201,162,94,0.03));border:1px solid rgba(201,162,94,0.35)">
+        <div style="max-width:56ch">
+          <div style="font-weight:600;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#C9A25E;margin-bottom:12px">Le menu signature</div>
+          <h3 style="margin:0 0 10px;font-family:'Cormorant',serif;font-weight:500;font-size:clamp(28px,3.6vw,40px);color:#F0E7D7">Le Menu Numidia — 7 services</h3>
+          <p style="margin:0;font-size:15.5px;line-height:1.65;color:rgba(240,231,215,0.74)">Sept assiettes au gré du marché et de l'inspiration du chef. Accord mets & vins en option (+ 3 200 DA).</p>
+        </div>
+        <div style="text-align:right">
+          <div style="font-family:'Cormorant',serif;font-size:clamp(38px,5vw,54px);line-height:1;color:#C9A25E">6 800 DA</div>
+          <div style="font-size:12.5px;letter-spacing:.05em;color:rgba(240,231,215,0.6);margin-top:4px">par personne</div>
+        </div>
+      </div>
+    </div>
+
+    <sc-for list="{{ menuSections }}" as="sec" hint-placeholder-count="3">
+      <div style="margin-bottom:clamp(40px,6vw,64px)">
+        <h3 style="margin:0 0 8px;font-family:'Cormorant',serif;font-weight:500;font-style:italic;font-size:clamp(24px,3vw,34px);color:#C9A25E">{{ sec.cat }}</h3>
+        <div>
+          <sc-for list="{{ sec.items }}" as="item" hint-placeholder-count="4">
+            <div style="display:flex;justify-content:space-between;align-items:baseline;gap:24px;padding:20px 0;border-bottom:1px solid rgba(239,230,214,0.09)">
+              <div style="flex:1">
+                <div style="font-family:'Cormorant',serif;font-weight:500;font-size:clamp(19px,2.2vw,23px);color:#F0E7D7;margin-bottom:5px">{{ item.name }}</div>
+                <div style="font-size:14.5px;line-height:1.55;color:rgba(240,231,215,0.6);max-width:60ch">{{ item.desc }}</div>
+              </div>
+              <div style="font-family:'Hanken Grotesk',sans-serif;font-weight:600;font-size:15px;letter-spacing:.02em;color:#C9A25E;white-space:nowrap">{{ item.price }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </sc-for>
+    <p style="margin:8px 0 0;font-size:13.5px;line-height:1.6;color:rgba(240,231,215,0.5)">Nos plats peuvent contenir des allergènes. Notre équipe vous renseigne sur simple demande. Prix nets, service compris.</p>
+  </div>
+</section>
+
+<section id="lieu" data-screen-label="Le lieu" style="padding:clamp(70px,10vw,140px) 0;border-top:1px solid rgba(239,230,214,0.08)">
+  <div style="max-width:1240px;margin:0 auto;padding:0 clamp(18px,5vw,64px)">
+    <div style="max-width:620px;margin-bottom:clamp(40px,6vw,64px)">
+      <div style="margin-bottom:20px"><span style="font-weight:600;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#C9A25E">03 — Le lieu</span></div>
+      <h2 style="margin:0;font-family:'Cormorant',serif;font-weight:400;font-size:clamp(34px,5vw,58px);line-height:1.06;color:#F0E7D7">Une villa, une <em style="font-style:italic;color:#C9A25E">terrasse</em>, la baie.</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px">
+      <sc-for list="{{ gallery }}" as="g" hint-placeholder-count="6">
+        <figure style="margin:0;position:relative;aspect-ratio:{{ g.ratio }};background:repeating-linear-gradient(135deg,rgba(201,162,94,0.05) 0 2px,transparent 2px 12px),radial-gradient(120% 120% at 30% 20%,#2A2118,#15110B);border:1px solid rgba(239,230,214,0.10);display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden" role="img" aria-label="{{ g.t }}">
+          <div style="position:absolute;top:14px;left:14px;font-family:'Hanken Grotesk',monospace;font-size:10.5px;letter-spacing:.14em;color:rgba(240,231,215,0.4)">{{ g.m }}</div>
+          <figcaption style="position:relative;padding:18px;background:linear-gradient(to top,rgba(21,17,11,0.85),transparent);font-family:'Cormorant',serif;font-size:22px;color:#F0E7D7">{{ g.t }}</figcaption>
+        </figure>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<section id="avis" data-screen-label="Avis" style="padding:clamp(70px,10vw,140px) 0;background:#1A150E;border-top:1px solid rgba(239,230,214,0.08)">
+  <div style="max-width:1240px;margin:0 auto;padding:0 clamp(18px,5vw,64px)">
+    <div style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:clamp(40px,6vw,60px)">
+      <div style="max-width:620px">
+        <div style="margin-bottom:20px"><span style="font-weight:600;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#C9A25E">04 — Vos mots</span></div>
+        <h2 style="margin:0;font-family:'Cormorant',serif;font-weight:400;font-size:clamp(34px,5vw,58px);line-height:1.06;color:#F0E7D7">Ce que l'on <em style="font-style:italic;color:#C9A25E">retient</em>.</h2>
+      </div>
+      <div style="text-align:right">
+        <div style="font-family:'Cormorant',serif;font-size:clamp(40px,5vw,58px);line-height:1;color:#C9A25E">4,8<span style="font-size:.5em;color:rgba(240,231,215,0.5)"> / 5</span></div>
+        <div style="font-size:13px;letter-spacing:.05em;color:rgba(240,231,215,0.6);margin-top:4px">214 avis vérifiés</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px">
+      <sc-for list="{{ reviews }}" as="rev" hint-placeholder-count="6">
+        <figure style="margin:0;display:flex;flex-direction:column;gap:14px;padding:26px;background:#15110B;border:1px solid rgba(239,230,214,0.10)">
+          <div style="letter-spacing:.12em;font-size:15px;color:#C9A25E">{{ rev.stars }}</div>
+          <blockquote style="margin:0;flex:1;font-size:15.5px;line-height:1.65;color:rgba(240,231,215,0.82)">{{ rev.text }}</blockquote>
+          <figcaption style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding-top:14px;border-top:1px solid rgba(239,230,214,0.08)">
+            <span style="font-weight:600;font-size:14px;color:#F0E7D7">{{ rev.name }}<span style="font-weight:400;color:rgba(240,231,215,0.5)"> · {{ rev.city }}</span></span>
+            <span style="font-size:12.5px;color:rgba(240,231,215,0.45)">{{ rev.date }}</span>
+          </figcaption>
+        </figure>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<section id="reserver" data-screen-label="Réserver" style="padding:clamp(70px,10vw,140px) 0;border-top:1px solid rgba(239,230,214,0.08)">
+  <div style="max-width:1240px;margin:0 auto;padding:0 clamp(18px,5vw,64px);display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(36px,5vw,64px);align-items:start">
+    <div>
+      <div style="margin-bottom:20px"><span style="font-weight:600;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#C9A25E">05 — Réservation</span></div>
+      <h2 style="margin:0 0 22px;font-family:'Cormorant',serif;font-weight:400;font-size:clamp(34px,5vw,58px);line-height:1.05;color:#F0E7D7">Réservez votre <em style="font-style:italic;color:#C9A25E">table</em>.</h2>
+      <p style="margin:0 0 32px;font-size:16px;line-height:1.7;color:rgba(240,231,215,0.72);max-width:44ch">Choisissez votre créneau en temps réel. Confirmation immédiate, sans frais. Pour les groupes de plus de 8 couverts, contactez-nous directement.</p>
+      <div style="display:flex;flex-direction:column;gap:2px">
+        <div style="display:flex;align-items:center;gap:14px;padding:16px 0;border-top:1px solid rgba(239,230,214,0.10)">
+          <span style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#C9A25E;width:80px">Adresse</span>
+          <span style="font-size:15px;color:rgba(240,231,215,0.85)">14, chemin Gaddouche — Hydra, Alger</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:14px;padding:16px 0;border-top:1px solid rgba(239,230,214,0.10)">
+          <span style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#C9A25E;width:80px">Téléphone</span>
+          <a href="tel:+213000000000" style="font-size:15px;color:rgba(240,231,215,0.85);text-decoration:none" style-hover="color:#C9A25E">+213 _ __ __ __ __</a>
+        </div>
+        <div style="display:flex;align-items:center;gap:14px;padding:16px 0;border-top:1px solid rgba(239,230,214,0.10);border-bottom:1px solid rgba(239,230,214,0.10)">
+          <span style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#C9A25E;width:80px">Horaires</span>
+          <span style="font-size:15px;color:rgba(240,231,215,0.85)">Mardi au dimanche · Lundi fermé</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="background:#1A150E;border:1px solid rgba(239,230,214,0.12);padding:clamp(22px,3.4vw,36px);animation:panelIn .5s ease both">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:26px">
+        <sc-for list="{{ stepsUI }}" as="st" hint-placeholder-count="4">
+          <div style="display:flex;align-items:center;gap:8px;flex:1;min-width:0">
+            <div style="{{ st.dotStyle }}">{{ st.mark }}</div>
+            <span style="{{ st.labelStyle }}">{{ st.label }}</span>
+          </div>
+        </sc-for>
+      </div>
+
+      <sc-if value="{{ isStep0 }}" hint-placeholder-val="{{ true }}">
+        <div>
+          <div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(240,231,215,0.55);margin-bottom:12px">Nombre de couverts</div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px">
+            <sc-for list="{{ partyButtons }}" as="p" hint-placeholder-count="8">
+              <button onClick="{{ p.onSelect }}" style="{{ p.style }}" aria-label="{{ p.aria }}">{{ p.label }}</button>
+            </sc-for>
+          </div>
+
+          <div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(240,231,215,0.55);margin-bottom:12px">Choisissez une date</div>
+          <div data-hscroll style="display:flex;gap:8px;overflow-x:auto;padding-bottom:10px;margin-bottom:26px">
+            <sc-for list="{{ dates }}" as="d" hint-placeholder-count="8">
+              <button onClick="{{ d.onSelect }}" style="{{ d.chipStyle }}" aria-label="{{ d.aria }}">
+                <span style="font-size:11px;letter-spacing:.06em;text-transform:uppercase;opacity:.8">{{ d.dayShort }}</span>
+                <span style="font-family:'Cormorant',serif;font-size:22px;line-height:1">{{ d.dayNum }}</span>
+                <span style="font-size:10.5px;opacity:.7">{{ d.monthShort }}</span>
+              </button>
+            </sc-for>
+          </div>
+
+          <sc-if value="{{ showServiceToggle }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;border:1px solid rgba(239,230,214,0.16);margin-bottom:24px">
+              <sc-for list="{{ serviceOptions }}" as="s" hint-placeholder-count="2">
+                <button onClick="{{ s.onSelect }}" style="{{ s.style }}">{{ s.label }}</button>
+              </sc-for>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ hasDate }}" hint-placeholder-val="{{ false }}">
+            <div>
+              <div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(240,231,215,0.55);margin-bottom:12px">{{ slotsHeading }}</div>
+              <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(84px,1fr));gap:8px;margin-bottom:8px">
+                <sc-for list="{{ slots }}" as="sl" hint-placeholder-count="8">
+                  <button onClick="{{ sl.onSelect }}" style="{{ sl.style }}" aria-label="{{ sl.aria }}">
+                    <span style="display:block">{{ sl.time }}</span>
+                    <sc-if value="{{ sl.showNote }}" hint-placeholder-val="{{ false }}"><span style="display:block;font-size:9.5px;letter-spacing:.04em;text-transform:uppercase;margin-top:3px;opacity:.85">{{ sl.note }}</span></sc-if>
+                  </button>
+                </sc-for>
+              </div>
+              <div style="font-size:12px;color:rgba(240,231,215,0.45);margin-bottom:26px">Les créneaux barrés sont complets.</div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ noDate }}" hint-placeholder-val="{{ true }}">
+            <div style="padding:24px 0;font-size:14.5px;color:rgba(240,231,215,0.5);text-align:center;border-top:1px solid rgba(239,230,214,0.08)">Sélectionnez une date pour voir les créneaux disponibles.</div>
+          </sc-if>
+
+          <button onClick="{{ toStep1 }}" disabled="{{ continue0Disabled }}" style="{{ continue0Style }}">Continuer <span style="font-size:16px">→</span></button>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isStep1 }}" hint-placeholder-val="{{ false }}">
+        <div>
+          <div style="display:flex;align-items:center;gap:10px;padding:12px 14px;background:rgba(201,162,94,0.08);border:1px solid rgba(201,162,94,0.22);margin-bottom:24px;font-size:14px;color:#F0E7D7">
+            <span style="color:#C9A25E">◆</span><span>{{ recapDate }} · {{ recapTime }} · {{ recapParty }}</span>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px;margin-bottom:16px">
+            <label style="display:block">
+              <span style="display:block;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:rgba(240,231,215,0.6);margin-bottom:8px">Prénom *</span>
+              <input value="{{ form.prenom }}" onInput="{{ onPrenom }}" style="{{ fldPrenom }}" aria-label="Prénom" aria-invalid="{{ errPrenomB }}">
+              <sc-if value="{{ errPrenomB }}" hint-placeholder-val="{{ false }}"><span style="display:block;margin-top:6px;font-size:12.5px;color:#E08A5E">{{ errPrenom }}</span></sc-if>
+            </label>
+            <label style="display:block">
+              <span style="display:block;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:rgba(240,231,215,0.6);margin-bottom:8px">Nom *</span>
+              <input value="{{ form.nom }}" onInput="{{ onNom }}" style="{{ fldNom }}" aria-label="Nom" aria-invalid="{{ errNomB }}">
+              <sc-if value="{{ errNomB }}" hint-placeholder-val="{{ false }}"><span style="display:block;margin-top:6px;font-size:12.5px;color:#E08A5E">{{ errNom }}</span></sc-if>
+            </label>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px;margin-bottom:16px">
+            <label style="display:block">
+              <span style="display:block;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:rgba(240,231,215,0.6);margin-bottom:8px">Téléphone *</span>
+              <input value="{{ form.tel }}" onInput="{{ onTel }}" inputmode="tel" placeholder="+213 ..." style="{{ fldTel }}" aria-label="Téléphone" aria-invalid="{{ errTelB }}">
+              <sc-if value="{{ errTelB }}" hint-placeholder-val="{{ false }}"><span style="display:block;margin-top:6px;font-size:12.5px;color:#E08A5E">{{ errTel }}</span></sc-if>
+            </label>
+            <label style="display:block">
+              <span style="display:block;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:rgba(240,231,215,0.6);margin-bottom:8px">E-mail *</span>
+              <input value="{{ form.email }}" onInput="{{ onEmail }}" inputmode="email" placeholder="vous@exemple.dz" style="{{ fldEmail }}" aria-label="E-mail" aria-invalid="{{ errEmailB }}">
+              <sc-if value="{{ errEmailB }}" hint-placeholder-val="{{ false }}"><span style="display:block;margin-top:6px;font-size:12.5px;color:#E08A5E">{{ errEmail }}</span></sc-if>
+            </label>
+          </div>
+          <label style="display:block;margin-bottom:16px">
+            <span style="display:block;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:rgba(240,231,215,0.6);margin-bottom:8px">Occasion</span>
+            <select value="{{ form.occasion }}" onChange="{{ onOccasion }}" style="{{ fldOccasion }}" aria-label="Occasion">
+              <option>Dîner en amoureux</option>
+              <option>Repas d'affaires</option>
+              <option>Anniversaire</option>
+              <option>Célébration familiale</option>
+              <option>Simple envie</option>
+              <option>Autre</option>
+            </select>
+          </label>
+          <label style="display:block;margin-bottom:20px">
+            <span style="display:block;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:rgba(240,231,215,0.6);margin-bottom:8px">Remarques (allergies, table souhaitée…)</span>
+            <textarea value="{{ form.remarques }}" onInput="{{ onRemarques }}" style="{{ fldRemarques }}" aria-label="Remarques"></textarea>
+          </label>
+          <label style="display:flex;align-items:flex-start;gap:11px;margin-bottom:14px;cursor:pointer">
+            <input type="checkbox" checked="{{ form.consent }}" onChange="{{ onConsent }}" style="width:18px;height:18px;margin-top:2px;flex:0 0 auto;accent-color:#C9A25E" aria-label="Consentement">
+            <span style="font-size:13.5px;line-height:1.5;color:rgba(240,231,215,0.72)">J'accepte que mes données soient utilisées pour traiter ma réservation, conformément à la <a href="#confidentialite" onClick="{{ openConfid }}" style="color:#C9A25E">politique de confidentialité</a>. *</span>
+          </label>
+          <sc-if value="{{ errConsentB }}" hint-placeholder-val="{{ false }}"><div style="margin:-6px 0 14px 29px;font-size:12.5px;color:#E08A5E">{{ errConsent }}</div></sc-if>
+          <label style="display:flex;align-items:flex-start;gap:11px;margin-bottom:26px;cursor:pointer">
+            <input type="checkbox" checked="{{ form.news }}" onChange="{{ onNews }}" style="width:18px;height:18px;margin-top:2px;flex:0 0 auto;accent-color:#C9A25E" aria-label="Newsletter">
+            <span style="font-size:13.5px;line-height:1.5;color:rgba(240,231,215,0.72)">Je souhaite recevoir les actualités et menus saisonniers de Numidia (optionnel).</span>
+          </label>
+          <div style="display:flex;gap:12px">
+            <button onClick="{{ backTo0 }}" style="height:50px;padding:0 22px;background:transparent;border:1px solid rgba(239,230,214,0.22);color:#F0E7D7;font-weight:500;font-size:14px;cursor:pointer;transition:border-color .18s ease" style-hover="border-color:#C9A25E">Retour</button>
+            <button onClick="{{ toStep2 }}" style="flex:1;height:50px;background:#C9A25E;color:#1A140C;border:none;font-weight:600;font-size:15px;cursor:pointer;transition:background .18s ease" style-hover="background:#E0BE7E">Vérifier ma réservation</button>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isStep2 }}" hint-placeholder-val="{{ false }}">
+        <div>
+          <h3 style="margin:0 0 18px;font-family:'Cormorant',serif;font-weight:500;font-size:26px;color:#F0E7D7">Récapitulatif</h3>
+          <div style="display:flex;flex-direction:column;gap:1px;margin-bottom:26px">
+            <div style="display:flex;justify-content:space-between;gap:16px;padding:13px 0;border-bottom:1px solid rgba(239,230,214,0.09)"><span style="font-size:13px;color:rgba(240,231,215,0.55)">Date</span><span style="font-size:14.5px;color:#F0E7D7;text-align:right">{{ recapDate }}</span></div>
+            <div style="display:flex;justify-content:space-between;gap:16px;padding:13px 0;border-bottom:1px solid rgba(239,230,214,0.09)"><span style="font-size:13px;color:rgba(240,231,215,0.55)">Service</span><span style="font-size:14.5px;color:#F0E7D7;text-align:right">{{ recapService }} · {{ recapTime }}</span></div>
+            <div style="display:flex;justify-content:space-between;gap:16px;padding:13px 0;border-bottom:1px solid rgba(239,230,214,0.09)"><span style="font-size:13px;color:rgba(240,231,215,0.55)">Couverts</span><span style="font-size:14.5px;color:#F0E7D7;text-align:right">{{ recapParty }}</span></div>
+            <div style="display:flex;justify-content:space-between;gap:16px;padding:13px 0;border-bottom:1px solid rgba(239,230,214,0.09)"><span style="font-size:13px;color:rgba(240,231,215,0.55)">Au nom de</span><span style="font-size:14.5px;color:#F0E7D7;text-align:right">{{ recapName }}</span></div>
+            <div style="display:flex;justify-content:space-between;gap:16px;padding:13px 0;border-bottom:1px solid rgba(239,230,214,0.09)"><span style="font-size:13px;color:rgba(240,231,215,0.55)">Contact</span><span style="font-size:14.5px;color:#F0E7D7;text-align:right">{{ recapContact }}</span></div>
+            <div style="display:flex;justify-content:space-between;gap:16px;padding:13px 0;border-bottom:1px solid rgba(239,230,214,0.09)"><span style="font-size:13px;color:rgba(240,231,215,0.55)">Occasion</span><span style="font-size:14.5px;color:#F0E7D7;text-align:right">{{ recapOccasion }}</span></div>
+            <div style="display:flex;justify-content:space-between;gap:16px;padding:13px 0"><span style="font-size:13px;color:rgba(240,231,215,0.55)">Remarques</span><span style="font-size:14.5px;color:#F0E7D7;text-align:right;max-width:60%">{{ recapRemarques }}</span></div>
+          </div>
+          <div style="display:flex;gap:12px">
+            <button onClick="{{ backTo1 }}" style="height:50px;padding:0 22px;background:transparent;border:1px solid rgba(239,230,214,0.22);color:#F0E7D7;font-weight:500;font-size:14px;cursor:pointer;transition:border-color .18s ease" style-hover="border-color:#C9A25E">Modifier</button>
+            <button onClick="{{ doConfirm }}" style="flex:1;height:50px;background:#C9A25E;color:#1A140C;border:none;font-weight:600;font-size:15px;cursor:pointer;transition:background .18s ease" style-hover="background:#E0BE7E">Confirmer la réservation</button>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isStep3 }}" hint-placeholder-val="{{ false }}">
+        <div style="text-align:center;padding:14px 0;animation:panelIn .45s ease both">
+          <div style="width:60px;height:60px;margin:0 auto 22px;border-radius:50%;border:1px solid #C9A25E;display:flex;align-items:center;justify-content:center;font-size:28px;color:#C9A25E">✓</div>
+          <h3 style="margin:0 0 10px;font-family:'Cormorant',serif;font-weight:500;font-size:30px;color:#F0E7D7">Réservation confirmée</h3>
+          <p style="margin:0 0 22px;font-size:15px;line-height:1.6;color:rgba(240,231,215,0.72)">Merci {{ form.prenom }}. Nous vous attendons le<br><strong style="color:#F0E7D7;font-weight:600">{{ recapDate }} à {{ recapTime }}</strong> pour {{ recapParty }}.</p>
+          <div style="display:inline-block;padding:14px 26px;background:rgba(201,162,94,0.10);border:1px solid rgba(201,162,94,0.28);margin-bottom:22px">
+            <div style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:rgba(240,231,215,0.55)">Référence</div>
+            <div style="font-family:'Cormorant',serif;font-size:26px;color:#C9A25E;letter-spacing:.04em">{{ ref }}</div>
+          </div>
+          <p style="margin:0 0 24px;font-size:13.5px;line-height:1.6;color:rgba(240,231,215,0.55)">Un e-mail de confirmation vous a été envoyé à {{ form.email }}. En cas d'empêchement, merci de prévenir au moins 4 h à l'avance.</p>
+          <button onClick="{{ resetRes }}" style="height:48px;padding:0 26px;background:transparent;border:1px solid rgba(239,230,214,0.22);color:#F0E7D7;font-weight:500;font-size:14px;cursor:pointer;transition:border-color .18s ease" style-hover="border-color:#C9A25E">Nouvelle réservation</button>
+        </div>
+      </sc-if>
+    </div>
+  </div>
+</section>
+
+<section id="infos" data-screen-label="Infos pratiques" style="padding:clamp(70px,10vw,140px) 0;background:#1A150E;border-top:1px solid rgba(239,230,214,0.08)">
+  <div style="max-width:1240px;margin:0 auto;padding:0 clamp(18px,5vw,64px);display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:clamp(36px,5vw,64px);align-items:start">
+    <div>
+      <div style="margin-bottom:20px"><span style="font-weight:600;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#C9A25E">06 — Infos pratiques</span></div>
+      <h2 style="margin:0 0 28px;font-family:'Cormorant',serif;font-weight:400;font-size:clamp(30px,4vw,48px);line-height:1.06;color:#F0E7D7">Nous <em style="font-style:italic;color:#C9A25E">trouver</em>.</h2>
+      <div style="display:flex;flex-direction:column;gap:22px">
+        <div><div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#C9A25E;margin-bottom:6px">Adresse</div><div style="font-size:16px;line-height:1.6;color:rgba(240,231,215,0.85)">14, chemin Gaddouche<br>Hydra, Alger 16035 — Algérie</div></div>
+        <div><div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#C9A25E;margin-bottom:6px">Contact</div><div style="font-size:16px;line-height:1.7;color:rgba(240,231,215,0.85)">+213 _ __ __ __ __<br>reservation@numidia-alger.dz</div></div>
+        <div><div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#C9A25E;margin-bottom:6px">Accès</div><div style="font-size:15px;line-height:1.6;color:rgba(240,231,215,0.7)">Voiturier en soirée · Parking à 80 m · À 10 min de Ben Aknoun</div></div>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#C9A25E;margin-bottom:14px">Horaires d'ouverture</div>
+      <div style="margin-bottom:26px">
+        <sc-for list="{{ hours }}" as="h" hint-placeholder-count="7">
+          <div style="display:flex;justify-content:space-between;gap:16px;padding:12px 0;border-bottom:1px solid rgba(239,230,214,0.09)">
+            <span style="font-size:15px;color:{{ h.color }}">{{ h.day }}</span>
+            <span style="font-size:14.5px;color:{{ h.color }};text-align:right">{{ h.hours }}</span>
+          </div>
+        </sc-for>
+      </div>
+      <div style="aspect-ratio:16/10;background:repeating-linear-gradient(135deg,rgba(201,162,94,0.05) 0 2px,transparent 2px 12px),radial-gradient(120% 120% at 40% 30%,#2A2118,#15110B);border:1px solid rgba(239,230,214,0.10);display:flex;align-items:center;justify-content:center" role="img" aria-label="Plan d'accès au restaurant Numidia, Hydra, Alger">
+        <span style="font-family:monospace;font-size:11px;letter-spacing:.14em;color:rgba(240,231,215,0.4)">PLAN · HYDRA, ALGER</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer style="padding:clamp(56px,7vw,90px) 0 34px;border-top:1px solid rgba(239,230,214,0.10)">
+  <div style="max-width:1240px;margin:0 auto;padding:0 clamp(18px,5vw,64px)">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:36px;margin-bottom:48px">
+      <div>
+        <div style="display:flex;align-items:baseline;gap:9px;margin-bottom:16px"><span style="font-family:'Cormorant',serif;font-weight:600;font-size:28px;color:#F0E7D7">Numidia</span><span style="font-weight:600;font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:#C9A25E">Alger</span></div>
+        <p style="margin:0;font-size:14.5px;line-height:1.65;color:rgba(240,231,215,0.6);max-width:34ch">Table gastronomique méditerranéenne sur les hauteurs de Hydra. Cuisine du marché, terrasse sur la baie.</p>
+      </div>
+      <div>
+        <div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#C9A25E;margin-bottom:16px">Explorer</div>
+        <div style="display:flex;flex-direction:column;gap:11px">
+          <a href="#histoire" style="text-decoration:none;font-size:14.5px;color:rgba(240,231,215,0.72)" style-hover="color:#F0E7D7">La maison</a>
+          <a href="#carte" style="text-decoration:none;font-size:14.5px;color:rgba(240,231,215,0.72)" style-hover="color:#F0E7D7">La carte</a>
+          <a href="#lieu" style="text-decoration:none;font-size:14.5px;color:rgba(240,231,215,0.72)" style-hover="color:#F0E7D7">Le lieu</a>
+          <a href="#reserver" style="text-decoration:none;font-size:14.5px;color:rgba(240,231,215,0.72)" style-hover="color:#F0E7D7">Réserver</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#C9A25E;margin-bottom:16px">Contact</div>
+        <div style="display:flex;flex-direction:column;gap:11px;font-size:14.5px;color:rgba(240,231,215,0.72)">
+          <span>14, chemin Gaddouche</span>
+          <span>Hydra, Alger 16035</span>
+          <a href="tel:+213000000000" style="text-decoration:none;color:rgba(240,231,215,0.72)" style-hover="color:#F0E7D7">+213 _ __ __ __ __</a>
+          <a href="mailto:reservation@numidia-alger.dz" style="text-decoration:none;color:rgba(240,231,215,0.72)" style-hover="color:#F0E7D7">reservation@numidia-alger.dz</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#C9A25E;margin-bottom:16px">Légal</div>
+        <div style="display:flex;flex-direction:column;gap:11px">
+          <a href="#mentions" onClick="{{ openMentions }}" style="text-decoration:none;font-size:14.5px;color:rgba(240,231,215,0.72)" style-hover="color:#F0E7D7">Mentions légales</a>
+          <a href="#confidentialite" onClick="{{ openConfid }}" style="text-decoration:none;font-size:14.5px;color:rgba(240,231,215,0.72)" style-hover="color:#F0E7D7">Politique de confidentialité</a>
+          <a href="#confidentialite" onClick="{{ openConfid }}" style="text-decoration:none;font-size:14.5px;color:rgba(240,231,215,0.72)" style-hover="color:#F0E7D7">Gestion des cookies</a>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;padding-top:26px;border-top:1px solid rgba(239,230,214,0.10)">
+      <span style="font-size:13px;color:rgba(240,231,215,0.5)">© 2026 Restaurant Numidia — Tous droits réservés.</span>
+      <a href="https://difarslan.com" target="_blank" rel="noopener" style="text-decoration:none;font-size:13px;color:rgba(240,231,215,0.5)" style-hover="color:#C9A25E">Réalisé par <span style="color:#C9A25E">Arslan DIF</span> — difarslan.com</a>
+    </div>
+  </div>
+</footer>
+
+<sc-if value="{{ showCookie }}" hint-placeholder-val="{{ false }}">
+  <div role="dialog" aria-label="Gestion des cookies" style="position:fixed;left:0;right:0;bottom:0;z-index:70;padding:16px clamp(16px,4vw,40px);background:rgba(26,21,14,0.96);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid rgba(201,162,94,0.3);animation:fadeUp .4s ease both">
+    <div style="max-width:1240px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px">
+      <p style="margin:0;flex:1;min-width:260px;font-size:14px;line-height:1.6;color:rgba(240,231,215,0.82)">Nous utilisons des cookies pour améliorer votre expérience et mesurer l'audience du site. Vous pouvez accepter ou refuser. <a href="#confidentialite" onClick="{{ openConfid }}" style="color:#C9A25E;text-decoration:underline">En savoir plus</a></p>
+      <div style="display:flex;gap:10px;flex:0 0 auto">
+        <button onClick="{{ refuseCookies }}" style="height:44px;padding:0 22px;background:transparent;border:1px solid rgba(239,230,214,0.24);color:#F0E7D7;font-weight:500;font-size:14px;cursor:pointer;transition:border-color .18s ease" style-hover="border-color:#F0E7D7">Refuser</button>
+        <button onClick="{{ acceptCookies }}" style="height:44px;padding:0 24px;background:#C9A25E;color:#1A140C;border:none;font-weight:600;font-size:14px;cursor:pointer;transition:background .18s ease" style-hover="background:#E0BE7E">Accepter</button>
+      </div>
+    </div>
+  </div>
+</sc-if>
+
+<sc-if value="{{ legalOpen }}" hint-placeholder-val="{{ false }}">
+  <div role="dialog" aria-label="{{ legalTitle }}" style="position:fixed;inset:0;z-index:90;background:rgba(10,8,5,0.7);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);animation:overlayIn .25s ease;display:flex;align-items:flex-start;justify-content:center;overflow-y:auto;padding:clamp(16px,5vh,60px) 16px">
+    <div style="width:100%;max-width:720px;background:#1A150E;border:1px solid rgba(239,230,214,0.14);animation:panelIn .35s ease both">
+      <div style="position:sticky;top:0;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:22px clamp(20px,4vw,40px);background:#1A150E;border-bottom:1px solid rgba(239,230,214,0.10)">
+        <h2 style="margin:0;font-family:'Cormorant',serif;font-weight:500;font-size:clamp(24px,3.4vw,32px);color:#F0E7D7">{{ legalTitle }}</h2>
+        <button onClick="{{ closeLegal }}" aria-label="Fermer" style="width:44px;height:44px;flex:0 0 auto;background:transparent;border:1px solid rgba(239,230,214,0.2);color:#F0E7D7;font-size:18px;cursor:pointer" style-hover="border-color:#C9A25E">✕</button>
+      </div>
+      <div style="padding:clamp(22px,4vw,40px)">
+        <sc-for list="{{ legalBlocks }}" as="b" hint-placeholder-count="6">
+          <sc-if value="{{ b.isH }}" hint-placeholder-val="{{ false }}"><h3 style="margin:26px 0 8px;font-weight:600;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:#C9A25E">{{ b.text }}</h3></sc-if>
+          <sc-if value="{{ b.isP }}" hint-placeholder-val="{{ true }}"><p style="margin:0 0 12px;font-size:14.5px;line-height:1.7;color:rgba(240,231,215,0.78)">{{ b.text }}</p></sc-if>
+        </sc-for>
+        <p style="margin:26px 0 0;padding-top:18px;border-top:1px solid rgba(239,230,214,0.1);font-size:13px;line-height:1.6;color:rgba(240,231,215,0.5)">Ce site est une démonstration. Les informations légales ci-dessus sont fictives et fournies à titre d'illustration.</p>
+      </div>
+    </div>
+  </div>
+</sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = {
+    cookie: null,
+    showCookie: false,
+    mobileMenu: false,
+    legal: null,
+    step: 0,
+    party: 2,
+    service: 'dinner',
+    dateISO: null,
+    time: null,
+    form: { prenom: '', nom: '', tel: '', email: '', occasion: 'Dîner en amoureux', remarques: '', consent: false, news: false },
+    errors: {},
+    ref: null,
+  };
+
+  componentDidMount() {
+    try {
+      const c = localStorage.getItem('numidia_cookie_v1');
+      if (c) this.setState({ cookie: c, showCookie: false });
+      else this.setState({ showCookie: true });
+    } catch (e) { this.setState({ showCookie: true }); }
+  }
+
+  pad(n) { return n < 10 ? '0' + n : '' + n; }
+  hashStr(s) { let h = 2166136261; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return ((h >>> 0) % 1000) / 1000; }
+
+  serviceForDay(dow) {
+    if (dow === 1) return { closed: true, lunch: false, dinner: false };
+    if (dow === 0) return { closed: false, lunch: true, dinner: false };
+    if (dow === 5 || dow === 6) return { closed: false, lunch: true, dinner: true };
+    return { closed: false, lunch: false, dinner: true };
+  }
+
+  getDates() {
+    const out = [];
+    const now = new Date(); now.setHours(0, 0, 0, 0);
+    const wd = ['dim.', 'lun.', 'mar.', 'mer.', 'jeu.', 'ven.', 'sam.'];
+    const mo = ['janv.', 'févr.', 'mars', 'avr.', 'mai', 'juin', 'juil.', 'août', 'sept.', 'oct.', 'nov.', 'déc.'];
+    for (let i = 0; i < 18; i++) {
+      const d = new Date(now); d.setDate(now.getDate() + i);
+      const dow = d.getDay();
+      const iso = d.getFullYear() + '-' + this.pad(d.getMonth() + 1) + '-' + this.pad(d.getDate());
+      out.push({ iso, dow, dayShort: wd[dow], dayNum: d.getDate(), monthShort: mo[d.getMonth()], svc: this.serviceForDay(dow) });
+    }
+    return out;
+  }
+
+  formatLong(iso) {
+    if (!iso) return '—';
+    const p = iso.split('-').map(Number);
+    const d = new Date(p[0], p[1] - 1, p[2]);
+    let s = new Intl.DateTimeFormat('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }).format(d);
+    return s.charAt(0).toUpperCase() + s.slice(1);
+  }
+
+  slotTimes(service) {
+    return service === 'lunch'
+      ? ['12:30', '13:00', '13:30', '14:00', '14:30']
+      : ['19:00', '19:30', '20:00', '20:30', '21:00', '21:30', '22:00', '22:30'];
+  }
+
+  selectDate(iso, svc) {
+    const service = svc.dinner ? 'dinner' : 'lunch';
+    this.setState({ dateISO: iso, service, time: null });
+  }
+
+  setField(k, v) {
+    this.setState(s => ({ form: { ...s.form, [k]: v }, errors: { ...s.errors, [k]: undefined } }));
+  }
+
+  validate() {
+    const f = this.state.form; const e = {};
+    if (!f.prenom.trim()) e.prenom = 'Indiquez votre prénom.';
+    if (!f.nom.trim()) e.nom = 'Indiquez votre nom.';
+    if (!/^[0-9+\s().-]{6,}$/.test(f.tel.trim())) e.tel = 'Numéro de téléphone invalide.';
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email.trim())) e.email = 'Adresse e-mail invalide.';
+    if (!f.consent) e.consent = 'Votre consentement est requis pour traiter la demande.';
+    this.setState({ errors: e });
+    return Object.keys(e).length === 0;
+  }
+
+  // ---- style builders (camelCase for React style objects) ----
+  pillStyle(sel) { return { minWidth: '46px', height: '46px', padding: '0 12px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', border: '1px solid ' + (sel ? '#C9A25E' : 'rgba(239,230,214,0.18)'), background: sel ? '#C9A25E' : 'transparent', color: sel ? '#1A140C' : '#EFE7D7', fontFamily: '"Hanken Grotesk",sans-serif', fontWeight: '500', fontSize: '16px', cursor: 'pointer', transition: 'all .18s ease' }; }
+  dateChipStyle(sel, dis) { return { flex: '0 0 auto', width: '70px', padding: '12px 6px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '3px', border: '1px solid ' + (sel ? '#C9A25E' : 'rgba(239,230,214,0.14)'), background: sel ? '#C9A25E' : (dis ? 'rgba(239,230,214,0.02)' : 'transparent'), color: dis ? 'rgba(240,231,215,0.28)' : (sel ? '#1A140C' : '#EFE7D7'), cursor: dis ? 'not-allowed' : 'pointer', transition: 'all .18s ease', textAlign: 'center' }; }
+  slotStyle(sel, dis, i) { return { position: 'relative', padding: '12px 6px', border: '1px solid ' + (sel ? '#C9A25E' : 'rgba(239,230,214,0.16)'), background: sel ? '#C9A25E' : (dis ? 'rgba(239,230,214,0.02)' : 'transparent'), color: dis ? 'rgba(240,231,215,0.3)' : (sel ? '#1A140C' : '#EFE7D7'), cursor: dis ? 'not-allowed' : 'pointer', textAlign: 'center', fontFamily: '"Hanken Grotesk",sans-serif', fontWeight: '500', fontSize: '15px', textDecoration: dis ? 'line-through' : 'none', transition: 'all .16s ease', animation: 'slotIn .35s ease both', animationDelay: (i * 0.03) + 's' }; }
+  segStyle(sel) { return { flex: '1', padding: '11px 14px', textAlign: 'center', border: 'none', background: sel ? '#C9A25E' : 'transparent', color: sel ? '#1A140C' : 'rgba(240,231,215,0.7)', fontFamily: '"Hanken Grotesk",sans-serif', fontWeight: '600', fontSize: '13px', cursor: 'pointer', transition: 'all .18s ease' }; }
+  inputStyle(err, tall) { return { width: '100%', padding: tall ? '14px 16px' : '13px 16px', minHeight: tall ? '92px' : 'auto', background: '#15110B', border: '1px solid ' + (err ? '#B5613C' : 'rgba(239,230,214,0.16)'), color: '#F0E7D7', fontFamily: '"Hanken Grotesk",sans-serif', fontSize: '15px', lineHeight: '1.5', outline: 'none', resize: tall ? 'vertical' : 'none', transition: 'border-color .18s ease' }; }
+  primaryStyle(dis) { return { display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '8px', height: '52px', width: '100%', background: dis ? 'rgba(201,162,94,0.28)' : '#C9A25E', color: dis ? 'rgba(26,20,12,0.5)' : '#1A140C', border: 'none', fontFamily: '"Hanken Grotesk",sans-serif', fontWeight: '600', fontSize: '15px', cursor: dis ? 'not-allowed' : 'pointer', transition: 'background .18s ease' }; }
+  dotStyle(st) { const active = st !== 'todo'; return { width: '28px', height: '28px', flex: '0 0 auto', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid ' + (active ? '#C9A25E' : 'rgba(239,230,214,0.2)'), background: st === 'done' ? '#C9A25E' : 'transparent', color: st === 'done' ? '#1A140C' : (st === 'active' ? '#C9A25E' : 'rgba(240,231,215,0.4)'), fontFamily: '"Hanken Grotesk",sans-serif', fontWeight: '600', fontSize: '12px' }; }
+
+  renderVals() {
+    const S = this.state;
+    const stars = r => '★★★★★☆☆☆☆☆'.slice(5 - r, 10 - r);
+
+    const menuSections = [
+      { cat: 'Entrées', items: [
+        { name: 'Chorba frik revisitée', desc: 'Bouillon de blé vert, écume de coriandre, agneau confit.', price: '1 100 DA' },
+        { name: 'Brick craquante au thon rouge', desc: 'Thon de Bou Ismaïl, câpres, citron confit, roquette.', price: '1 300 DA' },
+        { name: 'Carpaccio de daurade royale', desc: 'Huile d\u2019argan, fenouil croquant, grenade, fleur de sel.', price: '1 450 DA' },
+        { name: 'Salade d\u2019oranges de Boufarik', desc: 'Olives taggiasche, oignon rouge, menthe fraîche.', price: '950 DA' },
+      ] },
+      { cat: 'Plats', items: [
+        { name: 'Loup de mer en croûte de sel', desc: 'Pêche du jour, beurre blanc au safran de l\u2019Aurès.', price: '3 400 DA' },
+        { name: 'Tajine d\u2019agneau aux pruneaux', desc: 'Amandes torréfiées, semoule fine, jus réduit au miel.', price: '2 900 DA' },
+        { name: 'Épaule de veau confite 12 h', desc: 'Purée à l\u2019huile d\u2019olive de Kabylie, jus corsé.', price: '3 200 DA' },
+        { name: 'Couscous royal du chef', desc: 'Sept légumes, agneau, merguez maison, bouillon parfumé.', price: '2 600 DA' },
+        { name: 'Rougets grillés', desc: 'Purée de fèves, menthe, huile vierge première pression.', price: '3 100 DA' },
+      ] },
+      { cat: 'Desserts', items: [
+        { name: 'Kalb el louz réinventé', desc: 'Semoule, amande, glace à la fleur d\u2019oranger.', price: '800 DA' },
+        { name: 'Tarte fine aux figues de Kabylie', desc: 'Pâte sablée, miel de jujubier, sorbet lait.', price: '900 DA' },
+        { name: 'Sphère chocolat & sésame grillé', desc: 'Cœur coulant, praliné sésame, fleur de sel.', price: '1 000 DA' },
+        { name: 'Dattes Deglet Nour & mascarpone', desc: 'Éclats de noix, sirop de dattes, fleur de sel.', price: '750 DA' },
+      ] },
+    ];
+
+    const reviews = [
+      { name: 'Yasmine Belkacem', city: 'Alger', r: 5, date: 'Juin 2026', text: 'Une soirée mémorable. Le loup de mer en croûte de sel est d\u2019une justesse rare, et le service anticipe le moindre besoin. La terrasse au coucher du soleil vaut à elle seule le détour.' },
+      { name: 'Karim Haddad', city: 'Oran', r: 5, date: 'Mai 2026', text: 'Le menu dégustation est une vraie déclaration. Sept services parfaitement rythmés, des produits d\u2019ici sublimés. On sent une cuisine qui a une intention.' },
+      { name: 'Sofia Amrani', city: 'Alger', r: 4, date: 'Mai 2026', text: 'Cadre superbe et assiettes soignées. J\u2019aurais aimé un peu plus de choix végétarien, mais l\u2019accueil et le lieu rattrapent tout. On reviendra.' },
+      { name: 'Nadir Benslimane', city: 'Blida', r: 5, date: 'Avril 2026', text: 'Réservation impeccable, table prête à l\u2019heure, sommelier de bon conseil. Le tajine d\u2019agneau aux pruneaux est le meilleur que j\u2019aie mangé en ville.' },
+      { name: 'Lila Cherifi', city: 'Alger', r: 5, date: 'Avril 2026', text: 'Nous avons fêté un anniversaire au salon privé. Attention aux détails, dressage magnifique, kalb el louz revisité à tomber. Merci à toute l\u2019équipe.' },
+      { name: 'Réda Merabet', city: 'Constantine', r: 4, date: 'Mars 2026', text: 'Très belle table, ambiance feutrée et élégante. Les prix sont à la hauteur de la prestation. Une adresse pour les grandes occasions.' },
+    ].map(x => ({ ...x, stars: stars(x.r) }));
+
+    const gallery = [
+      { t: 'La salle principale', m: 'PHOTO · 4:5', ratio: '4/5' },
+      { t: 'Le bar à vins', m: 'PHOTO · 4:5', ratio: '4/5' },
+      { t: 'La terrasse — vue sur la baie', m: 'PHOTO · 4:5', ratio: '4/5' },
+      { t: 'La cuisine ouverte', m: 'PHOTO · 4:5', ratio: '4/5' },
+      { t: 'Le salon privé', m: 'PHOTO · 4:5', ratio: '4/5' },
+      { t: 'Dressage — plat signature', m: 'PHOTO · 4:5', ratio: '4/5' },
+    ];
+
+    const hours = [
+      { day: 'Lundi', hours: 'Fermé', closed: true },
+      { day: 'Mardi', hours: '19h00 – 23h00', closed: false },
+      { day: 'Mercredi', hours: '19h00 – 23h00', closed: false },
+      { day: 'Jeudi', hours: '19h00 – 23h00', closed: false },
+      { day: 'Vendredi', hours: '12h30 – 15h00 · 19h00 – 00h00', closed: false },
+      { day: 'Samedi', hours: '12h30 – 15h00 · 19h00 – 00h00', closed: false },
+      { day: 'Dimanche', hours: '12h30 – 16h00', closed: false },
+    ].map(h => ({ ...h, color: h.closed ? 'rgba(240,231,215,0.4)' : 'rgba(240,231,215,0.85)' }));
+
+    // party
+    const partyButtons = [1, 2, 3, 4, 5, 6, 7, 8].map(n => ({
+      label: n === 8 ? '8+' : ('' + n), value: n, aria: n + ' couverts',
+      onSelect: () => this.setState({ party: n }),
+      style: this.pillStyle(S.party === n),
+    }));
+
+    // dates
+    const rawDates = this.getDates();
+    const dates = rawDates.map(d => {
+      const dis = d.svc.closed;
+      const sel = S.dateISO === d.iso;
+      return { ...d, disabled: dis, selected: sel,
+        aria: d.dayShort + ' ' + d.dayNum + ' ' + d.monthShort + (dis ? ' (fermé)' : ''),
+        chipStyle: this.dateChipStyle(sel, dis),
+        onSelect: dis ? () => {} : () => this.selectDate(d.iso, d.svc) };
+    });
+
+    // service toggle
+    let showServiceToggle = false, serviceOptions = [], activeService = S.service;
+    const selDay = S.dateISO ? rawDates.find(x => x.iso === S.dateISO) : null;
+    if (selDay) {
+      const svc = selDay.svc;
+      if (svc.lunch && !svc.dinner) activeService = 'lunch';
+      if (!svc.lunch && svc.dinner) activeService = 'dinner';
+      if (svc.lunch && svc.dinner) {
+        showServiceToggle = true;
+        serviceOptions = [{ key: 'lunch', label: 'Déjeuner' }, { key: 'dinner', label: 'Dîner' }].map(o => ({
+          ...o, selected: activeService === o.key,
+          onSelect: () => this.setState({ service: o.key, time: null }),
+          style: this.segStyle(activeService === o.key),
+        }));
+      }
+    }
+
+    // slots
+    let slots = [];
+    if (S.dateISO) {
+      const times = this.slotTimes(activeService);
+      slots = times.map((t, i) => {
+        const r = this.hashStr(S.dateISO + activeService + t);
+        const st = r < 0.2 ? 'full' : (r < 0.36 ? 'last' : 'available');
+        const dis = st === 'full';
+        const sel = S.time === t;
+        return { time: t, note: st === 'last' ? 'peu de tables' : (st === 'full' ? 'complet' : ''),
+          showNote: st !== 'available', disabled: dis, selected: sel,
+          aria: t + (dis ? ' complet' : (st === 'last' ? ' dernières tables' : ' disponible')),
+          style: this.slotStyle(sel, dis, i),
+          onSelect: dis ? () => {} : () => this.setState({ time: t }) };
+      });
+    }
+
+    const continue0Disabled = !(S.dateISO && S.time);
+
+    // steps ui
+    const labels = ['Créneau', 'Coordonnées', 'Récap.', 'Confirmé'];
+    const stepsUI = labels.map((label, i) => {
+      const st = i < S.step ? 'done' : (i === S.step ? 'active' : 'todo');
+      return { label, mark: st === 'done' ? '✓' : ('' + (i + 1)), dotStyle: this.dotStyle(st),
+        labelStyle: { fontFamily: '"Hanken Grotesk",sans-serif', fontSize: '11.5px', letterSpacing: '.02em', color: st === 'todo' ? 'rgba(240,231,215,0.4)' : '#F0E7D7', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' } };
+    });
+
+    const f = S.form, e = S.errors;
+    const recapParty = S.party + (S.party > 1 ? ' couverts' : ' couvert');
+
+    // legal
+    const legalMap = {
+      mentions: { title: 'Mentions légales', blocks: [
+        { p: 'Le présent site est une démonstration réalisée à des fins de présentation commerciale.' },
+        { h: 'Éditeur' }, { p: 'Restaurant Numidia — SARL au capital de 2 000 000 DA. 14, chemin Gaddouche, Hydra, Alger 16035, Algérie. RC 16/00-1234567 B 22. NIF 000016123456789.' },
+        { h: 'Directeur de la publication' }, { p: 'M. Réda Bensalah, gérant.' },
+        { h: 'Hébergement' }, { p: 'Site hébergé par un prestataire technique. Coordonnées disponibles sur demande à contact@numidia-alger.dz.' },
+        { h: 'Propriété intellectuelle' }, { p: 'L\u2019ensemble des contenus (textes, visuels, identité) est la propriété du Restaurant Numidia. Toute reproduction sans autorisation est interdite.' },
+        { h: 'Contact' }, { p: 'Pour toute question : reservation@numidia-alger.dz · +213 _ __ __ __ __.' },
+      ] },
+      confidentialite: { title: 'Politique de confidentialité', blocks: [
+        { p: 'Le Restaurant Numidia attache une grande importance à la protection de vos données personnelles.' },
+        { h: 'Données collectées' }, { p: 'Lors d\u2019une réservation, nous collectons : prénom, nom, téléphone, adresse e-mail, ainsi que les informations que vous nous communiquez (occasion, remarques).' },
+        { h: 'Finalité du traitement' }, { p: 'Ces données servent uniquement à traiter et gérer votre réservation, à vous contacter en cas de besoin, et — si vous y consentez — à vous envoyer nos actualités.' },
+        { h: 'Durée de conservation' }, { p: 'Vos données sont conservées 24 mois après votre dernière visite, sauf obligation légale contraire.' },
+        { h: 'Vos droits' }, { p: 'Vous disposez d\u2019un droit d\u2019accès, de rectification, d\u2019effacement, d\u2019opposition et de portabilité de vos données. Exercez-les à reservation@numidia-alger.dz.' },
+        { h: 'Cookies' }, { p: 'Le site utilise des cookies de mesure d\u2019audience, soumis à votre consentement via le bandeau affiché à la première visite. Vous pouvez modifier votre choix à tout moment.' },
+        { h: 'Contact' }, { p: 'Pour toute question relative à vos données : reservation@numidia-alger.dz.' },
+      ] },
+    };
+    const legalData = S.legal ? legalMap[S.legal] : null;
+    const legalBlocks = legalData ? legalData.blocks.map(b => ({ isH: !!b.h, isP: !!b.p, text: b.h || b.p })) : [];
+
+    return {
+      // data
+      menuSections, reviews, gallery, hours,
+      // nav / ui
+      mobileMenu: S.mobileMenu, showCookie: S.showCookie,
+      toggleMenu: () => this.setState({ mobileMenu: true }),
+      navClose: () => this.setState({ mobileMenu: false }),
+      acceptCookies: () => { try { localStorage.setItem('numidia_cookie_v1', 'accepted'); } catch (e) {} this.setState({ cookie: 'accepted', showCookie: false }); },
+      refuseCookies: () => { try { localStorage.setItem('numidia_cookie_v1', 'refused'); } catch (e) {} this.setState({ cookie: 'refused', showCookie: false }); },
+      // legal
+      legalOpen: !!S.legal, legalTitle: legalData ? legalData.title : '', legalBlocks,
+      openMentions: (ev) => { if (ev && ev.preventDefault) ev.preventDefault(); this.setState({ legal: 'mentions', mobileMenu: false }); },
+      openConfid: (ev) => { if (ev && ev.preventDefault) ev.preventDefault(); this.setState({ legal: 'confidentialite', mobileMenu: false }); },
+      closeLegal: () => this.setState({ legal: null }),
+      // reservation
+      isStep0: S.step === 0, isStep1: S.step === 1, isStep2: S.step === 2, isStep3: S.step === 3,
+      stepsUI,
+      partyButtons, dates,
+      showServiceToggle, serviceOptions,
+      hasDate: !!S.dateISO, noDate: !S.dateISO,
+      slots, slotsHeading: activeService === 'lunch' ? 'Créneaux — déjeuner' : 'Créneaux — dîner',
+      continue0Disabled, continue0Style: this.primaryStyle(continue0Disabled),
+      toStep1: () => { if (!continue0Disabled) this.setState({ step: 1 }); },
+      backTo0: () => this.setState({ step: 0 }),
+      backTo1: () => this.setState({ step: 1 }),
+      toStep2: () => { if (this.validate()) this.setState({ step: 2 }); },
+      doConfirm: () => this.setState({ step: 3, ref: 'NUM-' + new Date().getFullYear() + '-' + Math.floor(1000 + Math.random() * 9000) }),
+      resetRes: () => this.setState({ step: 0, party: 2, dateISO: null, time: null, service: 'dinner', form: { prenom: '', nom: '', tel: '', email: '', occasion: 'Dîner en amoureux', remarques: '', consent: false, news: false }, errors: {}, ref: null }),
+      // form
+      form: f,
+      onPrenom: ev => this.setField('prenom', ev.target.value),
+      onNom: ev => this.setField('nom', ev.target.value),
+      onTel: ev => this.setField('tel', ev.target.value),
+      onEmail: ev => this.setField('email', ev.target.value),
+      onOccasion: ev => this.setField('occasion', ev.target.value),
+      onRemarques: ev => this.setField('remarques', ev.target.value),
+      onConsent: ev => this.setField('consent', ev.target.checked),
+      onNews: ev => this.setField('news', ev.target.checked),
+      fldPrenom: this.inputStyle(e.prenom, false), fldNom: this.inputStyle(e.nom, false),
+      fldTel: this.inputStyle(e.tel, false), fldEmail: this.inputStyle(e.email, false),
+      fldOccasion: this.inputStyle(false, false), fldRemarques: this.inputStyle(false, true),
+      errPrenom: e.prenom || '', errPrenomB: !!e.prenom,
+      errNom: e.nom || '', errNomB: !!e.nom,
+      errTel: e.tel || '', errTelB: !!e.tel,
+      errEmail: e.email || '', errEmailB: !!e.email,
+      errConsent: e.consent || '', errConsentB: !!e.consent,
+      // recap
+      recapDate: this.formatLong(S.dateISO), recapTime: S.time || '—', recapParty,
+      recapService: activeService === 'lunch' ? 'Déjeuner' : 'Dîner',
+      recapName: (f.prenom + ' ' + f.nom).trim() || '—',
+      recapContact: (f.tel + ' · ' + f.email).replace(/^ · | · $/g, '') || '—',
+      recapOccasion: f.occasion,
+      recapRemarques: f.remarques.trim() || 'Aucune',
+      ref: S.ref,
+    };
+  }
+}
+</script>
+</body>
+</html>

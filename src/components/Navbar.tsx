@@ -54,7 +54,7 @@ export default function Navbar() {
           : "bg-transparent"
       }`}
     >
-      <div className="w-full max-w-[1200px] mx-auto px-6 md:px-12 h-16 md:h-20 flex items-center justify-between">
+      <div className="w-full max-w-[1400px] mx-auto px-6 md:px-12 h-20 md:h-24 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2.5 hover:opacity-80 transition-opacity">
           <Image
@@ -62,12 +62,12 @@ export default function Navbar() {
             alt="Arslan DIF"
             width={560}
             height={140}
-            className="h-14 md:h-20 w-auto object-contain"
+            className="h-16 md:h-24 w-auto object-contain"
           />
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden md:flex items-center gap-6 lg:gap-8">
+        <nav className="hidden lg:flex items-center gap-6 xl:gap-8">
           {NAV_LINKS.map(({ key, href }) => (
             <a
               key={key}
@@ -81,12 +81,6 @@ export default function Navbar() {
               {t(translations.nav[key])}
             </a>
           ))}
-          <Link
-            href="/services"
-            className="text-sm font-medium text-[var(--gold)] hover:text-[var(--gold-pale)] transition-colors"
-          >
-            {t(translations.nav.services)}
-          </Link>
         </nav>
 
         {/* Right: lang + theme + CTA */}
@@ -132,17 +126,17 @@ export default function Navbar() {
             )}
           </button>
 
-          {/* Contact CTA */}
-          <a
-            href="/#contact"
-            className="hidden md:inline-flex items-center gap-2 text-sm font-medium font-[family-name:var(--font-heading)] border border-[var(--gold)] text-[var(--gold)] hover:bg-[var(--gold)] hover:text-black px-5 py-2 rounded-md transition-all"
+          {/* Prestations CTA */}
+          <Link
+            href="/services"
+            className="hidden lg:inline-flex items-center gap-2 text-sm font-bold font-[family-name:var(--font-heading)] bg-[var(--gold)] text-black hover:bg-[var(--gold-pale)] px-5 py-2 rounded-md transition-all"
           >
-            Contact
-          </a>
+            {t(translations.nav.services)}
+          </Link>
 
           {/* Mobile hamburger */}
           <button
-            className="md:hidden text-[var(--muted)] hover:text-[var(--text)]"
+            className="lg:hidden text-[var(--muted)] hover:text-[var(--text)]"
             onClick={() => setMenuOpen(!menuOpen)}
             aria-label="Toggle menu"
           >
@@ -159,7 +153,7 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {menuOpen && (
-        <div className="md:hidden bg-[var(--bg)]/95 backdrop-blur-md border-b border-[var(--border)] px-6 py-4 flex flex-col gap-3">
+        <div className="lg:hidden bg-[var(--bg)]/95 backdrop-blur-md border-b border-[var(--border)] px-6 py-4 flex flex-col gap-3">
           {NAV_LINKS.map(({ key, href }) => (
             <a
               key={key}

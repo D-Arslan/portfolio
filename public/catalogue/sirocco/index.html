@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #FBF4E9; -webkit-font-smoothing: antialiased; }
+  img { max-width: 100%; display: block; }
+  button { font: inherit; }
+  a { color: inherit; }
+  ::selection { background: #FF6B3D; color: #fff; }
+  :focus-visible { outline: 3px solid #FF6B3D; outline-offset: 2px; border-radius: 6px; }
+  input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 2px solid #0E7C9E; outline-offset: 1px; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
+  @keyframes pop { from { opacity: 0; transform: scale(.94); } to { opacity: 1; transform: none; } }
+  @keyframes floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+  image-slot { display: block; }
+</style>
+<script src="image-slot.js"></script>
+</helmet>
+
+<div style="font-family:'Plus Jakarta Sans',sans-serif;color:#12242E;background:#FBF4E9;min-height:100vh;overflow-x:hidden;">
+
+  <a href="#contenu" style="position:absolute;left:-999px;background:#0B3A53;color:#fff;padding:10px 16px;border-radius:8px;z-index:300;" style-focus="left:8px;top:8px">Aller au contenu</a>
+
+
+  <!-- ============ HEADER ============ -->
+  <header style="position:sticky;top:0;z-index:100;background:rgba(251,244,233,0.88);backdrop-filter:blur(12px);border-bottom:1px solid rgba(11,58,83,0.1);">
+    <div style="max-width:1200px;margin:0 auto;padding:0 clamp(18px,5vw,44px);height:74px;display:flex;align-items:center;justify-content:space-between;gap:20px;">
+      <button onClick="{{ goAccueil }}" aria-label="Sirocco — accueil" style="display:flex;align-items:center;gap:11px;background:none;border:none;cursor:pointer;padding:0;">
+        <span aria-hidden="true" style="width:30px;height:30px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#FFB27A,#FF6B3D 70%);display:inline-block;box-shadow:0 0 0 4px rgba(255,107,61,0.16);"></span>
+        <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:24px;letter-spacing:-.02em;color:#0B3A53;">Sirocco</span>
+      </button>
+      <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}">
+        <nav aria-label="Navigation principale" style="display:flex;align-items:center;gap:4px;">
+          <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="3">
+            <button onClick="{{ item.onClick }}" aria-current="{{ item.ariaCurrent }}" style="{{ item.style }}">{{ item.label }}</button>
+          </sc-for>
+          <button onClick="{{ goActivites }}" style="margin-left:14px;background:#FF6B3D;color:#fff;border:none;padding:12px 24px;border-radius:999px;font-weight:700;font-size:14px;cursor:pointer;transition:background .18s,transform .18s;box-shadow:0 6px 18px rgba(255,107,61,0.3);" style-hover="background:#E85427;transform:translateY(-1px)">Réserver une sortie</button>
+        </nav>
+      </sc-if>
+      <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
+        <button onClick="{{ toggleMobile }}" aria-label="Ouvrir le menu" aria-expanded="{{ mobileOpen }}" style="display:flex;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:10px;">
+          <span style="width:24px;height:2px;background:#0B3A53;display:block;border-radius:2px;"></span>
+          <span style="width:24px;height:2px;background:#0B3A53;display:block;border-radius:2px;"></span>
+          <span style="width:24px;height:2px;background:#0B3A53;display:block;border-radius:2px;"></span>
+        </button>
+      </sc-if>
+    </div>
+  </header>
+
+  <main id="contenu">
+
+  <!-- ============ ACCUEIL ============ -->
+  <sc-if value="{{ isAccueil }}" hint-placeholder-val="{{ true }}">
+  <div>
+    <!-- Hero -->
+    <section style="position:relative;background:linear-gradient(160deg,#0E5A73 0%,#0B3A53 55%,#072A3D 100%);color:#fff;padding:clamp(48px,7vw,92px) clamp(20px,6vw,44px) clamp(90px,11vw,150px);">
+      <div aria-hidden="true" style="position:absolute;inset:0;background:radial-gradient(60% 50% at 85% 10%,rgba(255,107,61,0.28),transparent 60%);"></div>
+      <div style="position:relative;max-width:1120px;margin:0 auto;">
+        <div style="max-width:660px;animation:fadeUp .7s cubic-bezier(.2,.7,.2,1) both;">
+          <div style="display:inline-flex;align-items:center;gap:9px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.18);padding:7px 15px;border-radius:999px;font-size:13px;font-weight:600;">
+            <span style="width:8px;height:8px;border-radius:50%;background:#FF6B3D;"></span>Sidi Fredj · Tipaza · Chenoua
+          </div>
+          <h1 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(40px,7.5vw,76px);line-height:1.02;letter-spacing:-.03em;margin:20px 0 0;">Vivez la côte algérienne <span style="color:#FF8A5B;">grandeur nature.</span></h1>
+          <p style="font-size:clamp(16px,2.4vw,19px);line-height:1.6;color:rgba(255,255,255,0.82);max-width:34em;margin:20px 0 0;">Kayak, plongée, parapente, yoga face à la mer… Des aventures encadrées par des guides passionnés, de la baie d’Alger au mont Chenoua.</p>
+        </div>
+
+        <!-- Finder -->
+        <form onSubmit="{{ submitFinder }}" style="margin-top:40px;background:#fff;border-radius:20px;padding:16px;box-shadow:0 24px 60px rgba(7,42,61,0.35);display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;align-items:end;max-width:860px;animation:fadeUp .9s cubic-bezier(.2,.7,.2,1) both;">
+          <!-- Envie de… -->
+          <div style="position:relative;z-index:70;">
+            <label style="display:block;font-size:12px;font-weight:700;color:#5B6B72;margin:0 0 6px 6px;text-transform:uppercase;letter-spacing:.06em;">Envie de…</label>
+            <button type="button" onClick="{{ toggleCat }}" aria-haspopup="listbox" aria-expanded="{{ catOpen }}" style="width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:13px 14px;border:1px solid rgba(11,58,83,0.18);border-radius:12px;background:#fff;color:#12242E;font-size:15px;font-weight:600;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;">
+              <span>{{ selectedCatLabel }}</span>
+              <span aria-hidden="true" style="color:#0E7C9E;font-size:11px;">▼</span>
+            </button>
+            <sc-if value="{{ catOpen }}" hint-placeholder-val="{{ false }}">
+              <div role="listbox" style="position:absolute;top:calc(100% + 8px);left:0;right:0;background:#fff;border:1px solid rgba(11,58,83,0.12);border-radius:16px;box-shadow:0 20px 50px rgba(7,42,61,0.22);padding:8px;z-index:2;">
+                <sc-for list="{{ finderOptions }}" as="opt" hint-placeholder-count="5">
+                  <button type="button" role="option" aria-selected="{{ opt.active }}" onClick="{{ opt.onSelect }}" style="{{ opt.style }}">
+                    <sc-if value="{{ opt.hasThumb }}" hint-placeholder-val="{{ true }}">
+                      <img src="{{ opt.thumb }}" alt="" style="width:38px;height:38px;border-radius:9px;object-fit:cover;flex:0 0 auto;" />
+                    </sc-if>
+                    <sc-if value="{{ opt.noThumb }}" hint-placeholder-val="{{ false }}">
+                      <span aria-hidden="true" style="width:38px;height:38px;border-radius:9px;flex:0 0 auto;display:flex;align-items:center;justify-content:center;background:linear-gradient(150deg,#0E7C9E,#0B3A53);color:#FF8A5B;font-size:17px;">✦</span>
+                    </sc-if>
+                    <span style="flex:1;font-size:15px;font-weight:600;color:#12242E;">{{ opt.label }}</span>
+                    <span style="font-size:12px;color:#5B6B72;font-weight:600;">{{ opt.count }}</span>
+                  </button>
+                </sc-for>
+              </div>
+            </sc-if>
+          </div>
+          <!-- Quand ? -->
+          <div style="position:relative;z-index:70;">
+            <label style="display:block;font-size:12px;font-weight:700;color:#5B6B72;margin:0 0 6px 6px;text-transform:uppercase;letter-spacing:.06em;">Quand&nbsp;?</label>
+            <button type="button" onClick="{{ toggleDate }}" aria-haspopup="dialog" aria-expanded="{{ dateOpen }}" style="width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 14px;border:1px solid rgba(11,58,83,0.18);border-radius:12px;background:#fff;color:#12242E;font-size:15px;font-weight:600;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;text-transform:capitalize;">
+              <span>{{ selectedDateFmt }}</span>
+              <svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#0E7C9E" stroke-width="2" stroke-linecap="round"><rect x="3" y="4.5" width="18" height="16.5" rx="2.5"/><path d="M3 9.5h18M8 2.5v4M16 2.5v4"/></svg>
+            </button>
+            <sc-if value="{{ dateOpen }}" hint-placeholder-val="{{ false }}">
+              <div role="dialog" aria-label="Calendrier" style="position:absolute;top:calc(100% + 8px);left:0;background:#fff;border:1px solid rgba(11,58,83,0.12);border-radius:16px;box-shadow:0 20px 50px rgba(7,42,61,0.22);padding:16px;z-index:2;width:300px;max-width:86vw;">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+                  <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:16px;text-transform:capitalize;color:#0B3A53;">{{ calMonthLabel }}</span>
+                  <div style="display:flex;gap:6px;">
+                    <button type="button" onClick="{{ calShiftPrev }}" aria-label="Mois précédent" style="width:32px;height:32px;border-radius:9px;border:1px solid rgba(11,58,83,0.16);background:#fff;color:#0B3A53;cursor:pointer;font-size:15px;line-height:1;">‹</button>
+                    <button type="button" onClick="{{ calShiftNext }}" aria-label="Mois suivant" style="width:32px;height:32px;border-radius:9px;border:1px solid rgba(11,58,83,0.16);background:#fff;color:#0B3A53;cursor:pointer;font-size:15px;line-height:1;">›</button>
+                  </div>
+                </div>
+                <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:4px;">
+                  <sc-for list="{{ calWeekdays }}" as="wd" hint-placeholder-count="7">
+                    <div style="text-align:center;font-size:11px;font-weight:700;color:#8A98A0;text-transform:uppercase;padding:4px 0;">{{ wd }}</div>
+                  </sc-for>
+                </div>
+                <sc-for list="{{ calWeeks }}" as="week" hint-placeholder-count="6">
+                  <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;">
+                    <sc-for list="{{ week.days }}" as="day" hint-placeholder-count="7">
+                      <button type="button" onClick="{{ day.onClick }}" style="{{ day.style }}">{{ day.d }}</button>
+                    </sc-for>
+                  </div>
+                </sc-for>
+                <div style="display:flex;justify-content:space-between;margin-top:12px;padding-top:12px;border-top:1px solid rgba(11,58,83,0.1);">
+                  <button type="button" onClick="{{ clearDate }}" style="background:none;border:none;color:#5B6B72;font-weight:700;font-size:13px;cursor:pointer;padding:0;">Effacer</button>
+                  <button type="button" onClick="{{ setToday }}" style="background:none;border:none;color:#FF6B3D;font-weight:700;font-size:13px;cursor:pointer;padding:0;">Aujourd’hui</button>
+                </div>
+              </div>
+            </sc-if>
+          </div>
+          <button type="submit" style="background:#FF6B3D;color:#fff;border:none;padding:15px 22px;border-radius:12px;font-weight:700;font-size:15px;cursor:pointer;transition:background .18s;height:52px;" style-hover="background:#E85427">Rechercher</button>
+        </form>
+        <sc-if value="{{ anyFinderOpen }}" hint-placeholder-val="{{ false }}">
+          <div onClick="{{ closeFinderPanels }}" aria-hidden="true" style="position:fixed;inset:0;z-index:60;"></div>
+        </sc-if>
+
+        <div style="display:flex;flex-wrap:wrap;gap:26px;margin-top:26px;font-size:14px;color:rgba(255,255,255,0.78);">
+          <span><strong style="color:#fff;">4,9/5</strong> · 1 200+ aventuriers</span>
+          <span><strong style="color:#fff;">Annulation gratuite</strong> jusqu’à 24 h</span>
+          <span><strong style="color:#fff;">Guides certifiés</strong> & petits groupes</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- wave -->
+    <div aria-hidden="true" style="background:#072A3D;line-height:0;margin-top:-1px;">
+      <svg viewBox="0 0 1440 90" preserveAspectRatio="none" style="display:block;width:100%;height:70px;"><path d="M0,45 C240,90 420,5 720,38 C1000,68 1200,10 1440,50 L1440,90 L0,90 Z" fill="#FBF4E9"></path></svg>
+    </div>
+
+    <!-- Catégories -->
+    <section style="padding:clamp(20px,3vw,30px) clamp(20px,6vw,44px) clamp(48px,7vw,80px);">
+      <div style="max-width:1120px;margin:0 auto;">
+        <h2 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:clamp(26px,4vw,40px);letter-spacing:-.02em;margin:0 0 8px;">Choisissez votre élément</h2>
+        <p style="color:#5B6B72;font-size:16px;margin:0 0 28px;">Quatre univers, une même dose d’adrénaline (ou de sérénité).</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;">
+          <sc-for list="{{ categoryCards }}" as="c" hint-placeholder-count="4">
+            <button onClick="{{ c.onClick }}" style="position:relative;border:none;cursor:pointer;text-align:left;border-radius:20px;overflow:hidden;height:200px;padding:0;transition:transform .2s,box-shadow .2s;" style-hover="transform:translateY(-4px);box-shadow:0 18px 40px rgba(7,42,61,0.22)">
+              <div aria-hidden="true" style="position:absolute;inset:0;background:{{ c.gradient }};"></div>
+              <div aria-hidden="true" style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 30%,rgba(7,42,61,0.55));"></div>
+              <div style="position:absolute;left:20px;bottom:18px;color:#fff;">
+                <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:24px;">{{ c.label }}</div>
+                <div style="font-size:13px;opacity:.85;margin-top:2px;">{{ c.count }} expériences</div>
+              </div>
+            </button>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+
+    <!-- Activités phares -->
+    <section style="background:#F1E4CE;padding:clamp(52px,8vw,90px) clamp(20px,6vw,44px);">
+      <div style="max-width:1120px;margin:0 auto;">
+        <div style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:34px;">
+          <div>
+            <span style="text-transform:uppercase;letter-spacing:.14em;font-size:12px;font-weight:700;color:#FF6B3D;">Les plus réservées</span>
+            <h2 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:clamp(26px,4vw,42px);letter-spacing:-.02em;margin:8px 0 0;">Nos aventures phares</h2>
+          </div>
+          <button onClick="{{ goActivites }}" style="background:#fff;color:#0B3A53;border:1px solid rgba(11,58,83,0.18);padding:12px 22px;border-radius:999px;font-weight:700;font-size:14px;cursor:pointer;transition:background .18s;" style-hover="background:#0B3A53;color:#fff">Toutes les activités →</button>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px;">
+          <sc-for list="{{ featured }}" as="a" hint-placeholder-count="6">
+            <article style="background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 8px 26px rgba(7,42,61,0.08);transition:transform .2s,box-shadow .2s;" style-hover="transform:translateY(-5px);box-shadow:0 20px 44px rgba(7,42,61,0.16)">
+              <div style="position:relative;height:184px;">
+                <image-slot id="{{ a.slotCover }}" src="{{ a.coverSrc }}" shape="rect" placeholder="Photo : {{ a.nom }}" style="position:absolute;inset:0;width:100%;height:100%;"></image-slot>
+                <span style="position:absolute;top:12px;left:12px;background:rgba(255,255,255,0.92);color:#0B3A53;font-size:12px;font-weight:700;padding:5px 11px;border-radius:999px;pointer-events:none;">{{ a.catLabel }}</span>
+                <span style="position:absolute;top:12px;right:12px;background:rgba(7,42,61,0.55);color:#fff;font-size:12px;font-weight:700;padding:5px 10px;border-radius:999px;pointer-events:none;">★ {{ a.noteFmt }}</span>
+              </div>
+              <button onClick="{{ a.onOpen }}" style="display:block;width:100%;text-align:left;background:none;border:none;padding:0;cursor:pointer;">
+                <div style="padding:18px 20px 22px;">
+                  <h3 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:21px;letter-spacing:-.01em;margin:0;color:#12242E;">{{ a.nom }}</h3>
+                  <p style="font-size:14px;color:#5B6B72;line-height:1.55;margin:7px 0 0;">{{ a.resume }}</p>
+                  <div style="display:flex;flex-wrap:wrap;gap:14px;margin-top:14px;font-size:13px;color:#5B6B72;">
+                    <span>⏱ {{ a.duree }}</span><span>◦ {{ a.niveau }}</span><span>◦ {{ a.lieu }}</span>
+                  </div>
+                  <div style="display:flex;align-items:baseline;justify-content:space-between;margin-top:16px;padding-top:14px;border-top:1px solid rgba(11,58,83,0.1);">
+                    <div><span style="font-size:12px;color:#5B6B72;">dès </span><span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:22px;color:#0B3A53;">{{ a.prixFmt }}</span><span style="font-size:12px;color:#5B6B72;"> /pers.</span></div>
+                    <span style="color:#FF6B3D;font-weight:700;font-size:14px;">Découvrir →</span>
+                  </div>
+                </div>
+              </button>
+            </article>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pourquoi -->
+    <section style="padding:clamp(52px,8vw,90px) clamp(20px,6vw,44px);">
+      <div style="max-width:1120px;margin:0 auto;">
+        <div style="text-align:center;margin-bottom:40px;">
+          <span style="text-transform:uppercase;letter-spacing:.14em;font-size:12px;font-weight:700;color:#FF6B3D;">Avec Sirocco</span>
+          <h2 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:clamp(26px,4vw,42px);letter-spacing:-.02em;margin:8px 0 0;">Partez l’esprit léger</h2>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px;">
+          <sc-for list="{{ atouts }}" as="p" hint-placeholder-count="4">
+            <div style="background:#fff;border-radius:20px;padding:26px;box-shadow:0 6px 20px rgba(7,42,61,0.06);">
+              <div aria-hidden="true" style="width:44px;height:44px;border-radius:12px;background:rgba(255,107,61,0.14);display:flex;align-items:center;justify-content:center;color:#FF6B3D;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:20px;">{{ p.mark }}</div>
+              <h3 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:19px;margin:16px 0 6px;">{{ p.titre }}</h3>
+              <p style="font-size:14px;color:#5B6B72;line-height:1.55;margin:0;">{{ p.texte }}</p>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+
+    <!-- Avis -->
+    <section style="background:linear-gradient(160deg,#0E5A73,#0B3A53);color:#fff;padding:clamp(52px,8vw,90px) clamp(20px,6vw,44px);">
+      <div style="max-width:1120px;margin:0 auto;">
+        <div style="text-align:center;margin-bottom:38px;">
+          <span style="text-transform:uppercase;letter-spacing:.14em;font-size:12px;font-weight:700;color:#FF8A5B;">Ils ont osé</span>
+          <h2 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:clamp(26px,4vw,42px);letter-spacing:-.02em;margin:8px 0 0;">4,9 / 5 sur 1 200 avis</h2>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:20px;">
+          <sc-for list="{{ reviewsHome }}" as="r" hint-placeholder-count="3">
+            <figure style="margin:0;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);border-radius:20px;padding:26px;">
+              <div style="color:#FF8A5B;letter-spacing:2px;">{{ r.starsF }}</div>
+              <blockquote style="font-size:17px;line-height:1.55;margin:14px 0 0;">« {{ r.texte }} »</blockquote>
+              <figcaption style="margin-top:18px;font-size:13px;color:rgba(255,255,255,0.68);"><strong style="color:#fff;">{{ r.nom }}</strong> · {{ r.actNom }}</figcaption>
+            </figure>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+  </div>
+  </sc-if>
+
+  <!-- ============ ACTIVITÉS ============ -->
+  <sc-if value="{{ isActivites }}" hint-placeholder-val="{{ false }}">
+  <div style="animation:fadeUp .5s ease both;">
+    <section style="background:linear-gradient(160deg,#0E5A73,#0B3A53);color:#fff;padding:clamp(44px,6vw,72px) clamp(20px,6vw,44px);">
+      <div style="max-width:1120px;margin:0 auto;">
+        <span style="text-transform:uppercase;letter-spacing:.14em;font-size:12px;font-weight:700;color:#FF8A5B;">Le catalogue</span>
+        <h1 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(34px,5.5vw,58px);letter-spacing:-.03em;margin:10px 0 0;">Toutes nos aventures</h1>
+        <p style="font-size:16px;color:rgba(255,255,255,0.8);margin:12px 0 0;max-width:38em;">Choisissez votre terrain de jeu. Réservation en ligne, confirmation immédiate, annulation gratuite.</p>
+      </div>
+    </section>
+    <section style="padding:clamp(28px,4vw,44px) clamp(20px,6vw,44px) clamp(56px,8vw,90px);">
+      <div style="max-width:1120px;margin:0 auto;">
+        <div role="group" aria-label="Filtrer par catégorie" style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:28px;">
+          <sc-for list="{{ filterChips }}" as="chip" hint-placeholder-count="5">
+            <button onClick="{{ chip.onClick }}" aria-pressed="{{ chip.active }}" style="{{ chip.style }}">{{ chip.label }}</button>
+          </sc-for>
+        </div>
+        <p style="font-size:14px;color:#5B6B72;margin:0 0 20px;">{{ activitiesCount }} expérience(s)</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px;">
+          <sc-for list="{{ activitiesFiltered }}" as="a" hint-placeholder-count="8">
+            <article style="background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 8px 26px rgba(7,42,61,0.08);transition:transform .2s,box-shadow .2s;" style-hover="transform:translateY(-5px);box-shadow:0 20px 44px rgba(7,42,61,0.16)">
+              <div style="position:relative;height:184px;">
+                <image-slot id="{{ a.slotCover }}" src="{{ a.coverSrc }}" shape="rect" placeholder="Photo : {{ a.nom }}" style="position:absolute;inset:0;width:100%;height:100%;"></image-slot>
+                <span style="position:absolute;top:12px;left:12px;background:rgba(255,255,255,0.92);color:#0B3A53;font-size:12px;font-weight:700;padding:5px 11px;border-radius:999px;pointer-events:none;">{{ a.catLabel }}</span>
+                <span style="position:absolute;top:12px;right:12px;background:rgba(7,42,61,0.55);color:#fff;font-size:12px;font-weight:700;padding:5px 10px;border-radius:999px;pointer-events:none;">★ {{ a.noteFmt }}</span>
+              </div>
+              <button onClick="{{ a.onOpen }}" style="display:block;width:100%;text-align:left;background:none;border:none;padding:0;cursor:pointer;">
+                <div style="padding:18px 20px 22px;">
+                  <h3 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:21px;margin:0;color:#12242E;">{{ a.nom }}</h3>
+                  <p style="font-size:14px;color:#5B6B72;line-height:1.55;margin:7px 0 0;">{{ a.resume }}</p>
+                  <div style="display:flex;flex-wrap:wrap;gap:14px;margin-top:14px;font-size:13px;color:#5B6B72;"><span>⏱ {{ a.duree }}</span><span>◦ {{ a.niveau }}</span><span>◦ {{ a.nbAvis }} avis</span></div>
+                  <div style="display:flex;align-items:baseline;justify-content:space-between;margin-top:16px;padding-top:14px;border-top:1px solid rgba(11,58,83,0.1);">
+                    <div><span style="font-size:12px;color:#5B6B72;">dès </span><span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:22px;color:#0B3A53;">{{ a.prixFmt }}</span><span style="font-size:12px;color:#5B6B72;"> /pers.</span></div>
+                    <span style="color:#FF6B3D;font-weight:700;font-size:14px;">Découvrir →</span>
+                  </div>
+                </div>
+              </button>
+            </article>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+  </div>
+  </sc-if>
+
+  <!-- ============ FICHE EXPÉRIENCE (moment fort) ============ -->
+  <sc-if value="{{ isFiche }}" hint-placeholder-val="{{ false }}">
+  <div style="animation:fadeUp .5s ease both;">
+    <section style="padding:clamp(24px,4vw,40px) clamp(20px,6vw,44px) clamp(56px,8vw,90px);">
+      <div style="max-width:1120px;margin:0 auto;">
+        <button onClick="{{ goActivites }}" style="background:none;border:none;color:#0E7C9E;font-weight:700;font-size:14px;cursor:pointer;padding:6px 0;margin-bottom:14px;">← Toutes les activités</button>
+
+        <div style="display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-bottom:6px;">
+          <span style="background:rgba(14,124,158,0.12);color:#0E7C9E;font-size:13px;font-weight:700;padding:5px 13px;border-radius:999px;">{{ act.catLabel }}</span>
+          <span style="font-size:14px;color:#12242E;font-weight:700;">★ {{ act.noteFmt }}</span>
+          <span style="font-size:14px;color:#5B6B72;">({{ act.nbAvis }} avis) · {{ act.lieu }}</span>
+        </div>
+        <h1 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(30px,5vw,52px);letter-spacing:-.03em;line-height:1.04;margin:0 0 22px;">{{ act.nom }}</h1>
+
+        <!-- Galerie -->
+        <div style="display:grid;grid-template-columns:2fr 1fr 1fr;grid-auto-rows:130px;gap:10px;border-radius:20px;overflow:hidden;margin-bottom:36px;">
+          <image-slot id="{{ act.gallery.0.id }}" src="{{ act.gallery.0.src }}" shape="rect" placeholder="Photo principale — {{ act.nom }}" style="grid-row:span 2;grid-column:span 1;width:100%;height:100%;min-height:270px;"></image-slot>
+          <image-slot id="{{ act.gallery.1.id }}" shape="rect" placeholder="Photo — {{ act.gallery.1.cap }}" style="width:100%;height:100%;"></image-slot>
+          <image-slot id="{{ act.gallery.2.id }}" shape="rect" placeholder="Photo — {{ act.gallery.2.cap }}" style="width:100%;height:100%;"></image-slot>
+          <image-slot id="{{ act.gallery.3.id }}" shape="rect" placeholder="Photo — {{ act.gallery.3.cap }}" style="grid-column:span 2;width:100%;height:100%;"></image-slot>
+        </div>
+
+        <!-- Deux colonnes -->
+        <div style="{{ ficheGridStyle }}">
+          <div>
+            <!-- Quick facts -->
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-bottom:32px;">
+              <sc-for list="{{ quickFacts }}" as="q" hint-placeholder-count="4">
+                <div style="background:#fff;border:1px solid rgba(11,58,83,0.1);border-radius:16px;padding:16px 18px;">
+                  <div style="font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:#5B6B72;font-weight:700;">{{ q.label }}</div>
+                  <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:18px;color:#0B3A53;margin-top:4px;">{{ q.value }}</div>
+                </div>
+              </sc-for>
+            </div>
+
+            <h2 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:26px;letter-spacing:-.01em;margin:0 0 12px;">L’expérience</h2>
+            <p style="font-size:16px;line-height:1.7;color:#33454E;margin:0 0 12px;">{{ act.description }}</p>
+            <p style="font-size:16px;line-height:1.7;color:#33454E;margin:0;">{{ act.description2 }}</p>
+
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:26px;margin-top:34px;">
+              <div>
+                <h3 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:20px;margin:0 0 14px;">Ce qui est inclus</h3>
+                <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:11px;">
+                  <sc-for list="{{ act.inclus }}" as="i" hint-placeholder-count="4">
+                    <li style="display:flex;align-items:flex-start;gap:11px;font-size:15px;color:#33454E;line-height:1.45;"><span aria-hidden="true" style="flex:0 0 auto;width:22px;height:22px;border-radius:50%;background:rgba(46,155,106,0.16);color:#2E9B6A;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;margin-top:1px;">✓</span>{{ i }}</li>
+                  </sc-for>
+                </ul>
+              </div>
+              <div>
+                <h3 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:20px;margin:0 0 14px;">À prévoir</h3>
+                <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:11px;">
+                  <sc-for list="{{ act.prevoir }}" as="p" hint-placeholder-count="4">
+                    <li style="display:flex;align-items:flex-start;gap:11px;font-size:15px;color:#33454E;line-height:1.45;"><span aria-hidden="true" style="flex:0 0 auto;width:22px;height:22px;border-radius:50%;background:rgba(255,107,61,0.16);color:#FF6B3D;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;margin-top:1px;">•</span>{{ p }}</li>
+                  </sc-for>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Point de RDV -->
+            <h3 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:20px;margin:34px 0 14px;">Point de rendez-vous</h3>
+            <div style="border-radius:18px;overflow:hidden;border:1px solid rgba(11,58,83,0.1);">
+              <div role="img" aria-label="Carte du point de rendez-vous : {{ act.rdv }}" style="position:relative;height:190px;background:linear-gradient(150deg,#1AA0B8,#0E5A73);">
+                <div aria-hidden="true" style="position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,rgba(255,255,255,0.08) 0 1px,transparent 1px 28px),repeating-linear-gradient(90deg,rgba(255,255,255,0.08) 0 1px,transparent 1px 28px);"></div>
+                <div aria-hidden="true" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-100%);width:22px;height:22px;border-radius:50% 50% 50% 0;background:#FF6B3D;rotate:-45deg;box-shadow:0 4px 10px rgba(7,42,61,0.4);"></div>
+                <span style="position:absolute;left:12px;bottom:11px;font-size:10px;color:rgba(255,255,255,0.9);background:rgba(7,42,61,0.45);padding:3px 8px;border-radius:6px;">carte · plan d’accès</span>
+              </div>
+              <div style="padding:16px 18px;background:#fff;font-size:15px;color:#33454E;"><strong style="color:#12242E;">📍 {{ act.rdv }}</strong></div>
+            </div>
+
+            <!-- Avis de l'activité -->
+            <h3 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:20px;margin:34px 0 14px;">Avis des aventuriers</h3>
+            <div style="display:flex;flex-direction:column;gap:14px;">
+              <sc-for list="{{ reviewsFor }}" as="r" hint-placeholder-count="2">
+                <figure style="margin:0;background:#fff;border:1px solid rgba(11,58,83,0.1);border-radius:16px;padding:20px;">
+                  <div style="color:#FF8A5B;letter-spacing:2px;font-size:14px;">{{ r.starsF }}</div>
+                  <blockquote style="font-size:15px;line-height:1.55;color:#33454E;margin:10px 0 0;">« {{ r.texte }} »</blockquote>
+                  <figcaption style="margin-top:12px;font-size:13px;color:#5B6B72;"><strong style="color:#12242E;">{{ r.nom }}</strong> · {{ r.date }}</figcaption>
+                </figure>
+              </sc-for>
+            </div>
+          </div>
+
+          <!-- Booking box (collant) -->
+          <aside style="{{ asideStyle }}">
+            <div style="background:#fff;border:1px solid rgba(11,58,83,0.12);border-radius:22px;padding:24px;box-shadow:0 18px 44px rgba(7,42,61,0.12);">
+              <div style="display:flex;align-items:baseline;justify-content:space-between;">
+                <div><span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:30px;color:#0B3A53;">{{ act.prixFmt }}</span><span style="font-size:14px;color:#5B6B72;"> /pers.</span></div>
+                <span style="font-size:13px;color:#2E9B6A;font-weight:700;">★ {{ act.noteFmt }}</span>
+              </div>
+
+              <label for="b-date" style="display:block;font-size:12px;font-weight:700;color:#5B6B72;text-transform:uppercase;letter-spacing:.06em;margin:20px 0 7px;">Date</label>
+              <input id="b-date" type="date" value="{{ booking.date }}" min="{{ todayIso }}" onChange="{{ onBookingDate }}" style="width:100%;padding:13px 14px;border:1px solid rgba(11,58,83,0.18);border-radius:12px;font-size:15px;background:#fff;color:#12242E;" />
+
+              <div style="font-size:12px;font-weight:700;color:#5B6B72;text-transform:uppercase;letter-spacing:.06em;margin:18px 0 9px;">Créneau</div>
+              <div role="group" aria-label="Créneaux" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(72px,1fr));gap:8px;">
+                <sc-for list="{{ creneauOptions }}" as="c" hint-placeholder-count="4">
+                  <button onClick="{{ c.onSelect }}" aria-pressed="{{ c.active }}" style="{{ c.style }}">{{ c.time }}</button>
+                </sc-for>
+              </div>
+
+              <div style="font-size:12px;font-weight:700;color:#5B6B72;text-transform:uppercase;letter-spacing:.06em;margin:18px 0 9px;">Participants</div>
+              <div style="display:flex;align-items:center;justify-content:space-between;border:1px solid rgba(11,58,83,0.18);border-radius:12px;padding:6px 10px;">
+                <button onClick="{{ decParticipants }}" aria-label="Retirer un participant" style="width:38px;height:38px;border-radius:10px;border:none;background:#F1E4CE;color:#0B3A53;font-size:22px;font-weight:700;cursor:pointer;line-height:1;">−</button>
+                <span aria-live="polite" style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:20px;">{{ booking.participants }}</span>
+                <button onClick="{{ incParticipants }}" aria-label="Ajouter un participant" style="width:38px;height:38px;border-radius:10px;border:none;background:#F1E4CE;color:#0B3A53;font-size:22px;font-weight:700;cursor:pointer;line-height:1;">+</button>
+              </div>
+
+              <div style="display:flex;align-items:baseline;justify-content:space-between;margin:20px 0 4px;padding-top:16px;border-top:1px solid rgba(11,58,83,0.12);">
+                <span style="font-weight:700;font-size:15px;">Total</span>
+                <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:26px;color:#FF6B3D;">{{ totalFmt }}</span>
+              </div>
+              <p style="font-size:12px;color:#5B6B72;margin:0 0 14px;">{{ booking.participants }} × {{ act.prixFmt }} · taxes incluses</p>
+
+              <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-size:12.5px;line-height:1.45;color:#33454E;margin-bottom:14px;">
+                <input type="checkbox" checked="{{ booking.consent }}" onChange="{{ toggleBookingConsent }}" style="margin-top:2px;width:16px;height:16px;accent-color:#0E7C9E;flex:0 0 auto;" />
+                <span>J’accepte la <button type="button" onClick="{{ goConfidentialite }}" style="background:none;border:none;color:#0E7C9E;text-decoration:underline;cursor:pointer;padding:0;font:inherit;">politique de confidentialité</button>.</span>
+              </label>
+
+              <sc-if value="{{ showBookingError }}" hint-placeholder-val="{{ false }}">
+                <div role="alert" style="background:rgba(255,107,61,0.1);border:1px solid rgba(255,107,61,0.35);color:#E85427;padding:10px 12px;border-radius:10px;font-size:13px;font-weight:600;margin-bottom:12px;">{{ bookingError }}</div>
+              </sc-if>
+
+              <button onClick="{{ confirmBooking }}" style="width:100%;background:#FF6B3D;color:#fff;border:none;padding:16px;border-radius:12px;font-weight:700;font-size:16px;cursor:pointer;transition:background .18s;box-shadow:0 8px 22px rgba(255,107,61,0.32);" style-hover="background:#E85427">Réserver maintenant</button>
+              <div style="display:flex;justify-content:center;gap:16px;margin-top:14px;font-size:12px;color:#5B6B72;">
+                <span>✓ Annulation gratuite 24 h</span><span>✓ Paiement sécurisé</span>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </div>
+  </sc-if>
+
+  <!-- ============ INFOS PRATIQUES ============ -->
+  <sc-if value="{{ isInfos }}" hint-placeholder-val="{{ false }}">
+  <div style="animation:fadeUp .5s ease both;">
+    <section style="background:linear-gradient(160deg,#0E5A73,#0B3A53);color:#fff;padding:clamp(44px,6vw,72px) clamp(20px,6vw,44px);">
+      <div style="max-width:900px;margin:0 auto;">
+        <span style="text-transform:uppercase;letter-spacing:.14em;font-size:12px;font-weight:700;color:#FF8A5B;">Avant de partir</span>
+        <h1 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(34px,5.5vw,58px);letter-spacing:-.03em;margin:10px 0 0;">Infos pratiques</h1>
+      </div>
+    </section>
+    <section style="padding:clamp(48px,7vw,84px) clamp(20px,6vw,44px);">
+      <div style="max-width:900px;margin:0 auto;">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;margin-bottom:44px;">
+          <div style="background:#fff;border-radius:20px;padding:24px;box-shadow:0 6px 20px rgba(7,42,61,0.06);">
+            <h2 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:20px;margin:0 0 10px;">Nous rejoindre</h2>
+            <p style="font-size:14px;line-height:1.65;color:#33454E;margin:0;">Base nautique Sirocco<br>Marina de Sidi Fredj, Alger<br>Parking gratuit sur place. Navette possible depuis le centre d’Alger sur demande.</p>
+          </div>
+          <div style="background:#fff;border-radius:20px;padding:24px;box-shadow:0 6px 20px rgba(7,42,61,0.06);">
+            <h2 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:20px;margin:0 0 10px;">Horaires</h2>
+            <p style="font-size:14px;line-height:1.65;color:#33454E;margin:0;">Tous les jours · 8h – 19h<br>Sorties selon météo et marées.<br>Accueil téléphonique 7j/7.</p>
+          </div>
+          <div style="background:#fff;border-radius:20px;padding:24px;box-shadow:0 6px 20px rgba(7,42,61,0.06);">
+            <h2 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:20px;margin:0 0 10px;">Contact</h2>
+            <p style="font-size:14px;line-height:1.65;color:#33454E;margin:0;">+213 _ __ __ __ __<br>bonjour@sirocco-aventures.dz<br>@sirocco.aventures</p>
+          </div>
+        </div>
+
+        <h2 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:clamp(24px,3.5vw,34px);letter-spacing:-.02em;margin:0 0 8px;">Bon à savoir</h2>
+        <p style="color:#5B6B72;font-size:15px;margin:0 0 20px;">Tout ce qu’il faut anticiper pour profiter à fond.</p>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <sc-for list="{{ faqList }}" as="f" hint-placeholder-count="5">
+            <div style="background:#fff;border:1px solid rgba(11,58,83,0.1);border-radius:14px;overflow:hidden;">
+              <button onClick="{{ f.onToggle }}" aria-expanded="{{ f.open }}" style="width:100%;text-align:left;background:none;border:none;cursor:pointer;padding:18px 20px;display:flex;align-items:center;justify-content:space-between;gap:14px;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:17px;color:#12242E;">
+                <span style="flex:1;">{{ f.q }}</span>
+                <span aria-hidden="true" style="{{ f.iconStyle }}">+</span>
+              </button>
+              <sc-if value="{{ f.open }}" hint-placeholder-val="{{ false }}">
+                <p style="font-size:15px;line-height:1.65;color:#33454E;margin:0;padding:0 20px 20px;">{{ f.a }}</p>
+              </sc-if>
+            </div>
+          </sc-for>
+        </div>
+
+        <div style="margin-top:44px;background:#F1E4CE;border-radius:20px;padding:clamp(24px,4vw,40px);text-align:center;">
+          <h2 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:clamp(24px,3.5vw,34px);letter-spacing:-.02em;margin:0;">Prêt à embarquer&nbsp;?</h2>
+          <p style="color:#5B6B72;font-size:16px;margin:12px 0 0;">Réservez votre première aventure en quelques clics.</p>
+          <button onClick="{{ goActivites }}" style="margin-top:22px;background:#FF6B3D;color:#fff;border:none;padding:15px 32px;border-radius:999px;font-weight:700;font-size:16px;cursor:pointer;box-shadow:0 8px 22px rgba(255,107,61,0.3);transition:background .18s,transform .18s;" style-hover="background:#E85427;transform:translateY(-2px)">Voir les activités</button>
+        </div>
+      </div>
+    </section>
+  </div>
+  </sc-if>
+
+  <!-- ============ MENTIONS ============ -->
+  <sc-if value="{{ isMentions }}" hint-placeholder-val="{{ false }}">
+  <div style="animation:fadeUp .5s ease both;">
+    <section style="padding:clamp(48px,7vw,84px) clamp(20px,6vw,44px);">
+      <div style="max-width:720px;margin:0 auto;">
+        <h1 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(32px,5vw,50px);letter-spacing:-.02em;margin:0 0 24px;">Mentions légales</h1>
+        <div style="font-size:15px;line-height:1.75;color:#33454E;">
+          <h2 style="font-family:'Bricolage Grotesque',sans-serif;font-size:22px;color:#0B3A53;margin:24px 0 8px;">Éditeur</h2>
+          <p style="margin:0;">Site de démonstration présentant Sirocco Aventures, prestataire fictif d’activités de loisirs, base nautique de Sidi Fredj, Alger. RC fictif&nbsp;: 16/00-XXXXXX · NIF fictif&nbsp;: 000000000000000.</p>
+          <h2 style="font-family:'Bricolage Grotesque',sans-serif;font-size:22px;color:#0B3A53;margin:24px 0 8px;">Directeur de la publication</h2>
+          <p style="margin:0;">Contact&nbsp;: bonjour@sirocco-aventures.dz · +213 _ __ __ __ __.</p>
+          <h2 style="font-family:'Bricolage Grotesque',sans-serif;font-size:22px;color:#0B3A53;margin:24px 0 8px;">Hébergement</h2>
+          <p style="margin:0;">Coordonnées de l’hébergeur précisées à la mise en production.</p>
+          <h2 style="font-family:'Bricolage Grotesque',sans-serif;font-size:22px;color:#0B3A53;margin:24px 0 8px;">Assurance & sécurité</h2>
+          <p style="margin:0;">Les activités sont présentées à titre démonstratif. En conditions réelles, chaque sortie serait couverte par une assurance responsabilité civile et encadrée par des moniteurs diplômés d’État.</p>
+          <h2 style="font-family:'Bricolage Grotesque',sans-serif;font-size:22px;color:#0B3A53;margin:24px 0 8px;">Conception</h2>
+          <p style="margin:0;">Site conçu et développé par Arslan DIF — <a href="https://difarslan.com" style="color:#FF6B3D;">difarslan.com</a>.</p>
+        </div>
+        <button onClick="{{ goAccueil }}" style="margin-top:30px;background:none;border:1px solid rgba(11,58,83,0.2);color:#0B3A53;padding:12px 24px;border-radius:999px;font-weight:700;font-size:14px;cursor:pointer;">← Accueil</button>
+      </div>
+    </section>
+  </div>
+  </sc-if>
+
+  <!-- ============ CONFIDENTIALITÉ ============ -->
+  <sc-if value="{{ isConfidentialite }}" hint-placeholder-val="{{ false }}">
+  <div style="animation:fadeUp .5s ease both;">
+    <section style="padding:clamp(48px,7vw,84px) clamp(20px,6vw,44px);">
+      <div style="max-width:720px;margin:0 auto;">
+        <h1 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(32px,5vw,50px);letter-spacing:-.02em;margin:0 0 24px;">Politique de confidentialité</h1>
+        <div style="font-size:15px;line-height:1.75;color:#33454E;">
+          <p style="margin:0;">Sirocco Aventures attache une grande importance à la protection de vos données personnelles.</p>
+          <h2 style="font-family:'Bricolage Grotesque',sans-serif;font-size:22px;color:#0B3A53;margin:24px 0 8px;">Données collectées</h2>
+          <p style="margin:0;">Lors d’une réservation, nous recueillons votre nom, votre téléphone, votre e-mail et les détails de la sortie choisie, dans le seul but de traiter votre demande.</p>
+          <h2 style="font-family:'Bricolage Grotesque',sans-serif;font-size:22px;color:#0B3A53;margin:24px 0 8px;">Conservation</h2>
+          <p style="margin:0;">Vos données ne sont ni vendues ni cédées. Les informations de réservation sont conservées 12 mois maximum, puis supprimées.</p>
+          <h2 style="font-family:'Bricolage Grotesque',sans-serif;font-size:22px;color:#0B3A53;margin:24px 0 8px;">Cookies</h2>
+          <p style="margin:0;">Des cookies de mesure d’audience ne sont déposés qu’après votre consentement. Vous pouvez les refuser à tout moment via le bandeau prévu à cet effet.</p>
+          <h2 style="font-family:'Bricolage Grotesque',sans-serif;font-size:22px;color:#0B3A53;margin:24px 0 8px;">Vos droits</h2>
+          <p style="margin:0;">Vous disposez d’un droit d’accès, de rectification et de suppression. Écrivez-nous à bonjour@sirocco-aventures.dz.</p>
+        </div>
+        <button onClick="{{ goAccueil }}" style="margin-top:30px;background:none;border:1px solid rgba(11,58,83,0.2);color:#0B3A53;padding:12px 24px;border-radius:999px;font-weight:700;font-size:14px;cursor:pointer;">← Accueil</button>
+      </div>
+    </section>
+  </div>
+  </sc-if>
+
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer style="background:#072A3D;color:rgba(255,255,255,0.72);padding:clamp(48px,7vw,80px) clamp(20px,6vw,44px) 28px;">
+    <div style="max-width:1120px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:36px;">
+      <div>
+        <div style="display:flex;align-items:center;gap:11px;margin-bottom:14px;"><span aria-hidden="true" style="width:26px;height:26px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#FFB27A,#FF6B3D 70%);"></span><span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:22px;color:#fff;">Sirocco</span></div>
+        <p style="font-size:14px;line-height:1.7;margin:0;max-width:26em;">Aventures nautiques & outdoor sur la côte algéroise. Encadrées, sécurisées, inoubliables.</p>
+      </div>
+      <div>
+        <h3 style="font-size:12px;text-transform:uppercase;letter-spacing:.14em;color:#FF8A5B;margin:0 0 14px;">Explorer</h3>
+        <div style="display:flex;flex-direction:column;gap:9px;align-items:flex-start;">
+          <button onClick="{{ goActivites }}" style="background:none;border:none;color:rgba(255,255,255,0.72);font-size:14px;cursor:pointer;padding:0;">Toutes les activités</button>
+          <button onClick="{{ goInfos }}" style="background:none;border:none;color:rgba(255,255,255,0.72);font-size:14px;cursor:pointer;padding:0;">Infos pratiques</button>
+        </div>
+      </div>
+      <div>
+        <h3 style="font-size:12px;text-transform:uppercase;letter-spacing:.14em;color:#FF8A5B;margin:0 0 14px;">Contact</h3>
+        <p style="font-size:14px;line-height:1.7;margin:0;">Marina de Sidi Fredj, Alger<br>+213 _ __ __ __ __<br>bonjour@sirocco-aventures.dz</p>
+      </div>
+      <div>
+        <h3 style="font-size:12px;text-transform:uppercase;letter-spacing:.14em;color:#FF8A5B;margin:0 0 14px;">Horaires</h3>
+        <p style="font-size:14px;line-height:1.7;margin:0;">Tous les jours · 8h – 19h<br><span style="color:rgba(255,255,255,0.5);">Sorties selon météo</span></p>
+      </div>
+    </div>
+    <div style="max-width:1120px;margin:36px auto 0;padding-top:22px;border-top:1px solid rgba(255,255,255,0.14);display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px;align-items:center;font-size:13px;">
+      <div style="display:flex;flex-wrap:wrap;gap:18px;align-items:center;">
+        <span style="color:rgba(255,255,255,0.5);">© 2026 Sirocco Aventures</span>
+        <button onClick="{{ goMentions }}" style="background:none;border:none;color:rgba(255,255,255,0.72);font-size:13px;cursor:pointer;padding:0;text-decoration:underline;">Mentions légales</button>
+        <button onClick="{{ goConfidentialite }}" style="background:none;border:none;color:rgba(255,255,255,0.72);font-size:13px;cursor:pointer;padding:0;text-decoration:underline;">Confidentialité</button>
+      </div>
+      <div style="color:rgba(255,255,255,0.5);">Réalisé par <a href="https://difarslan.com" style="color:#FF8A5B;text-decoration:none;font-weight:700;">Arslan DIF — difarslan.com</a></div>
+    </div>
+  </footer>
+
+  <!-- ============ MOBILE MENU ============ -->
+  <sc-if value="{{ mobileOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;inset:0;z-index:150;background:linear-gradient(160deg,#0E5A73,#072A3D);color:#fff;display:flex;flex-direction:column;padding:22px clamp(20px,6vw,40px);animation:pop .25s ease both;">
+      <div style="display:flex;align-items:center;justify-content:space-between;height:52px;">
+        <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:24px;">Sirocco</span>
+        <button onClick="{{ toggleMobile }}" aria-label="Fermer le menu" style="background:none;border:none;color:#fff;font-size:32px;cursor:pointer;line-height:1;padding:6px;">×</button>
+      </div>
+      <nav aria-label="Navigation mobile" style="display:flex;flex-direction:column;gap:4px;margin-top:28px;">
+        <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="3">
+          <button onClick="{{ item.onClick }}" style="background:none;border:none;text-align:left;color:#fff;font-family:'Bricolage Grotesque',sans-serif;font-size:32px;font-weight:700;padding:12px 0;cursor:pointer;border-bottom:1px solid rgba(255,255,255,0.12);">{{ item.label }}</button>
+        </sc-for>
+      </nav>
+      <button onClick="{{ goActivites }}" style="margin-top:auto;background:#FF6B3D;color:#fff;border:none;padding:16px;border-radius:999px;font-weight:700;font-size:16px;cursor:pointer;">Réserver une sortie</button>
+    </div>
+  </sc-if>
+
+  <!-- ============ CONFIRMATION MODALE ============ -->
+  <sc-if value="{{ showConfirm }}" hint-placeholder-val="{{ false }}">
+    <div role="dialog" aria-modal="true" aria-label="Réservation confirmée" style="position:fixed;inset:0;z-index:200;background:rgba(7,42,61,0.6);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:20px;">
+      <div style="background:#fff;border-radius:22px;max-width:440px;width:100%;padding:clamp(26px,5vw,38px);text-align:center;animation:pop .3s ease both;box-shadow:0 30px 70px rgba(7,42,61,0.4);">
+        <div aria-hidden="true" style="width:66px;height:66px;border-radius:50%;background:#2E9B6A;color:#fff;display:flex;align-items:center;justify-content:center;font-size:34px;margin:0 auto 18px;">✓</div>
+        <h2 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:28px;letter-spacing:-.02em;margin:0;">C’est réservé&nbsp;!</h2>
+        <p style="font-size:15px;color:#5B6B72;margin:8px 0 0;">Votre aventure vous attend. Un e-mail de confirmation vous sera envoyé.</p>
+        <div style="background:#F1E4CE;border-radius:16px;padding:20px;margin:22px 0;text-align:left;">
+          <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid rgba(11,58,83,0.1);"><span style="color:#5B6B72;font-size:14px;">Référence</span><span style="font-weight:800;color:#0B3A53;">{{ confirmRef }}</span></div>
+          <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid rgba(11,58,83,0.1);"><span style="color:#5B6B72;font-size:14px;">Activité</span><span style="font-weight:700;text-align:right;">{{ act.nom }}</span></div>
+          <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid rgba(11,58,83,0.1);"><span style="color:#5B6B72;font-size:14px;">Date & créneau</span><span style="font-weight:700;text-transform:capitalize;text-align:right;">{{ bookingDateLabel }} · {{ booking.creneau }}</span></div>
+          <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid rgba(11,58,83,0.1);"><span style="color:#5B6B72;font-size:14px;">Participants</span><span style="font-weight:700;">{{ booking.participants }}</span></div>
+          <div style="display:flex;justify-content:space-between;padding:7px 0;"><span style="color:#5B6B72;font-size:14px;">Total</span><span style="font-weight:800;color:#FF6B3D;">{{ totalFmt }}</span></div>
+        </div>
+        <p style="font-size:12.5px;color:#5B6B72;margin:0 0 18px;">Annulation gratuite jusqu’à 24 h avant le départ.</p>
+        <div style="display:flex;gap:10px;">
+          <button onClick="{{ closeConfirm }}" style="flex:1;background:none;border:1px solid rgba(11,58,83,0.2);color:#0B3A53;padding:13px;border-radius:12px;font-weight:700;font-size:14px;cursor:pointer;">Fermer</button>
+          <button onClick="{{ goActivitesFromConfirm }}" style="flex:1;background:#0B3A53;color:#fff;border:none;padding:13px;border-radius:12px;font-weight:700;font-size:14px;cursor:pointer;">Autres activités</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- ============ COOKIE BANNER ============ -->
+  <sc-if value="{{ showCookie }}" hint-placeholder-val="{{ false }}">
+    <div role="dialog" aria-label="Consentement aux cookies" style="position:fixed;left:0;right:0;bottom:0;z-index:160;padding:clamp(14px,3vw,20px);display:flex;justify-content:center;">
+      <div style="max-width:900px;width:100%;background:#fff;border:1px solid rgba(11,58,83,0.12);border-radius:18px;box-shadow:0 18px 50px rgba(7,42,61,0.25);padding:20px 22px;display:flex;flex-wrap:wrap;align-items:center;gap:16px;justify-content:space-between;">
+        <p style="margin:0;font-size:14px;line-height:1.6;color:#33454E;flex:1 1 320px;">Nous utilisons des cookies pour mesurer l’audience et améliorer votre expérience. <button onClick="{{ goConfidentialite }}" style="background:none;border:none;color:#0E7C9E;text-decoration:underline;cursor:pointer;padding:0;font:inherit;">En savoir plus</button></p>
+        <div style="display:flex;gap:10px;flex:0 0 auto;">
+          <button onClick="{{ refuseCookies }}" style="background:none;color:#0B3A53;border:1px solid rgba(11,58,83,0.22);padding:12px 22px;border-radius:999px;font-weight:700;font-size:14px;cursor:pointer;">Refuser</button>
+          <button onClick="{{ acceptCookies }}" style="background:#0E7C9E;color:#fff;border:none;padding:12px 22px;border-radius:999px;font-weight:700;font-size:14px;cursor:pointer;transition:background .18s;" style-hover="background:#0B3A53">Accepter</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;$preview&quot;: { &quot;width&quot;: &quot;100%&quot;, &quot;height&quot;: 760 },
+  &quot;forceCookie&quot;: { &quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: false, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Démo&quot; }
+}">
+class Component extends DCLogic {
+  state = {
+    page: 'accueil',
+    mobileOpen: false,
+    isMobile: false,
+    cookie: 'pending',
+    filter: 'toutes',
+    finder: { cat: 'toutes', date: '' },
+    selectedId: 1,
+    booking: { date: '', creneau: '', participants: 2, consent: false },
+    showConfirm: false,
+    confirmRef: '',
+    bookingError: '',
+    openFaq: 0,
+    catOpen: false,
+    dateOpen: false,
+    calMonth: ''
+  };
+
+  ACTIVITIES = [
+    { id: 1, cat: 'mer', catLabel: 'Mer', nom: 'Kayak de mer', duree: '2 h', niveau: 'Débutant', prix: 3500, note: 4.9, nbAvis: 128, groupe: 'max 10', langue: 'FR / AR', lieu: 'Sidi Fredj',
+      resume: 'Pagayez le long des criques turquoise de Sidi Fredj.',
+      description: 'Embarquez pour une balade en kayak biplace le long du littoral de Sidi Fredj. Entre falaises dorées et eaux cristallines, votre guide vous fait découvrir des criques accessibles uniquement par la mer.',
+      description2: 'Aucune expérience requise : après un court briefing, vous êtes prêt à glisser sur l’eau. Une pause baignade est prévue dans une calanque abritée.',
+      inclus: ['Kayak biplace & pagaie', 'Gilet de sauvetage', 'Guide diplômé', 'Bidon étanche'], prevoir: ['Maillot de bain', 'Serviette', 'Crème solaire', 'Chaussures d’eau'],
+      rdv: 'Ponton B, port de plaisance de Sidi Fredj', creneaux: ['09:00', '11:30', '14:00', '16:30'] },
+    { id: 2, cat: 'mer', catLabel: 'Mer', nom: 'Jet-ski découverte', duree: '30 min', niveau: 'Tous niveaux', prix: 6000, note: 4.8, nbAvis: 94, groupe: 'max 2 / jet', langue: 'FR / AR', lieu: 'Zeralda',
+      resume: 'Sensations garanties sur la baie de Zeralda.',
+      description: 'Prenez les commandes d’un jet-ski dernier cri et filez sur les eaux de la baie de Zeralda. Un moniteur vous accompagne en radio tout au long de la session.',
+      description2: 'Idéal pour les amateurs de vitesse : accélérations, virages serrés et vue imprenable sur la côte. Permis non requis.',
+      inclus: ['Jet-ski récent', 'Briefing sécurité', 'Combinaison néoprène', 'Encadrement radio'], prevoir: ['Maillot de bain', 'Serviette', 'Pièce d’identité'],
+      rdv: 'Base nautique de Zeralda plage', creneaux: ['10:00', '11:00', '15:00', '16:00', '17:00'] },
+    { id: 3, cat: 'mer', catLabel: 'Mer', nom: 'Paddle au lever du soleil', duree: '1 h 30', niveau: 'Débutant', prix: 2800, note: 4.9, nbAvis: 76, groupe: 'max 8', langue: 'FR / AR', lieu: 'Tipaza',
+      resume: 'Glissez sur une mer d’huile aux premières lueurs.',
+      description: 'Rejoignez-nous à l’aube pour une session de stand-up paddle sur les eaux calmes de Tipaza. Le lever de soleil sur les ruines romaines est un spectacle inoubliable.',
+      description2: 'La séance se termine par un café et une viennoiserie sur la plage. Parfait pour bien commencer la journée.',
+      inclus: ['Planche & pagaie', 'Leash de sécurité', 'Café & viennoiserie', 'Guide'], prevoir: ['Tenue de sport', 'Serviette', 'Coupe-vent léger'],
+      rdv: 'Plage de Tipaza, devant le café Le Dauphin', creneaux: ['06:00', '06:30', '07:00'] },
+    { id: 4, cat: 'mer', catLabel: 'Mer', nom: 'Baptême de plongée', duree: '3 h', niveau: 'Débutant', prix: 8500, note: 5.0, nbAvis: 152, groupe: 'max 4', langue: 'FR / AR / EN', lieu: 'Chenoua',
+      resume: 'Découvrez les fonds du Chenoua avec un moniteur.',
+      description: 'Vivez votre première immersion en toute sécurité, encadré individuellement par un moniteur breveté. Les fonds du Chenoua abritent mérous, poulpes et prairies de posidonies.',
+      description2: 'Deux immersions à faible profondeur sont prévues, précédées d’un briefing complet en piscine naturelle. Les photos sous-marines vous sont offertes.',
+      inclus: ['Équipement complet', 'Moniteur breveté', '2 immersions encadrées', 'Photos sous-marines'], prevoir: ['Maillot de bain', 'Serviette', 'Certificat médical conseillé'],
+      rdv: 'Club de plongée du Chenoua, Aïn Tagourait', creneaux: ['09:00', '13:30'] },
+    { id: 5, cat: 'terre', catLabel: 'Terre', nom: 'Randonnée côtière du Chenoua', duree: '4 h', niveau: 'Intermédiaire', prix: 2500, note: 4.7, nbAvis: 63, groupe: 'max 12', langue: 'FR / AR', lieu: 'Chenoua',
+      resume: 'Grimpez le mont Chenoua face à la Méditerranée.',
+      description: 'Une randonnée guidée sur les sentiers du parc national du Chenoua, entre maquis parfumé et panoramas vertigineux sur la baie de Tipaza.',
+      description2: 'Le guide de montagne partage l’histoire et la faune du massif. Une pause déjeuner est prévue au sommet, face à la mer.',
+      inclus: ['Guide de montagne', 'En-cas & eau', 'Bâtons de marche', 'Trousse de secours'], prevoir: ['Chaussures de rando', 'Chapeau', '2 L d’eau', 'Coupe-vent'],
+      rdv: 'Parking du parc national, Chenoua', creneaux: ['08:00', '09:00'] },
+    { id: 6, cat: 'terre', catLabel: 'Terre', nom: 'VTT dans les collines', duree: '3 h', niveau: 'Tous niveaux', prix: 3200, note: 4.6, nbAvis: 48, groupe: 'max 8', langue: 'FR / AR', lieu: 'Tipaza',
+      resume: 'Sillonnez oliveraies et pistes avec vue mer.',
+      description: 'Enfourchez un VTT tout-suspendu et partez à l’assaut des collines de Tipaza. Un itinéraire varié entre oliveraies, pistes et points de vue sur la Méditerranée.',
+      description2: 'Le parcours s’adapte au niveau du groupe. Un ravitaillement est prévu à mi-chemin, dans une ferme locale.',
+      inclus: ['VTT tout-suspendu', 'Casque', 'Guide', 'Ravitaillement'], prevoir: ['Tenue de sport', 'Gants (option)', 'Lunettes de soleil'],
+      rdv: 'Loueur Vélo Tipaza, entrée du site romain', creneaux: ['09:00', '14:30'] },
+    { id: 7, cat: 'air', catLabel: 'Air', nom: 'Parapente biplace', duree: '20 min de vol', niveau: 'Tous niveaux', prix: 9500, note: 4.9, nbAvis: 201, groupe: 'max 1 / moniteur', langue: 'FR / AR', lieu: 'Chréa',
+      resume: 'Envolez-vous au-dessus de la baie, en tandem.',
+      description: 'Décollez en tandem depuis les hauteurs de Chréa et survolez forêts de cèdres et vallées, avec la Méditerranée en toile de fond.',
+      description2: 'Aucune expérience nécessaire : votre moniteur breveté pilote la voile. La vidéo de votre vol vous est remise en fin de session.',
+      inclus: ['Vol en tandem', 'Moniteur breveté', 'Vidéo du vol', 'Équipement complet'], prevoir: ['Chaussures fermées', 'Vêtement coupe-vent', 'Estomac léger conseillé'],
+      rdv: 'Aire d’envol de Chréa (navette depuis Blida)', creneaux: ['10:00', '11:30', '15:00'] },
+    { id: 8, cat: 'bien-etre', catLabel: 'Bien-être', nom: 'Yoga face à la mer', duree: '1 h 15', niveau: 'Tous niveaux', prix: 1800, note: 4.9, nbAvis: 89, groupe: 'max 15', langue: 'FR / AR', lieu: 'Sidi Fredj',
+      resume: 'Respirez au rythme des vagues au coucher du soleil.',
+      description: 'Une séance de hatha yoga en plein air, sur la terrasse panoramique de la marina de Sidi Fredj, au moment magique du coucher de soleil.',
+      description2: 'Accessible à tous, la séance mêle postures douces, respiration et relaxation guidée. Une tisane bio vous est offerte pour prolonger la détente.',
+      inclus: ['Tapis & accessoires', 'Professeure certifiée', 'Tisane bio offerte'], prevoir: ['Tenue confortable', 'Serviette', 'Bouteille d’eau'],
+      rdv: 'Terrasse panoramique, marina de Sidi Fredj', creneaux: ['18:00', '18:30'] }
+  ];
+
+  PHOTO = {
+    1: 'photos/act1-kayak.png', 2: 'photos/act2-jetski.png', 3: 'photos/act3-paddle.png', 4: 'photos/act4-plongee.png',
+    5: 'photos/act5-rando.png', 6: 'photos/act6-vtt.png', 7: 'photos/act7-parapente.png', 8: 'photos/act8-yoga.png'
+  };
+
+  GRAD = {
+    1: 'linear-gradient(150deg,#1AA0B8,#0E5A73)', 2: 'linear-gradient(150deg,#0E7C9E,#0B3A53)', 3: 'linear-gradient(150deg,#5FC0CE,#1C7C93)', 4: 'linear-gradient(150deg,#0B3A53,#04222F)',
+    5: 'linear-gradient(150deg,#6FA85C,#3E6B4A)', 6: 'linear-gradient(150deg,#C8A24B,#7A6A2E)', 7: 'linear-gradient(150deg,#F4B24C,#E8792D)', 8: 'linear-gradient(150deg,#6FB9C9,#2A6E86)'
+  };
+
+  REVIEWS = [
+    { actId: 1, nom: 'Yasmine A.', note: 5, texte: 'Guide au top, criques sublimes. On a même vu des dauphins au loin !', date: 'juin 2026' },
+    { actId: 1, nom: 'Mehdi C.', note: 5, texte: 'Parfait pour débuter, très rassurant. Les enfants ont adoré.', date: 'mai 2026' },
+    { actId: 2, nom: 'Nadir B.', note: 5, texte: 'Trente minutes d’adrénaline pure, encadrement sérieux. Je reviens.', date: 'juin 2026' },
+    { actId: 2, nom: 'Lina H.', note: 4, texte: 'Super moment, un peu court à mon goût mais sensations garanties.', date: 'avril 2026' },
+    { actId: 3, nom: 'Sofia M.', note: 5, texte: 'Le lever de soleil sur Tipaza… magique. Le café après était un plus.', date: 'juin 2026' },
+    { actId: 4, nom: 'Karim D.', note: 5, texte: 'Premier baptême inoubliable, moniteur patient et pédagogue. Merci !', date: 'juin 2026' },
+    { actId: 4, nom: 'Amel R.', note: 5, texte: 'Les fonds du Chenoua sont magnifiques. Photos offertes en bonus.', date: 'mai 2026' },
+    { actId: 5, nom: 'Riad T.', note: 5, texte: 'Randonnée exigeante mais quel panorama au sommet. Guide passionnant.', date: 'mai 2026' },
+    { actId: 6, nom: 'Farida L.', note: 4, texte: 'Beaux paysages, vélos en bon état. Le ravitaillement à la ferme, top.', date: 'avril 2026' },
+    { actId: 7, nom: 'Walid S.', note: 5, texte: 'Le vol de ma vie ! Sensation de liberté totale, vidéo en souvenir.', date: 'juin 2026' },
+    { actId: 7, nom: 'Nour E.', note: 5, texte: 'Décollage impressionnant puis un calme incroyable. À faire absolument.', date: 'juin 2026' },
+    { actId: 8, nom: 'Imane B.', note: 5, texte: 'Séance apaisante face à la mer, professeure douce. On repart zen.', date: 'mai 2026' }
+  ];
+
+  ATOUTS = [
+    { mark: '✓', titre: 'Guides certifiés', texte: 'Moniteurs diplômés d’État, formés aux premiers secours.' },
+    { mark: '↺', titre: 'Annulation gratuite', texte: 'Remboursement intégral jusqu’à 24 h avant le départ.' },
+    { mark: '⛨', titre: 'Petits groupes', texte: 'Des sorties à taille humaine pour un vrai accompagnement.' },
+    { mark: '≈', titre: 'Matériel fourni', texte: 'Équipement récent, entretenu et adapté à chaque niveau.' }
+  ];
+
+  FAQ = [
+    { q: 'Faut-il savoir nager ?', a: 'Pour les activités nautiques, une aisance dans l’eau est recommandée. Un gilet de sauvetage est systématiquement fourni. Le yoga et les activités terrestres ne nécessitent pas de savoir nager.' },
+    { q: 'Que se passe-t-il en cas de mauvaise météo ?', a: 'La sécurité prime : en cas de conditions défavorables, la sortie est reportée ou intégralement remboursée. Nous vous prévenons au plus tard la veille.' },
+    { q: 'Les activités sont-elles adaptées aux enfants ?', a: 'La plupart de nos sorties sont accessibles dès 8 ans, accompagnés d’un adulte. Le parapente et la plongée ont un âge minimum spécifique, précisé sur chaque fiche.' },
+    { q: 'Comment se déroule le paiement ?', a: 'Vous réservez en ligne et réglez sur place, en espèces ou par carte. Aucun acompte n’est exigé pour bloquer votre créneau.' },
+    { q: 'Puis-je privatiser une sortie ?', a: 'Oui, la plupart des activités peuvent être privatisées pour un groupe, un anniversaire ou un team-building. Contactez-nous pour un devis sur mesure.' }
+  ];
+
+  componentDidMount() {
+    const today = new Date().toISOString().slice(0, 10);
+    let cookie = 'pending';
+    if (!this.props.forceCookie) { try { cookie = localStorage.getItem('sirocco_cookie') || 'pending'; } catch (e) {} }
+    this._onResize = () => this.setState({ isMobile: window.innerWidth < 900 });
+    window.addEventListener('resize', this._onResize);
+    this.setState(s => ({ cookie, isMobile: window.innerWidth < 900, finder: { ...s.finder, date: today }, booking: { ...s.booking, date: today }, calMonth: today.slice(0, 7) + '-01' }));
+  }
+  componentWillUnmount() { if (this._onResize) window.removeEventListener('resize', this._onResize); }
+
+  go(page) { this.setState({ page, mobileOpen: false }); try { window.scrollTo({ top: 0 }); } catch (e) {} }
+  toggleMobile() { this.setState(s => ({ mobileOpen: !s.mobileOpen })); }
+  acceptCookies() { try { localStorage.setItem('sirocco_cookie', 'accepted'); } catch (e) {} this.setState({ cookie: 'accepted' }); }
+  refuseCookies() { try { localStorage.setItem('sirocco_cookie', 'refused'); } catch (e) {} this.setState({ cookie: 'refused' }); }
+
+  setFilter(f) { this.setState({ filter: f }); }
+  onFinderCat(e) { const v = e.target.value; this.setState(s => ({ finder: { ...s.finder, cat: v } })); }
+  onFinderDate(e) { const v = e.target.value; this.setState(s => ({ finder: { ...s.finder, date: v } })); }
+  submitFinder(e) {
+    if (e && e.preventDefault) e.preventDefault();
+    this.setState(s => ({ filter: s.finder.cat, page: 'activites', mobileOpen: false }));
+    try { window.scrollTo({ top: 0 }); } catch (er) {}
+  }
+
+  toggleCat() { this.setState(s => ({ catOpen: !s.catOpen, dateOpen: false })); }
+  selectFinderCat(k) { this.setState(s => ({ finder: { ...s.finder, cat: k }, catOpen: false })); }
+  toggleDate() { this.setState(s => { const cm = s.finder.date ? s.finder.date.slice(0, 7) + '-01' : (new Date().toISOString().slice(0, 7) + '-01'); return { dateOpen: !s.dateOpen, catOpen: false, calMonth: cm }; }); }
+  closeFinderPanels() { this.setState({ catOpen: false, dateOpen: false }); }
+  calShift(delta) { this.setState(s => { const p = (s.calMonth || new Date().toISOString().slice(0, 7) + '-01').split('-').map(Number); const d = new Date(p[0], p[1] - 1 + delta, 1); return { calMonth: d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-01' }; }); }
+  pickDate(iso) { this.setState(s => ({ finder: { ...s.finder, date: iso }, dateOpen: false })); }
+  clearDate() { this.setState(s => ({ finder: { ...s.finder, date: '' } })); }
+  setToday() { const t = new Date().toISOString().slice(0, 10); this.setState(s => ({ finder: { ...s.finder, date: t }, calMonth: t.slice(0, 7) + '-01', dateOpen: false })); }
+
+  openFiche(id) {
+    const act = this.ACTIVITIES.find(a => a.id === id) || this.ACTIVITIES[0];
+    const today = new Date().toISOString().slice(0, 10);
+    this.setState(s => ({
+      selectedId: id, page: 'fiche', mobileOpen: false,
+      booking: { date: s.finder.date || today, creneau: act.creneaux[0], participants: 2, consent: false },
+      showConfirm: false, bookingError: ''
+    }));
+    try { window.scrollTo({ top: 0 }); } catch (e) {}
+  }
+
+  onBookingDate(e) { const v = e.target.value; this.setState(s => ({ booking: { ...s.booking, date: v } })); }
+  pickCreneau(t) { this.setState(s => ({ booking: { ...s.booking, creneau: t }, bookingError: '' })); }
+  incParticipants() { this.setState(s => ({ booking: { ...s.booking, participants: Math.min(12, s.booking.participants + 1) } })); }
+  decParticipants() { this.setState(s => ({ booking: { ...s.booking, participants: Math.max(1, s.booking.participants - 1) } })); }
+  toggleBookingConsent(e) { const v = e.target.checked; this.setState(s => ({ booking: { ...s.booking, consent: v } })); }
+  confirmBooking() {
+    const b = this.state.booking;
+    if (!b.date || !b.creneau) { this.setState({ bookingError: 'Choisissez une date et un créneau.' }); return; }
+    if (!b.consent) { this.setState({ bookingError: 'Merci d’accepter la politique de confidentialité.' }); return; }
+    const ref = 'SIR-' + (1000 + Math.floor(Math.random() * 9000));
+    this.setState({ confirmRef: ref, showConfirm: true, bookingError: '' });
+  }
+  closeConfirm() { this.setState({ showConfirm: false }); }
+
+  toggleFaq(i) { this.setState(s => ({ openFaq: s.openFaq === i ? -1 : i })); }
+
+  fmt(n) { return n.toLocaleString('fr-FR') + ' DA'; }
+
+  renderVals() {
+    const S = this.state;
+    const catLabels = { mer: 'Mer', terre: 'Terre', air: 'Air', 'bien-etre': 'Bien-être' };
+
+    const decorate = (a) => ({
+      ...a, prixFmt: this.fmt(a.prix), noteFmt: String(a.note).replace('.', ','),
+      gradient: this.GRAD[a.id], imgAlt: a.nom + ' — ' + a.lieu, slotCover: 'act-' + a.id + '-cover', coverSrc: this.PHOTO[a.id] || '', onOpen: () => this.openFiche(a.id)
+    });
+    const activitiesAll = this.ACTIVITIES.map(decorate);
+    const featured = activitiesAll.slice(0, 6);
+    const activitiesFiltered = S.filter === 'toutes' ? activitiesAll : activitiesAll.filter(a => a.cat === S.filter);
+
+    // nav
+    const navDefs = [['accueil', 'Accueil'], ['activites', 'Activités'], ['infos', 'Infos pratiques']];
+    const navItems = navDefs.map(([key, label]) => {
+      const active = S.page === key;
+      return {
+        key, label, ariaCurrent: active ? 'page' : undefined, onClick: () => this.go(key),
+        style: { background: 'none', border: 'none', cursor: 'pointer', fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: '15px', fontWeight: active ? 700 : 500, color: active ? '#0B3A53' : '#5B6B72', padding: '9px 14px', borderRadius: '999px', transition: 'color .15s' }
+      };
+    });
+
+    // category cards
+    const catKeys = ['mer', 'terre', 'air', 'bien-etre'];
+    const categoryCards = catKeys.map(k => ({
+      key: k, label: catLabels[k], count: this.ACTIVITIES.filter(a => a.cat === k).length,
+      gradient: k === 'mer' ? 'linear-gradient(150deg,#0E7C9E,#0B3A53)' : k === 'terre' ? 'linear-gradient(150deg,#6FA85C,#3E6B4A)' : k === 'air' ? 'linear-gradient(150deg,#F4B24C,#E8792D)' : 'linear-gradient(150deg,#6FB9C9,#2A6E86)',
+      onClick: () => { this.setFilter(k); this.go('activites'); }
+    }));
+
+    // filter chips
+    const chipDefs = [['toutes', 'Toutes'], ['mer', 'Mer'], ['terre', 'Terre'], ['air', 'Air'], ['bien-etre', 'Bien-être']];
+    const filterChips = chipDefs.map(([key, label]) => {
+      const active = S.filter === key;
+      return {
+        key, label, active, onClick: () => this.setFilter(key),
+        style: { border: active ? '1px solid #FF6B3D' : '1px solid rgba(11,58,83,0.18)', background: active ? '#FF6B3D' : '#fff', color: active ? '#fff' : '#0B3A53', fontWeight: 700, fontSize: '14px', padding: '10px 20px', borderRadius: '999px', cursor: 'pointer', transition: 'all .16s', fontFamily: "'Plus Jakarta Sans', sans-serif" }
+      };
+    });
+
+    // reviews home (varied)
+    const starF = (n) => '★★★★★'.slice(0, n);
+    const actNomById = {};
+    activitiesAll.forEach(a => { actNomById[a.id] = a.nom; });
+    const reviewsHome = [this.REVIEWS[9], this.REVIEWS[5], this.REVIEWS[0]].map(r => ({ ...r, starsF: starF(r.note), actNom: actNomById[r.actId] }));
+
+    // current activity (fiche)
+    const act = decorate(this.ACTIVITIES.find(a => a.id === S.selectedId) || this.ACTIVITIES[0]);
+    const galCaps = ['vue d’ensemble', 'en action', 'le matériel', 'le panorama'];
+    const galG = [act.gradient, 'linear-gradient(150deg,#5FC0CE,#1C7C93)', 'linear-gradient(150deg,#FF8A5B,#E85427)', 'linear-gradient(150deg,#0B3A53,#04222F)'];
+    act.gallery = galCaps.map((cap, i) => ({ cap, gradient: galG[i], id: i === 0 ? act.slotCover : 'act-' + act.id + '-g' + i, src: i === 0 ? act.coverSrc : '' }));
+    const quickFacts = [
+      { label: 'Durée', value: act.duree }, { label: 'Niveau', value: act.niveau },
+      { label: 'Groupe', value: act.groupe }, { label: 'Langues', value: act.langue }
+    ];
+    const reviewsFor = this.REVIEWS.filter(r => r.actId === act.id).map(r => ({ ...r, starsF: starF(r.note) }));
+
+    // booking
+    const creneauBase = { fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 700, fontSize: '14px', padding: '11px 0', borderRadius: '10px', textAlign: 'center', cursor: 'pointer', transition: 'all .16s' };
+    const creneauOptions = act.creneaux.map(t => {
+      const active = S.booking.creneau === t;
+      return { time: t, active, onSelect: () => this.pickCreneau(t), style: active ? { ...creneauBase, background: '#0B3A53', color: '#fff', border: '1px solid #0B3A53' } : { ...creneauBase, background: '#fff', color: '#0B3A53', border: '1px solid rgba(11,58,83,0.18)' } };
+    });
+    const total = act.prix * S.booking.participants;
+    let bookingDateLabel = '';
+    try { if (S.booking.date) bookingDateLabel = new Intl.DateTimeFormat('fr-FR', { weekday: 'short', day: 'numeric', month: 'short' }).format(new Date(S.booking.date + 'T12:00:00')); } catch (e) {}
+
+    const ficheGridStyle = S.isMobile ? { display: 'block' } : { display: 'grid', gridTemplateColumns: 'minmax(0,1fr) 372px', gap: '44px', alignItems: 'start' };
+    const asideStyle = S.isMobile ? { marginTop: '34px' } : { position: 'sticky', top: '90px' };
+
+    // FAQ
+    const faqList = this.FAQ.map((f, i) => {
+      const open = S.openFaq === i;
+      return { q: f.q, a: f.a, open, onToggle: () => this.toggleFaq(i), iconStyle: { flex: '0 0 auto', width: '30px', height: '30px', borderRadius: '50%', background: open ? '#FF6B3D' : 'rgba(11,58,83,0.08)', color: open ? '#fff' : '#0B3A53', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '20px', fontWeight: 700, transform: open ? 'rotate(45deg)' : 'none', transition: 'all .2s', lineHeight: 1 } };
+    });
+
+    const todayIso = new Date().toISOString().slice(0, 10);
+
+    // ── Finder : sélecteur d'univers (avec vignettes) ──
+    const catThumb = { mer: this.PHOTO[1], terre: this.PHOTO[6], air: this.PHOTO[7], 'bien-etre': this.PHOTO[8] };
+    const finderOptions = ['toutes', 'mer', 'terre', 'air', 'bien-etre'].map((k) => {
+      const count = k === 'toutes' ? this.ACTIVITIES.length : this.ACTIVITIES.filter(a => a.cat === k).length;
+      const active = S.finder.cat === k;
+      return {
+        key: k, label: catLabels[k] || 'Toutes les aventures', count, active,
+        hasThumb: !!catThumb[k], noThumb: !catThumb[k], thumb: catThumb[k] || '',
+        onSelect: () => this.selectFinderCat(k),
+        style: { display: 'flex', alignItems: 'center', gap: '12px', width: '100%', textAlign: 'left', border: 'none', background: active ? 'rgba(255,107,61,0.10)' : 'transparent', cursor: 'pointer', padding: '8px 10px', borderRadius: '12px', transition: 'background .14s' }
+      };
+    });
+    const selectedCatLabel = catLabels[S.finder.cat] || 'Toutes les aventures';
+    let selectedDateFmt = 'Choisir une date';
+    try { if (S.finder.date) selectedDateFmt = new Intl.DateTimeFormat('fr-FR', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' }).format(new Date(S.finder.date + 'T12:00:00')); } catch (e) {}
+
+    // ── Finder : calendrier ──
+    const cm = S.calMonth || (todayIso.slice(0, 7) + '-01');
+    const cy = parseInt(cm.slice(0, 4), 10), cmo = parseInt(cm.slice(5, 7), 10);
+    const pad2 = (n) => (n < 10 ? '0' : '') + n;
+    const mkIso = (y, m, d) => y + '-' + pad2(m) + '-' + pad2(d);
+    const firstDow = (new Date(cy, cmo - 1, 1).getDay() + 6) % 7;
+    const dim = new Date(cy, cmo, 0).getDate();
+    const prevDim = new Date(cy, cmo - 1, 0).getDate();
+    const cells = [];
+    for (let i = 0; i < firstDow; i++) { const d = prevDim - firstDow + 1 + i; const y = cmo - 1 < 1 ? cy - 1 : cy; const mo = cmo - 1 < 1 ? 12 : cmo - 1; cells.push({ d, iso: mkIso(y, mo, d), cur: false }); }
+    for (let d = 1; d <= dim; d++) cells.push({ d, iso: mkIso(cy, cmo, d), cur: true });
+    let ni = 1; while (cells.length < 42) { const y = cmo + 1 > 12 ? cy + 1 : cy; const mo = cmo + 1 > 12 ? 1 : cmo + 1; cells.push({ d: ni, iso: mkIso(y, mo, ni), cur: false }); ni++; }
+    const dayBase = { width: '100%', height: '38px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '10px', fontSize: '14px', fontWeight: 600, border: '1px solid transparent', background: 'transparent', fontFamily: "'Plus Jakarta Sans', sans-serif" };
+    const calCells = cells.map((c) => {
+      const isSelected = c.iso === S.finder.date;
+      const isToday = c.iso === todayIso;
+      const disabled = c.iso < todayIso;
+      let style, onClick;
+      if (disabled) { style = { ...dayBase, color: '#C3CDD2', cursor: 'not-allowed' }; onClick = () => {}; }
+      else if (isSelected) { style = { ...dayBase, background: '#FF6B3D', color: '#fff', cursor: 'pointer' }; onClick = () => this.pickDate(c.iso); }
+      else { style = { ...dayBase, color: c.cur ? '#12242E' : '#AEB9BF', cursor: 'pointer', borderColor: isToday ? '#0E7C9E' : 'transparent' }; onClick = () => this.pickDate(c.iso); }
+      return { d: c.d, style, onClick };
+    });
+    const calWeeks = [];
+    for (let i = 0; i < calCells.length; i += 7) calWeeks.push({ days: calCells.slice(i, i + 7) });
+    let calMonthLabel = '';
+    try { calMonthLabel = new Intl.DateTimeFormat('fr-FR', { month: 'long', year: 'numeric' }).format(new Date(cy, cmo - 1, 1)); } catch (e) {}
+    const ty = new Date().getFullYear(), tmo = new Date().getMonth() + 1;
+    const calCanPrev = cy > ty || (cy === ty && cmo > tmo);
+
+    return {
+      // layout
+      navItems, isDesktop: !S.isMobile, isMobile: S.isMobile, mobileOpen: S.mobileOpen, toggleMobile: () => this.toggleMobile(),
+      goAccueil: () => this.go('accueil'), goActivites: () => this.go('activites'), goInfos: () => this.go('infos'),
+      goMentions: () => this.go('mentions'), goConfidentialite: () => this.go('confidentialite'),
+      // pages
+      isAccueil: S.page === 'accueil', isActivites: S.page === 'activites', isFiche: S.page === 'fiche', isInfos: S.page === 'infos',
+      isMentions: S.page === 'mentions', isConfidentialite: S.page === 'confidentialite',
+      // home
+      finder: S.finder, submitFinder: (e) => this.submitFinder(e),
+      catOpen: S.catOpen, dateOpen: S.dateOpen, anyFinderOpen: S.catOpen || S.dateOpen,
+      toggleCat: () => this.toggleCat(), toggleDate: () => this.toggleDate(), closeFinderPanels: () => this.closeFinderPanels(),
+      finderOptions, selectedCatLabel, selectedDateFmt,
+      calWeeks, calWeekdays: ['lu', 'ma', 'me', 'je', 've', 'sa', 'di'], calMonthLabel, calCanPrev,
+      calShiftPrev: () => { if (this.state.calMonth > (new Date().toISOString().slice(0, 7) + '-01')) this.calShift(-1); }, calShiftNext: () => this.calShift(1),
+      clearDate: () => this.clearDate(), setToday: () => this.setToday(),
+      categoryCards, featured, reviewsHome, atouts: this.ATOUTS, todayIso,
+      // activités
+      filterChips, activitiesFiltered, activitiesCount: activitiesFiltered.length,
+      // fiche
+      act, quickFacts, reviewsFor, ficheGridStyle, asideStyle,
+      booking: S.booking, creneauOptions, onBookingDate: (e) => this.onBookingDate(e),
+      incParticipants: () => this.incParticipants(), decParticipants: () => this.decParticipants(),
+      toggleBookingConsent: (e) => this.toggleBookingConsent(e), totalFmt: this.fmt(total), bookingDateLabel,
+      confirmBooking: () => this.confirmBooking(), showBookingError: !!S.bookingError, bookingError: S.bookingError,
+      showConfirm: S.showConfirm, confirmRef: S.confirmRef, closeConfirm: () => this.closeConfirm(),
+      goActivitesFromConfirm: () => { this.closeConfirm(); this.go('activites'); },
+      // infos
+      faqList,
+      // cookies
+      showCookie: S.cookie === 'pending', acceptCookies: () => this.acceptCookies(), refuseCookies: () => this.refuseCookies()
+    };
+  }
+}
+</script>
+</body>
+</html>

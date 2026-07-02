@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,300;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{margin:0;background:#15120c;color:#ece5d6;font-family:'Archivo',system-ui,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+::selection{background:#c68a43;color:#15120c;}
+:focus-visible{outline:2px solid #dda45c;outline-offset:3px;border-radius:2px;}
+button{font-family:inherit;cursor:pointer;color:inherit;}
+input,textarea,select{font-family:inherit;}
+a{color:inherit;text-decoration:none;}
+::-webkit-scrollbar{width:11px;height:11px;}
+::-webkit-scrollbar-thumb{background:#3a3220;border-radius:8px;}
+::-webkit-scrollbar-track{background:#0e0c07;}
+@keyframes rise{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:none;}}
+@keyframes fade{from{opacity:0;}to{opacity:1;}}
+@keyframes scaleIn{from{opacity:0;transform:scale(.965);}to{opacity:1;transform:none;}}
+@keyframes floaty{0%,100%{transform:translateY(0);}50%{transform:translateY(-9px);}}
+@keyframes slideUp{from{opacity:0;transform:translateY(40px);}to{opacity:1;transform:none;}}
+@media (prefers-reduced-motion: reduce){*{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important;scroll-behavior:auto !important;}}
+image-slot::part(ring){border-color:rgba(236,229,214,0.28);}
+image-slot::part(frame){background:rgba(236,229,214,0.045);}
+</style>
+<script src="image-slot.js"></script>
+</helmet>
+
+<div aria-hidden="true" style="position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.045;mix-blend-mode:overlay;background-image:url(&quot;data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='180'%20height='180'%3E%3Cfilter%20id='n'%3E%3CfeTurbulence%20type='fractalNoise'%20baseFrequency='0.85'%20numOctaves='2'%20stitchTiles='stitch'/%3E%3C/filter%3E%3Crect%20width='100%25'%20height='100%25'%20filter='url(%23n)'/%3E%3C/svg%3E&quot;);"></div>
+
+<header style="position:fixed;top:0;left:0;right:0;z-index:40;display:flex;align-items:center;justify-content:space-between;padding:16px clamp(20px,5vw,56px);backdrop-filter:blur(16px);background:linear-gradient(180deg,rgba(14,12,7,.9),rgba(14,12,7,.42));border-bottom:1px solid rgba(236,229,214,0.1);">
+  <button onClick="{{ goAccueil }}" aria-label="MARSA, retour à l’accueil" style="background:none;border:none;padding:0;display:flex;align-items:baseline;gap:11px;">
+    <span style="font-family:'Newsreader',serif;font-weight:500;font-size:25px;letter-spacing:.18em;color:#f2ecdd;">MARSA</span>
+    <span style="font-size:9px;letter-spacing:.36em;color:#c68a43;text-transform:uppercase;font-weight:600;">Alger</span>
+  </button>
+
+  <sc-if value="{{ showDesktopNav }}" hint-placeholder-val="{{ true }}">
+    <nav aria-label="Navigation principale" style="display:flex;align-items:center;gap:clamp(20px,3vw,38px);">
+      <button onClick="{{ goAccueil }}" style="background:none;border:none;font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:500;color:#c8c0b0;padding:6px 0;transition:color .2s; {{ colAccueil }}" style-hover="color:#dda45c;">Accueil</button>
+      <button onClick="{{ goCarte }}" style="background:none;border:none;font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:500;color:#c8c0b0;padding:6px 0;transition:color .2s; {{ colCarte }}" style-hover="color:#dda45c;">La Carte</button>
+      <button onClick="{{ goMaison }}" style="background:none;border:none;font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:500;color:#c8c0b0;padding:6px 0;transition:color .2s; {{ colMaison }}" style-hover="color:#dda45c;">La Maison</button>
+      <button onClick="{{ goGalerie }}" style="background:none;border:none;font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:500;color:#c8c0b0;padding:6px 0;transition:color .2s; {{ colGalerie }}" style-hover="color:#dda45c;">Galerie</button>
+      <button onClick="{{ goContact }}" style="background:none;border:none;font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:500;color:#c8c0b0;padding:6px 0;transition:color .2s; {{ colContact }}" style-hover="color:#dda45c;">Contact</button>
+      <button onClick="{{ goReserver }}" style="background:#c68a43;color:#15120c;border:none;padding:12px 24px;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;border-radius:2px;transition:background .2s,transform .2s;" style-hover="background:#dda45c;transform:translateY(-1px);">Réserver</button>
+    </nav>
+  </sc-if>
+
+  <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
+    <button onClick="{{ toggleMenu }}" aria-label="Ouvrir le menu" style="background:none;border:1px solid rgba(236,229,214,0.24);border-radius:2px;padding:10px 12px;display:flex;flex-direction:column;gap:4px;">
+      <span style="display:block;width:20px;height:1.5px;background:#ece5d6;"></span>
+      <span style="display:block;width:20px;height:1.5px;background:#ece5d6;"></span>
+      <span style="display:block;width:20px;height:1.5px;background:#ece5d6;"></span>
+    </button>
+  </sc-if>
+</header>
+
+<sc-if value="{{ menuOpen }}">
+  <div style="position:fixed;inset:0;z-index:50;background:linear-gradient(180deg,#161207,#0d0b06);animation:fade .25s ease both;display:flex;flex-direction:column;padding:22px clamp(20px,6vw,40px);">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:48px;">
+      <span style="font-family:'Newsreader',serif;font-weight:500;font-size:25px;letter-spacing:.18em;color:#f2ecdd;">MARSA</span>
+      <button onClick="{{ toggleMenu }}" aria-label="Fermer le menu" style="background:none;border:1px solid rgba(236,229,214,0.24);border-radius:2px;padding:9px 14px;font-size:20px;line-height:1;color:#ece5d6;">×</button>
+    </div>
+    <nav style="display:flex;flex-direction:column;gap:6px;">
+      <button onClick="{{ goAccueil }}" style="background:none;border:none;text-align:left;font-family:'Newsreader',serif;font-size:34px;color:#f2ecdd;padding:14px 0;border-bottom:1px solid rgba(236,229,214,0.08);">Accueil</button>
+      <button onClick="{{ goCarte }}" style="background:none;border:none;text-align:left;font-family:'Newsreader',serif;font-size:34px;color:#f2ecdd;padding:14px 0;border-bottom:1px solid rgba(236,229,214,0.08);">La Carte</button>
+      <button onClick="{{ goMaison }}" style="background:none;border:none;text-align:left;font-family:'Newsreader',serif;font-size:34px;color:#f2ecdd;padding:14px 0;border-bottom:1px solid rgba(236,229,214,0.08);">La Maison</button>
+      <button onClick="{{ goGalerie }}" style="background:none;border:none;text-align:left;font-family:'Newsreader',serif;font-size:34px;color:#f2ecdd;padding:14px 0;border-bottom:1px solid rgba(236,229,214,0.08);">Galerie</button>
+      <button onClick="{{ goContact }}" style="background:none;border:none;text-align:left;font-family:'Newsreader',serif;font-size:34px;color:#f2ecdd;padding:14px 0;border-bottom:1px solid rgba(236,229,214,0.08);">Contact</button>
+    </nav>
+    <button onClick="{{ goReserver }}" style="margin-top:auto;background:#c68a43;color:#15120c;border:none;padding:18px;font-size:13px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;border-radius:2px;">Réserver une table</button>
+  </div>
+</sc-if>
+
+<main style="position:relative;z-index:2;">
+
+  <sc-if value="{{ vAccueil }}" hint-placeholder-val="{{ true }}">
+  <div>
+    <section data-screen-label="Accueil — Hero" style="position:relative;min-height:100vh;display:grid;place-items:center;text-align:center;padding:130px clamp(20px,6vw,40px) 90px;overflow:hidden;background:radial-gradient(125% 85% at 50% -12%,rgba(198,138,67,.2),transparent 55%),radial-gradient(95% 65% at 82% 112%,rgba(91,138,148,.16),transparent 60%),linear-gradient(180deg,#1c1710 0%,#15120c 46%,#0d0b06 100%);">
+      <div aria-hidden="true" style="position:absolute;inset:0;background:radial-gradient(120% 120% at 50% 50%,transparent 55%,rgba(8,7,4,.55) 100%);pointer-events:none;"></div>
+      <div style="position:relative;max-width:940px;animation:rise .9s cubic-bezier(.2,.7,.2,1) both;">
+        <p style="font-size:11px;letter-spacing:.36em;text-transform:uppercase;color:#c68a43;font-weight:600;margin:0 0 26px;">Table méditerranéenne · Hydra, Alger</p>
+        <h1 style="font-family:'Newsreader',serif;font-weight:400;font-size:clamp(42px,8.4vw,88px);line-height:1.01;letter-spacing:-.015em;margin:0;color:#f4eee0;">La mer se raconte<br>à chaque <em style="font-style:italic;color:#dda45c;">assiette</em>.</h1>
+        <p style="max-width:560px;margin:30px auto 0;color:#b3ab99;font-size:clamp(15px,2vw,18px);line-height:1.72;">Pêche du jour, feu de bois et huiles d’olive de nos terroirs. Une cuisine sincère, dressée face à la baie d’Alger.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:40px;">
+          <button onClick="{{ goReserver }}" style="background:#c68a43;color:#15120c;border:none;padding:16px 34px;font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;border-radius:2px;transition:background .25s,transform .25s;" style-hover="background:#dda45c;transform:translateY(-2px);">Réserver une table</button>
+          <button onClick="{{ goCarte }}" style="background:transparent;color:#ece5d6;border:1px solid rgba(236,229,214,0.3);padding:16px 34px;font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;border-radius:2px;transition:border-color .25s,color .25s;" style-hover="border-color:#c68a43;color:#dda45c;">Découvrir la carte</button>
+        </div>
+        <p style="margin-top:44px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#7c7566;">Du mardi au dimanche · Dîner dès 19h30</p>
+      </div>
+    </section>
+
+    <section style="padding:clamp(70px,11vw,140px) 0;background:#15120c;">
+      <div style="max-width:1180px;margin:0 auto;padding:0 clamp(20px,5vw,56px);display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:clamp(34px,5vw,80px);align-items:center;">
+        <image-slot id="marsa-salle" shape="rounded" radius="3" fit="cover" placeholder="Salle & baie vitrée — lumière naturelle, composition épurée" style="width:100%;height:clamp(340px,38vw,470px);display:block;border:1px solid rgba(236,229,214,0.08);color:#c9c0ad;"></image-slot>
+        <div>
+          <p style="font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:#c68a43;font-weight:600;margin:0 0 18px;">La Maison</p>
+          <h2 style="font-family:'Newsreader',serif;font-weight:400;font-size:clamp(30px,4.6vw,50px);line-height:1.08;letter-spacing:-.01em;margin:0;color:#f2ecdd;">Une cuisine née<br>d’un rivage.</h2>
+          <p style="color:#a49c8b;line-height:1.78;font-size:16px;margin:24px 0 0;max-width:460px;">Depuis 2018, MARSA réunit les produits de la Méditerranée et le savoir-faire des tables algéroises. Chaque service commence au petit matin, au retour des barques de Tamentfoust.</p>
+          <button onClick="{{ goMaison }}" style="margin-top:30px;background:none;border:none;padding:0;color:#dda45c;font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;border-bottom:1px solid rgba(221,164,92,0.4);padding-bottom:5px;" style-hover="border-color:#dda45c;">Notre histoire →</button>
+        </div>
+      </div>
+    </section>
+
+    <section style="padding:clamp(70px,11vw,130px) 0;background:linear-gradient(180deg,#15120c,#100d07);">
+      <div style="max-width:1180px;margin:0 auto;padding:0 clamp(20px,5vw,56px);">
+        <div style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:52px;">
+          <div>
+            <p style="font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:#c68a43;font-weight:600;margin:0 0 16px;">Le geste juste</p>
+            <h2 style="font-family:'Newsreader',serif;font-weight:400;font-size:clamp(30px,4.6vw,50px);line-height:1.05;letter-spacing:-.01em;margin:0;color:#f2ecdd;">Nos plats signatures</h2>
+          </div>
+          <button onClick="{{ goCarte }}" style="background:none;border:none;padding:0 0 5px;color:#dda45c;font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;border-bottom:1px solid rgba(221,164,92,0.4);">Toute la carte →</button>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px;">
+          <article style="border:1px solid rgba(236,229,214,0.09);border-radius:3px;overflow:hidden;background:#171308;transition:transform .3s,border-color .3s;" style-hover="transform:translateY(-4px);border-color:rgba(198,138,67,0.4);">
+            <image-slot id="marsa-sig1" shape="rect" fit="cover" placeholder="Loup de mer — gros plan, lumière naturelle" style="width:100%;height:230px;display:block;color:#c9c0ad;"></image-slot>
+            <div style="padding:24px;">
+              <h3 style="font-family:'Newsreader',serif;font-weight:500;font-size:22px;margin:0;color:#f2ecdd;">Loup de mer en croûte de sel</h3>
+              <p style="color:#8f8878;font-size:14px;line-height:1.6;margin:10px 0 16px;">Pêche du jour, croûte de sel de Sig, huile d’olive citronnée.</p>
+              <span style="font-size:14px;letter-spacing:.06em;color:#dda45c;font-weight:600;">3 600 DA</span>
+            </div>
+          </article>
+          <article style="border:1px solid rgba(236,229,214,0.09);border-radius:3px;overflow:hidden;background:#171308;transition:transform .3s,border-color .3s;" style-hover="transform:translateY(-4px);border-color:rgba(198,138,67,0.4);">
+            <image-slot id="marsa-sig2" shape="rect" fit="cover" placeholder="Gambas rôties — gros plan, couleurs fidèles" style="width:100%;height:230px;display:block;color:#c9c0ad;"></image-slot>
+            <div style="padding:24px;">
+              <h3 style="font-family:'Newsreader',serif;font-weight:500;font-size:22px;margin:0;color:#f2ecdd;">Gambas rôties, ail confit</h3>
+              <p style="color:#8f8878;font-size:14px;line-height:1.6;margin:10px 0 16px;">Gambas sauvages, ail doux, piment d’Alep, coriandre fraîche.</p>
+              <span style="font-size:14px;letter-spacing:.06em;color:#dda45c;font-weight:600;">3 900 DA</span>
+            </div>
+          </article>
+          <article style="border:1px solid rgba(236,229,214,0.09);border-radius:3px;overflow:hidden;background:#171308;transition:transform .3s,border-color .3s;" style-hover="transform:translateY(-4px);border-color:rgba(198,138,67,0.4);">
+            <image-slot id="marsa-sig3" shape="rect" fit="cover" placeholder="Baklava & glace — dressage soigné" style="width:100%;height:230px;display:block;color:#c9c0ad;"></image-slot>
+            <div style="padding:24px;">
+              <h3 style="font-family:'Newsreader',serif;font-weight:500;font-size:22px;margin:0;color:#f2ecdd;">Baklava revisitée</h3>
+              <p style="color:#8f8878;font-size:14px;line-height:1.6;margin:10px 0 16px;">Feuilleté aux pistaches, glace fleur d’oranger, miel de jujubier.</p>
+              <span style="font-size:14px;letter-spacing:.06em;color:#dda45c;font-weight:600;">1 100 DA</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section style="padding:clamp(70px,11vw,130px) 0;background:#100d07;">
+      <div style="max-width:1180px;margin:0 auto;padding:0 clamp(20px,5vw,56px);">
+        <p style="font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:#c68a43;font-weight:600;margin:0 0 16px;text-align:center;">Ils en parlent</p>
+        <h2 style="font-family:'Newsreader',serif;font-weight:400;font-size:clamp(28px,4.4vw,46px);line-height:1.06;margin:0 0 52px;color:#f2ecdd;text-align:center;">Une table dont on se souvient</h2>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:20px;">
+          <sc-for list="{{ avis }}" as="a" hint-placeholder-count="6">
+            <figure style="margin:0;border:1px solid rgba(236,229,214,0.09);border-radius:3px;padding:28px;background:#15120c;">
+              <div style="font-size:15px;letter-spacing:.14em;margin-bottom:16px;"><span style="color:#dda45c;">{{ a.full }}</span><span style="color:#4a4436;">{{ a.empty }}</span></div>
+              <blockquote style="margin:0;font-family:'Newsreader',serif;font-size:18px;line-height:1.55;color:#e4ddcd;font-style:italic;">“{{ a.text }}”</blockquote>
+              <figcaption style="margin-top:20px;display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid rgba(236,229,214,0.08);padding-top:16px;">
+                <span style="font-weight:600;font-size:14px;color:#ece5d6;">{{ a.name }}</span>
+                <span style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#7c7566;">{{ a.date }}</span>
+              </figcaption>
+            </figure>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+
+    <section style="padding:clamp(64px,9vw,110px) clamp(20px,5vw,56px);background:linear-gradient(135deg,#3a2c17,#1a140b);text-align:center;border-top:1px solid rgba(236,229,214,0.08);border-bottom:1px solid rgba(236,229,214,0.08);">
+      <p style="font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:#dda45c;font-weight:600;margin:0 0 18px;">Réservation</p>
+      <h2 style="font-family:'Newsreader',serif;font-weight:400;font-size:clamp(30px,5vw,54px);line-height:1.05;margin:0 auto;max-width:640px;color:#f4eee0;">Réservez votre table face à la mer</h2>
+      <p style="color:#b3ab99;font-size:16px;margin:22px auto 34px;max-width:480px;line-height:1.7;">Places limitées à chaque service. Acompte garantissant votre réservation, déduit de l’addition.</p>
+      <button onClick="{{ goReserver }}" style="background:#c68a43;color:#15120c;border:none;padding:17px 40px;font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;border-radius:2px;transition:background .25s,transform .25s;" style-hover="background:#dda45c;transform:translateY(-2px);">Réserver maintenant</button>
+    </section>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ vCarte }}">
+  <div style="animation:rise .55s ease both;padding-top:96px;">
+    <section data-screen-label="La Carte" style="padding:clamp(48px,7vw,90px) 0 clamp(60px,9vw,120px);">
+      <div style="max-width:940px;margin:0 auto;padding:0 clamp(20px,5vw,56px);">
+        <div style="text-align:center;margin-bottom:24px;">
+          <p style="font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:#c68a43;font-weight:600;margin:0 0 16px;">Menu de saison</p>
+          <h1 style="font-family:'Newsreader',serif;font-weight:400;font-size:clamp(38px,6.5vw,68px);line-height:1;margin:0;color:#f4eee0;">La Carte</h1>
+          <p style="color:#a49c8b;font-size:15px;line-height:1.7;max-width:560px;margin:22px auto 0;">Carte renouvelée au fil des arrivages. Les prix sont indiqués en dinars algériens, taxes comprises.</p>
+        </div>
+
+        <div style="border:1px solid rgba(236,229,214,0.1);border-radius:3px;padding:20px 24px;margin:40px 0 8px;background:#171308;display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;">
+          <span style="font-size:22px;line-height:1;color:#dda45c;">ⓘ</span>
+          <div style="flex:1;min-width:220px;">
+            <p style="margin:0;font-size:13px;color:#cbc3b2;line-height:1.6;"><strong style="color:#ece5d6;">Allergènes</strong> — les 14 allergènes majeurs sont signalés par plat, conformément au règlement (UE) n° 1169/2011 (INCO). En cas d’allergie, informez-nous : notre équipe adapte le service.</p>
+          </div>
+        </div>
+
+        <sc-for list="{{ menu }}" as="cat" hint-placeholder-count="4">
+          <section style="margin-top:clamp(44px,6vw,72px);">
+            <div style="display:flex;align-items:center;gap:20px;margin-bottom:30px;">
+              <h2 style="font-family:'Newsreader',serif;font-weight:400;font-style:italic;font-size:clamp(26px,4vw,38px);margin:0;color:#dda45c;white-space:nowrap;">{{ cat.label }}</h2>
+              <span style="flex:1;height:1px;background:rgba(236,229,214,0.14);"></span>
+            </div>
+            <sc-if value="{{ cat.note }}">
+              <p style="margin:0 0 26px;font-size:12.5px;letter-spacing:.04em;color:#8f8878;font-style:italic;border-left:2px solid rgba(198,138,67,0.5);padding-left:14px;line-height:1.6;">{{ cat.note }}</p>
+            </sc-if>
+            <div style="display:flex;flex-direction:column;gap:26px;">
+              <sc-for list="{{ cat.dishes }}" as="d" hint-placeholder-count="5">
+                <article style="display:grid;grid-template-columns:1fr auto;gap:8px 20px;align-items:baseline;">
+                  <h3 style="font-family:'Newsreader',serif;font-weight:500;font-size:20px;margin:0;color:#f2ecdd;">{{ d.name }}</h3>
+                  <span style="font-size:15px;letter-spacing:.05em;color:#dda45c;font-weight:600;white-space:nowrap;">{{ d.price }}</span>
+                  <p style="grid-column:1 / -1;margin:0;color:#8f8878;font-size:14px;line-height:1.6;max-width:600px;">{{ d.desc }}</p>
+                  <div style="grid-column:1 / -1;display:flex;flex-wrap:wrap;gap:7px;margin-top:2px;">
+                    <sc-for list="{{ d.allergens }}" as="al" hint-placeholder-count="2">
+                      <span style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#b3ab99;border:1px solid rgba(236,229,214,0.16);border-radius:20px;padding:4px 10px;">{{ al }}</span>
+                    </sc-for>
+                    <sc-for list="{{ d.diet }}" as="dt">
+                      <span style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#8fb39a;border:1px solid rgba(143,179,154,0.35);border-radius:20px;padding:4px 10px;">{{ dt }}</span>
+                    </sc-for>
+                  </div>
+                </article>
+              </sc-for>
+            </div>
+          </section>
+        </sc-for>
+
+        <div style="margin-top:64px;text-align:center;">
+          <button onClick="{{ goReserver }}" style="background:#c68a43;color:#15120c;border:none;padding:16px 36px;font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;border-radius:2px;transition:background .25s,transform .25s;" style-hover="background:#dda45c;transform:translateY(-2px);">Réserver une table</button>
+        </div>
+      </div>
+    </section>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ vMaison }}">
+  <div style="animation:rise .55s ease both;padding-top:96px;">
+    <section data-screen-label="La Maison" style="padding:clamp(48px,7vw,90px) 0 clamp(60px,9vw,120px);">
+      <div style="max-width:820px;margin:0 auto;padding:0 clamp(20px,5vw,56px);text-align:center;">
+        <p style="font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:#c68a43;font-weight:600;margin:0 0 16px;">Notre histoire</p>
+        <h1 style="font-family:'Newsreader',serif;font-weight:400;font-size:clamp(38px,6.5vw,64px);line-height:1.02;margin:0;color:#f4eee0;">La Maison</h1>
+        <p style="font-family:'Newsreader',serif;font-style:italic;font-size:clamp(20px,3vw,26px);line-height:1.5;color:#d8d0bf;margin:34px auto 0;max-width:640px;">« Nous ne cuisinons pas la mer, nous la mettons en scène — avec le respect qu’on doit à ce qu’elle nous confie. »</p>
+      </div>
+      <div style="max-width:1120px;margin:64px auto 0;padding:0 clamp(20px,5vw,56px);">
+        <image-slot id="marsa-brigade" shape="rounded" radius="3" fit="cover" placeholder="La brigade en service — reportage, lumière naturelle" style="width:100%;height:clamp(280px,42vw,520px);display:block;border:1px solid rgba(236,229,214,0.08);color:#c9c0ad;"></image-slot>
+      </div>
+      <div style="max-width:820px;margin:56px auto 0;padding:0 clamp(20px,5vw,56px);">
+        <p style="color:#b3ab99;font-size:17px;line-height:1.85;margin:0 0 24px;">Ouverte en 2018 sur les hauteurs d’Hydra, MARSA est née de l’envie de deux amis, l’un chef, l’autre pêcheur, de rapprocher la table algéroise du geste méditerranéen. Ici, la carte suit les arrivages : ce que la mer donne le matin, la salle le reçoit le soir.</p>
+        <p style="color:#b3ab99;font-size:17px;line-height:1.85;margin:0;">Le feu de bois est au cœur de la cuisine. Les huiles d’olive viennent de Kabylie, le sel de Sig, les agrumes de la Mitidja. Rien de superflu : un produit, une cuisson, un assaisonnement précis.</p>
+      </div>
+      <div style="max-width:1120px;margin:72px auto 0;padding:0 clamp(20px,5vw,56px);display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:28px;">
+        <div style="border-top:1px solid rgba(198,138,67,0.5);padding-top:22px;">
+          <h3 style="font-family:'Newsreader',serif;font-weight:500;font-size:22px;margin:0 0 10px;color:#f2ecdd;">Le produit d’abord</h3>
+          <p style="color:#8f8878;font-size:14.5px;line-height:1.7;margin:0;">Pêche côtière de Tamentfoust, maraîchage de la Mitidja, viandes tracées.</p>
+        </div>
+        <div style="border-top:1px solid rgba(198,138,67,0.5);padding-top:22px;">
+          <h3 style="font-family:'Newsreader',serif;font-weight:500;font-size:22px;margin:0 0 10px;color:#f2ecdd;">Le feu, la patience</h3>
+          <p style="color:#8f8878;font-size:14.5px;line-height:1.7;margin:0;">Cuissons lentes au feu de bois, bouillons longs, rien qui ne se précipite.</p>
+        </div>
+        <div style="border-top:1px solid rgba(198,138,67,0.5);padding-top:22px;">
+          <h3 style="font-family:'Newsreader',serif;font-weight:500;font-size:22px;margin:0 0 10px;color:#f2ecdd;">L’accueil, toujours</h3>
+          <p style="color:#8f8878;font-size:14.5px;line-height:1.7;margin:0;">Une salle intime de 42 couverts, un service attentif, sans jamais peser.</p>
+        </div>
+      </div>
+      <div style="text-align:center;margin-top:64px;">
+        <button onClick="{{ goReserver }}" style="background:transparent;color:#ece5d6;border:1px solid rgba(236,229,214,0.3);padding:16px 36px;font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;border-radius:2px;transition:border-color .25s,color .25s;" style-hover="border-color:#c68a43;color:#dda45c;">Réserver une table</button>
+      </div>
+    </section>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ vGalerie }}">
+  <div style="animation:rise .55s ease both;padding-top:96px;">
+    <section data-screen-label="Galerie" style="padding:clamp(48px,7vw,90px) 0 clamp(60px,9vw,120px);">
+      <div style="max-width:1180px;margin:0 auto;padding:0 clamp(20px,5vw,56px);">
+        <div style="text-align:center;margin-bottom:52px;">
+          <p style="font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:#c68a43;font-weight:600;margin:0 0 16px;">En images</p>
+          <h1 style="font-family:'Newsreader',serif;font-weight:400;font-size:clamp(38px,6.5vw,64px);line-height:1;margin:0;color:#f4eee0;">Galerie</h1>
+        </div>
+        <div style="columns:290px;column-gap:20px;">
+          <sc-for list="{{ gallery }}" as="g" hint-placeholder-count="8">
+            <div style="break-inside:avoid;margin-bottom:20px;">
+              <image-slot id="{{ g.id }}" shape="rounded" radius="3" fit="cover" placeholder="{{ g.cap }}" style="width:100%;height:{{ g.h }};display:block;border:1px solid rgba(236,229,214,0.08);color:#c9c0ad;"></image-slot>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ vContact }}">
+  <div style="animation:rise .55s ease both;padding-top:96px;">
+    <section data-screen-label="Contact" style="padding:clamp(48px,7vw,90px) 0 clamp(60px,9vw,120px);">
+      <div style="max-width:1120px;margin:0 auto;padding:0 clamp(20px,5vw,56px);">
+        <div style="text-align:center;margin-bottom:56px;">
+          <p style="font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:#c68a43;font-weight:600;margin:0 0 16px;">Nous joindre</p>
+          <h1 style="font-family:'Newsreader',serif;font-weight:400;font-size:clamp(38px,6.5vw,64px);line-height:1;margin:0;color:#f4eee0;">Contact</h1>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(32px,5vw,64px);">
+          <div>
+            <div style="display:flex;flex-direction:column;gap:26px;">
+              <div>
+                <p style="font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#7c7566;font-weight:600;margin:0 0 8px;">Adresse</p>
+                <p style="margin:0;font-size:17px;color:#e4ddcd;line-height:1.6;">24, chemin Beyrouth<br>Hydra, 16035 Alger</p>
+              </div>
+              <div>
+                <p style="font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#7c7566;font-weight:600;margin:0 0 8px;">Réservations</p>
+                <p style="margin:0;font-size:17px;color:#e4ddcd;line-height:1.7;">+213 _ __ __ __ __<br><a href="mailto:reservation@marsa-alger.dz" style="color:#dda45c;border-bottom:1px solid rgba(221,164,92,0.35);">reservation@marsa-alger.dz</a></p>
+              </div>
+              <div>
+                <p style="font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#7c7566;font-weight:600;margin:0 0 12px;">Horaires</p>
+                <div style="display:flex;flex-direction:column;gap:9px;">
+                  <sc-for list="{{ hours }}" as="h" hint-placeholder-count="4">
+                    <div style="display:flex;justify-content:space-between;gap:16px;font-size:14.5px;border-bottom:1px dashed rgba(236,229,214,0.1);padding-bottom:9px;">
+                      <span style="color:#cbc3b2;">{{ h.d }}</span>
+                      <span style="color:#8f8878;text-align:right;">{{ h.h }}</span>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+              <image-slot id="marsa-plan" shape="rounded" radius="3" fit="cover" placeholder="Plan / vue du quartier — Hydra, Alger" style="width:100%;height:180px;display:block;border:1px solid rgba(236,229,214,0.08);color:#c9c0ad;"></image-slot>
+            </div>
+          </div>
+
+          <div style="border:1px solid rgba(236,229,214,0.1);border-radius:3px;padding:clamp(24px,4vw,40px);background:#171308;">
+            <sc-if value="{{ cNotSent }}" hint-placeholder-val="{{ true }}">
+              <div>
+                <h2 style="font-family:'Newsreader',serif;font-weight:500;font-size:26px;margin:0 0 6px;color:#f2ecdd;">Écrivez-nous</h2>
+                <p style="color:#8f8878;font-size:14px;margin:0 0 26px;line-height:1.6;">Une question, un événement privé, une demande particulière ?</p>
+                <div style="display:flex;flex-direction:column;gap:18px;">
+                  <div>
+                    <label for="cn" style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#a49c8b;font-weight:600;margin-bottom:8px;display:block;">Nom complet</label>
+                    <input id="cn" type="text" value="{{ cName }}" onChange="{{ onCName }}" placeholder="Votre nom" style="width:100%;background:rgba(236,229,214,0.04);border:1px solid rgba(236,229,214,0.16);color:#ece5d6;padding:13px 15px;font-size:15px;border-radius:2px;" style-focus="border-color:#c68a43;">
+                  </div>
+                  <div>
+                    <label for="ce" style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#a49c8b;font-weight:600;margin-bottom:8px;display:block;">Email</label>
+                    <input id="ce" type="email" value="{{ cEmail }}" onChange="{{ onCEmail }}" placeholder="vous@exemple.dz" style="width:100%;background:rgba(236,229,214,0.04);border:1px solid rgba(236,229,214,0.16);color:#ece5d6;padding:13px 15px;font-size:15px;border-radius:2px;" style-focus="border-color:#c68a43;">
+                  </div>
+                  <div>
+                    <label for="cm" style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#a49c8b;font-weight:600;margin-bottom:8px;display:block;">Message</label>
+                    <textarea id="cm" rows="4" value="{{ cMsg }}" onChange="{{ onCMsg }}" placeholder="Votre message…" style="width:100%;background:rgba(236,229,214,0.04);border:1px solid rgba(236,229,214,0.16);color:#ece5d6;padding:13px 15px;font-size:15px;border-radius:2px;resize:vertical;" style-focus="border-color:#c68a43;"></textarea>
+                  </div>
+                  <label style="display:flex;gap:12px;align-items:flex-start;cursor:pointer;font-size:12.5px;color:#a49c8b;line-height:1.55;">
+                    <input type="checkbox" checked="{{ cConsent }}" onChange="{{ onCConsent }}" style="margin-top:2px;width:17px;height:17px;accent-color:#c68a43;flex-shrink:0;">
+                    <span>J’accepte que mes données soient utilisées pour traiter ma demande, conformément à la <button onClick="{{ openConfid }}" type="button" style="background:none;border:none;padding:0;color:#dda45c;text-decoration:underline;cursor:pointer;font-size:12.5px;">politique de confidentialité</button>.</span>
+                  </label>
+                  <button onClick="{{ sendContact }}" disabled="{{ contactDisabled }}" style="margin-top:4px;background:#c68a43;color:#15120c;border:none;padding:15px;font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;border-radius:2px;transition:background .25s;opacity:{{ contactOpacity }};" style-hover="background:#dda45c;">Envoyer le message</button>
+                </div>
+              </div>
+            </sc-if>
+            <sc-if value="{{ cSent }}">
+              <div style="text-align:center;padding:40px 10px;animation:scaleIn .4s ease both;">
+                <div style="width:56px;height:56px;border-radius:50%;border:1.5px solid #c68a43;display:grid;place-items:center;margin:0 auto 22px;color:#dda45c;font-size:26px;">✓</div>
+                <h2 style="font-family:'Newsreader',serif;font-weight:500;font-size:26px;margin:0 0 12px;color:#f2ecdd;">Message envoyé</h2>
+                <p style="color:#a49c8b;font-size:15px;line-height:1.6;margin:0;max-width:320px;margin:0 auto;">Merci. Notre équipe vous répond sous 24 h ouvrées.</p>
+              </div>
+            </sc-if>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ vReserver }}">
+  <div style="animation:rise .55s ease both;padding-top:96px;">
+    <section data-screen-label="Réservation" style="padding:clamp(44px,6vw,80px) 0 clamp(60px,9vw,120px);">
+      <div style="max-width:720px;margin:0 auto;padding:0 clamp(20px,5vw,40px);">
+        <div style="text-align:center;margin-bottom:14px;">
+          <p style="font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:#c68a43;font-weight:600;margin:0 0 14px;">Réserver</p>
+          <h1 style="font-family:'Newsreader',serif;font-weight:400;font-size:clamp(34px,5.5vw,54px);line-height:1;margin:0;color:#f4eee0;">Votre table</h1>
+        </div>
+
+        <sc-if value="{{ rNotDone }}" hint-placeholder-val="{{ true }}">
+          <div style="border:1px solid rgba(236,229,214,0.1);border-radius:4px;background:#171308;padding:clamp(22px,4vw,40px);margin-top:34px;">
+            <div style="display:flex;align-items:center;gap:6px;margin-bottom:34px;">
+              <sc-for list="{{ steps }}" as="st" hint-placeholder-count="4">
+                <div style="display:flex;align-items:center;gap:6px;flex:1;">
+                  <div style="width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:700;flex-shrink:0;border:1px solid; {{ st.badge }}">{{ st.n }}</div>
+                  <span style="font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;display:{{ st.labelDisplay }}; {{ st.labelCol }}">{{ st.label }}</span>
+                </div>
+              </sc-for>
+            </div>
+
+            <sc-if value="{{ rs1 }}">
+              <div style="animation:fade .35s ease both;">
+                <h2 style="font-family:'Newsreader',serif;font-weight:500;font-size:24px;margin:0 0 18px;color:#f2ecdd;">Le service</h2>
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;">
+                  <sc-for list="{{ serviceCards }}" as="sv">
+                    <button onClick="{{ sv.onClick }}" style="text-align:left;border:1px solid rgba(236,229,214,0.16);border-radius:3px;padding:20px;background:rgba(236,229,214,0.03);transition:border-color .2s,background .2s; {{ sv.selCss }}">
+                      <span style="font-family:'Newsreader',serif;font-size:22px;color:#f2ecdd;display:block;">{{ sv.label }}</span>
+                      <span style="font-size:13px;color:#dda45c;display:block;margin:6px 0 8px;letter-spacing:.04em;">{{ sv.hours }}</span>
+                      <span style="font-size:12.5px;color:#8f8878;line-height:1.5;">{{ sv.desc }}</span>
+                    </button>
+                  </sc-for>
+                </div>
+                <h2 style="font-family:'Newsreader',serif;font-weight:500;font-size:24px;margin:32px 0 16px;color:#f2ecdd;">Nombre de couverts</h2>
+                <div style="display:flex;flex-wrap:wrap;gap:10px;">
+                  <sc-for list="{{ guestOptions }}" as="g">
+                    <button onClick="{{ g.onClick }}" style="width:52px;height:52px;border-radius:3px;font-size:16px;font-weight:600;border:1px solid rgba(236,229,214,0.16);background:rgba(236,229,214,0.03);color:#ece5d6;transition:all .2s; {{ g.selCss }}">{{ g.n }}</button>
+                  </sc-for>
+                </div>
+                <p style="font-size:12.5px;color:#7c7566;margin:14px 0 0;line-height:1.5;">Pour un groupe de plus de 8 personnes, écrivez-nous à reservation@marsa-alger.dz.</p>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ rs2 }}">
+              <div style="animation:fade .35s ease both;">
+                <h2 style="font-family:'Newsreader',serif;font-weight:500;font-size:24px;margin:0 0 6px;color:#f2ecdd;">La date</h2>
+                <p style="font-size:12.5px;color:#7c7566;margin:0 0 18px;">Fermé le lundi. Choisissez un jour de service.</p>
+                <div style="display:flex;gap:10px;overflow-x:auto;padding-bottom:10px;">
+                  <sc-for list="{{ daysUI }}" as="d">
+                    <button onClick="{{ d.onClick }}" style="flex:0 0 auto;width:72px;padding:14px 0;border-radius:3px;border:1px solid rgba(236,229,214,0.16);background:rgba(236,229,214,0.03);color:#ece5d6;transition:all .2s;text-align:center; {{ d.selCss }}">
+                      <span style="display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;opacity:.7;">{{ d.dow }}</span>
+                      <span style="display:block;font-size:22px;font-family:'Newsreader',serif;margin:4px 0;">{{ d.day }}</span>
+                      <span style="display:block;font-size:10px;letter-spacing:.1em;text-transform:uppercase;opacity:.7;">{{ d.mon }}</span>
+                    </button>
+                  </sc-for>
+                </div>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ rs3 }}">
+              <div style="animation:fade .35s ease both;">
+                <h2 style="font-family:'Newsreader',serif;font-weight:500;font-size:24px;margin:0 0 6px;color:#f2ecdd;">L’heure</h2>
+                <p style="font-size:12.5px;color:#7c7566;margin:0 0 18px;">Service {{ serviceLabelLower }} · {{ dateLabel }}</p>
+                <div style="display:flex;flex-wrap:wrap;gap:10px;">
+                  <sc-for list="{{ slotsUI }}" as="sl">
+                    <button onClick="{{ sl.onClick }}" style="position:relative;min-width:78px;padding:14px 16px;border-radius:3px;font-size:15px;font-weight:600;border:1px solid rgba(236,229,214,0.16);background:rgba(236,229,214,0.03);color:#ece5d6;transition:all .2s; {{ sl.css }}">
+                      {{ sl.t }}
+                      <span style="display:{{ sl.tagDisplay }};font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#b0a08a;position:absolute;bottom:2px;left:0;right:0;">complet</span>
+                    </button>
+                  </sc-for>
+                </div>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ rs4 }}">
+              <div style="animation:fade .35s ease both;">
+                <h2 style="font-family:'Newsreader',serif;font-weight:500;font-size:24px;margin:0 0 18px;color:#f2ecdd;">Vos coordonnées</h2>
+                <div style="display:flex;flex-direction:column;gap:16px;">
+                  <div>
+                    <label for="rn" style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#a49c8b;font-weight:600;margin-bottom:8px;display:block;">Nom complet</label>
+                    <input id="rn" type="text" value="{{ rName }}" onChange="{{ onRName }}" placeholder="Votre nom" style="width:100%;background:rgba(236,229,214,0.04);border:1px solid rgba(236,229,214,0.16);color:#ece5d6;padding:13px 15px;font-size:15px;border-radius:2px;" style-focus="border-color:#c68a43;">
+                  </div>
+                  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;">
+                    <div>
+                      <label for="rp" style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#a49c8b;font-weight:600;margin-bottom:8px;display:block;">Téléphone</label>
+                      <input id="rp" type="tel" value="{{ rPhone }}" onChange="{{ onRPhone }}" placeholder="+213 …" style="width:100%;background:rgba(236,229,214,0.04);border:1px solid rgba(236,229,214,0.16);color:#ece5d6;padding:13px 15px;font-size:15px;border-radius:2px;" style-focus="border-color:#c68a43;">
+                    </div>
+                    <div>
+                      <label for="re" style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#a49c8b;font-weight:600;margin-bottom:8px;display:block;">Email</label>
+                      <input id="re" type="email" value="{{ rEmail }}" onChange="{{ onREmail }}" placeholder="vous@exemple.dz" style="width:100%;background:rgba(236,229,214,0.04);border:1px solid rgba(236,229,214,0.16);color:#ece5d6;padding:13px 15px;font-size:15px;border-radius:2px;" style-focus="border-color:#c68a43;">
+                    </div>
+                  </div>
+                  <div style="border:1px solid rgba(198,138,67,0.32);border-radius:3px;padding:18px 20px;background:linear-gradient(180deg,rgba(198,138,67,.1),rgba(198,138,67,.02));">
+                    <p style="margin:0 0 6px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#dda45c;font-weight:600;">Acompte anti no-show</p>
+                    <p style="margin:0;font-size:13.5px;color:#cbc3b2;line-height:1.6;">Un acompte de <strong style="color:#f2ecdd;">2 000 DA par couvert</strong> ({{ acompte }} pour votre réservation) confirme la table. Il est <strong style="color:#f2ecdd;">déduit de l’addition</strong> et remboursable en cas d’annulation plus de 24 h à l’avance.</p>
+                  </div>
+                  <label style="display:flex;gap:12px;align-items:flex-start;cursor:pointer;font-size:12.5px;color:#a49c8b;line-height:1.55;">
+                    <input type="checkbox" checked="{{ rConsent }}" onChange="{{ onRConsent }}" style="margin-top:2px;width:17px;height:17px;accent-color:#c68a43;flex-shrink:0;">
+                    <span>J’accepte la politique d’acompte et le traitement de mes données pour gérer ma réservation, conformément à la <button onClick="{{ openConfid }}" type="button" style="background:none;border:none;padding:0;color:#dda45c;text-decoration:underline;cursor:pointer;font-size:12.5px;">politique de confidentialité</button>.</span>
+                  </label>
+                </div>
+              </div>
+            </sc-if>
+
+            <div style="display:flex;justify-content:space-between;gap:14px;margin-top:32px;padding-top:22px;border-top:1px solid rgba(236,229,214,0.1);">
+              <button onClick="{{ rBack }}" style="visibility:{{ backVisible }};background:none;border:1px solid rgba(236,229,214,0.24);color:#ece5d6;padding:13px 24px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;border-radius:2px;" style-hover="border-color:#c68a43;">Retour</button>
+              <button onClick="{{ rNext }}" disabled="{{ nextDisabled }}" style="background:#c68a43;color:#15120c;border:none;padding:13px 30px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;border-radius:2px;transition:background .25s;opacity:{{ nextOpacity }};" style-hover="background:#dda45c;">{{ nextLabel }}</button>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ rDone }}">
+          <div style="border:1px solid rgba(198,138,67,0.32);border-radius:4px;background:#171308;padding:clamp(28px,5vw,48px);margin-top:34px;text-align:center;animation:scaleIn .45s ease both;">
+            <div style="width:60px;height:60px;border-radius:50%;border:1.5px solid #c68a43;display:grid;place-items:center;margin:0 auto 24px;color:#dda45c;font-size:28px;">✓</div>
+            <h2 style="font-family:'Newsreader',serif;font-weight:500;font-size:30px;margin:0 0 10px;color:#f4eee0;">Réservation confirmée</h2>
+            <p style="color:#a49c8b;font-size:15px;line-height:1.6;margin:0 auto 30px;max-width:400px;">Merci {{ rName }}. Un email de confirmation et le lien de règlement de l’acompte vous ont été envoyés.</p>
+            <div style="text-align:left;max-width:400px;margin:0 auto;border:1px solid rgba(236,229,214,0.1);border-radius:3px;overflow:hidden;">
+              <div style="display:flex;justify-content:space-between;padding:14px 18px;border-bottom:1px solid rgba(236,229,214,0.08);"><span style="color:#8f8878;font-size:13px;">Service</span><span style="color:#ece5d6;font-size:14px;">{{ serviceLabel }}</span></div>
+              <div style="display:flex;justify-content:space-between;padding:14px 18px;border-bottom:1px solid rgba(236,229,214,0.08);"><span style="color:#8f8878;font-size:13px;">Date</span><span style="color:#ece5d6;font-size:14px;text-transform:capitalize;">{{ dateLabel }}</span></div>
+              <div style="display:flex;justify-content:space-between;padding:14px 18px;border-bottom:1px solid rgba(236,229,214,0.08);"><span style="color:#8f8878;font-size:13px;">Heure</span><span style="color:#ece5d6;font-size:14px;">{{ rSlot }}</span></div>
+              <div style="display:flex;justify-content:space-between;padding:14px 18px;border-bottom:1px solid rgba(236,229,214,0.08);"><span style="color:#8f8878;font-size:13px;">Couverts</span><span style="color:#ece5d6;font-size:14px;">{{ rGuests }}</span></div>
+              <div style="display:flex;justify-content:space-between;padding:14px 18px;background:rgba(198,138,67,.08);"><span style="color:#dda45c;font-size:13px;">Acompte</span><span style="color:#f2ecdd;font-size:14px;font-weight:600;">{{ acompte }}</span></div>
+            </div>
+            <button onClick="{{ rReset }}" style="margin-top:30px;background:none;border:1px solid rgba(236,229,214,0.24);color:#ece5d6;padding:13px 28px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;border-radius:2px;" style-hover="border-color:#c68a43;">Nouvelle réservation</button>
+          </div>
+        </sc-if>
+      </div>
+    </section>
+  </div>
+  </sc-if>
+
+</main>
+
+<footer style="position:relative;z-index:2;background:#0d0b06;border-top:1px solid rgba(236,229,214,0.1);padding:clamp(56px,8vw,90px) 0 34px;">
+  <div style="max-width:1180px;margin:0 auto;padding:0 clamp(20px,5vw,56px);">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:40px 28px;">
+      <div style="grid-column:1 / -1;max-width:340px;">
+        <div style="display:flex;align-items:baseline;gap:11px;margin-bottom:16px;">
+          <span style="font-family:'Newsreader',serif;font-weight:500;font-size:26px;letter-spacing:.18em;color:#f2ecdd;">MARSA</span>
+          <span style="font-size:9px;letter-spacing:.36em;color:#c68a43;text-transform:uppercase;font-weight:600;">Alger</span>
+        </div>
+        <p style="color:#8f8878;font-size:14px;line-height:1.7;margin:0;">Table méditerranéenne. Pêche du jour, feu de bois et produits de nos terroirs, face à la baie d’Alger.</p>
+      </div>
+      <div>
+        <p style="font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#7c7566;font-weight:600;margin:0 0 16px;">Visiter</p>
+        <div style="display:flex;flex-direction:column;gap:11px;align-items:flex-start;">
+          <button onClick="{{ goCarte }}" style="background:none;border:none;padding:0;color:#cbc3b2;font-size:14px;" style-hover="color:#dda45c;">La Carte</button>
+          <button onClick="{{ goMaison }}" style="background:none;border:none;padding:0;color:#cbc3b2;font-size:14px;" style-hover="color:#dda45c;">La Maison</button>
+          <button onClick="{{ goGalerie }}" style="background:none;border:none;padding:0;color:#cbc3b2;font-size:14px;" style-hover="color:#dda45c;">Galerie</button>
+          <button onClick="{{ goReserver }}" style="background:none;border:none;padding:0;color:#cbc3b2;font-size:14px;" style-hover="color:#dda45c;">Réserver</button>
+        </div>
+      </div>
+      <div>
+        <p style="font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#7c7566;font-weight:600;margin:0 0 16px;">Contact</p>
+        <p style="color:#cbc3b2;font-size:14px;line-height:1.8;margin:0;">24, chemin Beyrouth<br>Hydra, 16035 Alger<br>+213 _ __ __ __ __<br><a href="mailto:reservation@marsa-alger.dz" style="color:#dda45c;">reservation@marsa-alger.dz</a></p>
+      </div>
+      <div>
+        <p style="font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#7c7566;font-weight:600;margin:0 0 16px;">Horaires</p>
+        <p style="color:#cbc3b2;font-size:14px;line-height:1.8;margin:0;">Mardi – Vendredi<br>12h–14h30 · 19h30–23h<br>Samedi 19h30–23h30<br>Dimanche 12h–15h · Lundi fermé</p>
+      </div>
+    </div>
+    <div style="margin-top:48px;padding-top:24px;border-top:1px solid rgba(236,229,214,0.08);display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:center;">
+      <div style="display:flex;flex-wrap:wrap;gap:20px;align-items:center;">
+        <span style="font-size:12px;color:#6c6558;">© 2026 MARSA — Alger</span>
+        <button onClick="{{ openMentions }}" style="background:none;border:none;padding:0;font-size:12px;color:#8f8878;" style-hover="color:#dda45c;">Mentions légales</button>
+        <button onClick="{{ openConfid }}" style="background:none;border:none;padding:0;font-size:12px;color:#8f8878;" style-hover="color:#dda45c;">Politique de confidentialité</button>
+      </div>
+      <a href="https://difarslan.com" target="_blank" rel="noopener" style="font-size:12px;color:#6c6558;letter-spacing:.03em;" style-hover="color:#dda45c;">Réalisé par Arslan DIF — difarslan.com</a>
+    </div>
+  </div>
+</footer>
+
+<sc-if value="{{ showCookie }}">
+  <div role="dialog" aria-label="Consentement aux cookies" style="position:fixed;left:0;right:0;bottom:0;z-index:55;background:#14110a;border-top:1px solid rgba(236,229,214,0.14);padding:20px clamp(20px,5vw,40px);animation:slideUp .4s ease both;box-shadow:0 -20px 40px rgba(0,0,0,.4);">
+    <div style="max-width:1180px;margin:0 auto;display:flex;flex-wrap:wrap;gap:18px;align-items:center;justify-content:space-between;">
+      <p style="margin:0;font-size:13.5px;color:#b3ab99;line-height:1.6;max-width:640px;flex:1;min-width:260px;">Nous utilisons des cookies pour améliorer votre expérience et mesurer l’audience du site. Vous pouvez accepter ou refuser les cookies non essentiels. En savoir plus dans notre <button onClick="{{ openConfid }}" style="background:none;border:none;padding:0;color:#dda45c;text-decoration:underline;cursor:pointer;font-size:13.5px;">politique de confidentialité</button>.</p>
+      <div style="display:flex;gap:12px;flex-shrink:0;">
+        <button onClick="{{ refuseCookies }}" style="background:transparent;border:1px solid rgba(236,229,214,0.28);color:#ece5d6;padding:12px 24px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:600;border-radius:2px;" style-hover="border-color:#c68a43;">Refuser</button>
+        <button onClick="{{ acceptCookies }}" style="background:#c68a43;color:#15120c;border:none;padding:12px 24px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;border-radius:2px;" style-hover="background:#dda45c;">Accepter</button>
+      </div>
+    </div>
+  </div>
+</sc-if>
+
+<sc-if value="{{ legalOpen }}">
+  <div role="dialog" aria-modal="true" aria-label="{{ legalTitle }}" onClick="{{ closeLegal }}" style="position:fixed;inset:0;z-index:70;background:rgba(8,7,4,.72);backdrop-filter:blur(6px);display:flex;align-items:flex-start;justify-content:center;padding:clamp(20px,6vh,80px) 20px;overflow-y:auto;animation:fade .25s ease both;">
+    <div onClick="{{ stopProp }}" style="background:#14110a;border:1px solid rgba(236,229,214,0.14);border-radius:4px;max-width:680px;width:100%;padding:clamp(28px,5vw,48px);animation:scaleIn .3s ease both;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:20px;margin-bottom:24px;">
+        <h2 style="font-family:'Newsreader',serif;font-weight:400;font-size:clamp(24px,4vw,34px);margin:0;color:#f4eee0;">{{ legalTitle }}</h2>
+        <button onClick="{{ closeLegal }}" aria-label="Fermer" style="background:none;border:1px solid rgba(236,229,214,0.24);border-radius:2px;padding:8px 13px;font-size:18px;line-height:1;color:#ece5d6;flex-shrink:0;" style-hover="border-color:#c68a43;">×</button>
+      </div>
+      <div style="color:#a49c8b;font-size:14px;line-height:1.75;" innerHTML="{{ legalBody }}"></div>
+    </div>
+  </div>
+</sc-if>
+
+<template id="__bundler_thumbnail">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#15120c"/><text x="50" y="46" font-family="Georgia,serif" font-size="15" letter-spacing="3" fill="#dda45c" text-anchor="middle">MARSA</text><text x="50" y="62" font-family="sans-serif" font-size="5" letter-spacing="3" fill="#c68a43" text-anchor="middle">ALGER</text></svg>
+</template>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:&quot;100%&quot;,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  state = {
+    view: 'accueil', menuOpen: false, isMobile: false, reduce: false,
+    cookie: null, legal: null,
+    rStep: 1, rService: null, rGuests: 2, rDate: null, rSlot: null,
+    rName: '', rEmail: '', rPhone: '', rConsent: false, rDone: false,
+    cName: '', cEmail: '', cMsg: '', cConsent: false, cSent: false,
+  };
+
+  componentDidMount() {
+    try {
+      this._mq = window.matchMedia('(max-width: 860px)');
+      this._onMq = (e) => this.setState({ isMobile: e.matches });
+      this.setState({ isMobile: this._mq.matches });
+      this._mq.addEventListener('change', this._onMq);
+      this.setState({ reduce: window.matchMedia('(prefers-reduced-motion: reduce)').matches });
+    } catch (e) {}
+    try {
+      const c = localStorage.getItem('marsa_cookie');
+      if (c) this.setState({ cookie: c });
+    } catch (e) {}
+  }
+  componentWillUnmount() {
+    try { this._mq && this._mq.removeEventListener('change', this._onMq); } catch (e) {}
+  }
+
+  navigate = (v) => {
+    this.setState({ view: v, menuOpen: false });
+    try { window.scrollTo({ top: 0, behavior: this.state.reduce ? 'auto' : 'smooth' }); } catch (e) { window.scrollTo(0, 0); }
+  };
+  toggleMenu = () => this.setState((s) => ({ menuOpen: !s.menuOpen }));
+
+  setCookie = (v) => { try { localStorage.setItem('marsa_cookie', v); } catch (e) {} this.setState({ cookie: v }); };
+  openLegal = (k) => this.setState({ legal: k });
+  closeLegal = () => this.setState({ legal: null });
+
+  formatDA(n) { return (n || 0).toLocaleString('fr-FR').replace(/\u202f|\u00a0/g, ' ') + ' DA'; }
+
+  buildDays() {
+    const out = [];
+    const d = new Date(); d.setHours(0, 0, 0, 0); d.setDate(d.getDate() + 1);
+    let guard = 0;
+    while (out.length < 12 && guard < 40) {
+      if (d.getDay() !== 1) {
+        out.push({
+          iso: d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'),
+          dow: d.toLocaleDateString('fr-FR', { weekday: 'short' }).replace('.', ''),
+          day: d.getDate(),
+          mon: d.toLocaleDateString('fr-FR', { month: 'short' }).replace('.', ''),
+        });
+      }
+      d.setDate(d.getDate() + 1); guard++;
+    }
+    return out;
+  }
+
+  slotsFor(service) {
+    if (service === 'dejeuner') return [{ t: '12:00' }, { t: '12:30', full: true }, { t: '13:00' }, { t: '13:30' }, { t: '14:00' }];
+    if (service === 'diner') return [{ t: '19:30' }, { t: '20:00', full: true }, { t: '20:30' }, { t: '21:00', full: true }, { t: '21:30' }, { t: '22:00' }];
+    return [];
+  }
+
+  pillSel(sel) { return sel ? 'background:#c68a43;color:#15120c;border-color:#c68a43;' : ''; }
+
+  renderVals() {
+    const s = this.state;
+    const set = (patch) => this.setState(patch);
+
+    const menu = [
+      { key: 'entrees', label: 'Entrées', dishes: [
+        { name: 'Velouté de fèves & menthe fraîche', desc: 'Crème de fèves nouvelles, huile de menthe, croûtons dorés.', price: '1 100 DA', allergens: ['Gluten', 'Lait', 'Céleri'] },
+        { name: 'Carpaccio de daurade royale', desc: 'Fines lamelles, huile de citron beldi, fleur de sel de Béjaïa.', price: '1 600 DA', allergens: ['Poissons', 'Sulfites'] },
+        { name: 'Aubergine fumée & tahina', desc: 'Caviar d’aubergine au feu de bois, graines de grenade, huile d’olive.', price: '1 200 DA', allergens: ['Sésame'], diet: ['Vegan'] },
+        { name: 'Sardines marinées, fenouil & orange', desc: 'Marinade aux agrumes, fenouil croquant, huile d’olive de Kabylie.', price: '1 400 DA', allergens: ['Poissons', 'Sulfites'] },
+        { name: 'Bourek d’agneau, pignons & cannelle', desc: 'Feuille de brick croustillante, agneau confit, pignons torréfiés.', price: '1 350 DA', allergens: ['Gluten', 'Fruits à coque', 'Œufs'] },
+      ] },
+      { key: 'poissons', label: 'Poissons', dishes: [
+        { name: 'Loup de mer en croûte de sel', desc: 'Pêche du jour, croûte de sel de Sig, huile d’olive citronnée.', price: '3 600 DA', allergens: ['Poissons'] },
+        { name: 'Gambas rôties, ail confit', desc: 'Gambas sauvages, ail doux, piment d’Alep, coriandre fraîche.', price: '3 900 DA', allergens: ['Crustacés'] },
+        { name: 'Rouget grillé & caviar d’aubergine', desc: 'Filets de rouget, purée d’aubergine fumée, jus de bouillabaisse.', price: '3 200 DA', allergens: ['Poissons', 'Sésame'] },
+        { name: 'Poulpe braisé, pommes rattes', desc: 'Poulpe fondant, chorizo artisanal, paprika fumé, persil plat.', price: '3 400 DA', allergens: ['Mollusques', 'Sulfites'] },
+        { name: 'Filet de mérou, bouillon de safran', desc: 'Mérou nacré, fenouil confit, bouillon safrané et fenouil.', price: '3 800 DA', allergens: ['Poissons', 'Céleri'] },
+      ] },
+      { key: 'viandes', label: 'Viandes', note: 'Origine des viandes : agneau & bœuf d’Algérie, veau de France. Traçabilité complète disponible sur demande.', dishes: [
+        { name: 'Épaule d’agneau confite 7 heures', desc: 'Cuisson lente au feu de bois, cumin, abricots moelleux, jus corsé.', price: '3 800 DA', allergens: ['Sulfites'] },
+        { name: 'Souris d’agneau, semoule perlée', desc: 'Semoule aux amandes, raisins dorés, jus au ras el-hanout.', price: '3 600 DA', allergens: ['Gluten', 'Fruits à coque'] },
+        { name: 'Entrecôte maturée 30 jours', desc: 'Bœuf maturé, beurre d’herbes, frites de patate douce.', price: '4 200 DA', allergens: ['Lait'] },
+        { name: 'Tajine de poulet fermier', desc: 'Citron confit, olives de Sig, oignons fondants, semoule fine.', price: '2 900 DA', allergens: ['Sulfites'], diet: ['Sans gluten'] },
+        { name: 'Côte de veau, jus au thym', desc: 'Veau rôti sur l’os, légumes du marché grillés, jus au thym.', price: '4 000 DA', allergens: ['Lait'] },
+      ] },
+      { key: 'desserts', label: 'Desserts', dishes: [
+        { name: 'Baklava revisitée', desc: 'Feuilleté aux pistaches, glace fleur d’oranger, miel de jujubier.', price: '1 100 DA', allergens: ['Gluten', 'Fruits à coque', 'Lait'] },
+        { name: 'Crème brûlée à la cardamome', desc: 'Crème onctueuse, caramel craquant, cardamome verte.', price: '950 DA', allergens: ['Œufs', 'Lait'] },
+        { name: 'Figues rôties au miel', desc: 'Figues de saison, mascarpone, éclats de pistache.', price: '1 200 DA', allergens: ['Lait', 'Fruits à coque'] },
+        { name: 'Sorbet citron-basilic', desc: 'Sorbet maison, huile d’olive, zeste de citron confit.', price: '850 DA', allergens: [], diet: ['Vegan', 'Sans gluten'] },
+        { name: 'Mhalbi à l’eau de rose', desc: 'Crème de riz parfumée, eau de rose, pistaches concassées.', price: '900 DA', allergens: ['Lait', 'Fruits à coque'] },
+      ] },
+    ];
+
+    const avisRaw = [
+      { name: 'Yasmine B.', note: 5, date: 'Juin 2026', text: 'Une cuisine d’une finesse rare à Alger. Le loup en croûte de sel était parfait, le service aux petits soins.' },
+      { name: 'Karim H.', note: 5, date: 'Juin 2026', text: 'Cadre feutré et sublime vue sur la baie. Les gambas rôties valent à elles seules le détour.' },
+      { name: 'Sofiane M.', note: 4, date: 'Mai 2026', text: 'Très belle expérience, produits d’une grande fraîcheur. Réservation indispensable le week-end.' },
+      { name: 'Nadia L.', note: 5, date: 'Mai 2026', text: 'Le meilleur dîner méditerranéen depuis longtemps. La baklava revisitée est un vrai délice.' },
+      { name: 'Reda T.', note: 5, date: 'Avril 2026', text: 'Accueil chaleureux, vins bien choisis, ambiance intime. On reviendra sans hésiter.' },
+      { name: 'Amel K.', note: 4, date: 'Avril 2026', text: 'Assiettes soignées et créatives. Le mhalbi à l’eau de rose m’a rappelé mon enfance.' },
+    ];
+    const avis = avisRaw.map((a) => ({ ...a, full: '★'.repeat(a.note), empty: '★'.repeat(5 - a.note) }));
+
+    const gallery = [
+      { id: 'gal-1', cap: 'Salle & baie — lumière naturelle', h: '340px' },
+      { id: 'gal-2', cap: 'Loup de mer, gros plan', h: '260px' },
+      { id: 'gal-3', cap: 'Le bar & la cave à vins', h: '300px' },
+      { id: 'gal-4', cap: 'Terrasse sur la baie', h: '380px' },
+      { id: 'gal-5', cap: 'Dressage d’un dessert', h: '250px' },
+      { id: 'gal-6', cap: 'La brigade au passe', h: '320px' },
+      { id: 'gal-7', cap: 'Détail de table dressée', h: '270px' },
+      { id: 'gal-8', cap: 'Gambas & ail confit', h: '350px' },
+    ];
+
+    const hours = [
+      { d: 'Lundi', h: 'Fermé' },
+      { d: 'Mardi – Vendredi', h: '12h00–14h30 · 19h30–23h00' },
+      { d: 'Samedi', h: '19h30 – 23h30' },
+      { d: 'Dimanche', h: '12h00 – 15h00' },
+    ];
+
+    // Reservation derived
+    const days = this.buildDays();
+    const daysUI = days.map((d) => ({ ...d, onClick: () => set({ rDate: d.iso }), selCss: this.pillSel(d.iso === s.rDate) }));
+    const slots = this.slotsFor(s.rService);
+    const slotsUI = slots.map((o) => ({
+      t: o.t, full: !!o.full,
+      onClick: o.full ? (() => {}) : (() => set({ rSlot: o.t })),
+      css: o.full ? 'opacity:.4;cursor:not-allowed;' : this.pillSel(o.t === s.rSlot),
+      tagDisplay: o.full ? 'block' : 'none',
+    }));
+    const guestOptions = [1, 2, 3, 4, 5, 6, 7, 8].map((n) => ({ n, onClick: () => set({ rGuests: n }), selCss: this.pillSel(n === s.rGuests) }));
+    const serviceCards = [
+      { key: 'dejeuner', label: 'Déjeuner', hours: '12h00 – 14h30', desc: 'Service du midi, du mardi au dimanche.', onClick: () => set({ rService: 'dejeuner', rSlot: null }), selCss: s.rService === 'dejeuner' ? 'border-color:#c68a43;background:linear-gradient(180deg,rgba(198,138,67,.16),rgba(198,138,67,.03));' : '' },
+      { key: 'diner', label: 'Dîner', hours: '19h30 – 23h00', desc: 'Service du soir, ambiance feutrée.', onClick: () => set({ rService: 'diner', rSlot: null }), selCss: s.rService === 'diner' ? 'border-color:#c68a43;background:linear-gradient(180deg,rgba(198,138,67,.16),rgba(198,138,67,.03));' : '' },
+    ];
+
+    const dateLabel = s.rDate ? new Date(s.rDate + 'T00:00:00').toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' }) : '';
+    const serviceLabel = s.rService === 'dejeuner' ? 'Déjeuner' : (s.rService === 'diner' ? 'Dîner' : '');
+    const acompte = this.formatDA(2000 * (s.rGuests || 0));
+
+    let canNext = false;
+    if (s.rStep === 1) canNext = !!s.rService && !!s.rGuests;
+    else if (s.rStep === 2) canNext = !!s.rDate;
+    else if (s.rStep === 3) canNext = !!s.rSlot;
+    const emailOk = /.+@.+\..+/.test(s.rEmail);
+    const canConfirm = !!s.rName.trim() && emailOk && !!s.rPhone.trim() && s.rConsent;
+    const step4Ready = s.rStep === 4 ? canConfirm : true;
+    const nextEnabled = s.rStep < 4 ? canNext : canConfirm;
+
+    const stepLabels = ['Service', 'Date', 'Heure', 'Coordonnées'];
+    const steps = [1, 2, 3, 4].map((n) => {
+      const done = n < s.rStep, active = n === s.rStep;
+      return {
+        n,
+        label: stepLabels[n - 1],
+        badge: active ? 'background:#c68a43;color:#15120c;border-color:#c68a43;' : (done ? 'background:transparent;color:#dda45c;border-color:#c68a43;' : 'background:transparent;color:#7c7566;border-color:rgba(236,229,214,0.2);'),
+        labelCol: active ? 'color:#dda45c;' : 'color:#7c7566;',
+        labelDisplay: s.isMobile ? 'none' : 'inline',
+      };
+    });
+
+    const rNext = () => { if (nextEnabled) { if (s.rStep < 4) set((p) => ({ rStep: p.rStep + 1 })); else set({ rDone: true }); } };
+    const rBack = () => { if (s.rStep > 1) set((p) => ({ rStep: p.rStep - 1 })); };
+    const rReset = () => set({ rStep: 1, rService: null, rGuests: 2, rDate: null, rSlot: null, rName: '', rEmail: '', rPhone: '', rConsent: false, rDone: false });
+
+    // Contact
+    const cEmailOk = /.+@.+\..+/.test(s.cEmail);
+    const canSend = !!s.cName.trim() && cEmailOk && !!s.cMsg.trim() && s.cConsent;
+    const sendContact = () => { if (canSend) set({ cSent: true }); };
+
+    const legalTitle = s.legal === 'mentions' ? 'Mentions légales' : (s.legal === 'confidentialite' ? 'Politique de confidentialité' : '');
+    const legalBody = s.legal === 'mentions' ? this.mentions() : (s.legal === 'confidentialite' ? this.confid() : '');
+
+    return {
+      // view flags
+      vAccueil: s.view === 'accueil', vCarte: s.view === 'carte', vMaison: s.view === 'maison', vGalerie: s.view === 'galerie', vContact: s.view === 'contact', vReserver: s.view === 'reserver',
+      isMobile: !!s.isMobile, showDesktopNav: !s.isMobile, menuOpen: s.menuOpen,
+      // nav
+      goAccueil: () => this.navigate('accueil'), goCarte: () => this.navigate('carte'), goMaison: () => this.navigate('maison'), goGalerie: () => this.navigate('galerie'), goContact: () => this.navigate('contact'), goReserver: () => this.navigate('reserver'),
+      toggleMenu: this.toggleMenu,
+      colAccueil: s.view === 'accueil' ? 'color:#dda45c;' : '', colCarte: s.view === 'carte' ? 'color:#dda45c;' : '', colMaison: s.view === 'maison' ? 'color:#dda45c;' : '', colGalerie: s.view === 'galerie' ? 'color:#dda45c;' : '', colContact: s.view === 'contact' ? 'color:#dda45c;' : '',
+      // data
+      menu, avis, gallery, hours,
+      // reservation
+      rNotDone: !s.rDone, rDone: s.rDone,
+      steps, rs1: s.rStep === 1, rs2: s.rStep === 2, rs3: s.rStep === 3, rs4: s.rStep === 4,
+      serviceCards, guestOptions, daysUI, slotsUI,
+      serviceLabel, serviceLabelLower: serviceLabel.toLowerCase(), dateLabel, acompte,
+      rName: s.rName, rEmail: s.rEmail, rPhone: s.rPhone, rConsent: s.rConsent, rSlot: s.rSlot, rGuests: s.rGuests,
+      onRName: (e) => set({ rName: e.target.value }), onREmail: (e) => set({ rEmail: e.target.value }), onRPhone: (e) => set({ rPhone: e.target.value }), onRConsent: (e) => set({ rConsent: e.target.checked }),
+      rNext, rBack, rReset,
+      nextDisabled: !nextEnabled, nextOpacity: nextEnabled ? '1' : '.45', nextLabel: s.rStep < 4 ? 'Continuer' : 'Confirmer',
+      backVisible: s.rStep > 1 ? 'visible' : 'hidden',
+      // contact
+      cNotSent: !s.cSent, cSent: s.cSent,
+      cName: s.cName, cEmail: s.cEmail, cMsg: s.cMsg, cConsent: s.cConsent,
+      onCName: (e) => set({ cName: e.target.value }), onCEmail: (e) => set({ cEmail: e.target.value }), onCMsg: (e) => set({ cMsg: e.target.value }), onCConsent: (e) => set({ cConsent: e.target.checked }),
+      sendContact, contactDisabled: !canSend, contactOpacity: canSend ? '1' : '.45',
+      // cookie
+      showCookie: !s.cookie, acceptCookies: () => this.setCookie('accept'), refuseCookies: () => this.setCookie('refuse'),
+      // legal
+      legalOpen: !!s.legal, legalTitle, legalBody,
+      openMentions: () => this.openLegal('mentions'), openConfid: () => this.openLegal('confidentialite'), closeLegal: this.closeLegal,
+      stopProp: (e) => e.stopPropagation(),
+    };
+  }
+
+  mentions() {
+    return [
+      '<p style="margin:0 0 16px;"><strong style="color:#e4ddcd;">Éditeur du site</strong><br>MARSA — Table méditerranéenne (SARL). Siège : 24, chemin Beyrouth, Hydra, 16035 Alger, Algérie.<br>RC n° 16/00-1284517 B 26 · NIF : 000016109284517.<br>Directeur de la publication : la direction de MARSA.</p>',
+      '<p style="margin:0 0 16px;"><strong style="color:#e4ddcd;">Contact</strong><br>Téléphone : +213 _ __ __ __ __ · Email : reservation@marsa-alger.dz</p>',
+      '<p style="margin:0 0 16px;"><strong style="color:#e4ddcd;">Hébergement</strong><br>Site hébergé par un prestataire d’hébergement mutualisé, joignable via les coordonnées ci-dessus.</p>',
+      '<p style="margin:0 0 16px;"><strong style="color:#e4ddcd;">Propriété intellectuelle</strong><br>L’ensemble des contenus (textes, visuels, identité) est protégé. Toute reproduction sans autorisation est interdite.</p>',
+      '<p style="margin:0;font-size:12.5px;color:#7c7566;">Ce site est une démonstration réalisée par Arslan DIF (difarslan.com). Les données présentées (plats, prix, avis, coordonnées) sont fictives.</p>',
+    ].join('');
+  }
+  confid() {
+    return [
+      '<p style="margin:0 0 16px;">La présente politique décrit la manière dont MARSA traite les données personnelles collectées via ce site, dans le respect de la réglementation applicable en Algérie relative à la protection des données à caractère personnel.</p>',
+      '<p style="margin:0 0 16px;"><strong style="color:#e4ddcd;">Données collectées</strong><br>Via les formulaires de réservation et de contact : nom, adresse email, numéro de téléphone, ainsi que les détails de votre demande (date, service, nombre de couverts, message).</p>',
+      '<p style="margin:0 0 16px;"><strong style="color:#e4ddcd;">Finalités</strong><br>Traiter et confirmer vos réservations, gérer l’acompte, répondre à vos demandes et, avec votre consentement, mesurer l’audience du site.</p>',
+      '<p style="margin:0 0 16px;"><strong style="color:#e4ddcd;">Base légale & conservation</strong><br>Vos données sont traitées sur la base de votre consentement et de l’exécution de la prestation. Elles sont conservées 12 mois après votre dernière interaction, sauf obligation légale contraire.</p>',
+      '<p style="margin:0 0 16px;"><strong style="color:#e4ddcd;">Cookies</strong><br>Des cookies de mesure d’audience ne sont déposés qu’après votre acceptation via le bandeau dédié. Vous pouvez les refuser sans altérer votre navigation.</p>',
+      '<p style="margin:0 0 16px;"><strong style="color:#e4ddcd;">Vos droits</strong><br>Vous disposez d’un droit d’accès, de rectification, d’effacement et d’opposition. Pour l’exercer : reservation@marsa-alger.dz.</p>',
+      '<p style="margin:0;font-size:12.5px;color:#7c7566;">Données de démonstration — site réalisé par Arslan DIF (difarslan.com).</p>',
+    ].join('');
+  }
+}
+</script>
+</body>
+</html>

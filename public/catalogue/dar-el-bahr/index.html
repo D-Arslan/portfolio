@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:#F7F1E7;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+::selection{background:#B08D57;color:#fff}
+input,select,button,textarea{font-family:inherit}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadein{from{opacity:0}to{opacity:1}}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+<script src="image-slot.js"></script>
+</helmet>
+<div style="font-family:'Jost',sans-serif;color:#17302E;background:#F7F1E7;min-height:100vh;display:flex;flex-direction:column;">
+
+  <a href="#contenu" style="position:absolute;left:-9999px;top:0;background:#1E5F5A;color:#fff;padding:12px 18px;z-index:200;font-size:13px;" style-focus="left:12px;top:12px;outline:2px solid #B08D57;">Aller au contenu</a>
+
+  <sc-if value="{{ showCookie }}">
+    <div role="region" aria-label="Gestion des cookies" style="position:fixed;left:0;right:0;bottom:0;z-index:150;background:#17302E;color:#EDE4D3;padding:18px clamp(16px,5vw,48px);display:flex;flex-wrap:wrap;align-items:center;gap:16px 28px;box-shadow:0 -12px 40px -20px rgba(0,0,0,.5);">
+      <p style="margin:0;flex:1;min-width:240px;font-size:13.5px;line-height:1.6;font-weight:300;color:#DED3BF;">Nous utilisons des cookies pour mesurer l’audience et améliorer votre expérience. Vous pouvez les accepter ou les refuser. En savoir plus dans notre <a href="#" onClick="{{ nav }}" style="color:#CBAE7A;text-decoration:underline;text-underline-offset:2px;">politique de confidentialité</a>.</p>
+      <div style="display:flex;gap:12px;">
+        <button onClick="{{ refuseCookie }}" style="font-family:'Jost';font-size:12px;letter-spacing:.14em;text-transform:uppercase;padding:12px 22px;background:transparent;color:#EDE4D3;border:1px solid rgba(237,228,211,.4);cursor:pointer;transition:all .25s ease;" style-hover="border-color:#EDE4D3;" style-focus="outline:2px solid #CBAE7A;outline-offset:2px;">Refuser</button>
+        <button onClick="{{ acceptCookie }}" style="font-family:'Jost';font-size:12px;letter-spacing:.14em;text-transform:uppercase;padding:12px 22px;background:#B08D57;color:#17302E;border:1px solid #B08D57;cursor:pointer;font-weight:500;transition:all .25s ease;" style-hover="background:#C6A469;" style-focus="outline:2px solid #EDE4D3;outline-offset:2px;">Accepter</button>
+      </div>
+    </div>
+  </sc-if>
+
+  <header style="position:sticky;top:0;z-index:120;background:rgba(247,241,231,.88);backdrop-filter:blur(12px);border-bottom:1px solid rgba(176,141,87,.28);">
+    <div style="max-width:1240px;margin:0 auto;padding:0 clamp(16px,5vw,48px);height:74px;display:flex;align-items:center;justify-content:space-between;gap:24px;">
+      <button onClick="{{ nav }}" aria-label="Dar el Bahr — accueil" style="display:flex;align-items:center;gap:12px;background:none;border:none;cursor:pointer;padding:0;text-align:left;" style-focus="outline:2px solid #1E5F5A;outline-offset:4px;">
+        <span aria-hidden="true" style="width:16px;height:16px;background:#B08D57;transform:rotate(45deg);display:inline-block;flex:none;"></span>
+        <span style="display:flex;flex-direction:column;line-height:1;">
+          <span style="font-family:'Cormorant Garamond',serif;font-size:23px;font-weight:600;letter-spacing:.04em;color:#17302E;">Dar el Bahr</span>
+          <span style="font-family:'Jost';font-size:9.5px;letter-spacing:.34em;text-transform:uppercase;color:#8A7A5A;margin-top:3px;">Hôtel &amp; Spa · Tipaza</span>
+        </span>
+      </button>
+
+      <sc-if value="{{ notMobile }}">
+        <nav aria-label="Navigation principale" style="display:flex;align-items:center;gap:30px;">
+          <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="5">
+            <button onClick="{{ item.go }}" style="position:relative;background:none;border:none;cursor:pointer;font-family:'Jost';font-size:13px;letter-spacing:.06em;color:#2E4440;padding:6px 0;transition:color .25s ease;" style-hover="color:#1E5F5A;" style-focus="outline:2px solid #1E5F5A;outline-offset:3px;">
+              {{ item.label }}
+              <sc-if value="{{ item.active }}"><span aria-hidden="true" style="position:absolute;left:0;right:0;bottom:-2px;height:1.5px;background:#B08D57;"></span></sc-if>
+            </button>
+          </sc-for>
+          <button onClick="{{ openReservation }}" style="font-family:'Jost';font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:500;padding:13px 26px;background:#1E5F5A;color:#F7F1E7;border:none;cursor:pointer;transition:background .3s ease;" style-hover="background:#143f3b;" style-focus="outline:2px solid #B08D57;outline-offset:2px;">Réserver</button>
+        </nav>
+      </sc-if>
+
+      <sc-if value="{{ isMobile }}">
+        <button onClick="{{ toggleMenu }}" aria-label="Ouvrir le menu" aria-expanded="{{ menuOpen }}" style="display:flex;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px;" style-focus="outline:2px solid #1E5F5A;outline-offset:2px;">
+          <span aria-hidden="true" style="width:26px;height:1.5px;background:#17302E;display:block;"></span>
+          <span aria-hidden="true" style="width:26px;height:1.5px;background:#17302E;display:block;"></span>
+          <span aria-hidden="true" style="width:26px;height:1.5px;background:#17302E;display:block;"></span>
+        </button>
+      </sc-if>
+    </div>
+  </header>
+
+  <sc-if value="{{ menuOpen }}">
+    <div style="position:fixed;inset:74px 0 0 0;z-index:110;background:#F7F1E7;display:flex;flex-direction:column;padding:24px clamp(20px,7vw,48px);">
+      <nav aria-label="Navigation mobile" style="display:flex;flex-direction:column;">
+        <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="5">
+          <button onClick="{{ item.go }}" style="text-align:left;background:none;border:none;border-bottom:1px solid rgba(176,141,87,.25);cursor:pointer;font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:500;color:#17302E;padding:20px 0;" style-focus="outline:2px solid #1E5F5A;">{{ item.label }}</button>
+        </sc-for>
+      </nav>
+      <button onClick="{{ openReservation }}" style="margin-top:32px;font-family:'Jost';font-size:13px;letter-spacing:.16em;text-transform:uppercase;font-weight:500;padding:18px;background:#1E5F5A;color:#F7F1E7;border:none;cursor:pointer;">Réserver un séjour</button>
+    </div>
+  </sc-if>
+
+  <main id="contenu" style="flex:1;">
+
+    <!-- ================= ACCUEIL ================= -->
+    <sc-if value="{{ isAccueil }}" hint-placeholder-val="{{ true }}">
+      <div>
+        <section style="background:linear-gradient(168deg,#faf4e9 0%,#f1e6d1 38%,#dbe8e3 74%,#c2d8d1 100%);padding:clamp(48px,7vw,88px) clamp(16px,5vw,48px) clamp(64px,8vw,110px);">
+          <div style="max-width:1240px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:clamp(32px,5vw,64px);align-items:center;">
+            <div>
+              <p style="font-family:'Jost';font-size:12px;letter-spacing:.34em;text-transform:uppercase;color:#A9854A;margin:0 0 22px;">Tipaza · Côte méditerranéenne</p>
+              <h1 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(44px,7vw,82px);line-height:1.02;letter-spacing:-.01em;color:#15302D;margin:0 0 24px;">Le luxe discret,<br>face à la mer.</h1>
+              <p style="font-size:clamp(16px,1.4vw,18px);line-height:1.8;font-weight:300;color:#3D4F49;max-width:460px;margin:0 0 34px;">Un havre balnéaire de six hébergements d’exception, un spa d’inspiration méditerranéenne et une plage privée sur la baie de Tipaza. L’art de recevoir, à l’algérienne.</p>
+              <div style="display:flex;flex-wrap:wrap;gap:14px;">
+                <button onClick="{{ openReservation }}" style="font-family:'Jost';font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:500;padding:16px 34px;background:#1E5F5A;color:#F7F1E7;border:none;cursor:pointer;transition:background .3s ease;" style-hover="background:#143f3b;" style-focus="outline:2px solid #B08D57;outline-offset:2px;">Réserver un séjour</button>
+                <button onClick="{{ nav }}" data-nav="chambres" style="font-family:'Jost';font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:500;padding:16px 32px;background:transparent;color:#17302E;border:1px solid #B08D57;cursor:pointer;transition:all .3s ease;" style-hover="background:#B08D57;color:#fff;" style-focus="outline:2px solid #1E5F5A;outline-offset:2px;">Découvrir les suites</button>
+              </div>
+            </div>
+            <div style="position:relative;aspect-ratio:4/5;min-height:320px;border-radius:4px;overflow:hidden;box-shadow:0 40px 90px -50px rgba(21,48,45,.6);">
+              <image-slot id="photo-hero" shape="rect" fit="cover" placeholder="Photo — façade & baie au lever du jour (portrait 4:5)" style="width:100%;height:100%;display:block;"></image-slot>
+            </div>
+          </div>
+        </section>
+
+        <!-- Booking bar -->
+        <section style="padding:0 clamp(16px,5vw,48px);margin-top:clamp(-56px,-5vw,-64px);position:relative;z-index:5;">
+          <div style="max-width:1080px;margin:0 auto;background:#FFFDF9;border:1px solid rgba(176,141,87,.3);box-shadow:0 30px 70px -40px rgba(21,48,45,.45);padding:clamp(20px,3vw,30px);">
+            <p style="font-family:'Jost';font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:#A9854A;margin:0 0 18px;">Vérifier les disponibilités</p>
+            <div style="display:flex;flex-wrap:wrap;gap:18px 22px;align-items:flex-end;">
+              <div style="flex:1;min-width:150px;">
+                <label for="hb-arr" style="display:block;font-family:'Jost';font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#8A9591;margin:0 0 8px;font-weight:500;">Arrivée</label>
+                <input id="hb-arr" type="date" value="{{ arrivee }}" min="{{ today }}" onChange="{{ setArrivee }}" style="width:100%;font-family:'Jost';font-size:15px;padding:12px 12px;border:1px solid rgba(23,48,46,.2);background:#fff;color:#17302E;border-radius:2px;outline:none;" style-focus="border-color:#1E5F5A;box-shadow:0 0 0 3px rgba(30,95,90,.15);">
+              </div>
+              <div style="flex:1;min-width:150px;">
+                <label for="hb-dep" style="display:block;font-family:'Jost';font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#8A9591;margin:0 0 8px;font-weight:500;">Départ</label>
+                <input id="hb-dep" type="date" value="{{ depart }}" min="{{ arrivee }}" onChange="{{ setDepart }}" style="width:100%;font-family:'Jost';font-size:15px;padding:12px 12px;border:1px solid rgba(23,48,46,.2);background:#fff;color:#17302E;border-radius:2px;outline:none;" style-focus="border-color:#1E5F5A;box-shadow:0 0 0 3px rgba(30,95,90,.15);">
+              </div>
+              <div style="flex:1.4;min-width:200px;">
+                <label for="hb-room" style="display:block;font-family:'Jost';font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#8A9591;margin:0 0 8px;font-weight:500;">Hébergement</label>
+                <select id="hb-room" value="{{ roomId }}" onChange="{{ setRoom }}" style="width:100%;font-family:'Jost';font-size:15px;padding:12px 12px;border:1px solid rgba(23,48,46,.2);background:#fff;color:#17302E;border-radius:2px;outline:none;cursor:pointer;" style-focus="border-color:#1E5F5A;box-shadow:0 0 0 3px rgba(30,95,90,.15);">
+                  <sc-for list="{{ roomsView }}" as="r" hint-placeholder-count="6"><option value="{{ r.id }}">{{ r.optLabel }}</option></sc-for>
+                </select>
+              </div>
+              <button onClick="{{ openReservation }}" style="flex:none;font-family:'Jost';font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:500;padding:15px 30px;background:#1E5F5A;color:#F7F1E7;border:none;cursor:pointer;transition:background .3s ease;" style-hover="background:#143f3b;" style-focus="outline:2px solid #B08D57;outline-offset:2px;">Voir le récapitulatif</button>
+            </div>
+            <p style="margin:18px 0 0;font-size:12.5px;color:#7C8883;font-weight:300;">Meilleur tarif garanti · Annulation gratuite jusqu’à 48 h avant l’arrivée · Acompte de 30 %.</p>
+          </div>
+        </section>
+
+        <!-- Intro -->
+        <section style="padding:clamp(64px,9vw,120px) clamp(16px,5vw,48px) clamp(32px,5vw,56px);">
+          <div style="max-width:820px;margin:0 auto;text-align:center;">
+            <p style="font-family:'Jost';font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:#A9854A;margin:0 0 20px;">Bienvenue</p>
+            <h2 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(30px,4.5vw,50px);line-height:1.12;color:#15302D;margin:0 0 24px;">Une parenthèse hors du temps, à une heure d’Alger.</h2>
+            <p style="font-size:17px;line-height:1.85;font-weight:300;color:#3D4F49;">Niché entre pins parasols et Méditerranée, Dar el Bahr conjugue l’élégance sobre des grandes maisons balnéaires et la chaleur de l’hospitalité algérienne. Chaque détail — du lin des chambres au sel de nos gommages — puise dans la lumière et les matières de la côte.</p>
+          </div>
+        </section>
+
+        <!-- Featured rooms -->
+        <section style="padding:clamp(32px,5vw,56px) clamp(16px,5vw,48px) clamp(64px,9vw,110px);">
+          <div style="max-width:1240px;margin:0 auto;">
+            <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:20px;margin-bottom:clamp(32px,4vw,52px);">
+              <div>
+                <p style="font-family:'Jost';font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:#A9854A;margin:0 0 14px;">Chambres &amp; Suites</p>
+                <h2 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(30px,4vw,46px);line-height:1.08;color:#15302D;margin:0;">Nos plus beaux hébergements</h2>
+              </div>
+              <button onClick="{{ nav }}" data-nav="chambres" style="background:none;border:none;cursor:pointer;font-family:'Jost';font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:#1E5F5A;border-bottom:1px solid #1E5F5A;padding:6px 0;" style-hover="color:#B08D57;border-color:#B08D57;" style-focus="outline:2px solid #1E5F5A;outline-offset:3px;">Voir les 6 hébergements</button>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:28px;">
+              <sc-for list="{{ roomsFeatured }}" as="r" hint-placeholder-count="3">
+                <article style="background:#FFFDF9;border:1px solid rgba(23,48,46,.09);overflow:hidden;display:flex;flex-direction:column;">
+                  <div style="position:relative;aspect-ratio:3/2;">
+                    <image-slot id="{{ r.imgId }}" src="{{ r.imgSrc }}" shape="rect" fit="cover" placeholder="{{ r.slotLabel }}" style="width:100%;height:100%;display:block;"></image-slot>
+                    <span style="position:absolute;left:12px;bottom:12px;pointer-events:none;font-family:'Jost';font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#15302D;background:rgba(247,241,231,.92);padding:5px 11px;border-radius:2px;font-weight:500;">{{ r.vue }}</span>
+                  </div>
+                  <div style="padding:24px 24px 26px;display:flex;flex-direction:column;flex:1;">
+                    <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;">
+                      <h3 style="font-family:'Cormorant Garamond',serif;font-size:25px;font-weight:600;color:#17302E;margin:0;">{{ r.label }}</h3>
+                      <span style="font-family:'Jost';font-size:11px;color:#8A9591;letter-spacing:.04em;white-space:nowrap;">{{ r.size }}</span>
+                    </div>
+                    <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:17px;color:#5B8B83;margin:8px 0 16px;">{{ r.tagline }}</p>
+                    <div style="margin-top:auto;display:flex;justify-content:space-between;align-items:flex-end;border-top:1px solid rgba(176,141,87,.25);padding-top:16px;gap:12px;">
+                      <span style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:#1E5F5A;">{{ r.prixFmt }}<span style="font-family:'Jost';font-size:11px;color:#8A9591;font-weight:400;"> / nuit</span></span>
+                      <button onClick="{{ r.reserve }}" style="font-family:'Jost';font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:500;padding:11px 20px;background:#1E5F5A;color:#F7F1E7;border:none;cursor:pointer;transition:background .3s ease;" style-hover="background:#143f3b;" style-focus="outline:2px solid #B08D57;outline-offset:2px;">Réserver</button>
+                    </div>
+                  </div>
+                </article>
+              </sc-for>
+            </div>
+          </div>
+        </section>
+
+        <!-- Spa teaser -->
+        <section style="background:#EFE7D6;padding:clamp(64px,9vw,110px) clamp(16px,5vw,48px);">
+          <div style="max-width:1240px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:clamp(32px,5vw,64px);align-items:center;">
+            <div style="position:relative;aspect-ratio:4/3;border-radius:4px;overflow:hidden;box-shadow:0 40px 80px -50px rgba(21,48,45,.6);">
+              <image-slot id="photo-spa-bassin" src="photos/spa-bassin.jpg" shape="rect" fit="cover" placeholder="Photo — bassin de relaxation du spa" style="width:100%;height:100%;display:block;"></image-slot>
+            </div>
+            <div>
+              <p style="font-family:'Jost';font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:#A9854A;margin:0 0 20px;">Le Spa</p>
+              <h2 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(30px,4.2vw,48px);line-height:1.1;color:#15302D;margin:0 0 22px;">Le rituel de la mer, sous vos sens.</h2>
+              <p style="font-size:16.5px;line-height:1.85;font-weight:300;color:#3D4F49;margin:0 0 30px;max-width:460px;">Hammam traditionnel, gommages au sel, massages à l’huile d’argan : six soins signature puisés dans les traditions du bassin méditerranéen, ouverts tous les jours de 9 h à 21 h.</p>
+              <button onClick="{{ nav }}" data-nav="spa" style="font-family:'Jost';font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:500;padding:15px 32px;background:transparent;color:#17302E;border:1px solid #B08D57;cursor:pointer;transition:all .3s ease;" style-hover="background:#B08D57;color:#fff;" style-focus="outline:2px solid #1E5F5A;outline-offset:2px;">Découvrir les soins</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Avis -->
+        <section style="padding:clamp(64px,9vw,110px) clamp(16px,5vw,48px);">
+          <div style="max-width:1240px;margin:0 auto;">
+            <div style="text-align:center;margin-bottom:clamp(36px,5vw,56px);">
+              <p style="font-family:'Jost';font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:#A9854A;margin:0 0 14px;">Ils ont séjourné chez nous</p>
+              <h2 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(30px,4vw,46px);color:#15302D;margin:0;">Une note moyenne de 4,8 / 5</h2>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:24px;">
+              <sc-for list="{{ avisView }}" as="a" hint-placeholder-count="4">
+                <figure style="margin:0;background:#FFFDF9;border:1px solid rgba(23,48,46,.09);padding:28px 26px;display:flex;flex-direction:column;">
+                  <span aria-hidden="true" style="color:#B08D57;letter-spacing:.14em;font-size:15px;margin-bottom:16px;">{{ a.stars }}</span>
+                  <blockquote style="margin:0 0 20px;font-family:'Cormorant Garamond',serif;font-size:20px;line-height:1.5;color:#28403B;font-style:italic;flex:1;">« {{ a.txt }} »</blockquote>
+                  <figcaption style="font-family:'Jost';font-size:13px;color:#5B6B65;">
+                    <span style="font-weight:500;color:#17302E;">{{ a.nom }}</span> · {{ a.ville }}
+                    <span style="display:block;font-size:11px;color:#9AA6A0;margin-top:3px;letter-spacing:.06em;">{{ a.date }}</span>
+                  </figcaption>
+                </figure>
+              </sc-for>
+            </div>
+          </div>
+        </section>
+
+        <!-- CTA -->
+        <section style="padding:0 clamp(16px,5vw,48px) clamp(72px,9vw,120px);">
+          <div style="max-width:1240px;margin:0 auto;position:relative;overflow:hidden;border-radius:4px;background:linear-gradient(150deg,#1E5F5A 0%,#15302D 100%);padding:clamp(48px,7vw,88px) clamp(24px,5vw,72px);text-align:center;">
+            <p style="font-family:'Jost';font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:#C6A469;margin:0 0 18px;">Votre séjour vous attend</p>
+            <h2 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(30px,4.5vw,52px);line-height:1.1;color:#F7F1E7;margin:0 0 30px;">Réservez en quelques instants.</h2>
+            <button onClick="{{ openReservation }}" style="font-family:'Jost';font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:500;padding:16px 38px;background:#B08D57;color:#15302D;border:none;cursor:pointer;transition:background .3s ease;" style-hover="background:#C6A469;" style-focus="outline:2px solid #F7F1E7;outline-offset:2px;">Réserver maintenant</button>
+          </div>
+        </section>
+      </div>
+    </sc-if>
+
+    <!-- ================= CHAMBRES ================= -->
+    <sc-if value="{{ isChambres }}">
+      <div>
+        <section style="background:linear-gradient(168deg,#faf4e9 0%,#eee2ca 100%);padding:clamp(56px,8vw,96px) clamp(16px,5vw,48px);text-align:center;">
+          <p style="font-family:'Jost';font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:#A9854A;margin:0 0 18px;">Hébergements</p>
+          <h1 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(38px,6vw,66px);line-height:1.05;color:#15302D;margin:0 0 18px;">Chambres &amp; Suites</h1>
+          <p style="max-width:600px;margin:0 auto;font-size:16.5px;line-height:1.8;font-weight:300;color:#3D4F49;">Six hébergements aux tons sable et laiton, du cocon face au jardin à la villa avec piscine privée. Tous avec petit-déjeuner inclus et accès au spa.</p>
+        </section>
+        <section style="padding:clamp(48px,6vw,80px) clamp(16px,5vw,48px) clamp(72px,9vw,120px);">
+          <div style="max-width:1240px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:30px;">
+            <sc-for list="{{ roomsView }}" as="r" hint-placeholder-count="6">
+              <article style="background:#FFFDF9;border:1px solid rgba(23,48,46,.09);overflow:hidden;display:flex;flex-direction:column;">
+                <div style="position:relative;aspect-ratio:16/10;">
+                  <image-slot id="{{ r.imgId }}" src="{{ r.imgSrc }}" shape="rect" fit="cover" placeholder="{{ r.slotLabel }}" style="width:100%;height:100%;display:block;"></image-slot>
+                  <span style="position:absolute;left:14px;top:14px;pointer-events:none;font-family:'Jost';font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#15302D;background:rgba(247,241,231,.92);padding:6px 12px;border-radius:2px;font-weight:500;">{{ r.vue }}</span>
+                </div>
+                <div style="padding:28px 28px 30px;display:flex;flex-direction:column;flex:1;">
+                  <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;">
+                    <h2 style="font-family:'Cormorant Garamond',serif;font-size:29px;font-weight:600;color:#17302E;margin:0;">{{ r.label }}</h2>
+                  </div>
+                  <p style="font-family:'Jost';font-size:12px;letter-spacing:.06em;color:#8A9591;margin:8px 0 0;">{{ r.size }} · {{ r.bed }} · jusqu’à {{ r.cap }} pers.</p>
+                  <p style="font-size:15px;line-height:1.75;font-weight:300;color:#3D4F49;margin:16px 0 20px;">{{ r.desc }}</p>
+                  <ul style="list-style:none;margin:0 0 24px;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:9px 16px;">
+                    <sc-for list="{{ r.amen }}" as="a" hint-placeholder-count="6">
+                      <li style="font-family:'Jost';font-size:13px;color:#3D4F49;font-weight:300;display:flex;align-items:center;gap:9px;"><span aria-hidden="true" style="width:5px;height:5px;background:#B08D57;transform:rotate(45deg);flex:none;"></span>{{ a }}</li>
+                    </sc-for>
+                  </ul>
+                  <div style="margin-top:auto;display:flex;justify-content:space-between;align-items:flex-end;border-top:1px solid rgba(176,141,87,.28);padding-top:20px;gap:16px;flex-wrap:wrap;">
+                    <div>
+                      <span style="display:block;font-family:'Jost';font-size:11px;color:#8A9591;letter-spacing:.06em;">À partir de</span>
+                      <span style="font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:600;color:#1E5F5A;">{{ r.prixFmt }}<span style="font-family:'Jost';font-size:12px;color:#8A9591;font-weight:400;"> / nuit</span></span>
+                    </div>
+                    <button onClick="{{ r.reserve }}" style="font-family:'Jost';font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:500;padding:13px 26px;background:#1E5F5A;color:#F7F1E7;border:none;cursor:pointer;transition:background .3s ease;" style-hover="background:#143f3b;" style-focus="outline:2px solid #B08D57;outline-offset:2px;">Réserver</button>
+                  </div>
+                </div>
+              </article>
+            </sc-for>
+          </div>
+        </section>
+      </div>
+    </sc-if>
+
+    <!-- ================= SPA ================= -->
+    <sc-if value="{{ isSpa }}">
+      <div>
+        <section style="background:linear-gradient(168deg,#eef3ee 0%,#dbe8e1 100%);padding:clamp(56px,8vw,96px) clamp(16px,5vw,48px);text-align:center;">
+          <p style="font-family:'Jost';font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:#A9854A;margin:0 0 18px;">Bien-être</p>
+          <h1 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(38px,6vw,66px);line-height:1.05;color:#15302D;margin:0 0 18px;">Le Spa Dar el Bahr</h1>
+          <p style="max-width:620px;margin:0 auto;font-size:16.5px;line-height:1.8;font-weight:300;color:#3D4F49;">Un sanctuaire de 600 m² face à la mer : hammam, bassin de relaxation et cabines de soins. Réservation conseillée à la réception ou au +213 _ __ __ __ __.</p>
+        </section>
+        <section style="padding:clamp(48px,6vw,80px) clamp(16px,5vw,48px) clamp(32px,5vw,48px);">
+          <div style="max-width:1080px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:22px;">
+            <sc-for list="{{ soinsView }}" as="x" hint-placeholder-count="6">
+              <article style="background:#FFFDF9;border:1px solid rgba(23,48,46,.09);padding:28px 26px;display:flex;flex-direction:column;">
+                <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:6px;">
+                  <h2 style="font-family:'Cormorant Garamond',serif;font-size:25px;font-weight:600;color:#17302E;margin:0;">{{ x.nom }}</h2>
+                  <span style="font-family:'Jost';font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#5B8B83;white-space:nowrap;background:#EAF1EE;padding:5px 10px;border-radius:2px;">{{ x.duree }}</span>
+                </div>
+                <p style="font-size:14.5px;line-height:1.7;font-weight:300;color:#3D4F49;margin:10px 0 22px;flex:1;">{{ x.desc }}</p>
+                <div style="border-top:1px solid rgba(176,141,87,.28);padding-top:16px;font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:600;color:#1E5F5A;">{{ x.prixFmt }}</div>
+              </article>
+            </sc-for>
+          </div>
+        </section>
+        <section style="padding:clamp(24px,4vw,48px) clamp(16px,5vw,48px) clamp(72px,9vw,110px);">
+          <div style="max-width:1080px;margin:0 auto;background:#EFE7D6;border:1px solid rgba(176,141,87,.3);padding:clamp(28px,4vw,44px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:28px;">
+            <div>
+              <h3 style="font-family:'Jost';font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:#A9854A;margin:0 0 14px;font-weight:500;">Horaires du spa</h3>
+              <p style="font-size:15px;line-height:1.9;font-weight:300;color:#3D4F49;margin:0;">Tous les jours · 9 h 00 – 21 h 00<br>Dernier soin à 20 h 00<br>Accès inclus pour les résidents</p>
+            </div>
+            <div>
+              <h3 style="font-family:'Jost';font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:#A9854A;margin:0 0 14px;font-weight:500;">Bon à savoir</h3>
+              <p style="font-size:15px;line-height:1.9;font-weight:300;color:#3D4F49;margin:0;">Accès dès 16 ans · Peignoirs fournis<br>Prévoir 15 min avant le soin<br>Annulation gratuite jusqu’à 24 h</p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </sc-if>
+
+    <!-- ================= GALERIE ================= -->
+    <sc-if value="{{ isGalerie }}">
+      <div>
+        <section style="background:linear-gradient(168deg,#faf4e9 0%,#eee2ca 100%);padding:clamp(56px,8vw,96px) clamp(16px,5vw,48px);text-align:center;">
+          <p style="font-family:'Jost';font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:#A9854A;margin:0 0 18px;">En images</p>
+          <h1 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(38px,6vw,66px);line-height:1.05;color:#15302D;margin:0;">Galerie</h1>
+        </section>
+        <section style="padding:clamp(36px,5vw,56px) clamp(16px,5vw,48px) clamp(72px,9vw,110px);">
+          <div style="max-width:1240px;margin:0 auto;">
+            <div role="tablist" aria-label="Filtrer la galerie" style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:clamp(28px,4vw,44px);">
+              <sc-for list="{{ filters }}" as="f" hint-placeholder-count="5">
+                <sc-if value="{{ f.active }}">
+                  <button onClick="{{ f.go }}" aria-pressed="true" style="font-family:'Jost';font-size:12px;letter-spacing:.12em;text-transform:uppercase;padding:11px 22px;background:#1E5F5A;border:1px solid #1E5F5A;color:#F7F1E7;cursor:pointer;border-radius:100px;" style-focus="outline:2px solid #B08D57;outline-offset:2px;">{{ f.label }}</button>
+                </sc-if>
+                <sc-if value="{{ f.inactive }}">
+                  <button onClick="{{ f.go }}" aria-pressed="false" style="font-family:'Jost';font-size:12px;letter-spacing:.12em;text-transform:uppercase;padding:11px 22px;background:transparent;border:1px solid rgba(23,48,46,.2);color:#3D4F49;cursor:pointer;border-radius:100px;transition:all .25s ease;" style-hover="border-color:#1E5F5A;color:#1E5F5A;" style-focus="outline:2px solid #1E5F5A;outline-offset:2px;">{{ f.label }}</button>
+                </sc-if>
+              </sc-for>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:16px;">
+              <sc-for list="{{ galleryView }}" as="t" hint-placeholder-count="9">
+                <div style="position:relative;aspect-ratio:4/3;overflow:hidden;border-radius:3px;">
+                  <image-slot id="{{ t.img }}" src="{{ t.src }}" shape="rect" fit="cover" placeholder="{{ t.slotLabel }}" style="width:100%;height:100%;display:block;"></image-slot>
+                  <span style="position:absolute;left:12px;bottom:12px;right:12px;pointer-events:none;text-align:left;font-family:'Jost';font-size:11px;letter-spacing:.02em;color:#fff;background:rgba(21,48,45,.5);backdrop-filter:blur(4px);padding:6px 11px;border-radius:2px;">{{ t.label }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </section>
+      </div>
+    </sc-if>
+
+    <!-- ================= CONTACT ================= -->
+    <sc-if value="{{ isContact }}">
+      <div>
+        <section style="background:linear-gradient(168deg,#eef3ee 0%,#dbe8e1 100%);padding:clamp(56px,8vw,96px) clamp(16px,5vw,48px);text-align:center;">
+          <p style="font-family:'Jost';font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:#A9854A;margin:0 0 18px;">Nous écrire · nous trouver</p>
+          <h1 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(38px,6vw,66px);line-height:1.05;color:#15302D;margin:0;">Contact &amp; Accès</h1>
+        </section>
+        <section style="padding:clamp(48px,6vw,80px) clamp(16px,5vw,48px) clamp(72px,9vw,110px);">
+          <div style="max-width:1180px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:clamp(32px,5vw,56px);">
+            <div>
+              <h2 style="font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:600;color:#17302E;margin:0 0 24px;">Écrivez-nous</h2>
+              <sc-if value="{{ contactNotSent }}">
+                <form onSubmit="{{ submitContact }}" style="display:flex;flex-direction:column;gap:18px;">
+                  <div>
+                    <label for="c-nom" style="display:block;font-family:'Jost';font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#8A9591;margin:0 0 8px;font-weight:500;">Nom complet</label>
+                    <input id="c-nom" type="text" required autocomplete="name" style="width:100%;font-size:15px;padding:13px 14px;border:1px solid rgba(23,48,46,.2);background:#FFFDF9;color:#17302E;border-radius:2px;outline:none;" style-focus="border-color:#1E5F5A;box-shadow:0 0 0 3px rgba(30,95,90,.15);">
+                  </div>
+                  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:18px;">
+                    <div>
+                      <label for="c-mail" style="display:block;font-family:'Jost';font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#8A9591;margin:0 0 8px;font-weight:500;">E-mail</label>
+                      <input id="c-mail" type="email" required autocomplete="email" style="width:100%;font-size:15px;padding:13px 14px;border:1px solid rgba(23,48,46,.2);background:#FFFDF9;color:#17302E;border-radius:2px;outline:none;" style-focus="border-color:#1E5F5A;box-shadow:0 0 0 3px rgba(30,95,90,.15);">
+                    </div>
+                    <div>
+                      <label for="c-tel" style="display:block;font-family:'Jost';font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#8A9591;margin:0 0 8px;font-weight:500;">Téléphone</label>
+                      <input id="c-tel" type="tel" autocomplete="tel" placeholder="+213 _ __ __ __ __" style="width:100%;font-size:15px;padding:13px 14px;border:1px solid rgba(23,48,46,.2);background:#FFFDF9;color:#17302E;border-radius:2px;outline:none;" style-focus="border-color:#1E5F5A;box-shadow:0 0 0 3px rgba(30,95,90,.15);">
+                    </div>
+                  </div>
+                  <div>
+                    <label for="c-msg" style="display:block;font-family:'Jost';font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#8A9591;margin:0 0 8px;font-weight:500;">Message</label>
+                    <textarea id="c-msg" rows="4" required style="width:100%;font-size:15px;padding:13px 14px;border:1px solid rgba(23,48,46,.2);background:#FFFDF9;color:#17302E;border-radius:2px;outline:none;resize:vertical;font-family:'Jost';" style-focus="border-color:#1E5F5A;box-shadow:0 0 0 3px rgba(30,95,90,.15);"></textarea>
+                  </div>
+                  <label style="display:flex;gap:12px;align-items:flex-start;cursor:pointer;font-size:13px;line-height:1.6;color:#3D4F49;font-weight:300;">
+                    <input type="checkbox" checked="{{ contactConsent }}" onChange="{{ setContactConsent }}" required style="margin-top:3px;width:17px;height:17px;accent-color:#1E5F5A;flex:none;cursor:pointer;">
+                    <span>J’accepte que mes données soient utilisées pour traiter ma demande, conformément à la <a href="#" onClick="{{ nav }}" data-nav="confidentialite" style="color:#1E5F5A;text-decoration:underline;text-underline-offset:2px;">politique de confidentialité</a>.</span>
+                  </label>
+                  <button type="submit" disabled="{{ contactNotConsent }}" style="align-self:flex-start;font-family:'Jost';font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:500;padding:15px 34px;background:#1E5F5A;color:#F7F1E7;border:none;cursor:pointer;transition:background .3s ease;" style-hover="background:#143f3b;" style-focus="outline:2px solid #B08D57;outline-offset:2px;">Envoyer le message</button>
+                </form>
+              </sc-if>
+              <sc-if value="{{ contactSent }}">
+                <div role="status" style="background:#EAF1EE;border:1px solid #9EC4BC;padding:32px 28px;border-radius:3px;">
+                  <p style="font-family:'Cormorant Garamond',serif;font-size:26px;color:#1E5F5A;margin:0 0 10px;">Merci, votre message est parti.</p>
+                  <p style="font-size:15px;line-height:1.7;font-weight:300;color:#3D4F49;margin:0;">Notre équipe vous répondra sous 24 heures. À très bientôt sur la baie de Tipaza.</p>
+                </div>
+              </sc-if>
+            </div>
+            <div>
+              <div role="img" aria-label="Plan d’accès à Dar el Bahr, route de la corniche, Tipaza" style="position:relative;aspect-ratio:16/10;border-radius:4px;overflow:hidden;background:radial-gradient(130% 100% at 70% 20%, rgba(255,255,255,.4), transparent 55%), linear-gradient(150deg,#e7efe9 0%,#c7dcd3 48%,#8fb9b0 100%);margin-bottom:28px;box-shadow:0 30px 70px -45px rgba(21,48,45,.5);">
+                <span aria-hidden="true" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-100%);width:22px;height:22px;background:#B84B3A;border-radius:50% 50% 50% 0;rotate:-45deg;box-shadow:0 6px 14px rgba(0,0,0,.3);"></span>
+                <span style="position:absolute;left:14px;bottom:14px;font-family:ui-monospace,monospace;font-size:10px;color:#fff;background:rgba(21,48,45,.42);backdrop-filter:blur(4px);padding:6px 10px;border-radius:2px;">PLAN · route de la corniche, baie de Tipaza</span>
+              </div>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:24px 28px;">
+                <div>
+                  <h3 style="font-family:'Jost';font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#A9854A;margin:0 0 10px;font-weight:500;">Adresse</h3>
+                  <p style="font-size:14.5px;line-height:1.75;font-weight:300;color:#3D4F49;margin:0;">Route de la Corniche<br>Baie de Tipaza<br>42000 Tipaza, Algérie</p>
+                </div>
+                <div>
+                  <h3 style="font-family:'Jost';font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#A9854A;margin:0 0 10px;font-weight:500;">Nous joindre</h3>
+                  <p style="font-size:14.5px;line-height:1.75;font-weight:300;color:#3D4F49;margin:0;">Tél. +213 _ __ __ __ __<br>reservations@darelbahr.dz<br>Réception ouverte 24 h/24</p>
+                </div>
+                <div>
+                  <h3 style="font-family:'Jost';font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#A9854A;margin:0 0 10px;font-weight:500;">Accès</h3>
+                  <p style="font-size:14.5px;line-height:1.75;font-weight:300;color:#3D4F49;margin:0;">À 70 km à l’ouest d’Alger<br>Aéroport Alger — 1 h 10<br>Voiturier &amp; parking privé</p>
+                </div>
+                <div>
+                  <h3 style="font-family:'Jost';font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#A9854A;margin:0 0 10px;font-weight:500;">Restaurant</h3>
+                  <p style="font-size:14.5px;line-height:1.75;font-weight:300;color:#3D4F49;margin:0;">Le Phare · 7 h – 23 h<br>Piscine · 8 h – 20 h<br>Spa · 9 h – 21 h</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </sc-if>
+
+    <!-- ================= RESERVATION (moment fort) ================= -->
+    <sc-if value="{{ isReservation }}">
+      <div>
+        <section style="background:linear-gradient(168deg,#faf4e9 0%,#eee2ca 100%);padding:clamp(48px,7vw,80px) clamp(16px,5vw,48px);text-align:center;">
+          <p style="font-family:'Jost';font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:#A9854A;margin:0 0 16px;">Réservation en ligne</p>
+          <h1 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(34px,5.5vw,58px);line-height:1.05;color:#15302D;margin:0;">Composez votre séjour</h1>
+        </section>
+
+        <sc-if value="{{ confirmed }}">
+          <section style="padding:clamp(48px,6vw,80px) clamp(16px,5vw,48px) clamp(72px,9vw,110px);">
+            <div role="status" style="max-width:720px;margin:0 auto;background:#FFFDF9;border:1px solid #9EC4BC;border-top:4px solid #1E5F5A;padding:clamp(32px,4vw,52px);">
+              <p style="font-family:'Jost';font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:#5B8B83;margin:0 0 10px;">Demande confirmée</p>
+              <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4vw,40px);font-weight:600;color:#15302D;margin:0 0 8px;">Votre séjour est réservé.</h2>
+              <p style="font-size:15.5px;line-height:1.75;font-weight:300;color:#3D4F49;margin:0 0 28px;">Un e-mail de confirmation vient de vous être envoyé. Le règlement de l’acompte finalise la réservation. Référence : <strong style="font-family:ui-monospace,monospace;color:#1E5F5A;letter-spacing:.04em;">{{ bookingRef }}</strong></p>
+              <div style="border-top:1px solid rgba(176,141,87,.28);padding-top:24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr));gap:20px 28px;">
+                <div><span style="display:block;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#8A9591;margin-bottom:6px;">Hébergement</span><span style="font-family:'Cormorant Garamond',serif;font-size:20px;color:#17302E;">{{ selName }}</span></div>
+                <div><span style="display:block;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#8A9591;margin-bottom:6px;">Arrivée</span><span style="font-family:'Cormorant Garamond',serif;font-size:20px;color:#17302E;text-transform:capitalize;">{{ arriveeLabel }}</span></div>
+                <div><span style="display:block;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#8A9591;margin-bottom:6px;">Départ</span><span style="font-family:'Cormorant Garamond',serif;font-size:20px;color:#17302E;text-transform:capitalize;">{{ departLabel }}</span></div>
+                <div><span style="display:block;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#8A9591;margin-bottom:6px;">Voyageurs</span><span style="font-family:'Cormorant Garamond',serif;font-size:20px;color:#17302E;">{{ voyageurs }}</span></div>
+                <div><span style="display:block;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#8A9591;margin-bottom:6px;">Total séjour</span><span style="font-family:'Cormorant Garamond',serif;font-size:20px;color:#1E5F5A;">{{ totalFmt }}</span></div>
+                <div><span style="display:block;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#8A9591;margin-bottom:6px;">Acompte (30 %)</span><span style="font-family:'Cormorant Garamond',serif;font-size:20px;color:#1E5F5A;">{{ acompteFmt }}</span></div>
+              </div>
+              <div style="display:flex;flex-wrap:wrap;gap:14px;margin-top:32px;">
+                <button onClick="{{ resetBooking }}" style="font-family:'Jost';font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:500;padding:14px 28px;background:#1E5F5A;color:#F7F1E7;border:none;cursor:pointer;" style-hover="background:#143f3b;" style-focus="outline:2px solid #B08D57;outline-offset:2px;">Modifier la réservation</button>
+                <button onClick="{{ nav }}" data-nav="accueil" style="font-family:'Jost';font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:500;padding:14px 28px;background:transparent;color:#17302E;border:1px solid #B08D57;cursor:pointer;" style-hover="background:#B08D57;color:#fff;" style-focus="outline:2px solid #1E5F5A;outline-offset:2px;">Retour à l’accueil</button>
+              </div>
+            </div>
+          </section>
+        </sc-if>
+
+        <sc-if value="{{ notConfirmed }}">
+          <section style="padding:clamp(40px,5vw,64px) clamp(16px,5vw,48px) clamp(72px,9vw,110px);">
+            <div style="max-width:1080px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:32px;align-items:start;">
+              <!-- Left: form -->
+              <div style="background:#FFFDF9;border:1px solid rgba(23,48,46,.09);padding:clamp(24px,3vw,36px);">
+                <h2 style="font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:600;color:#17302E;margin:0 0 24px;">Vos dates &amp; votre chambre</h2>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:20px;">
+                  <div>
+                    <label for="r-arr" style="display:block;font-family:'Jost';font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#8A9591;margin:0 0 8px;font-weight:500;">Arrivée</label>
+                    <input id="r-arr" type="date" value="{{ arrivee }}" min="{{ today }}" onChange="{{ setArrivee }}" style="width:100%;font-size:15px;padding:13px 12px;border:1px solid rgba(23,48,46,.2);background:#fff;color:#17302E;border-radius:2px;outline:none;" style-focus="border-color:#1E5F5A;box-shadow:0 0 0 3px rgba(30,95,90,.15);">
+                  </div>
+                  <div>
+                    <label for="r-dep" style="display:block;font-family:'Jost';font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#8A9591;margin:0 0 8px;font-weight:500;">Départ</label>
+                    <input id="r-dep" type="date" value="{{ depart }}" min="{{ arrivee }}" onChange="{{ setDepart }}" style="width:100%;font-size:15px;padding:13px 12px;border:1px solid rgba(23,48,46,.2);background:#fff;color:#17302E;border-radius:2px;outline:none;" style-focus="border-color:#1E5F5A;box-shadow:0 0 0 3px rgba(30,95,90,.15);">
+                  </div>
+                </div>
+                <div style="margin-bottom:20px;">
+                  <label for="r-room" style="display:block;font-family:'Jost';font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#8A9591;margin:0 0 8px;font-weight:500;">Hébergement</label>
+                  <select id="r-room" value="{{ roomId }}" onChange="{{ setRoom }}" style="width:100%;font-size:15px;padding:13px 12px;border:1px solid rgba(23,48,46,.2);background:#fff;color:#17302E;border-radius:2px;outline:none;cursor:pointer;" style-focus="border-color:#1E5F5A;box-shadow:0 0 0 3px rgba(30,95,90,.15);">
+                    <sc-for list="{{ roomsView }}" as="r" hint-placeholder-count="6"><option value="{{ r.id }}">{{ r.optLabel }}</option></sc-for>
+                  </select>
+                </div>
+                <div style="margin-bottom:24px;">
+                  <span style="display:block;font-family:'Jost';font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#8A9591;margin:0 0 8px;font-weight:500;">Voyageurs</span>
+                  <div style="display:flex;align-items:center;gap:16px;">
+                    <button type="button" onClick="{{ decGuests }}" aria-label="Retirer un voyageur" style="width:44px;height:44px;border:1px solid rgba(23,48,46,.25);background:#fff;color:#17302E;font-size:20px;cursor:pointer;border-radius:2px;line-height:1;" style-hover="border-color:#1E5F5A;color:#1E5F5A;" style-focus="outline:2px solid #1E5F5A;outline-offset:2px;">–</button>
+                    <span aria-live="polite" style="font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:600;color:#17302E;min-width:28px;text-align:center;">{{ voyageurs }}</span>
+                    <button type="button" onClick="{{ incGuests }}" aria-label="Ajouter un voyageur" style="width:44px;height:44px;border:1px solid rgba(23,48,46,.25);background:#fff;color:#17302E;font-size:20px;cursor:pointer;border-radius:2px;line-height:1;" style-hover="border-color:#1E5F5A;color:#1E5F5A;" style-focus="outline:2px solid #1E5F5A;outline-offset:2px;">+</button>
+                    <span style="font-size:12.5px;color:#8A9591;font-weight:300;">Capacité max. : {{ selCap }} pers.</span>
+                  </div>
+                </div>
+                <div style="position:relative;aspect-ratio:16/9;border-radius:3px;overflow:hidden;">
+                  <image-slot id="{{ selImgId }}" src="{{ selImgSrc }}" shape="rect" fit="cover" placeholder="{{ selSlotLabel }}" style="width:100%;height:100%;display:block;"></image-slot>
+                  <span style="position:absolute;left:14px;bottom:14px;pointer-events:none;font-family:'Jost';font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#15302D;background:rgba(247,241,231,.92);padding:6px 12px;border-radius:2px;font-weight:500;">{{ selName }} · {{ selVue }}</span>
+                </div>
+              </div>
+
+              <!-- Right: summary -->
+              <div style="position:sticky;top:92px;">
+                <div style="background:#15302D;color:#EDE4D3;padding:clamp(24px,3vw,32px);">
+                  <p style="font-family:'Jost';font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:#C6A469;margin:0 0 20px;">Récapitulatif</p>
+                  <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px;">
+                    <span style="font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:600;color:#F7F1E7;">{{ selName }}</span>
+                  </div>
+                  <p style="font-size:12.5px;color:#A9BDB6;margin:0 0 22px;font-weight:300;">{{ selSize }} · {{ selBed }} · {{ selVue }}</p>
+
+                  <div style="border-top:1px solid rgba(198,164,105,.3);padding-top:18px;display:flex;flex-direction:column;gap:12px;font-size:14px;">
+                    <div style="display:flex;justify-content:space-between;"><span style="color:#BBCCC6;font-weight:300;">Durée</span><span style="color:#F7F1E7;">{{ nightsLabel }}</span></div>
+                    <div style="display:flex;justify-content:space-between;"><span style="color:#BBCCC6;font-weight:300;">Prix / nuit</span><span style="color:#F7F1E7;">{{ selPrixFmt }}</span></div>
+                    <div style="display:flex;justify-content:space-between;"><span style="color:#BBCCC6;font-weight:300;">Sous-total</span><span style="color:#F7F1E7;">{{ subtotalFmt }}</span></div>
+                    <div style="display:flex;justify-content:space-between;"><span style="color:#BBCCC6;font-weight:300;">Taxe de séjour</span><span style="color:#F7F1E7;">{{ taxeFmt }}</span></div>
+                  </div>
+                  <div style="border-top:1px solid rgba(198,164,105,.3);margin-top:18px;padding-top:18px;display:flex;justify-content:space-between;align-items:baseline;">
+                    <span style="font-family:'Jost';font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#C6A469;">Total</span>
+                    <span style="font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:600;color:#F7F1E7;">{{ totalFmt }}</span>
+                  </div>
+                  <div style="display:flex;justify-content:space-between;font-size:13px;margin-top:8px;color:#BBCCC6;font-weight:300;"><span>Acompte à régler (30 %)</span><span style="color:#C6A469;">{{ acompteFmt }}</span></div>
+                  <div style="display:flex;justify-content:space-between;font-size:13px;margin-top:4px;color:#BBCCC6;font-weight:300;"><span>Solde à l’arrivée</span><span>{{ soldeFmt }}</span></div>
+
+                  <div style="background:rgba(198,164,105,.12);border:1px solid rgba(198,164,105,.28);padding:14px 16px;margin-top:22px;font-size:12.5px;line-height:1.6;color:#DED3BF;font-weight:300;">
+                    <strong style="color:#F7F1E7;font-weight:500;">Politique d’annulation.</strong> Annulation gratuite jusqu’à 48 h avant l’arrivée. Passé ce délai, l’acompte de 30 % est retenu.
+                  </div>
+
+                  <label style="display:flex;gap:11px;align-items:flex-start;cursor:pointer;font-size:12.5px;line-height:1.6;color:#DED3BF;font-weight:300;margin-top:20px;">
+                    <input type="checkbox" checked="{{ consent }}" onChange="{{ toggleConsent }}" style="margin-top:2px;width:17px;height:17px;accent-color:#C6A469;flex:none;cursor:pointer;">
+                    <span>J’accepte la politique d’acompte et d’annulation ainsi que la <a href="#" onClick="{{ nav }}" data-nav="confidentialite" style="color:#C6A469;text-decoration:underline;text-underline-offset:2px;">politique de confidentialité</a>.</span>
+                  </label>
+
+                  <sc-if value="{{ notValid }}"><p style="font-size:12px;color:#E8B79E;margin:16px 0 0;font-weight:300;">Sélectionnez une date de départ postérieure à la date d’arrivée.</p></sc-if>
+
+                  <button onClick="{{ confirmBooking }}" disabled="{{ cannotConfirm }}" style="width:100%;margin-top:20px;font-family:'Jost';font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:500;padding:16px;background:#C6A469;color:#15302D;border:none;cursor:pointer;transition:background .3s ease,opacity .3s ease;opacity:1;" style-hover="background:#D6B57A;" style-focus="outline:2px solid #F7F1E7;outline-offset:2px;">Confirmer la réservation</button>
+                  <p style="text-align:center;font-size:11.5px;color:#A9BDB6;margin:12px 0 0;font-weight:300;">Aucun paiement immédiat · demande sans engagement</p>
+                </div>
+              </div>
+            </div>
+          </section>
+        </sc-if>
+      </div>
+    </sc-if>
+
+    <!-- ================= MENTIONS LEGALES ================= -->
+    <sc-if value="{{ isMentions }}">
+      <div style="max-width:760px;margin:0 auto;padding:clamp(56px,8vw,96px) clamp(20px,5vw,48px);">
+        <p style="font-family:'Jost';font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:#A9854A;margin:0 0 16px;">Informations légales</p>
+        <h1 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(34px,5vw,50px);color:#15302D;margin:0 0 32px;">Mentions légales</h1>
+        <div style="font-size:15px;line-height:1.85;font-weight:300;color:#3D4F49;">
+          <h2 style="font-family:'Cormorant Garamond',serif;font-size:24px;color:#17302E;margin:28px 0 10px;font-weight:600;">Éditeur du site</h2>
+          <p style="margin:0 0 12px;">Dar el Bahr — Hôtel &amp; Spa (SARL), au capital de 40 000 000 DA. Route de la Corniche, Baie de Tipaza, 42000 Tipaza, Algérie. Registre du commerce n° 42/00-XXXXXXX B 26. Directeur de la publication : la direction générale de l’établissement.</p>
+          <h2 style="font-family:'Cormorant Garamond',serif;font-size:24px;color:#17302E;margin:28px 0 10px;font-weight:600;">Contact</h2>
+          <p style="margin:0 0 12px;">Tél. +213 _ __ __ __ __ · reservations@darelbahr.dz</p>
+          <h2 style="font-family:'Cormorant Garamond',serif;font-size:24px;color:#17302E;margin:28px 0 10px;font-weight:600;">Hébergement du site</h2>
+          <p style="margin:0 0 12px;">Ce site de démonstration est hébergé par le studio de son concepteur. Les contenus, textes et visuels sont fournis à titre illustratif.</p>
+          <h2 style="font-family:'Cormorant Garamond',serif;font-size:24px;color:#17302E;margin:28px 0 10px;font-weight:600;">Propriété intellectuelle</h2>
+          <p style="margin:0 0 12px;">L’ensemble des éléments du site (textes, mises en page, éléments graphiques) est protégé. Toute reproduction sans autorisation est interdite. Données présentées à des fins de démonstration.</p>
+        </div>
+        <button onClick="{{ nav }}" data-nav="accueil" style="margin-top:36px;background:none;border:none;cursor:pointer;font-family:'Jost';font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:#1E5F5A;border-bottom:1px solid #1E5F5A;padding:6px 0;" style-hover="color:#B08D57;border-color:#B08D57;" style-focus="outline:2px solid #1E5F5A;outline-offset:3px;">← Retour à l’accueil</button>
+      </div>
+    </sc-if>
+
+    <!-- ================= CONFIDENTIALITE ================= -->
+    <sc-if value="{{ isConfidentialite }}">
+      <div style="max-width:760px;margin:0 auto;padding:clamp(56px,8vw,96px) clamp(20px,5vw,48px);">
+        <p style="font-family:'Jost';font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:#A9854A;margin:0 0 16px;">Vos données</p>
+        <h1 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(34px,5vw,50px);color:#15302D;margin:0 0 32px;">Politique de confidentialité</h1>
+        <div style="font-size:15px;line-height:1.85;font-weight:300;color:#3D4F49;">
+          <p style="margin:0 0 12px;">Nous attachons une grande importance à la protection de vos données personnelles. Cette politique décrit comment elles sont collectées et utilisées.</p>
+          <h2 style="font-family:'Cormorant Garamond',serif;font-size:24px;color:#17302E;margin:28px 0 10px;font-weight:600;">Données collectées</h2>
+          <p style="margin:0 0 12px;">Lors d’une réservation ou d’une prise de contact : nom, e-mail, téléphone, dates et préférences de séjour. Ces informations servent uniquement à traiter votre demande.</p>
+          <h2 style="font-family:'Cormorant Garamond',serif;font-size:24px;color:#17302E;margin:28px 0 10px;font-weight:600;">Cookies</h2>
+          <p style="margin:0 0 12px;">Le site utilise des cookies de mesure d’audience, soumis à votre consentement via le bandeau prévu à cet effet. Vous pouvez les accepter ou les refuser à tout moment.</p>
+          <h2 style="font-family:'Cormorant Garamond',serif;font-size:24px;color:#17302E;margin:28px 0 10px;font-weight:600;">Vos droits</h2>
+          <p style="margin:0 0 12px;">Vous disposez d’un droit d’accès, de rectification et de suppression de vos données. Pour l’exercer, écrivez-nous à reservations@darelbahr.dz.</p>
+          <h2 style="font-family:'Cormorant Garamond',serif;font-size:24px;color:#17302E;margin:28px 0 10px;font-weight:600;">Conservation</h2>
+          <p style="margin:0 0 12px;">Vos données sont conservées le temps nécessaire au traitement de votre séjour, puis archivées ou supprimées conformément à la réglementation en vigueur.</p>
+        </div>
+        <button onClick="{{ nav }}" data-nav="accueil" style="margin-top:36px;background:none;border:none;cursor:pointer;font-family:'Jost';font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:#1E5F5A;border-bottom:1px solid #1E5F5A;padding:6px 0;" style-hover="color:#B08D57;border-color:#B08D57;" style-focus="outline:2px solid #1E5F5A;outline-offset:3px;">← Retour à l’accueil</button>
+      </div>
+    </sc-if>
+
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer style="background:#15302D;color:#C9D4CF;padding:clamp(56px,7vw,88px) clamp(16px,5vw,48px) 0;">
+    <div style="max-width:1240px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:40px;padding-bottom:clamp(40px,5vw,64px);">
+      <div style="grid-column:1/-1;max-width:360px;">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px;">
+          <span aria-hidden="true" style="width:15px;height:15px;background:#B08D57;transform:rotate(45deg);display:inline-block;"></span>
+          <span style="font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:600;letter-spacing:.04em;color:#F7F1E7;">Dar el Bahr</span>
+        </div>
+        <p style="font-size:14px;line-height:1.8;font-weight:300;color:#9DB0AA;margin:0;">Hôtel &amp; Spa balnéaire sur la baie de Tipaza. L’art de recevoir, entre pins parasols et Méditerranée.</p>
+      </div>
+      <div>
+        <h3 style="font-family:'Jost';font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#C6A469;margin:0 0 18px;font-weight:500;">Explorer</h3>
+        <nav aria-label="Liens de pied de page" style="display:flex;flex-direction:column;gap:11px;">
+          <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="5">
+            <button onClick="{{ item.go }}" style="text-align:left;background:none;border:none;cursor:pointer;font-family:'Jost';font-size:14px;color:#C9D4CF;font-weight:300;padding:0;transition:color .25s ease;" style-hover="color:#F7F1E7;" style-focus="outline:2px solid #C6A469;outline-offset:2px;">{{ item.label }}</button>
+          </sc-for>
+        </nav>
+      </div>
+      <div>
+        <h3 style="font-family:'Jost';font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#C6A469;margin:0 0 18px;font-weight:500;">Nous contacter</h3>
+        <p style="font-size:14px;line-height:1.9;font-weight:300;color:#9DB0AA;margin:0;">Route de la Corniche<br>42000 Tipaza, Algérie<br>Tél. +213 _ __ __ __ __<br>reservations@darelbahr.dz</p>
+      </div>
+      <div>
+        <h3 style="font-family:'Jost';font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#C6A469;margin:0 0 18px;font-weight:500;">Informations</h3>
+        <nav aria-label="Liens légaux" style="display:flex;flex-direction:column;gap:11px;">
+          <button onClick="{{ nav }}" data-nav="mentions" style="text-align:left;background:none;border:none;cursor:pointer;font-family:'Jost';font-size:14px;color:#C9D4CF;font-weight:300;padding:0;" style-hover="color:#F7F1E7;" style-focus="outline:2px solid #C6A469;outline-offset:2px;">Mentions légales</button>
+          <button onClick="{{ nav }}" data-nav="confidentialite" style="text-align:left;background:none;border:none;cursor:pointer;font-family:'Jost';font-size:14px;color:#C9D4CF;font-weight:300;padding:0;" style-hover="color:#F7F1E7;" style-focus="outline:2px solid #C6A469;outline-offset:2px;">Politique de confidentialité</button>
+          <button onClick="{{ openReservation }}" style="text-align:left;background:none;border:none;cursor:pointer;font-family:'Jost';font-size:14px;color:#C9D4CF;font-weight:300;padding:0;" style-hover="color:#F7F1E7;" style-focus="outline:2px solid #C6A469;outline-offset:2px;">Réserver un séjour</button>
+        </nav>
+      </div>
+    </div>
+    <div style="max-width:1240px;margin:0 auto;border-top:1px solid rgba(198,164,105,.22);padding:24px 0 32px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;font-size:12.5px;color:#8FA39D;font-weight:300;">
+      <span>© 2026 Dar el Bahr — Hôtel &amp; Spa. Tous droits réservés. Site de démonstration.</span>
+      <span>Réalisé par Arslan DIF — <a href="https://difarslan.com" target="_blank" rel="noopener" style="color:#C6A469;text-decoration:none;" style-hover="text-decoration:underline;">difarslan.com</a></span>
+    </div>
+  </footer>
+
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  G1='radial-gradient(130% 100% at 22% 12%, rgba(255,255,255,.42), transparent 55%), linear-gradient(160deg,#f6ddc0 0%,#e3a97e 34%,#5b8b83 78%,#22504b 100%)';
+  G2='radial-gradient(130% 100% at 70% 8%, rgba(255,255,255,.45), transparent 55%), linear-gradient(180deg,#d9ece9 0%,#8ec3bb 46%,#1f5f5a 100%)';
+  G3='radial-gradient(130% 100% at 28% 16%, rgba(255,255,255,.55), transparent 55%), linear-gradient(150deg,#f8f0de 0%,#e6cfa2 55%,#c19f63 100%)';
+  G4='radial-gradient(130% 100% at 62% 12%, rgba(255,255,255,.45), transparent 55%), linear-gradient(160deg,#f2f0e7 0%,#cbb894 50%,#7c6b4a 100%)';
+  G5='radial-gradient(130% 100% at 40% 12%, rgba(255,255,255,.48), transparent 55%), linear-gradient(180deg,#e9f4f1 0%,#93c9c1 48%,#1c5a55 100%)';
+  G6='radial-gradient(130% 100% at 30% 16%, rgba(255,255,255,.42), transparent 55%), linear-gradient(155deg,#eef3ee 0%,#a9c8bc 50%,#3c6f66 100%)';
+
+  rooms=[
+    {id:'rivage', label:'Chambre Rivage', size:'32 m²', bed:'Lit Queen 160', cap:2, prix:28000, vue:'Vue jardin', tagline:'Le calme, au ras des tamaris.', desc:"Une chambre lumineuse ouverte sur les jardins de tamaris, pensée pour les séjours à deux. Matériaux naturels, lin lavé et bois clair.", amen:['Vue jardin','Wi-Fi fibre','Climatisation','Minibar offert','Coffre-fort','Peignoirs & chaussons'], bg:this.G3},
+    {id:'jardin', label:'Chambre Deluxe Jardin', size:'38 m²', bed:'Lit King 180', cap:2, prix:34000, vue:'Terrasse privative', tagline:'Une terrasse rien qu’à vous.', desc:"Plus spacieuse, avec une terrasse privative meublée face aux jardins. Idéale pour prolonger les soirées d’été à l’ombre.", amen:['Terrasse privative','Wi-Fi fibre','Climatisation','Machine à café','Coffre-fort','Peignoirs & chaussons'], bg:this.G4},
+    {id:'corail', label:'Suite Corail', size:'55 m²', bed:'Lit King + salon', cap:3, prix:52000, vue:'Vue mer frontale', tagline:'La Méditerranée pour horizon.', desc:"Notre suite signature en front de mer : chambre, salon séparé et large balcon surplombant la baie de Tipaza. Le lever du soleil s’y savoure au lit.", amen:['Vue mer frontale','Balcon 12 m²','Salon séparé','Wi-Fi fibre','Machine Nespresso','Baignoire îlot'], bg:this.G1},
+    {id:'tramontane', label:'Suite Junior Tramontane', size:'48 m²', bed:'Lit King 200', cap:2, prix:46000, vue:'Vue mer latérale', tagline:'Le grand large, en version intime.', desc:"Une suite junior aux tons sable et laiton, avec coin lecture face à la mer et douche à l’italienne en marbre.", amen:['Vue mer latérale','Coin salon','Wi-Fi fibre','Climatisation','Douche à l’italienne','Peignoirs & chaussons'], bg:this.G2},
+    {id:'panorama', label:'Suite Signature Panorama', size:'72 m²', bed:'Lit King + 2', cap:4, prix:78000, vue:'Vue mer panoramique', tagline:'180° sur la baie.', desc:"Au dernier étage, une suite d’angle aux baies vitrées panoramiques, terrasse solarium et service majordome. Notre plus belle vue.", amen:['Vue panoramique 180°','Terrasse solarium','Service majordome','Wi-Fi fibre','Bar privatif','Baignoire îlot vue mer'], bg:this.G5, img:'photos/panorama.jpg'},
+    {id:'villa', label:'Villa Bahr', size:'140 m²', bed:'2 chambres · 6 pers.', cap:6, prix:145000, vue:'Piscine privée', tagline:'Votre refuge, les pieds dans l’eau.', desc:"Une villa indépendante avec piscine privée chauffée, jardin clos et accès direct à la plage. Pensée pour les familles et les séjours d’exception.", amen:['Piscine privée chauffée','Accès plage direct','Jardin clos','Cuisine équipée','Service majordome','Parking privé'], bg:this.G6, img:'photos/villa.jpg'},
+  ];
+  soins=[
+    {nom:'Rituel Hammam Traditionnel', duree:'90 min', prix:9500, desc:'Gommage au savon noir, gant de kessa et modelage relaxant sous la vapeur.'},
+    {nom:'Massage aux Huiles d’Argan', duree:'60 min', prix:7200, desc:'Modelage corps complet aux huiles d’argan bio pressées à froid.'},
+    {nom:'Soin Visage Éclat Marin', duree:'75 min', prix:8800, desc:'Nettoyage, exfoliation et masque aux actifs marins pour une peau repulpée.'},
+    {nom:'Enveloppement aux Algues', duree:'45 min', prix:6500, desc:'Cocon détoxifiant et reminéralisant aux algues de Méditerranée.'},
+    {nom:'Rituel Duo Évasion', duree:'120 min', prix:18000, desc:'Parenthèse à deux : hammam, gommage et massage côte à côte en cabine privée.'},
+    {nom:'Gommage au Sel de Mer', duree:'30 min', prix:4800, desc:'Exfoliation vivifiante au sel de mer et huiles essentielles d’agrumes.'},
+  ];
+  avis=[
+    {nom:'Yasmine B.', ville:'Alger', note:5, date:'Mai 2026', txt:'Un week-end parfait. La Suite Corail au réveil, face à la mer, restera un souvenir inoubliable. Service d’une délicatesse rare.'},
+    {nom:'Karim & Nadia', ville:'Oran', note:5, date:'Avril 2026', txt:'Le spa vaut à lui seul le déplacement. Le rituel duo est une merveille. Nous reviendrons sans hésiter.'},
+    {nom:'Sofiane M.', ville:'Constantine', note:4, date:'Mars 2026', txt:'Cadre superbe et personnel aux petits soins. Petit bémol sur l’attente au dîner, mais rien de rédhibitoire.'},
+    {nom:'Leïla H.', ville:'Alger', note:5, date:'Juin 2026', txt:'Tout est pensé dans le détail, de l’accueil au départ. La villa avec piscine privée est idéale en famille.'},
+  ];
+  gallery=[
+    {cat:'chambres', label:'Suite Corail · vue mer', img:'photo-corail', src:''},
+    {cat:'plage', label:'Baie de Tipaza au lever du jour', img:'photo-plage-lever', src:'photos/plage-lever.jpg'},
+    {cat:'spa', label:'Hammam traditionnel', img:'photo-hammam', src:'photos/hammam.jpg'},
+    {cat:'restaurant', label:'Le Phare · terrasse au couchant', img:'photo-restaurant', src:'photos/restaurant.jpg'},
+    {cat:'chambres', label:'Villa Bahr · piscine privée', img:'photo-villa', src:'photos/villa.jpg'},
+    {cat:'plage', label:'Ponton privé sur la Méditerranée', img:'photo-ponton', src:'photos/ponton.jpg'},
+    {cat:'spa', label:'Bassin de relaxation', img:'photo-spa-bassin', src:'photos/spa-bassin.jpg'},
+    {cat:'restaurant', label:'La table du chef', img:'photo-table-chef', src:'photos/table-chef.jpg'},
+    {cat:'chambres', label:'Chambre Deluxe Jardin', img:'photo-jardin', src:''},
+  ];
+
+  state={
+    view:'accueil', menuOpen:false,
+    cookie:(typeof localStorage!=='undefined'?localStorage.getItem('deb_cookie'):null),
+    arrivee:'', depart:'', roomId:'corail', voyageurs:2,
+    consent:false, confirmed:false, bookingRef:'',
+    galleryFilter:'tout', lightbox:null,
+    contactConsent:false, contactSent:false,
+    vw:(typeof window!=='undefined'?window.innerWidth:1280),
+  };
+
+  iso(d){ return d.toISOString().slice(0,10); }
+  motion(){ try{ return (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)?'auto':'smooth'; }catch(e){ return 'smooth'; } }
+
+  componentDidMount(){
+    const t=new Date();
+    const a=new Date(t.getTime()+7*86400000);
+    const d=new Date(t.getTime()+9*86400000);
+    this.setState({arrivee:this.iso(a), depart:this.iso(d)});
+    this._onResize=()=>this.setState({vw:window.innerWidth});
+    window.addEventListener('resize', this._onResize);
+  }
+  componentWillUnmount(){ if(this._onResize) window.removeEventListener('resize', this._onResize); }
+
+  nav=(v)=>{ this.setState({view:v, menuOpen:false, confirmed:(v==='reservation'?this.state.confirmed:false)}); try{window.scrollTo({top:0,behavior:this.motion()});}catch(e){} };
+  toggleMenu=()=>this.setState(s=>({menuOpen:!s.menuOpen}));
+  acceptCookie=()=>{ try{localStorage.setItem('deb_cookie','accepted');}catch(e){} this.setState({cookie:'accepted'}); };
+  refuseCookie=()=>{ try{localStorage.setItem('deb_cookie','refused');}catch(e){} this.setState({cookie:'refused'}); };
+
+  setArrivee=(e)=>this.setState({arrivee:e.target.value});
+  setDepart=(e)=>this.setState({depart:e.target.value});
+  setRoom=(e)=>{ const id=e.target.value; const r=this.rooms.find(x=>x.id===id); this.setState(s=>({roomId:id, voyageurs:Math.min(s.voyageurs, r?r.cap:s.voyageurs)})); };
+  incGuests=()=>{ const r=this.rooms.find(x=>x.id===this.state.roomId); this.setState(s=>({voyageurs:Math.min((r?r.cap:9), s.voyageurs+1)})); };
+  decGuests=()=>this.setState(s=>({voyageurs:Math.max(1,s.voyageurs-1)}));
+  toggleConsent=()=>this.setState(s=>({consent:!s.consent}));
+
+  nights(){ const {arrivee,depart}=this.state; if(!arrivee||!depart) return 0; const a=new Date(arrivee), d=new Date(depart); const ms=d-a; if(!(ms>0)) return 0; return Math.round(ms/86400000); }
+  canConfirm(){ const r=this.rooms.find(x=>x.id===this.state.roomId); return this.nights()>0 && this.state.consent && this.state.voyageurs<=(r?r.cap:99); }
+  confirmBooking=(e)=>{ if(e&&e.preventDefault)e.preventDefault(); if(!this.canConfirm())return; this.setState({confirmed:true, bookingRef:'DEB-2026-'+Math.floor(1000+Math.random()*9000)}); try{window.scrollTo({top:0,behavior:this.motion()});}catch(e2){} };
+  resetBooking=()=>this.setState({confirmed:false});
+
+  setFilter=(k)=>this.setState({galleryFilter:k});
+  openLightbox=(t)=>this.setState({lightbox:t});
+  closeLightbox=()=>this.setState({lightbox:null});
+  goReserve=(id)=>{ this.setState({roomId:id, confirmed:false}); this.nav('reservation'); };
+
+  setContactConsent=()=>this.setState(s=>({contactConsent:!s.contactConsent}));
+  submitContact=(e)=>{ if(e&&e.preventDefault)e.preventDefault(); if(!this.state.contactConsent)return; this.setState({contactSent:true}); };
+
+  fmt(n){ return Math.round(n).toLocaleString('fr-FR')+' DA'; }
+  dLabel(s){ if(!s) return '—'; const d=new Date(s); if(isNaN(d.getTime())) return '—'; return d.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'}); }
+
+  renderVals(){
+    const s=this.state;
+    const isMobile=s.vw<860;
+    const room=this.rooms.find(x=>x.id===s.roomId)||this.rooms[0];
+    const nights=this.nights();
+    const subtotal=nights*room.prix;
+    const taxe=nights*300*s.voyageurs;
+    const total=subtotal+taxe;
+    const acompte=Math.round(total*0.3);
+    const solde=total-acompte;
+    const datesValid=nights>0;
+
+    const roomsView=this.rooms.map(r=>({...r, prixFmt:this.fmt(r.prix), optLabel:r.label+' — '+this.fmt(r.prix)+'/nuit', imgId:'photo-'+r.id, imgSrc:(r.img||''), slotLabel:'Photo — '+r.label, reserve:()=>this.goReserve(r.id)}));
+    const soinsView=this.soins.map(x=>({...x, prixFmt:this.fmt(x.prix)}));
+    const avisView=this.avis.map(a=>({...a, stars:'★★★★★'.slice(0,a.note)+'☆☆☆☆☆'.slice(0,5-a.note)}));
+    const filters=[['tout','Tout'],['chambres','Chambres'],['spa','Spa'],['plage','Plage & mer'],['restaurant','Restaurant']].map(f=>({key:f[0],label:f[1],active:s.galleryFilter===f[0],inactive:s.galleryFilter!==f[0],go:()=>this.setFilter(f[0])}));
+    const galleryView=this.gallery.filter(t=>s.galleryFilter==='tout'||t.cat===s.galleryFilter).map(t=>({...t, slotLabel:'Photo — '+t.label, src:(t.src||'')}));
+    const mk=(k,l)=>({key:k,label:l,active:s.view===k,go:()=>this.nav(k)});
+    const navItems=[mk('accueil','Accueil'),mk('chambres','Chambres & Suites'),mk('spa','Le Spa'),mk('galerie','Galerie'),mk('contact','Contact & Accès')];
+
+    return {
+      isMobile, notMobile:!isMobile, menuOpen:s.menuOpen, showCookie:s.cookie==null,
+      navItems, filters, galleryView, roomsView, roomsFeatured:roomsView.slice(0,3), soinsView, avisView,
+      isAccueil:s.view==='accueil', isChambres:s.view==='chambres', isSpa:s.view==='spa',
+      isGalerie:s.view==='galerie', isContact:s.view==='contact', isReservation:s.view==='reservation',
+      isMentions:s.view==='mentions', isConfidentialite:s.view==='confidentialite',
+      arrivee:s.arrivee, depart:s.depart, roomId:s.roomId, voyageurs:s.voyageurs, today:this.iso(new Date()),
+      nights, nightsLabel:datesValid?(nights+' nuit'+(nights>1?'s':'')):'—',
+      subtotalFmt:this.fmt(subtotal), taxeFmt:this.fmt(taxe), totalFmt:this.fmt(total), acompteFmt:this.fmt(acompte), soldeFmt:this.fmt(solde),
+      selName:room.label, selPrixFmt:this.fmt(room.prix), selCap:room.cap, selSize:room.size, selBed:room.bed, selBg:room.bg, selVue:room.vue, selDesc:room.desc, selImgId:'photo-'+room.id, selSlotLabel:'Photo — '+room.label, selImgSrc:(room.img||''),
+      arriveeLabel:this.dLabel(s.arrivee), departLabel:this.dLabel(s.depart),
+      datesValid, notValid:!datesValid, consent:s.consent, canConfirm:this.canConfirm(), cannotConfirm:!this.canConfirm(),
+      confirmed:s.confirmed, notConfirmed:!s.confirmed, bookingRef:s.bookingRef,
+      nav:this.nav, goReserve:this.goReserve, toggleMenu:this.toggleMenu,
+      acceptCookie:this.acceptCookie, refuseCookie:this.refuseCookie,
+      setArrivee:this.setArrivee, setDepart:this.setDepart, setRoom:this.setRoom,
+      incGuests:this.incGuests, decGuests:this.decGuests, toggleConsent:this.toggleConsent,
+      confirmBooking:this.confirmBooking, resetBooking:this.resetBooking, openReservation:()=>this.nav('reservation'),
+      lightbox:s.lightbox, lightboxOpen:!!s.lightbox, closeLightbox:this.closeLightbox,
+      contactConsent:s.contactConsent, contactNotConsent:!s.contactConsent, setContactConsent:this.setContactConsent, submitContact:this.submitContact, contactSent:s.contactSent, contactNotSent:!s.contactSent,
+    };
+  }
+}
+</script>
+</body>
+</html>

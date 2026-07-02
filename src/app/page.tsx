@@ -8,6 +8,7 @@ import Education from "@/components/Education";
 import Blog from "@/components/Blog";
 import Certifications from "@/components/Certifications";
 import Contact from "@/components/Contact";
+import PrestationsCTA from "@/components/PrestationsCTA";
 import Footer from "@/components/Footer";
 
 export default function Home() {
@@ -24,6 +25,7 @@ export default function Home() {
         <Blog />
         <Certifications />
         <Contact />
+        <PrestationsCTA />
       </main>
       <Footer />
     </>

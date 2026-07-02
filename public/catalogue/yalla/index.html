@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:#FBF8FF;color:#1B1030;font-family:'Space Grotesk',system-ui,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  ::selection{background:#DB2777;color:#fff}
+  *:focus-visible{outline:2.5px solid #9333EA;outline-offset:3px}
+  a{color:inherit}
+  input,select,textarea,button{font-family:inherit}
+  [data-desktop-nav]{display:flex}
+  [data-hamburger]{display:none}
+  @media(max-width:880px){[data-desktop-nav]{display:none}[data-hamburger]{display:inline-flex}}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+  @keyframes pop{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:none}}
+  @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+  @keyframes shimmer{0%{background-position:0% 50%}100%{background-position:200% 50%}}
+  [data-hscroll]{scrollbar-width:thin;scrollbar-color:#D9CCEE transparent}
+  [data-hscroll]::-webkit-scrollbar{height:6px}
+  [data-hscroll]::-webkit-scrollbar-thumb{background:#D9CCEE;border-radius:3px}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+</style>
+</helmet>
+
+<header style="position:sticky;top:0;z-index:60;background:rgba(251,248,255,0.82);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid #EDE5FA">
+  <div style="max-width:1180px;margin:0 auto;padding:0 clamp(16px,5vw,56px);height:70px;display:flex;align-items:center;justify-content:space-between;gap:20px">
+    <button onClick="{{ goHome }}" style="background:none;border:none;cursor:pointer;padding:0;display:flex;align-items:baseline;gap:9px">
+      <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:26px;letter-spacing:-.02em;background:linear-gradient(115deg,#7C3AED,#DB2777 55%,#FB7185);-webkit-background-clip:text;background-clip:text;color:transparent">yalla</span>
+      <span style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;color:#9A8FB0">Alger</span>
+    </button>
+    <nav data-desktop-nav aria-label="Navigation" style="align-items:center;gap:32px">
+      <button onClick="{{ goHome }}" style="background:none;border:none;cursor:pointer;font-weight:500;font-size:14.5px;color:#4B3E63" style-hover="color:#1B1030">Accueil</button>
+      <button onClick="{{ goAgenda }}" style="background:none;border:none;cursor:pointer;font-weight:500;font-size:14.5px;color:#4B3E63" style-hover="color:#1B1030">Agenda</button>
+      <button onClick="{{ goInfos }}" style="background:none;border:none;cursor:pointer;font-weight:500;font-size:14.5px;color:#4B3E63" style-hover="color:#1B1030">Infos</button>
+    </nav>
+    <div style="display:flex;align-items:center;gap:12px">
+      <button onClick="{{ goAgenda }}" style="height:42px;padding:0 22px;border:none;border-radius:999px;background:linear-gradient(115deg,#7C3AED,#DB2777 60%,#FB7185);color:#fff;font-weight:600;font-size:14px;cursor:pointer;box-shadow:0 6px 18px rgba(219,39,119,0.28);transition:transform .16s ease,box-shadow .16s ease" style-hover="transform:translateY(-1px);box-shadow:0 10px 24px rgba(219,39,119,0.36)">Explorer</button>
+      <button data-hamburger onClick="{{ toggleMenu }}" aria-label="Menu" style="width:44px;height:44px;align-items:center;justify-content:center;flex-direction:column;gap:5px;background:#fff;border:1px solid #E7DEF6;border-radius:12px;cursor:pointer">
+        <span style="display:block;width:18px;height:2px;border-radius:2px;background:#1B1030"></span>
+        <span style="display:block;width:18px;height:2px;border-radius:2px;background:#1B1030"></span>
+        <span style="display:block;width:18px;height:2px;border-radius:2px;background:#1B1030"></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<sc-if value="{{ mobileMenu }}" hint-placeholder-val="{{ false }}">
+  <div role="dialog" aria-label="Menu" style="position:fixed;inset:0;z-index:80;background:#FBF8FF;animation:fadeUp .25s ease;padding:20px clamp(18px,6vw,40px);display:flex;flex-direction:column">
+    <div style="display:flex;align-items:center;justify-content:space-between;height:50px">
+      <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:26px;background:linear-gradient(115deg,#7C3AED,#DB2777 55%,#FB7185);-webkit-background-clip:text;background-clip:text;color:transparent">yalla</span>
+      <button onClick="{{ navClose }}" aria-label="Fermer" style="width:44px;height:44px;background:#fff;border:1px solid #E7DEF6;border-radius:12px;font-size:19px;cursor:pointer">✕</button>
+    </div>
+    <nav style="display:flex;flex-direction:column;gap:4px;margin-top:36px">
+      <button onClick="{{ goHome }}" style="text-align:left;background:none;border:none;border-bottom:1px solid #EDE5FA;padding:14px 0;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:34px;color:#1B1030;cursor:pointer">Accueil</button>
+      <button onClick="{{ goAgenda }}" style="text-align:left;background:none;border:none;border-bottom:1px solid #EDE5FA;padding:14px 0;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:34px;color:#1B1030;cursor:pointer">Agenda</button>
+      <button onClick="{{ goInfos }}" style="text-align:left;background:none;border:none;border-bottom:1px solid #EDE5FA;padding:14px 0;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:34px;color:#1B1030;cursor:pointer">Infos</button>
+    </nav>
+    <button onClick="{{ goAgenda }}" style="margin-top:auto;height:56px;border:none;border-radius:999px;background:linear-gradient(115deg,#7C3AED,#DB2777 60%,#FB7185);color:#fff;font-weight:600;font-size:16px;cursor:pointer">Voir l'agenda</button>
+  </div>
+</sc-if>
+
+<sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+<main data-screen-label="Accueil">
+  <section style="position:relative;overflow:hidden;padding:clamp(48px,8vw,96px) 0 clamp(40px,6vw,72px)">
+    <div style="position:absolute;top:-120px;right:-80px;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(219,39,119,0.22),transparent 68%);filter:blur(8px);animation:floaty 9s ease-in-out infinite;pointer-events:none"></div>
+    <div style="position:absolute;bottom:-160px;left:-100px;width:460px;height:460px;border-radius:50%;background:radial-gradient(circle,rgba(124,58,237,0.18),transparent 68%);pointer-events:none"></div>
+    <div style="position:relative;max-width:1180px;margin:0 auto;padding:0 clamp(16px,5vw,56px)">
+      <div style="display:inline-flex;align-items:center;gap:8px;padding:7px 15px;border-radius:999px;background:#fff;border:1px solid #ECE3FA;font-weight:600;font-size:12.5px;color:#7C3AED;margin-bottom:26px;animation:fadeUp .6s ease both"><span style="width:8px;height:8px;border-radius:50%;background:#DB2777"></span>8 sorties cette quinzaine à Alger</div>
+      <h1 style="margin:0;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(52px,11vw,132px);line-height:0.92;letter-spacing:-.03em;color:#1B1030;animation:fadeUp .7s ease .05s both">Sortez à<br><span style="background:linear-gradient(115deg,#7C3AED,#DB2777 50%,#FB7185);-webkit-background-clip:text;background-clip:text;color:transparent">Alger.</span></h1>
+      <p style="margin:26px 0 0;max-width:46ch;font-size:clamp(16px,2vw,20px);line-height:1.6;color:#5B4F73;animation:fadeUp .7s ease .12s both">Concerts, festivals, soirées, spectacles, expos et humour. Réservez vos billets en quelques secondes, recevez votre e-billet avec QR.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:34px;animation:fadeUp .7s ease .18s both">
+        <button onClick="{{ goAgenda }}" style="height:56px;padding:0 30px;border:none;border-radius:999px;background:linear-gradient(115deg,#7C3AED,#DB2777 60%,#FB7185);background-size:200% auto;color:#fff;font-weight:600;font-size:16px;cursor:pointer;box-shadow:0 10px 28px rgba(219,39,119,0.32);transition:transform .16s ease" style-hover="transform:translateY(-2px)">Explorer l'agenda →</button>
+      </div>
+      <div data-hscroll style="display:flex;gap:10px;margin-top:30px;overflow-x:auto;padding-bottom:6px;animation:fadeUp .7s ease .24s both">
+        <sc-for list="{{ cats }}" as="c" hint-placeholder-count="6">
+          <button onClick="{{ c.onSelect }}" style="{{ c.homeStyle }}">{{ c.label }}</button>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section style="max-width:1180px;margin:0 auto;padding:clamp(20px,3vw,32px) clamp(16px,5vw,56px) clamp(56px,8vw,96px)">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:26px">
+      <h2 style="margin:0;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:clamp(28px,4vw,42px);letter-spacing:-.02em;color:#1B1030">À l'affiche</h2>
+      <button onClick="{{ goAgenda }}" style="background:none;border:none;cursor:pointer;font-weight:600;font-size:14.5px;color:#9333EA">Tout voir →</button>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px">
+      <sc-for list="{{ featured }}" as="ev" hint-placeholder-count="3">
+        <button onClick="{{ ev.onOpen }}" style="text-align:left;background:#fff;border:1px solid #EEE7F8;border-radius:24px;overflow:hidden;cursor:pointer;padding:0;display:flex;flex-direction:column;box-shadow:0 2px 14px rgba(27,16,48,0.05);transition:transform .18s ease,box-shadow .18s ease" style-hover="transform:translateY(-4px);box-shadow:0 16px 34px rgba(124,58,237,0.16)">
+          <div style="{{ ev.thumbStyle }}" role="img" aria-label="{{ ev.imgAlt }}">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;position:relative;z-index:1">
+              <span style="padding:5px 12px;border-radius:999px;background:rgba(255,255,255,0.22);backdrop-filter:blur(4px);color:#fff;font-weight:600;font-size:11px;letter-spacing:.04em;text-transform:uppercase">{{ ev.catLabel }}</span>
+              <span style="text-align:center;background:#fff;border-radius:12px;padding:6px 10px;line-height:1"><span style="display:block;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:20px;color:#1B1030">{{ ev.day }}</span><span style="display:block;font-size:10px;font-weight:600;text-transform:uppercase;color:#9333EA">{{ ev.monthShort }}</span></span>
+            </div>
+            <div style="position:relative;z-index:1;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(26px,3vw,34px);line-height:0.95;color:#fff;letter-spacing:-.01em;text-shadow:0 2px 20px rgba(0,0,0,0.18)">{{ ev.short }}</div>
+          </div>
+          <div style="padding:18px 20px 20px;display:flex;flex-direction:column;gap:6px;flex:1">
+            <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:19px;line-height:1.15;color:#1B1030">{{ ev.title }}</div>
+            <div style="font-size:13.5px;color:#6B5F82">{{ ev.venue }} · {{ ev.timeStr }}</div>
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-top:12px;padding-top:14px;border-top:1px solid #F0EAF9">
+              <span style="font-weight:600;font-size:14px;color:#1B1030">dès {{ ev.priceFrom }} DA</span>
+              <span style="width:34px;height:34px;border-radius:50%;background:#F6F0FE;display:flex;align-items:center;justify-content:center;color:#9333EA;font-size:16px">→</span>
+            </div>
+          </div>
+        </button>
+      </sc-for>
+    </div>
+  </section>
+</main>
+</sc-if>
+
+<sc-if value="{{ isAgenda }}" hint-placeholder-val="{{ false }}">
+<main data-screen-label="Agenda" style="max-width:1180px;margin:0 auto;padding:clamp(36px,6vw,64px) clamp(16px,5vw,56px) clamp(56px,8vw,96px);animation:fadeUp .4s ease both">
+  <div style="margin-bottom:8px;font-weight:600;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:#9333EA">L'agenda</div>
+  <h1 style="margin:0 0 24px;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(38px,6vw,68px);letter-spacing:-.03em;line-height:0.95;color:#1B1030">Quoi faire ce soir&nbsp;?</h1>
+  <div data-hscroll style="display:flex;gap:9px;overflow-x:auto;padding-bottom:8px;margin-bottom:14px">
+    <sc-for list="{{ filterChips }}" as="c" hint-placeholder-count="7">
+      <button onClick="{{ c.onSelect }}" style="{{ c.style }}">{{ c.label }}</button>
+    </sc-for>
+  </div>
+  <div style="font-size:14px;color:#6B5F82;margin-bottom:34px">{{ agendaCount }}</div>
+
+  <div style="display:flex;flex-direction:column;gap:clamp(28px,4vw,44px)">
+    <sc-for list="{{ agendaGroups }}" as="grp" hint-placeholder-count="4">
+      <div style="display:grid;grid-template-columns:120px 1fr;gap:clamp(16px,3vw,36px);align-items:start">
+        <div style="position:sticky;top:82px">
+          <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(40px,5vw,60px);line-height:0.9;letter-spacing:-.03em;background:linear-gradient(150deg,#7C3AED,#DB2777);-webkit-background-clip:text;background-clip:text;color:transparent">{{ grp.day }}</div>
+          <div style="font-weight:600;font-size:14px;color:#1B1030;text-transform:capitalize">{{ grp.monthShort }}</div>
+          <div style="font-size:13px;color:#9A8FB0;text-transform:capitalize">{{ grp.weekday }}</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <sc-for list="{{ grp.events }}" as="ev" hint-placeholder-count="2">
+            <button onClick="{{ ev.onOpen }}" style="text-align:left;display:grid;grid-template-columns:140px 1fr;gap:0;background:#fff;border:1px solid #EEE7F8;border-radius:22px;overflow:hidden;cursor:pointer;padding:0;box-shadow:0 2px 12px rgba(27,16,48,0.04);transition:transform .16s ease,box-shadow .16s ease" style-hover="transform:translateY(-2px);box-shadow:0 12px 28px rgba(124,58,237,0.14)">
+              <div style="{{ ev.rowThumbStyle }}" role="img" aria-label="{{ ev.imgAlt }}">
+                <span style="position:relative;z-index:1;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:15px;line-height:0.95;color:#fff;text-shadow:0 1px 10px rgba(0,0,0,0.35)">{{ ev.short }}</span>
+              </div>
+              <div style="padding:16px 20px;display:flex;flex-direction:column;gap:5px;justify-content:center">
+                <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><span style="{{ ev.catChipStyle }}">{{ ev.catLabel }}</span><span style="font-size:12.5px;color:#9A8FB0">{{ ev.timeStr }}</span></div>
+                <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:clamp(18px,2.4vw,23px);line-height:1.1;color:#1B1030">{{ ev.title }}</div>
+                <div style="font-size:13.5px;color:#6B5F82">{{ ev.venue }}, {{ ev.city }}</div>
+                <div style="margin-top:6px;font-weight:600;font-size:14px;color:#9333EA">dès {{ ev.priceFrom }} DA</div>
+              </div>
+            </button>
+          </sc-for>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+</main>
+</sc-if>
+
+<sc-if value="{{ isEvent }}" hint-placeholder-val="{{ false }}">
+<main data-screen-label="Fiche événement" style="animation:fadeUp .4s ease both">
+  <div style="{{ ev.heroStyle }}" role="img" aria-label="{{ ev.imgAlt }}">
+    <div style="position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:clamp(28px,5vw,56px) clamp(16px,5vw,56px)">
+      <button onClick="{{ goAgenda }}" style="background:rgba(255,255,255,0.2);backdrop-filter:blur(6px);border:none;border-radius:999px;color:#fff;font-weight:600;font-size:13px;padding:8px 16px;cursor:pointer;margin-bottom:24px">← Retour à l'agenda</button>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap">
+        <span style="padding:6px 14px;border-radius:999px;background:rgba(255,255,255,0.22);color:#fff;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.04em">{{ ev.catLabel }}</span>
+        <span style="color:rgba(255,255,255,0.9);font-weight:500;font-size:14px">{{ ev.dateFull }} · {{ ev.timeStr }}</span>
+      </div>
+      <h1 style="margin:0;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(38px,7vw,82px);line-height:0.94;letter-spacing:-.03em;color:#fff;text-shadow:0 4px 30px rgba(0,0,0,0.18)">{{ ev.title }}</h1>
+      <div style="margin-top:16px;color:rgba(255,255,255,0.92);font-size:16px;font-weight:500">{{ ev.venue }} — {{ ev.city }}</div>
+    </div>
+  </div>
+
+  <div style="max-width:1180px;margin:0 auto;padding:clamp(32px,5vw,56px) clamp(16px,5vw,56px);display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(28px,4vw,52px);align-items:start">
+    <div>
+      <h2 style="margin:0 0 12px;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:24px;color:#1B1030">À propos</h2>
+      <p style="margin:0 0 28px;font-size:16px;line-height:1.7;color:#4B3E63">{{ ev.description }}</p>
+      <h2 style="margin:0 0 14px;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:24px;color:#1B1030">{{ ev.lineupLabel }}</h2>
+      <div style="display:flex;flex-wrap:wrap;gap:9px;margin-bottom:28px">
+        <sc-for list="{{ ev.lineup }}" as="a" hint-placeholder-count="4">
+          <span style="padding:9px 16px;border-radius:999px;background:#F5EFFD;border:1px solid #ECE0FB;font-weight:600;font-size:14px;color:#5B2A9E">{{ a }}</span>
+        </sc-for>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:2px;background:#fff;border:1px solid #EEE7F8;border-radius:20px;padding:6px 22px">
+        <div style="display:flex;justify-content:space-between;padding:14px 0;border-bottom:1px solid #F0EAF9"><span style="color:#6B5F82;font-size:14px">Lieu</span><span style="font-weight:600;font-size:14px;text-align:right">{{ ev.venue }}, {{ ev.city }}</span></div>
+        <div style="display:flex;justify-content:space-between;padding:14px 0;border-bottom:1px solid #F0EAF9"><span style="color:#6B5F82;font-size:14px">Date</span><span style="font-weight:600;font-size:14px;text-align:right">{{ ev.dateFull }}</span></div>
+        <div style="display:flex;justify-content:space-between;padding:14px 0;border-bottom:1px solid #F0EAF9"><span style="color:#6B5F82;font-size:14px">Ouverture des portes</span><span style="font-weight:600;font-size:14px;text-align:right">{{ ev.doorsStr }}</span></div>
+        <div style="display:flex;justify-content:space-between;padding:14px 0"><span style="color:#6B5F82;font-size:14px">Billet</span><span style="font-weight:600;font-size:14px;text-align:right">E-billet · QR à l'entrée</span></div>
+      </div>
+    </div>
+
+    <div style="position:sticky;top:86px;background:#fff;border:1px solid #EDE4FA;border-radius:26px;padding:clamp(20px,3vw,28px);box-shadow:0 12px 40px rgba(124,58,237,0.12)">
+      <h2 style="margin:0 0 4px;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:22px;color:#1B1030">Choisissez vos billets</h2>
+      <p style="margin:0 0 20px;font-size:13.5px;color:#8478A0">Le total se met à jour en direct.</p>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <sc-for list="{{ tiersUI }}" as="t" hint-placeholder-count="3">
+          <div style="{{ t.rowStyle }}">
+            <div style="flex:1;min-width:0">
+              <div style="font-weight:600;font-size:15.5px;color:#1B1030">{{ t.name }}</div>
+              <div style="font-size:12.5px;color:#8478A0">{{ t.note }}</div>
+              <div style="font-weight:700;font-size:15px;color:#9333EA;margin-top:3px">{{ t.priceFmt }} DA</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;flex:0 0 auto">
+              <button onClick="{{ t.onDec }}" aria-label="Retirer" style="{{ t.minusStyle }}">−</button>
+              <span style="min-width:20px;text-align:center;font-weight:700;font-size:16px;color:#1B1030">{{ t.qty }}</span>
+              <button onClick="{{ t.onInc }}" aria-label="Ajouter" style="width:38px;height:38px;border-radius:50%;border:none;background:linear-gradient(135deg,#7C3AED,#DB2777);color:#fff;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center">+</button>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+      <div style="margin-top:20px;padding-top:18px;border-top:1px dashed #E0D5F2">
+        <div style="display:flex;justify-content:space-between;font-size:14px;color:#6B5F82;margin-bottom:8px"><span>Sous-total ({{ totalCount }} billet<span>{{ plural }}</span>)</span><span>{{ subtotalFmt }} DA</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:14px;color:#6B5F82;margin-bottom:14px"><span>Frais de service</span><span>{{ feeFmt }} DA</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:18px"><span style="font-weight:600;font-size:16px;color:#1B1030">Total</span><span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:28px;background:linear-gradient(115deg,#7C3AED,#DB2777);-webkit-background-clip:text;background-clip:text;color:transparent">{{ grandFmt }} DA</span></div>
+        <button onClick="{{ goCheckout }}" disabled="{{ noTickets }}" style="{{ continueStyle }}">Continuer vers le paiement</button>
+      </div>
+    </div>
+  </div>
+</main>
+</sc-if>
+
+<sc-if value="{{ isCheckout }}" hint-placeholder-val="{{ false }}">
+<main data-screen-label="Checkout" style="max-width:960px;margin:0 auto;padding:clamp(32px,5vw,56px) clamp(16px,5vw,56px) clamp(56px,8vw,96px);animation:fadeUp .4s ease both">
+  <button onClick="{{ backToEvent }}" style="background:#fff;border:1px solid #E7DEF6;border-radius:999px;font-weight:600;font-size:13px;padding:9px 17px;cursor:pointer;margin-bottom:24px">← Retour</button>
+  <h1 style="margin:0 0 28px;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(32px,5vw,52px);letter-spacing:-.02em;color:#1B1030">Finaliser la commande</h1>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:28px;align-items:start">
+    <div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
+        <label style="display:block"><span style="display:block;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#6B5F82;margin-bottom:7px">Prénom *</span><input value="{{ form.prenom }}" onInput="{{ onPrenom }}" style="{{ fldPrenom }}" aria-label="Prénom" aria-invalid="{{ errPrenomB }}"><sc-if value="{{ errPrenomB }}" hint-placeholder-val="{{ false }}"><span style="display:block;margin-top:5px;font-size:12px;color:#DB2777">{{ errPrenom }}</span></sc-if></label>
+        <label style="display:block"><span style="display:block;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#6B5F82;margin-bottom:7px">Nom *</span><input value="{{ form.nom }}" onInput="{{ onNom }}" style="{{ fldNom }}" aria-label="Nom" aria-invalid="{{ errNomB }}"><sc-if value="{{ errNomB }}" hint-placeholder-val="{{ false }}"><span style="display:block;margin-top:5px;font-size:12px;color:#DB2777">{{ errNom }}</span></sc-if></label>
+      </div>
+      <label style="display:block;margin-bottom:14px"><span style="display:block;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#6B5F82;margin-bottom:7px">E-mail *</span><input value="{{ form.email }}" onInput="{{ onEmail }}" inputmode="email" placeholder="vous@exemple.dz" style="{{ fldEmail }}" aria-label="E-mail" aria-invalid="{{ errEmailB }}"><span style="display:block;margin-top:6px;font-size:12px;color:#8478A0">Votre e-billet sera envoyé à cette adresse.</span><sc-if value="{{ errEmailB }}" hint-placeholder-val="{{ false }}"><span style="display:block;margin-top:5px;font-size:12px;color:#DB2777">{{ errEmail }}</span></sc-if></label>
+      <label style="display:block;margin-bottom:22px"><span style="display:block;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#6B5F82;margin-bottom:7px">Téléphone *</span><input value="{{ form.tel }}" onInput="{{ onTel }}" inputmode="tel" placeholder="+213 ..." style="{{ fldTel }}" aria-label="Téléphone" aria-invalid="{{ errTelB }}"><sc-if value="{{ errTelB }}" hint-placeholder-val="{{ false }}"><span style="display:block;margin-top:5px;font-size:12px;color:#DB2777">{{ errTel }}</span></sc-if></label>
+
+      <div style="font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#6B5F82;margin-bottom:10px">Moyen de paiement</div>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:22px">
+        <sc-for list="{{ payOptions }}" as="p" hint-placeholder-count="3">
+          <button onClick="{{ p.onSelect }}" style="{{ p.style }}"><span style="display:flex;align-items:center;gap:11px"><span style="{{ p.dot }}"></span><span style="font-weight:600;font-size:15px;color:#1B1030">{{ p.label }}</span></span><span style="font-size:12.5px;color:#8478A0">{{ p.note }}</span></button>
+        </sc-for>
+      </div>
+
+      <label style="display:flex;align-items:flex-start;gap:11px;margin-bottom:12px;cursor:pointer"><input type="checkbox" checked="{{ form.consent }}" onChange="{{ onConsent }}" style="width:18px;height:18px;margin-top:2px;flex:0 0 auto;accent-color:#9333EA" aria-label="Consentement"><span style="font-size:13.5px;line-height:1.5;color:#5B4F73">J'accepte les <button onClick="{{ openCGV }}" style="background:none;border:none;padding:0;color:#9333EA;font-weight:600;cursor:pointer;font-size:13.5px">conditions de vente</button> et la <button onClick="{{ openConfid }}" style="background:none;border:none;padding:0;color:#9333EA;font-weight:600;cursor:pointer;font-size:13.5px">politique de confidentialité</button>. *</span></label>
+      <sc-if value="{{ errConsentB }}" hint-placeholder-val="{{ false }}"><div style="margin:-4px 0 12px 29px;font-size:12px;color:#DB2777">{{ errConsent }}</div></sc-if>
+      <label style="display:flex;align-items:flex-start;gap:11px;margin-bottom:6px;cursor:pointer"><input type="checkbox" checked="{{ form.news }}" onChange="{{ onNews }}" style="width:18px;height:18px;margin-top:2px;flex:0 0 auto;accent-color:#9333EA" aria-label="Newsletter"><span style="font-size:13.5px;line-height:1.5;color:#5B4F73">Prévenez-moi des prochaines sorties à Alger (optionnel).</span></label>
+    </div>
+
+    <div style="position:sticky;top:86px;background:#fff;border:1px solid #EDE4FA;border-radius:24px;padding:24px;box-shadow:0 10px 34px rgba(124,58,237,0.10)">
+      <div style="{{ co_thumbStyle }}" role="img" aria-label="{{ co_imgAlt }}"><span style="position:relative;z-index:1;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:18px;color:#fff;text-shadow:0 1px 12px rgba(0,0,0,0.35)">{{ co_short }}</span></div>
+      <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:19px;color:#1B1030;margin-top:14px">{{ co_title }}</div>
+      <div style="font-size:13.5px;color:#6B5F82;margin-bottom:16px">{{ co_dateFull }} · {{ co_venue }}</div>
+      <div style="display:flex;flex-direction:column;gap:9px;padding:14px 0;border-top:1px solid #F0EAF9;border-bottom:1px solid #F0EAF9;margin-bottom:14px">
+        <sc-for list="{{ co_items }}" as="it" hint-placeholder-count="2">
+          <div style="display:flex;justify-content:space-between;font-size:14px"><span style="color:#4B3E63">{{ it.qty }} × {{ it.name }}</span><span style="font-weight:600">{{ it.lineFmt }} DA</span></div>
+        </sc-for>
+        <div style="display:flex;justify-content:space-between;font-size:13.5px;color:#8478A0"><span>Frais de service</span><span>{{ feeFmt }} DA</span></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:18px"><span style="font-weight:600;font-size:16px">Total</span><span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:26px;background:linear-gradient(115deg,#7C3AED,#DB2777);-webkit-background-clip:text;background-clip:text;color:transparent">{{ grandFmt }} DA</span></div>
+      <button onClick="{{ submitOrder }}" style="width:100%;height:54px;border:none;border-radius:999px;background:linear-gradient(115deg,#7C3AED,#DB2777 60%,#FB7185);color:#fff;font-weight:700;font-size:16px;cursor:pointer;box-shadow:0 8px 24px rgba(219,39,119,0.3)">Payer {{ grandFmt }} DA</button>
+      <p style="margin:12px 0 0;font-size:11.5px;line-height:1.5;color:#9A8FB0;text-align:center">Paiement sécurisé — démonstration. Aucune transaction réelle n'est effectuée.</p>
+    </div>
+  </div>
+</main>
+</sc-if>
+
+<sc-if value="{{ isTicket }}" hint-placeholder-val="{{ false }}">
+<main data-screen-label="E-billet" style="max-width:620px;margin:0 auto;padding:clamp(36px,6vw,72px) clamp(16px,5vw,40px) clamp(56px,8vw,96px);animation:pop .45s ease both">
+  <div style="text-align:center;margin-bottom:28px">
+    <div style="width:64px;height:64px;margin:0 auto 16px;border-radius:50%;background:linear-gradient(135deg,#7C3AED,#DB2777);display:flex;align-items:center;justify-content:center;color:#fff;font-size:30px;box-shadow:0 10px 28px rgba(219,39,119,0.34)">✓</div>
+    <h1 style="margin:0 0 6px;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(28px,5vw,40px);letter-spacing:-.02em;color:#1B1030">C'est réservé&nbsp;!</h1>
+    <p style="margin:0;font-size:15px;color:#6B5F82">Votre e-billet est confirmé. Un exemplaire a été envoyé à {{ order.email }}.</p>
+  </div>
+
+  <div style="border-radius:26px;overflow:hidden;box-shadow:0 20px 50px rgba(124,58,237,0.22)">
+    <div style="{{ order.headStyle }}">
+      <div style="position:relative;z-index:1">
+        <div style="font-weight:600;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,0.85);margin-bottom:8px">E-billet · Yalla Alger</div>
+        <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(24px,4vw,32px);line-height:1;color:#fff;text-shadow:0 2px 16px rgba(0,0,0,0.2)">{{ order.title }}</div>
+        <div style="margin-top:10px;color:rgba(255,255,255,0.92);font-size:14px;font-weight:500">{{ order.dateFull }} · {{ order.timeStr }}</div>
+        <div style="color:rgba(255,255,255,0.92);font-size:14px">{{ order.venue }}, {{ order.city }}</div>
+      </div>
+    </div>
+    <div style="position:relative;background:#fff;padding:26px 26px 28px">
+      <div style="position:absolute;top:-13px;left:-13px;width:26px;height:26px;border-radius:50%;background:#FBF8FF"></div>
+      <div style="position:absolute;top:-13px;right:-13px;width:26px;height:26px;border-radius:50%;background:#FBF8FF"></div>
+      <div style="display:flex;gap:22px;align-items:center;flex-wrap:wrap">
+        <div data-om-raster style="width:132px;height:132px;flex:0 0 auto;background:#fff;border:1px solid #EEE7F8;border-radius:14px;padding:9px">
+          <svg viewBox="0 0 23 23" shape-rendering="crispEdges" style="width:100%;height:100%;display:block" role="img" aria-label="QR code du billet"><path d="{{ order.qr }}" fill="#1B1030" fill-rule="evenodd"></path></svg>
+        </div>
+        <div style="flex:1;min-width:180px">
+          <div style="font-size:11.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#9A8FB0">Titulaire</div>
+          <div style="font-weight:600;font-size:16px;color:#1B1030;margin-bottom:12px">{{ order.name }}</div>
+          <div style="font-size:11.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#9A8FB0">Référence</div>
+          <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:19px;color:#9333EA;letter-spacing:.02em">{{ order.ref }}</div>
+        </div>
+      </div>
+      <div style="margin-top:20px;padding-top:16px;border-top:1px dashed #E0D5F2;display:flex;flex-direction:column;gap:8px">
+        <sc-for list="{{ order.items }}" as="it" hint-placeholder-count="2">
+          <div style="display:flex;justify-content:space-between;font-size:14px"><span style="color:#4B3E63">{{ it.qty }} × {{ it.name }}</span><span style="font-weight:600">{{ it.lineFmt }} DA</span></div>
+        </sc-for>
+        <div style="display:flex;justify-content:space-between;font-size:15px;margin-top:4px;padding-top:10px;border-top:1px solid #F0EAF9"><span style="font-weight:600">Total payé</span><span style="font-weight:700;color:#9333EA">{{ order.totalFmt }} DA</span></div>
+      </div>
+    </div>
+  </div>
+  <p style="margin:20px 0 0;text-align:center;font-size:13.5px;color:#8478A0">Présentez ce QR code à l'entrée. Une capture d'écran suffit.</p>
+  <div style="display:flex;gap:12px;justify-content:center;margin-top:22px;flex-wrap:wrap">
+    <button onClick="{{ goAgenda }}" style="height:50px;padding:0 26px;border:1px solid #E7DEF6;border-radius:999px;background:#fff;font-weight:600;font-size:14.5px;cursor:pointer">Retour à l'agenda</button>
+  </div>
+</main>
+</sc-if>
+
+<sc-if value="{{ isInfos }}" hint-placeholder-val="{{ false }}">
+<main data-screen-label="Infos" style="max-width:900px;margin:0 auto;padding:clamp(36px,6vw,64px) clamp(16px,5vw,56px) clamp(56px,8vw,96px);animation:fadeUp .4s ease both">
+  <div style="margin-bottom:8px;font-weight:600;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:#9333EA">Infos pratiques</div>
+  <h1 style="margin:0 0 30px;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(34px,6vw,60px);letter-spacing:-.03em;line-height:0.95;color:#1B1030">Comment ça marche</h1>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-bottom:48px">
+    <sc-for list="{{ steps }}" as="s" hint-placeholder-count="3">
+      <div style="background:#fff;border:1px solid #EEE7F8;border-radius:20px;padding:22px">
+        <div style="width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#7C3AED,#DB2777);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:18px;margin-bottom:14px">{{ s.n }}</div>
+        <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:18px;color:#1B1030;margin-bottom:6px">{{ s.t }}</div>
+        <div style="font-size:14px;line-height:1.55;color:#6B5F82">{{ s.d }}</div>
+      </div>
+    </sc-for>
+  </div>
+  <h2 style="margin:0 0 16px;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:26px;color:#1B1030">Questions fréquentes</h2>
+  <div style="display:flex;flex-direction:column;gap:2px;margin-bottom:48px">
+    <sc-for list="{{ faq }}" as="f" hint-placeholder-count="4">
+      <div style="padding:18px 0;border-bottom:1px solid #EDE5FA">
+        <div style="font-weight:600;font-size:16px;color:#1B1030;margin-bottom:6px">{{ f.q }}</div>
+        <div style="font-size:14.5px;line-height:1.6;color:#5B4F73">{{ f.a }}</div>
+      </div>
+    </sc-for>
+  </div>
+  <div style="background:linear-gradient(120deg,#7C3AED,#DB2777 60%,#FB7185);border-radius:26px;padding:clamp(26px,4vw,40px);color:#fff">
+    <h2 style="margin:0 0 10px;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(24px,3.4vw,34px)">Une question&nbsp;?</h2>
+    <p style="margin:0 0 20px;font-size:15px;line-height:1.6;color:rgba(255,255,255,0.92);max-width:52ch">Notre équipe billetterie répond du dimanche au jeudi, de 9h à 18h.</p>
+    <div style="display:flex;flex-wrap:wrap;gap:22px">
+      <div><div style="font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,0.8)">Téléphone</div><div style="font-weight:600;font-size:16px">+213 _ __ __ __ __</div></div>
+      <div><div style="font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,0.8)">E-mail</div><div style="font-weight:600;font-size:16px">contact@yalla-alger.dz</div></div>
+      <div><div style="font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,0.8)">Bureau</div><div style="font-weight:600;font-size:16px">Rue Didouche Mourad, Alger-Centre</div></div>
+    </div>
+  </div>
+</main>
+</sc-if>
+
+<footer style="border-top:1px solid #EDE5FA;background:#fff">
+  <div style="max-width:1180px;margin:0 auto;padding:clamp(40px,6vw,64px) clamp(16px,5vw,56px)32px">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:32px;margin-bottom:40px">
+      <div>
+        <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:26px;background:linear-gradient(115deg,#7C3AED,#DB2777 55%,#FB7185);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:12px">yalla</div>
+        <p style="margin:0;font-size:14px;line-height:1.6;color:#6B5F82;max-width:32ch">La billetterie des sorties à Alger. Concerts, festivals, soirées, spectacles et plus.</p>
+      </div>
+      <div>
+        <div style="font-weight:600;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#9333EA;margin-bottom:14px">Naviguer</div>
+        <div style="display:flex;flex-direction:column;gap:10px;align-items:flex-start">
+          <button onClick="{{ goHome }}" style="background:none;border:none;padding:0;cursor:pointer;font-size:14px;color:#4B3E63">Accueil</button>
+          <button onClick="{{ goAgenda }}" style="background:none;border:none;padding:0;cursor:pointer;font-size:14px;color:#4B3E63">Agenda</button>
+          <button onClick="{{ goInfos }}" style="background:none;border:none;padding:0;cursor:pointer;font-size:14px;color:#4B3E63">Infos pratiques</button>
+        </div>
+      </div>
+      <div>
+        <div style="font-weight:600;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#9333EA;margin-bottom:14px">Contact</div>
+        <div style="display:flex;flex-direction:column;gap:10px;font-size:14px;color:#4B3E63">
+          <span>Rue Didouche Mourad, Alger</span>
+          <span>+213 _ __ __ __ __</span>
+          <span>contact@yalla-alger.dz</span>
+        </div>
+      </div>
+      <div>
+        <div style="font-weight:600;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#9333EA;margin-bottom:14px">Légal</div>
+        <div style="display:flex;flex-direction:column;gap:10px;align-items:flex-start">
+          <button onClick="{{ openMentions }}" style="background:none;border:none;padding:0;cursor:pointer;font-size:14px;color:#4B3E63">Mentions légales</button>
+          <button onClick="{{ openConfid }}" style="background:none;border:none;padding:0;cursor:pointer;font-size:14px;color:#4B3E63">Politique de confidentialité</button>
+          <button onClick="{{ openCGV }}" style="background:none;border:none;padding:0;cursor:pointer;font-size:14px;color:#4B3E63">Conditions de vente</button>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;padding-top:26px;border-top:1px solid #EDE5FA">
+      <span style="font-size:13px;color:#9A8FB0">© 2026 Yalla Billetterie — Tous droits réservés.</span>
+      <a href="https://difarslan.com" target="_blank" rel="noopener" style="text-decoration:none;font-size:13px;color:#9A8FB0" style-hover="color:#9333EA">Réalisé par <span style="color:#9333EA;font-weight:600">Arslan DIF</span> — difarslan.com</a>
+    </div>
+  </div>
+</footer>
+
+<sc-if value="{{ showCookie }}" hint-placeholder-val="{{ false }}">
+  <div role="dialog" aria-label="Cookies" style="position:fixed;left:0;right:0;bottom:0;z-index:70;padding:16px clamp(16px,4vw,40px);background:#fff;border-top:1px solid #EDE5FA;box-shadow:0 -8px 30px rgba(27,16,48,0.08);animation:fadeUp .35s ease both">
+    <div style="max-width:1180px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px">
+      <p style="margin:0;flex:1;min-width:240px;font-size:14px;line-height:1.55;color:#4B3E63">Nous utilisons des cookies pour améliorer votre expérience et mesurer l'audience. <button onClick="{{ openConfid }}" style="background:none;border:none;padding:0;color:#9333EA;font-weight:600;cursor:pointer;font-size:14px;text-decoration:underline">En savoir plus</button></p>
+      <div style="display:flex;gap:10px">
+        <button onClick="{{ refuseCookies }}" style="height:44px;padding:0 22px;border:1px solid #E0D5F2;border-radius:999px;background:#fff;font-weight:600;font-size:14px;color:#4B3E63;cursor:pointer">Refuser</button>
+        <button onClick="{{ acceptCookies }}" style="height:44px;padding:0 24px;border:none;border-radius:999px;background:linear-gradient(115deg,#7C3AED,#DB2777);color:#fff;font-weight:600;font-size:14px;cursor:pointer">Accepter</button>
+      </div>
+    </div>
+  </div>
+</sc-if>
+
+<sc-if value="{{ legalOpen }}" hint-placeholder-val="{{ false }}">
+  <div role="dialog" aria-label="{{ legalTitle }}" style="position:fixed;inset:0;z-index:90;background:rgba(27,16,48,0.5);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);animation:fadeUp .25s ease;display:flex;align-items:flex-start;justify-content:center;overflow-y:auto;padding:clamp(16px,5vh,60px) 16px">
+    <div style="width:100%;max-width:680px;background:#fff;border-radius:24px;overflow:hidden;animation:pop .3s ease both">
+      <div style="position:sticky;top:0;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:22px clamp(20px,4vw,36px);background:#fff;border-bottom:1px solid #EDE5FA">
+        <h2 style="margin:0;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:clamp(22px,3.4vw,30px);color:#1B1030">{{ legalTitle }}</h2>
+        <button onClick="{{ closeLegal }}" aria-label="Fermer" style="width:44px;height:44px;flex:0 0 auto;background:#F6F0FE;border:none;border-radius:12px;font-size:18px;cursor:pointer;color:#5B2A9E">✕</button>
+      </div>
+      <div style="padding:clamp(22px,4vw,36px)">
+        <sc-for list="{{ legalBlocks }}" as="b" hint-placeholder-count="6">
+          <sc-if value="{{ b.isH }}" hint-placeholder-val="{{ false }}"><h3 style="margin:22px 0 8px;font-weight:600;font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:#9333EA">{{ b.text }}</h3></sc-if>
+          <sc-if value="{{ b.isP }}" hint-placeholder-val="{{ true }}"><p style="margin:0 0 12px;font-size:14.5px;line-height:1.7;color:#4B3E63">{{ b.text }}</p></sc-if>
+        </sc-for>
+        <p style="margin:22px 0 0;padding-top:16px;border-top:1px solid #EDE5FA;font-size:12.5px;line-height:1.6;color:#9A8FB0">Ce site est une démonstration. Les informations légales ci-dessus sont fictives et fournies à titre d'illustration.</p>
+      </div>
+    </div>
+  </div>
+</sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = {
+    view: 'home', cat: 'all', eventId: null, qty: {},
+    form: { prenom: '', nom: '', email: '', tel: '', consent: false, news: false, pay: 'cib' },
+    errors: {}, order: null,
+    cookie: null, showCookie: false, mobileMenu: false, legal: null,
+  };
+
+  componentDidMount() {
+    try {
+      const c = localStorage.getItem('yalla_cookie_v1');
+      this.setState(c ? { cookie: c, showCookie: false } : { showCookie: true });
+    } catch (e) { this.setState({ showCookie: true }); }
+  }
+
+  fmt(n) { return ('' + Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ' '); }
+  hashInt(s) { let h = 2166136261; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
+
+  fmtDate(iso) {
+    const wd = ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
+    const mo = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
+    const moS = ['janv.', 'févr.', 'mars', 'avr.', 'mai', 'juin', 'juil.', 'août', 'sept.', 'oct.', 'nov.', 'déc.'];
+    const p = iso.split('-').map(Number); const d = new Date(p[0], p[1] - 1, p[2]);
+    return { weekday: wd[d.getDay()], day: d.getDate(), month: mo[d.getMonth()], monthShort: moS[d.getMonth()], full: wd[d.getDay()] + ' ' + d.getDate() + ' ' + mo[d.getMonth()] + ' ' + p[0] };
+  }
+
+  makeQR(seed) {
+    const N = 23; let h = this.hashInt(seed) || 1;
+    const rnd = () => { h = (Math.imul(h, 1103515245) + 12345) & 0x7fffffff; return h / 0x7fffffff; };
+    const inBox = (r, c, br, bc) => r >= br && r < br + 7 && c >= bc && c < bc + 7;
+    const isFinder = (r, c) => inBox(r, c, 0, 0) || inBox(r, c, 0, N - 7) || inBox(r, c, N - 7, 0);
+    let d = '';
+    for (let r = 0; r < N; r++) for (let c = 0; c < N; c++) {
+      if (isFinder(r, c)) continue;
+      if (rnd() > 0.52) d += 'M' + c + ' ' + r + 'h1v1h-1z';
+    }
+    const finder = (br, bc) => { d += 'M' + bc + ' ' + br + 'h7v7h-7z' + 'M' + (bc + 1) + ' ' + (br + 1) + 'h5v5h-5z' + 'M' + (bc + 2) + ' ' + (br + 2) + 'h3v3h-3z'; };
+    finder(0, 0); finder(0, N - 7); finder(N - 7, 0);
+    return d;
+  }
+
+  data() {
+    const g = {
+      concert: 'linear-gradient(140deg,#7C3AED,#DB2777)',
+      festival: 'linear-gradient(140deg,#DB2777,#FB7185)',
+      club: 'linear-gradient(140deg,#4F46E5,#9333EA)',
+      humour: 'linear-gradient(140deg,#FB923C,#EC4899)',
+      spectacle: 'linear-gradient(140deg,#F43F5E,#FB923C)',
+      expo: 'linear-gradient(140deg,#8B5CF6,#EC4899)',
+    };
+    const catLabels = { concert: 'Concert', festival: 'Festival', club: 'Soirée', humour: 'Humour', spectacle: 'Spectacle', expo: 'Expo' };
+    return [
+      { id: 'soolking', short: 'SOOLKING', title: 'Soolking — Live à Alger', cat: 'concert', dateISO: '2026-07-18', timeStr: '21h00', doorsStr: '19h30', venue: 'Coupole du 5-Juillet', city: 'Alger', description: 'L\u2019enfant de Staoueli revient sur ses terres pour un concert événement. Deux heures de show, un nouveau live band et les tubes qui ont marqué toute une génération. Un rendez-vous à ne pas manquer sous la Coupole.', lineupLabel: 'Programmation', lineup: ['Soolking', 'DJ set d\u2019ouverture', 'Invités surprises'], tiers: [{ id: 'eb', name: 'Early Bird', price: 2500, note: 'Quantité limitée' }, { id: 'std', name: 'Standard', price: 3500, note: 'Fosse debout' }, { id: 'vip', name: 'VIP', price: 6000, note: 'Accès prioritaire + bar' }, { id: 'or', name: 'Carré Or', price: 9000, note: 'Places assises face scène' }] },
+      { id: 'diwan', short: 'DIWAN\nFEST', title: 'Festival Diwan d\u2019Alger', cat: 'festival', dateISO: '2026-07-24', timeStr: '19h00', doorsStr: '18h00', venue: 'Théâtre de Verdure', city: 'Alger', description: 'Trois jours de fusion gnawa, chaâbi et musiques du monde au cœur du Théâtre de Verdure. Une programmation qui célèbre les racines et les métissages, du crépuscule jusqu\u2019à tard dans la nuit.', lineupLabel: 'Line-up', lineup: ['Gnawa Diffusion', 'Cheikh Sidi Bémol', 'Index', 'Democratoz', 'Lella'], tiers: [{ id: 'j1', name: 'Pass 1 jour', price: 2000, note: 'Ven., sam. ou dim.' }, { id: 'j3', name: 'Pass 3 jours', price: 5000, note: 'Accès complet' }, { id: 'vip', name: 'VIP Pass', price: 8000, note: 'Espace VIP + rencontres' }] },
+      { id: 'electro', short: 'ROOF\nTOP', title: 'Nuit Électro — Rooftop Sessions', cat: 'club', dateISO: '2026-08-01', timeStr: '23h00', doorsStr: '22h30', venue: 'Rooftop El Aurassi', city: 'Alger', description: 'La nuit électro la plus attendue de l\u2019été, sur le toit de l\u2019Aurassi avec vue panoramique sur la baie. House, mélodique et deep jusqu\u2019au lever du soleil.', lineupLabel: 'Aux platines', lineup: ['Nassim Kouti', 'Skander', 'B2B Sunset', 'Résident El Aurassi'], tiers: [{ id: 'eb', name: 'Early Bird', price: 2000, note: 'Avant minuit' }, { id: 'std', name: 'Standard', price: 3000, note: 'Entrée + vestiaire' }, { id: 'table', name: 'Table (4 pers.)', price: 18000, note: 'Bouteille offerte' }] },
+      { id: 'secteur', short: 'STAND\nUP', title: 'Abdelkader Secteur — Stand-up', cat: 'humour', dateISO: '2026-07-30', timeStr: '20h30', doorsStr: '20h00', venue: 'Salle Ibn Zeydoun', city: 'Riadh El Feth, Alger', description: 'Le maître de l\u2019humour algérien présente son nouveau spectacle. Des sketches inédits, une observation aiguisée du quotidien, et deux heures de rire garanti pour toute la famille.', lineupLabel: 'Sur scène', lineup: ['Abdelkader Secteur', 'Première partie surprise'], tiers: [{ id: 'std', name: 'Standard', price: 1800, note: 'Placement libre' }, { id: 'prem', name: 'Premium', price: 2800, note: 'Rangs centraux' }, { id: 'vip', name: 'Carré VIP', price: 4500, note: 'Premiers rangs' }] },
+      { id: 'ballet', short: 'CASSE\nNOIS.', title: 'Casse-Noisette — Ballet', cat: 'spectacle', dateISO: '2026-08-09', timeStr: '18h00', doorsStr: '17h15', venue: 'Opéra d\u2019Alger Boualem Bessaïh', city: 'Ouled Fayet, Alger', description: 'Le célèbre ballet de Tchaïkovski dans une mise en scène féerique, porté par un orchestre live. Une soirée d\u2019exception pour petits et grands à l\u2019Opéra d\u2019Alger.', lineupLabel: 'Distribution', lineup: ['Ballet national', 'Orchestre symphonique', 'Solistes invités'], tiers: [{ id: 'c3', name: 'Catégorie 3', price: 2200, note: 'Balcon' }, { id: 'c2', name: 'Catégorie 2', price: 3500, note: 'Corbeille' }, { id: 'c1', name: 'Catégorie 1', price: 5000, note: 'Orchestre' }, { id: 'loge', name: 'Loge', price: 7500, note: 'Loge privée' }] },
+      { id: 'biennale', short: 'BIEN\nNALE', title: 'Biennale d\u2019Art Contemporain', cat: 'expo', dateISO: '2026-07-15', timeStr: '10h — 19h', doorsStr: '10h00', venue: 'Musée d\u2019Art Moderne (MaMa)', city: 'Alger-Centre', description: 'Un mois d\u2019exposition réunissant une quarantaine d\u2019artistes du continent africain. Installations, peinture, vidéo et performances autour du thème « Rivages ». Du 15 juillet au 15 août.', lineupLabel: 'Au programme', lineup: ['40 artistes', 'Performances live', 'Ateliers', 'Nocturnes du jeudi'], tiers: [{ id: 'ent', name: 'Entrée', price: 800, note: 'Accès 1 jour' }, { id: 'guide', name: 'Visite guidée', price: 1500, note: 'Avec médiateur' }, { id: 'pass', name: 'Pass saison', price: 2500, note: 'Accès illimité' }] },
+      { id: 'rimitti', short: 'RIMI\nTTI', title: 'Cheikha Rimitti — Tribute', cat: 'concert', dateISO: '2026-08-07', timeStr: '21h30', doorsStr: '20h30', venue: 'Théâtre National Algérien (TNA)', city: 'Alger', description: 'Un hommage vibrant à la reine du raï, réunissant plusieurs voix de la scène algérienne actuelle. Une célébration du patrimoine musical, entre tradition et modernité.', lineupLabel: 'Line-up', lineup: ['Souad Massi', 'Sofiane Saïdi', 'Orchestre du TNA'], tiers: [{ id: 'std', name: 'Standard', price: 2500, note: 'Parterre' }, { id: 'balc', name: 'Balcon', price: 3200, note: 'Vue plongeante' }, { id: 'vip', name: 'VIP', price: 4500, note: 'Loge + accueil' }] },
+      { id: 'comedy', short: 'COMEDY\nCLUB', title: 'Alger Comedy Club — Plateau', cat: 'humour', dateISO: '2026-07-22', timeStr: '20h00', doorsStr: '19h30', venue: 'Le Garage', city: 'Hydra, Alger', description: 'Cinq humoristes, un plateau, une soirée. Le rendez-vous mensuel du stand-up algérois où se croisent têtes d\u2019affiche et talents émergents dans une ambiance intimiste.', lineupLabel: 'Le plateau', lineup: ['Yacine Belhousse', 'Nawel', 'Comedy Club crew', 'Scène ouverte'], tiers: [{ id: 'eb', name: 'Early Bird', price: 1500, note: 'Prévente' }, { id: 'std', name: 'Standard', price: 2200, note: 'Sur place' }, { id: 'duo', name: 'Billet Duo', price: 4000, note: 'Pour 2 personnes' }] },
+    ].map(e => ({ ...e, grad: g[e.cat], catLabel: catLabels[e.cat] }));
+  }
+
+  setField(k, v) { this.setState(s => ({ form: { ...s.form, [k]: v }, errors: { ...s.errors, [k]: undefined } })); }
+  inc(id) { this.setState(s => ({ qty: { ...s.qty, [id]: Math.min(10, (s.qty[id] || 0) + 1) } })); }
+  dec(id) { this.setState(s => ({ qty: { ...s.qty, [id]: Math.max(0, (s.qty[id] || 0) - 1) } })); }
+  nav(v) { this.setState({ view: v, mobileMenu: false }); try { window.scrollTo(0, 0); } catch (e) {} }
+  openEvent(id) { this.setState({ view: 'event', eventId: id, qty: {}, mobileMenu: false }); try { window.scrollTo(0, 0); } catch (e) {} }
+
+  validate() {
+    const f = this.state.form, e = {};
+    if (!f.prenom.trim()) e.prenom = 'Requis.';
+    if (!f.nom.trim()) e.nom = 'Requis.';
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email.trim())) e.email = 'Adresse e-mail invalide.';
+    if (!/^[0-9+\s().-]{6,}$/.test(f.tel.trim())) e.tel = 'Numéro invalide.';
+    if (!f.consent) e.consent = 'Vous devez accepter pour continuer.';
+    this.setState({ errors: e });
+    return Object.keys(e).length === 0;
+  }
+
+  chipStyle(active, grad) { return { flex: '0 0 auto', height: '40px', padding: '0 18px', border: active ? '1px solid transparent' : '1px solid #E4DAF3', borderRadius: '999px', background: active ? grad : '#fff', color: active ? '#fff' : '#4B3E63', fontFamily: '"Space Grotesk",sans-serif', fontWeight: '600', fontSize: '14px', cursor: 'pointer', whiteSpace: 'nowrap', transition: 'all .16s ease' }; }
+  inputStyle(err) { return { width: '100%', padding: '13px 15px', background: '#FBF8FF', border: '1px solid ' + (err ? '#F472B6' : '#E7DEF6'), borderRadius: '12px', color: '#1B1030', fontSize: '15px', outline: 'none', transition: 'border-color .16s ease' }; }
+  qtyBtnStyle(dis) { return { width: '38px', height: '38px', borderRadius: '50%', border: '1px solid ' + (dis ? '#EEE7F8' : '#D9C9F2'), background: '#fff', color: dis ? '#CBBFE0' : '#5B2A9E', fontSize: '20px', cursor: dis ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }; }
+  payStyle(sel) { return { display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px', width: '100%', textAlign: 'left', padding: '15px 17px', borderRadius: '14px', border: '1.5px solid ' + (sel ? '#9333EA' : '#E7DEF6'), background: sel ? '#F9F2FE' : '#fff', cursor: 'pointer', transition: 'all .16s ease' }; }
+  payDot(sel) { return { width: '18px', height: '18px', borderRadius: '50%', flex: '0 0 auto', border: '5px solid ' + (sel ? '#9333EA' : '#DAD0EE'), background: '#fff', boxSizing: 'border-box' }; }
+
+  renderVals() {
+    const S = this.state;
+    const events = this.data();
+    const byId = id => events.find(e => e.id === id);
+    const minPrice = e => Math.min.apply(null, e.tiers.map(t => t.price));
+
+    const cardBase = e => {
+      const dt = this.fmtDate(e.dateISO);
+      return {
+        id: e.id, short: e.short, title: e.title, catLabel: e.catLabel, venue: e.venue, city: e.city, timeStr: e.timeStr,
+        day: dt.day, monthShort: dt.monthShort, weekday: dt.weekday, priceFrom: this.fmt(minPrice(e)),
+        thumbStyle: { aspectRatio: '3/2', background: 'linear-gradient(180deg,rgba(24,12,45,0.30),rgba(24,12,45,0.03) 44%,rgba(24,12,45,0.58)), url("images/events/' + e.id + '.jpg") center/cover no-repeat, ' + e.grad, padding: '16px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', position: 'relative', whiteSpace: 'pre-line' },
+        rowThumbStyle: { background: 'linear-gradient(180deg,rgba(24,12,45,0.22),rgba(24,12,45,0.55)), url("images/events/' + e.id + '.jpg") center/cover no-repeat, ' + e.grad, padding: '14px', display: 'flex', alignItems: 'flex-end', minHeight: '100%', position: 'relative', whiteSpace: 'pre-line' },
+        catChipStyle: { display: 'inline-flex', alignItems: 'center', height: '24px', padding: '0 11px', borderRadius: '999px', background: e.grad, color: '#fff', fontWeight: '600', fontSize: '11px', letterSpacing: '.03em', textTransform: 'uppercase' },
+        img: 'images/events/' + e.id + '.jpg', imgAlt: 'Photographie — ' + e.title,
+        onOpen: () => this.openEvent(e.id),
+      };
+    };
+
+    // categories (home chips navigate to agenda filtered)
+    const catDefs = [
+      { key: 'concert', label: 'Concert' }, { key: 'festival', label: 'Festival' }, { key: 'club', label: 'Soirée' },
+      { key: 'humour', label: 'Humour' }, { key: 'spectacle', label: 'Spectacle' }, { key: 'expo', label: 'Expo' },
+    ];
+    const gradOf = { all: 'linear-gradient(115deg,#7C3AED,#DB2777)', concert: 'linear-gradient(140deg,#7C3AED,#DB2777)', festival: 'linear-gradient(140deg,#DB2777,#FB7185)', club: 'linear-gradient(140deg,#4F46E5,#9333EA)', humour: 'linear-gradient(140deg,#FB923C,#EC4899)', spectacle: 'linear-gradient(140deg,#F43F5E,#FB923C)', expo: 'linear-gradient(140deg,#8B5CF6,#EC4899)' };
+    const cats = catDefs.map(c => ({ label: c.label, homeStyle: this.chipStyle(false, gradOf[c.key]), onSelect: () => { this.setState({ view: 'agenda', cat: c.key, mobileMenu: false }); try { window.scrollTo(0, 0); } catch (e) {} } }));
+
+    const filterDefs = [{ key: 'all', label: 'Tout' }].concat(catDefs);
+    const filterChips = filterDefs.map(c => ({ label: c.label, style: this.chipStyle(S.cat === c.key, gradOf[c.key]), onSelect: () => this.setState({ cat: c.key }) }));
+
+    // agenda groups (filtered + sorted)
+    const filtered = events.filter(e => S.cat === 'all' || e.cat === S.cat).sort((a, b) => a.dateISO < b.dateISO ? -1 : 1);
+    const groupsMap = {};
+    filtered.forEach(e => { (groupsMap[e.dateISO] = groupsMap[e.dateISO] || []).push(e); });
+    const agendaGroups = Object.keys(groupsMap).sort().map(iso => {
+      const dt = this.fmtDate(iso);
+      return { day: dt.day, monthShort: dt.monthShort, weekday: dt.weekday, events: groupsMap[iso].map(cardBase) };
+    });
+    const agendaCount = filtered.length + (filtered.length > 1 ? ' événements à venir' : ' événement à venir');
+
+    const featured = ['soolking', 'diwan', 'electro', 'ballet'].map(id => cardBase(byId(id)));
+
+    // current event view
+    const cur = S.eventId ? byId(S.eventId) : null;
+    let evVM = {}, tiersUI = [], subtotal = 0, totalCount = 0;
+    if (cur) {
+      const dt = this.fmtDate(cur.dateISO);
+      tiersUI = cur.tiers.map(t => {
+        const q = S.qty[t.id] || 0; subtotal += q * t.price; totalCount += q;
+        return { name: t.name, note: t.note, priceFmt: this.fmt(t.price), qty: q, onInc: () => this.inc(t.id), onDec: () => this.dec(t.id), minusStyle: this.qtyBtnStyle(q === 0), rowStyle: { display: 'flex', alignItems: 'center', gap: '12px', padding: '14px', borderRadius: '16px', border: '1px solid ' + (q > 0 ? '#D9C9F2' : '#EEE7F8'), background: q > 0 ? '#FAF5FE' : '#fff' } };
+      });
+      evVM = {
+        title: cur.title, catLabel: cur.catLabel, venue: cur.venue, city: cur.city, timeStr: cur.timeStr, doorsStr: cur.doorsStr,
+        description: cur.description, lineup: cur.lineup, lineupLabel: cur.lineupLabel, dateFull: dt.full,
+        img: 'images/events/' + cur.id + '.jpg', imgAlt: 'Photographie — ' + cur.title,
+        heroStyle: { background: 'linear-gradient(180deg,rgba(20,10,40,0.34),rgba(20,10,40,0.60)), url("images/events/' + cur.id + '.jpg") center/cover no-repeat, ' + cur.grad, position: 'relative', overflow: 'hidden' },
+      };
+    }
+    const fee = Math.round(subtotal * 0.04);
+    const grand = subtotal + fee;
+
+    // checkout summary
+    const co_items = cur ? cur.tiers.filter(t => (S.qty[t.id] || 0) > 0).map(t => ({ name: t.name, qty: S.qty[t.id], lineFmt: this.fmt(t.price * S.qty[t.id]) })) : [];
+    const coDt = cur ? this.fmtDate(cur.dateISO) : {};
+
+    // pay options
+    const payDefs = [{ key: 'cib', label: 'Carte CIB', note: 'Paiement en ligne' }, { key: 'edahabia', label: 'Edahabia', note: 'Algérie Poste' }, { key: 'onsite', label: 'Sur place', note: 'À retirer au guichet' }];
+    const payOptions = payDefs.map(p => ({ label: p.label, note: p.note, style: this.payStyle(S.form.pay === p.key), dot: this.payDot(S.form.pay === p.key), onSelect: () => this.setField('pay', p.key) }));
+
+    // legal
+    const legalMap = {
+      mentions: { title: 'Mentions légales', blocks: [
+        { p: 'Le présent site est une démonstration réalisée à des fins de présentation commerciale.' },
+        { h: 'Éditeur' }, { p: 'Yalla Billetterie — SARL au capital de 1 000 000 DA. Rue Didouche Mourad, Alger-Centre 16000, Algérie. RC 16/00-9876543 B 24. NIF 000016987654321.' },
+        { h: 'Directeur de la publication' }, { p: 'La gérance de Yalla Billetterie.' },
+        { h: 'Hébergement' }, { p: 'Site hébergé par un prestataire technique. Coordonnées disponibles sur demande à contact@yalla-alger.dz.' },
+        { h: 'Propriété intellectuelle' }, { p: 'Les contenus, visuels et l\u2019identité de la plateforme sont protégés. Toute reproduction sans autorisation est interdite.' },
+      ] },
+      confidentialite: { title: 'Politique de confidentialité', blocks: [
+        { p: 'Yalla attache une grande importance à la protection de vos données personnelles.' },
+        { h: 'Données collectées' }, { p: 'Lors d\u2019une commande : prénom, nom, e-mail, téléphone, ainsi que les informations de paiement traitées par notre prestataire agréé.' },
+        { h: 'Finalité' }, { p: 'Vos données servent à traiter votre commande, vous délivrer votre e-billet, et — avec votre consentement — vous informer des prochaines sorties.' },
+        { h: 'Conservation' }, { p: 'Les données sont conservées 24 mois après votre dernier achat, sauf obligation légale contraire.' },
+        { h: 'Vos droits' }, { p: 'Vous disposez d\u2019un droit d\u2019accès, de rectification, d\u2019effacement et d\u2019opposition. Contactez contact@yalla-alger.dz.' },
+        { h: 'Cookies' }, { p: 'Nous utilisons des cookies de mesure d\u2019audience soumis à votre consentement via le bandeau affiché à la première visite.' },
+      ] },
+      cgv: { title: 'Conditions de vente', blocks: [
+        { p: 'Les présentes conditions régissent la vente de billets sur la plateforme Yalla (démonstration).' },
+        { h: 'Billets' }, { p: 'Les billets sont nominatifs et délivrés sous forme d\u2019e-billet avec QR code, valable pour un seul accès.' },
+        { h: 'Paiement' }, { p: 'Le paiement s\u2019effectue par carte CIB, Edahabia ou retrait au guichet. Les prix sont indiqués en dinars algériens, frais de service inclus au récapitulatif.' },
+        { h: 'Remboursement' }, { p: 'Sauf annulation de l\u2019événement par l\u2019organisateur, les billets ne sont ni repris ni échangés, conformément à la réglementation en vigueur.' },
+        { h: 'Accès' }, { p: 'L\u2019accès à l\u2019événement peut être refusé en cas de billet non conforme ou déjà scanné.' },
+      ] },
+    };
+    const legalData = S.legal ? legalMap[S.legal] : null;
+    const legalBlocks = legalData ? legalData.blocks.map(b => ({ isH: !!b.h, isP: !!b.p, text: b.h || b.p })) : [];
+
+    // order (ticket)
+    const O = S.order;
+    let orderVM = {};
+    if (O) {
+      orderVM = { ...O, headStyle: { background: O.grad, padding: 'clamp(24px,4vw,34px)', position: 'relative', overflow: 'hidden' } };
+    }
+
+    return {
+      isHome: S.view === 'home', isAgenda: S.view === 'agenda', isEvent: S.view === 'event', isCheckout: S.view === 'checkout', isTicket: S.view === 'ticket', isInfos: S.view === 'infos',
+      goHome: () => this.nav('home'), goAgenda: () => this.nav('agenda'), goInfos: () => this.nav('infos'),
+      toggleMenu: () => this.setState({ mobileMenu: true }), navClose: () => this.setState({ mobileMenu: false }),
+      cats, filterChips, agendaGroups, agendaCount, featured,
+      // event
+      ev: evVM, tiersUI, totalCount, plural: totalCount > 1 ? 's' : '', noTickets: totalCount === 0,
+      subtotalFmt: this.fmt(subtotal), feeFmt: this.fmt(fee), grandFmt: this.fmt(grand),
+      continueStyle: { width: '100%', height: '52px', border: 'none', borderRadius: '999px', background: totalCount === 0 ? '#E7DEF6' : 'linear-gradient(115deg,#7C3AED,#DB2777 60%,#FB7185)', color: totalCount === 0 ? '#B3A6CC' : '#fff', fontWeight: '700', fontSize: '15.5px', cursor: totalCount === 0 ? 'not-allowed' : 'pointer', boxShadow: totalCount === 0 ? 'none' : '0 8px 22px rgba(219,39,119,0.28)' },
+      goCheckout: () => { if (totalCount > 0) this.nav('checkout'); },
+      backToEvent: () => this.nav('event'),
+      // checkout
+      co_items, co_short: cur ? cur.short : '', co_title: cur ? cur.title : '', co_venue: cur ? cur.venue : '', co_dateFull: cur ? coDt.full : '',
+      co_img: cur ? 'images/events/' + cur.id + '.jpg' : '', co_imgAlt: cur ? 'Photographie — ' + cur.title : '',
+      imgErr: e => { e.target.style.display = 'none'; },
+      co_thumbStyle: { aspectRatio: '16/7', borderRadius: '16px', overflow: 'hidden', background: cur ? 'linear-gradient(180deg,rgba(24,12,45,0.22),rgba(24,12,45,0.55)), url("images/events/' + cur.id + '.jpg") center/cover no-repeat, ' + cur.grad : '#ccc', display: 'flex', alignItems: 'flex-end', padding: '14px', position: 'relative', whiteSpace: 'pre-line' },
+      payOptions,
+      form: S.form,
+      onPrenom: e => this.setField('prenom', e.target.value), onNom: e => this.setField('nom', e.target.value),
+      onEmail: e => this.setField('email', e.target.value), onTel: e => this.setField('tel', e.target.value),
+      onConsent: e => this.setField('consent', e.target.checked), onNews: e => this.setField('news', e.target.checked),
+      fldPrenom: this.inputStyle(S.errors.prenom), fldNom: this.inputStyle(S.errors.nom), fldEmail: this.inputStyle(S.errors.email), fldTel: this.inputStyle(S.errors.tel),
+      errPrenom: S.errors.prenom || '', errPrenomB: !!S.errors.prenom, errNom: S.errors.nom || '', errNomB: !!S.errors.nom,
+      errEmail: S.errors.email || '', errEmailB: !!S.errors.email, errTel: S.errors.tel || '', errTelB: !!S.errors.tel,
+      errConsent: S.errors.consent || '', errConsentB: !!S.errors.consent,
+      submitOrder: () => {
+        if (!this.validate()) return;
+        const ev2 = byId(S.eventId); const dt = this.fmtDate(ev2.dateISO);
+        const ref = 'YL-' + new Date().getFullYear() + '-' + Math.floor(1000 + Math.random() * 9000);
+        const items = ev2.tiers.filter(t => (S.qty[t.id] || 0) > 0).map(t => ({ name: t.name, qty: S.qty[t.id], lineFmt: this.fmt(t.price * S.qty[t.id]) }));
+        const order = { ref, title: ev2.title, dateFull: dt.full, timeStr: ev2.timeStr, venue: ev2.venue, city: ev2.city, grad: ev2.grad, name: (S.form.prenom + ' ' + S.form.nom).trim(), email: S.form.email, items, totalFmt: this.fmt(grand), qr: this.makeQR(ref) };
+        this.setState({ order, view: 'ticket' }); try { window.scrollTo(0, 0); } catch (e) {}
+      },
+      // ticket
+      order: orderVM,
+      // infos
+      steps: [{ n: '1', t: 'Trouvez votre sortie', d: 'Parcourez l\u2019agenda par date ou filtrez par catégorie.' }, { n: '2', t: 'Choisissez vos billets', d: 'Sélectionnez vos tarifs, le total se calcule en direct.' }, { n: '3', t: 'Recevez votre e-billet', d: 'Un QR code vous est envoyé par e-mail, à présenter à l\u2019entrée.' }],
+      faq: [
+        { q: 'Comment fonctionne l\u2019e-billet ?', a: 'Après paiement, vous recevez un e-billet avec un QR code unique. Présentez-le sur votre téléphone ou imprimé à l\u2019entrée.' },
+        { q: 'Quels moyens de paiement acceptez-vous ?', a: 'Carte CIB et Edahabia (Algérie Poste) en ligne, ou retrait et règlement au guichet le jour de l\u2019événement.' },
+        { q: 'Puis-je me faire rembourser ?', a: 'Les billets ne sont ni repris ni échangés, sauf en cas d\u2019annulation de l\u2019événement par l\u2019organisateur.' },
+        { q: 'Les prix affichés sont-ils définitifs ?', a: 'Oui. Les frais de service sont indiqués séparément dans le récapitulatif avant paiement, en dinars algériens.' },
+      ],
+      // cookie / legal
+      showCookie: S.showCookie,
+      acceptCookies: () => { try { localStorage.setItem('yalla_cookie_v1', 'accepted'); } catch (e) {} this.setState({ showCookie: false }); },
+      refuseCookies: () => { try { localStorage.setItem('yalla_cookie_v1', 'refused'); } catch (e) {} this.setState({ showCookie: false }); },
+      legalOpen: !!S.legal, legalTitle: legalData ? legalData.title : '', legalBlocks,
+      openMentions: () => this.setState({ legal: 'mentions', mobileMenu: false }),
+      openConfid: () => this.setState({ legal: 'confidentialite', mobileMenu: false }),
+      openCGV: () => this.setState({ legal: 'cgv', mobileMenu: false }),
+      closeLegal: () => this.setState({ legal: null }),
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<script src="image-slot.js"></script>
+<style>
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:#1c1815;color:#f2e8da;font-family:'Manrope',system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+::selection{background:#d99a4e;color:#1c1815}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent,#d99a4e);outline-offset:3px;border-radius:2px}
+input,textarea,button{font-family:inherit}
+@keyframes mtUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+@keyframes mtFloat{0%,100%{transform:translate(0,0)}50%{transform:translate(-18px,26px)}}
+@keyframes mtSheen{0%{background-position:0% 50%}100%{background-position:200% 50%}}
+.mt-up{animation:mtUp .9s cubic-bezier(.2,.7,.2,1) both}
+.nav-desk{display:flex}
+.nav-burger{display:none}
+.res-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(28px,4vw,56px);align-items:start}
+.hero-grid{display:grid;grid-template-columns:1.12fr .88fr;gap:clamp(28px,5vw,72px);align-items:center}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,4vw,64px);align-items:start}
+@media(max-width:900px){.hero-grid{grid-template-columns:1fr}.res-grid{grid-template-columns:1fr}.contact-grid{grid-template-columns:1fr}}
+@media(max-width:860px){.nav-desk{display:none}.nav-burger{display:flex}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition-duration:.001ms!important}}
+</style>
+</helmet>
+
+<div style="--accent:{{ accent }};--accentDeep:{{ accentDeep }};position:relative;min-height:100vh">
+
+<div aria-hidden="true" style="position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.05;background-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E&quot;)"></div>
+
+<header style="position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:16px clamp(20px,5vw,64px);backdrop-filter:blur(14px);background:rgba(28,24,21,.74);border-bottom:1px solid rgba(242,232,218,.1)">
+  <a href="#accueil" onClick="{{ goAccueil }}" style="text-decoration:none;display:flex;flex-direction:column;line-height:1;gap:3px">
+    <span style="font-family:'Cormorant Garamond',serif;font-weight:600;font-size:24px;letter-spacing:.01em;color:#f2e8da">Maison Tassili</span>
+    <span style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.36em;text-transform:uppercase;color:var(--accent,#d99a4e)">Table &middot; Alger</span>
+  </a>
+  <nav class="nav-desk" aria-label="Navigation principale" style="align-items:center;gap:clamp(18px,2.4vw,38px)">
+    <a href="#carte" onClick="{{ goCarte }}" style="text-decoration:none;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(242,232,218,.66);transition:color .2s" style-hover="color:#f2e8da">La Carte</a>
+    <a href="#reserver" onClick="{{ goReserver }}" style="text-decoration:none;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(242,232,218,.66);transition:color .2s" style-hover="color:#f2e8da">Réserver</a>
+    <a href="#avis" onClick="{{ goAvis }}" style="text-decoration:none;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(242,232,218,.66);transition:color .2s" style-hover="color:#f2e8da">Avis</a>
+    <a href="#maison" onClick="{{ goMaison }}" style="text-decoration:none;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(242,232,218,.66);transition:color .2s" style-hover="color:#f2e8da">La Maison</a>
+    <a href="#contact" onClick="{{ goContact }}" style="text-decoration:none;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(242,232,218,.66);transition:color .2s" style-hover="color:#f2e8da">Contact</a>
+    <a href="#reserver" onClick="{{ goReserver }}" style="text-decoration:none;font-family:'Space Mono',monospace;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:11px 20px;background:var(--accent,#d99a4e);color:#1c1815;border-radius:2px;transition:background .2s,transform .2s" style-hover="background:var(--accentDeep,#c47b34);transform:translateY(-1px)">Réserver une table</a>
+  </nav>
+  <button class="nav-burger" onClick="{{ toggleNav }}" aria-label="Ouvrir le menu" style="align-items:center;justify-content:center;width:44px;height:44px;background:transparent;border:1px solid rgba(242,232,218,.24);border-radius:3px;cursor:pointer;color:#f2e8da;font-size:18px">≡</button>
+</header>
+
+<sc-if value="{{ mobileNav }}">
+  <div style="position:fixed;inset:0;z-index:60;background:rgba(20,17,14,.97);backdrop-filter:blur(6px);display:flex;flex-direction:column;padding:22px clamp(20px,5vw,64px)">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:48px">
+      <span style="font-family:'Cormorant Garamond',serif;font-weight:600;font-size:24px">Maison Tassili</span>
+      <button onClick="{{ closeNav }}" aria-label="Fermer le menu" style="width:44px;height:44px;background:transparent;border:1px solid rgba(242,232,218,.24);border-radius:3px;cursor:pointer;color:#f2e8da;font-size:20px">×</button>
+    </div>
+    <nav aria-label="Navigation mobile" style="display:flex;flex-direction:column;gap:6px">
+      <a href="#carte" onClick="{{ goCarte }}" style="text-decoration:none;font-family:'Cormorant Garamond',serif;font-size:38px;color:#f2e8da;padding:8px 0;border-bottom:1px solid rgba(242,232,218,.1)">La Carte</a>
+      <a href="#reserver" onClick="{{ goReserver }}" style="text-decoration:none;font-family:'Cormorant Garamond',serif;font-size:38px;color:#f2e8da;padding:8px 0;border-bottom:1px solid rgba(242,232,218,.1)">Réserver</a>
+      <a href="#avis" onClick="{{ goAvis }}" style="text-decoration:none;font-family:'Cormorant Garamond',serif;font-size:38px;color:#f2e8da;padding:8px 0;border-bottom:1px solid rgba(242,232,218,.1)">Avis</a>
+      <a href="#maison" onClick="{{ goMaison }}" style="text-decoration:none;font-family:'Cormorant Garamond',serif;font-size:38px;color:#f2e8da;padding:8px 0;border-bottom:1px solid rgba(242,232,218,.1)">La Maison</a>
+      <a href="#contact" onClick="{{ goContact }}" style="text-decoration:none;font-family:'Cormorant Garamond',serif;font-size:38px;color:#f2e8da;padding:8px 0;border-bottom:1px solid rgba(242,232,218,.1)">Contact</a>
+    </nav>
+    <a href="#reserver" onClick="{{ goReserver }}" style="margin-top:auto;text-align:center;text-decoration:none;font-family:'Space Mono',monospace;font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:18px;background:var(--accent,#d99a4e);color:#1c1815;border-radius:2px">Réserver une table</a>
+  </div>
+</sc-if>
+
+<main style="position:relative;z-index:2">
+
+<section id="accueil" style="position:relative;overflow:hidden;min-height:100vh;display:flex;align-items:center;padding:120px clamp(20px,5vw,64px) 70px;background:radial-gradient(130% 110% at 82% 4%, #322619 0%, #241e18 42%, #1c1815 74%)">
+  <div aria-hidden="true" style="position:absolute;width:520px;height:520px;right:-120px;top:8%;border-radius:50%;background:radial-gradient(circle,rgba(217,154,78,.28),transparent 68%);filter:blur(20px);animation:mtFloat 16s ease-in-out infinite"></div>
+  <div style="max-width:1220px;margin:0 auto;width:100%" class="hero-grid">
+    <div class="mt-up">
+      <div style="display:inline-flex;align-items:center;gap:10px;padding:7px 14px;border:1px solid rgba(242,232,218,.18);border-radius:100px;margin-bottom:30px">
+        <span style="width:6px;height:6px;border-radius:50%;background:var(--accent,#d99a4e)"></span>
+        <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(242,232,218,.72)">Ouvert du mardi au dimanche</span>
+      </div>
+      <h1 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(48px,8vw,96px);line-height:.96;letter-spacing:-.015em;margin:0 0 26px;color:#f2e8da">
+        Le goût de<br><span style="font-style:italic;color:var(--accent,#d99a4e)">l’Algérie</span>, dressé<br>comme jamais.
+      </h1>
+      <p style="max-width:480px;font-size:clamp(16px,2vw,19px);line-height:1.6;color:rgba(242,232,218,.72);margin:0 0 38px">
+        Une table contemporaine au cœur d’Alger, où le patrimoine culinaire se réinvente en sept services. Produits de saison, feu de bois, et la baie pour horizon.
+      </p>
+      <div style="display:flex;flex-wrap:wrap;gap:14px;align-items:center">
+        <a href="#reserver" onClick="{{ goReserver }}" style="text-decoration:none;font-family:'Space Mono',monospace;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:17px 30px;background:var(--accent,#d99a4e);color:#1c1815;border-radius:2px;transition:background .2s,transform .2s" style-hover="background:var(--accentDeep,#c47b34);transform:translateY(-2px)">Réserver une table</a>
+        <a href="#carte" onClick="{{ goCarte }}" style="text-decoration:none;font-family:'Space Mono',monospace;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:17px 30px;background:transparent;border:1px solid rgba(242,232,218,.24);color:#f2e8da;border-radius:2px;transition:border-color .2s" style-hover="border-color:var(--accent,#d99a4e)">Voir la carte</a>
+      </div>
+      <div style="display:flex;gap:38px;margin-top:52px;flex-wrap:wrap">
+        <div><div style="font-family:'Cormorant Garamond',serif;font-size:34px;color:var(--accent,#d99a4e);line-height:1">{{ avgRating }}</div><div style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(242,232,218,.5);margin-top:4px">{{ reviewCount }} avis</div></div>
+        <div><div style="font-family:'Cormorant Garamond',serif;font-size:34px;color:var(--accent,#d99a4e);line-height:1">7</div><div style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(242,232,218,.5);margin-top:4px">Services dégustation</div></div>
+        <div><div style="font-family:'Cormorant Garamond',serif;font-size:34px;color:var(--accent,#d99a4e);line-height:1">2019</div><div style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(242,232,218,.5);margin-top:4px">Depuis</div></div>
+      </div>
+    </div>
+    <div class="mt-up" style="position:relative">
+      <image-slot id="mt-hero" shape="rounded" radius="6" fit="cover" placeholder="Salle & lumière du soir — déposez la photo" style="display:block;position:relative;width:100%;aspect-ratio:4/5;border:1px solid rgba(242,232,218,.12);border-radius:6px"></image-slot>
+      <div style="position:absolute;left:-18px;bottom:34px;background:#1c1815;border:1px solid rgba(242,232,218,.14);border-radius:6px;padding:16px 18px;max-width:220px;box-shadow:0 20px 50px rgba(0,0,0,.5)">
+        <div style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent,#d99a4e);margin-bottom:6px">Menu dégustation</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:26px;color:#f2e8da;line-height:1">6 500 DA<span style="font-size:14px;color:rgba(242,232,218,.55)"> / pers.</span></div>
+        <div style="font-size:12px;color:rgba(242,232,218,.6);margin-top:6px">Sept services, au gré du marché.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="carte" style="scroll-margin-top:80px;padding:clamp(64px,9vw,120px) clamp(20px,5vw,64px);background:#1c1815">
+  <div style="max-width:1220px;margin:0 auto">
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:14px">
+      <sc-if value="{{ chapters }}"><span style="font-family:'Space Mono',monospace;font-size:12px;color:var(--accent,#d99a4e);letter-spacing:.1em">01</span></sc-if>
+      <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:rgba(242,232,218,.5)">La Carte</span>
+      <span style="flex:1;height:1px;background:rgba(242,232,218,.14)"></span>
+    </div>
+    <h2 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(34px,5vw,60px);line-height:1;letter-spacing:-.01em;margin:0 0 10px;max-width:640px">Une cuisine de mémoire et de saison</h2>
+    <p style="max-width:560px;color:rgba(242,232,218,.65);font-size:16px;line-height:1.6;margin:0 0 54px">La carte évolue au rythme du marché de la Pêcherie et des maraîchers de la Mitidja. Voici les incontournables du moment.</p>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(30px,4vw,64px);align-items:start">
+      <div>
+        <h3 style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent,#d99a4e);border-bottom:1px solid rgba(242,232,218,.14);padding-bottom:12px;margin:0 0 22px">Entrées</h3>
+        <sc-for list="{{ entrees }}" as="d" hint-placeholder-count="4">
+          <div style="display:flex;justify-content:space-between;gap:18px;align-items:baseline;padding:14px 0;border-bottom:1px solid rgba(242,232,218,.07)">
+            <div><div style="font-family:'Cormorant Garamond',serif;font-size:23px;color:#f2e8da;line-height:1.15">{{ d.name }}</div><div style="font-size:13px;color:rgba(242,232,218,.55);line-height:1.45;margin-top:3px">{{ d.desc }}</div></div>
+            <div style="font-family:'Space Mono',monospace;font-size:14px;color:var(--accent,#d99a4e);white-space:nowrap">{{ d.price }}</div>
+          </div>
+        </sc-for>
+      </div>
+      <div>
+        <h3 style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent,#d99a4e);border-bottom:1px solid rgba(242,232,218,.14);padding-bottom:12px;margin:0 0 22px">Plats</h3>
+        <sc-for list="{{ plats }}" as="d" hint-placeholder-count="6">
+          <div style="display:flex;justify-content:space-between;gap:18px;align-items:baseline;padding:14px 0;border-bottom:1px solid rgba(242,232,218,.07)">
+            <div><div style="font-family:'Cormorant Garamond',serif;font-size:23px;color:#f2e8da;line-height:1.15">{{ d.name }}</div><div style="font-size:13px;color:rgba(242,232,218,.55);line-height:1.45;margin-top:3px">{{ d.desc }}</div></div>
+            <div style="font-family:'Space Mono',monospace;font-size:14px;color:var(--accent,#d99a4e);white-space:nowrap">{{ d.price }}</div>
+          </div>
+        </sc-for>
+      </div>
+      <div>
+        <h3 style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent,#d99a4e);border-bottom:1px solid rgba(242,232,218,.14);padding-bottom:12px;margin:0 0 22px">Douceurs</h3>
+        <sc-for list="{{ desserts }}" as="d" hint-placeholder-count="3">
+          <div style="display:flex;justify-content:space-between;gap:18px;align-items:baseline;padding:14px 0;border-bottom:1px solid rgba(242,232,218,.07)">
+            <div><div style="font-family:'Cormorant Garamond',serif;font-size:23px;color:#f2e8da;line-height:1.15">{{ d.name }}</div><div style="font-size:13px;color:rgba(242,232,218,.55);line-height:1.45;margin-top:3px">{{ d.desc }}</div></div>
+            <div style="font-family:'Space Mono',monospace;font-size:14px;color:var(--accent,#d99a4e);white-space:nowrap">{{ d.price }}</div>
+          </div>
+        </sc-for>
+        <div style="margin-top:30px;padding:24px;border:1px solid rgba(217,154,78,.32);border-radius:6px;background:linear-gradient(180deg,rgba(217,154,78,.08),transparent)">
+          <div style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent,#d99a4e);margin-bottom:8px">Menu Dégustation « Tassili »</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:22px;line-height:1.2;color:#f2e8da;margin-bottom:10px">Sept services au gré du marché, laissez-vous guider.</div>
+          <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--accent,#d99a4e)">6 500 DA</span><span style="font-size:12px;color:rgba(242,232,218,.55)">par personne</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="reserver" style="scroll-margin-top:80px;padding:clamp(64px,9vw,120px) clamp(20px,5vw,64px);background:radial-gradient(120% 90% at 12% 0%,#241e17,#1c1815 60%)">
+  <div style="max-width:1220px;margin:0 auto">
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:14px">
+      <sc-if value="{{ chapters }}"><span style="font-family:'Space Mono',monospace;font-size:12px;color:var(--accent,#d99a4e);letter-spacing:.1em">02</span></sc-if>
+      <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:rgba(242,232,218,.5)">Réserver</span>
+      <span style="flex:1;height:1px;background:rgba(242,232,218,.14)"></span>
+    </div>
+    <div class="res-grid">
+      <div>
+        <h2 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(34px,5vw,58px);line-height:1;letter-spacing:-.01em;margin:0 0 18px">Votre table<br>en quelques gestes</h2>
+        <p style="color:rgba(242,232,218,.66);font-size:16px;line-height:1.6;max-width:420px;margin:0 0 34px">Disponibilités en temps réel. Confirmation immédiate. Pour les groupes de plus de 12 convives, contactez-nous directement.</p>
+        <div style="display:flex;flex-direction:column;gap:18px">
+          <div style="display:flex;gap:14px;align-items:flex-start"><span style="font-family:'Space Mono',monospace;color:var(--accent,#d99a4e);font-size:13px">→</span><div><div style="font-size:15px;color:#f2e8da">Horaires</div><div style="font-size:13px;color:rgba(242,232,218,.58)">Mar–Dim · 12h–15h &amp; 19h–23h30 · Fermé le lundi</div></div></div>
+          <div style="display:flex;gap:14px;align-items:flex-start"><span style="font-family:'Space Mono',monospace;color:var(--accent,#d99a4e);font-size:13px">→</span><div><div style="font-size:15px;color:#f2e8da">Adresse</div><div style="font-size:13px;color:rgba(242,232,218,.58)">14, Boulevard Che Guevara — Alger-Centre</div></div></div>
+          <div style="display:flex;gap:14px;align-items:flex-start"><span style="font-family:'Space Mono',monospace;color:var(--accent,#d99a4e);font-size:13px">→</span><div><div style="font-size:15px;color:#f2e8da">Téléphone</div><div style="font-size:13px;color:rgba(242,232,218,.58)">+213 _ __ __ __ __</div></div></div>
+        </div>
+      </div>
+
+      <div style="background:#1c1815;border:1px solid rgba(242,232,218,.13);border-radius:8px;padding:clamp(22px,3vw,34px);box-shadow:0 30px 70px rgba(0,0,0,.4)">
+        <div style="display:flex;gap:8px;margin-bottom:28px">
+          <sc-for list="{{ stepsUi }}" as="s" hint-placeholder-count="4">
+            <div style="{{ s.style }}"><span style="font-family:'Space Mono',monospace;font-size:11px">{{ s.n }}</span></div>
+          </sc-for>
+        </div>
+
+        <sc-if value="{{ step1 }}">
+          <div>
+            <div style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:rgba(242,232,218,.55);margin-bottom:12px">Service</div>
+            <div style="display:flex;gap:10px;margin-bottom:24px">
+              <button onClick="{{ setDejeuner }}" style="{{ dejStyle }}">Déjeuner</button>
+              <button onClick="{{ setDiner }}" style="{{ dinStyle }}">Dîner</button>
+            </div>
+            <div style="display:flex;gap:18px;flex-wrap:wrap;margin-bottom:24px">
+              <div style="flex:1;min-width:150px">
+                <label for="mt-date" style="display:block;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:rgba(242,232,218,.55);margin-bottom:10px">Date</label>
+                <input id="mt-date" type="date" value="{{ date }}" min="{{ minDate }}" onChange="{{ onDate }}" style="width:100%;background:#241e18;border:1px solid rgba(242,232,218,.18);color:#f2e8da;font-size:15px;padding:13px 14px;border-radius:3px;outline:none;color-scheme:dark">
+              </div>
+              <div style="min-width:150px">
+                <div style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:rgba(242,232,218,.55);margin-bottom:10px">Convives</div>
+                <div style="display:flex;align-items:center;border:1px solid rgba(242,232,218,.18);border-radius:3px;overflow:hidden">
+                  <button onClick="{{ decParty }}" aria-label="Retirer un convive" style="width:46px;height:47px;background:transparent;border:none;color:#f2e8da;font-size:20px;cursor:pointer">−</button>
+                  <span aria-live="polite" style="flex:1;text-align:center;font-family:'Space Mono',monospace;font-size:16px;color:#f2e8da">{{ party }}</span>
+                  <button onClick="{{ incParty }}" aria-label="Ajouter un convive" style="width:46px;height:47px;background:transparent;border:none;color:#f2e8da;font-size:20px;cursor:pointer">+</button>
+                </div>
+              </div>
+            </div>
+            <div style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:rgba(242,232,218,.55);margin-bottom:12px">Horaire disponible</div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(78px,1fr));gap:8px">
+              <sc-for list="{{ slots }}" as="sl" hint-placeholder-count="7">
+                <button onClick="{{ sl.onClick }}" disabled="{{ sl.full }}" style="{{ sl.style }}">{{ sl.t }}</button>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ step2 }}">
+          <div>
+            <div style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:rgba(242,232,218,.55);margin-bottom:14px">Choisissez votre espace</div>
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <sc-for list="{{ areaCards }}" as="a" hint-placeholder-count="3">
+                <button onClick="{{ a.onClick }}" style="{{ a.style }}">
+                  <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px"><span style="font-family:'Cormorant Garamond',serif;font-size:22px">{{ a.name }}</span><span style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.1em;color:var(--accent,#d99a4e);white-space:nowrap">{{ a.cap }}</span></div>
+                  <div style="font-size:13px;color:rgba(242,232,218,.6);line-height:1.45;margin-top:5px;text-align:left">{{ a.desc }}</div>
+                </button>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ step3 }}">
+          <div style="display:flex;flex-direction:column;gap:16px">
+            <div><label for="mt-name" style="display:block;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:rgba(242,232,218,.55);margin-bottom:8px">Nom complet</label><input id="mt-name" value="{{ name }}" onInput="{{ onName }}" placeholder="Ex. Amine Belhadj" style="width:100%;background:#241e18;border:1px solid rgba(242,232,218,.18);color:#f2e8da;font-size:15px;padding:13px 14px;border-radius:3px;outline:none"></div>
+            <div style="display:flex;gap:14px;flex-wrap:wrap">
+              <div style="flex:1;min-width:150px"><label for="mt-phone" style="display:block;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:rgba(242,232,218,.55);margin-bottom:8px">Téléphone</label><input id="mt-phone" type="tel" value="{{ phone }}" onInput="{{ onPhone }}" placeholder="+213 __ __ __ __" style="width:100%;background:#241e18;border:1px solid rgba(242,232,218,.18);color:#f2e8da;font-size:15px;padding:13px 14px;border-radius:3px;outline:none"></div>
+              <div style="flex:1;min-width:150px"><label for="mt-email" style="display:block;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:rgba(242,232,218,.55);margin-bottom:8px">Email</label><input id="mt-email" type="email" value="{{ email }}" onInput="{{ onEmail }}" placeholder="vous@exemple.dz" style="width:100%;background:#241e18;border:1px solid rgba(242,232,218,.18);color:#f2e8da;font-size:15px;padding:13px 14px;border-radius:3px;outline:none"></div>
+            </div>
+            <div><label for="mt-req" style="display:block;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:rgba(242,232,218,.55);margin-bottom:8px">Demande particulière (facultatif)</label><textarea id="mt-req" value="{{ requests }}" onInput="{{ onRequests }}" rows="2" placeholder="Allergies, occasion, emplacement…" style="width:100%;background:#241e18;border:1px solid rgba(242,232,218,.18);color:#f2e8da;font-size:15px;padding:13px 14px;border-radius:3px;outline:none;resize:vertical"></textarea></div>
+            <label style="display:flex;gap:12px;align-items:flex-start;cursor:pointer;font-size:13px;color:rgba(242,232,218,.7);line-height:1.5">
+              <input type="checkbox" checked="{{ consent }}" onChange="{{ toggleConsent }}" style="margin-top:3px;width:17px;height:17px;accent-color:var(--accent,#d99a4e);flex:none">
+              <span>J’accepte que mes données soient utilisées pour gérer ma réservation, conformément à la <a href="#" onClick="{{ openConf }}" style="color:var(--accent,#d99a4e)">politique de confidentialité</a>.</span>
+            </label>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ step4 }}">
+          <div style="text-align:center;padding:8px 0">
+            <div style="width:56px;height:56px;border-radius:50%;background:var(--accent,#d99a4e);color:#1c1815;display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 18px">✓</div>
+            <h3 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:32px;margin:0 0 8px">Réservation confirmée</h3>
+            <p style="color:rgba(242,232,218,.65);font-size:14px;margin:0 0 22px">Un récapitulatif vous a été envoyé. Au plaisir de vous accueillir.</p>
+            <div style="text-align:left;background:#241e18;border:1px solid rgba(242,232,218,.14);border-radius:6px;padding:20px;display:flex;flex-direction:column;gap:10px">
+              <div style="display:flex;justify-content:space-between;font-size:14px"><span style="color:rgba(242,232,218,.55)">Référence</span><span style="font-family:'Space Mono',monospace;color:var(--accent,#d99a4e)">{{ ref }}</span></div>
+              <div style="display:flex;justify-content:space-between;font-size:14px"><span style="color:rgba(242,232,218,.55)">Au nom de</span><span>{{ name }}</span></div>
+              <div style="display:flex;justify-content:space-between;font-size:14px"><span style="color:rgba(242,232,218,.55)">Date</span><span style="text-transform:capitalize">{{ dateFr }}</span></div>
+              <div style="display:flex;justify-content:space-between;font-size:14px"><span style="color:rgba(242,232,218,.55)">{{ serviceLabel }}</span><span>{{ time }} · {{ party }} couverts</span></div>
+              <div style="display:flex;justify-content:space-between;font-size:14px"><span style="color:rgba(242,232,218,.55)">Espace</span><span>{{ areaName }}</span></div>
+            </div>
+            <button onClick="{{ resetRes }}" style="margin-top:22px;background:transparent;border:1px solid rgba(242,232,218,.24);color:#f2e8da;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;padding:14px 24px;border-radius:2px;cursor:pointer">Nouvelle réservation</button>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ showNav }}">
+          <div style="display:flex;gap:12px;margin-top:28px;align-items:center">
+            <sc-if value="{{ showBack }}">
+              <button onClick="{{ back }}" style="background:transparent;border:1px solid rgba(242,232,218,.22);color:#f2e8da;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;padding:15px 22px;border-radius:2px;cursor:pointer">Retour</button>
+            </sc-if>
+            <button onClick="{{ next }}" style="{{ nextStyle }}">{{ primaryLabel }}</button>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="avis" style="scroll-margin-top:80px;padding:clamp(64px,9vw,120px) clamp(20px,5vw,64px);background:#1c1815">
+  <div style="max-width:1220px;margin:0 auto">
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:14px">
+      <sc-if value="{{ chapters }}"><span style="font-family:'Space Mono',monospace;font-size:12px;color:var(--accent,#d99a4e);letter-spacing:.1em">03</span></sc-if>
+      <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:rgba(242,232,218,.5)">Avis clients</span>
+      <span style="flex:1;height:1px;background:rgba(242,232,218,.14)"></span>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:20px;margin-bottom:48px">
+      <h2 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(34px,5vw,58px);line-height:1;letter-spacing:-.01em;margin:0;max-width:520px">Ils ont dîné chez nous</h2>
+      <div style="text-align:right"><div style="font-family:'Cormorant Garamond',serif;font-size:52px;color:var(--accent,#d99a4e);line-height:.9">{{ avgRating }}<span style="font-size:22px;color:rgba(242,232,218,.4)">/5</span></div><div style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(242,232,218,.5);margin-top:4px">Sur {{ reviewCount }} avis vérifiés</div></div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px">
+      <sc-for list="{{ reviews }}" as="r" hint-placeholder-count="6">
+        <div style="background:#241e18;border:1px solid rgba(242,232,218,.1);border-radius:6px;padding:26px;display:flex;flex-direction:column;gap:14px">
+          <div style="font-size:15px;letter-spacing:2px"><span style="color:var(--accent,#d99a4e)">{{ r.full }}</span><span style="color:rgba(242,232,218,.2)">{{ r.empty }}</span></div>
+          <p style="font-family:'Cormorant Garamond',serif;font-size:20px;line-height:1.4;color:#f2e8da;margin:0;font-style:italic">« {{ r.text }} »</p>
+          <div style="margin-top:auto;display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid rgba(242,232,218,.09);padding-top:14px"><span style="font-size:14px;color:#f2e8da">{{ r.name }}</span><span style="font-family:'Space Mono',monospace;font-size:11px;color:rgba(242,232,218,.5)">{{ r.city }} · {{ r.date }}</span></div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<section id="maison" style="scroll-margin-top:80px;padding:clamp(64px,9vw,120px) clamp(20px,5vw,64px);background:radial-gradient(120% 90% at 88% 0%,#241e17,#1c1815 58%)">
+  <div style="max-width:1220px;margin:0 auto">
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:14px">
+      <sc-if value="{{ chapters }}"><span style="font-family:'Space Mono',monospace;font-size:12px;color:var(--accent,#d99a4e);letter-spacing:.1em">04</span></sc-if>
+      <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:rgba(242,232,218,.5)">La Maison</span>
+      <span style="flex:1;height:1px;background:rgba(242,232,218,.14)"></span>
+    </div>
+    <div class="hero-grid" style="margin-bottom:64px">
+      <div>
+        <h2 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(34px,5vw,58px);line-height:1;letter-spacing:-.01em;margin:0 0 20px">Née d’un souvenir de cuisine familiale</h2>
+        <p style="color:rgba(242,232,218,.72);font-size:17px;line-height:1.65;margin:0 0 16px">Ouverte en 2019 par la cheffe Rym Belkacem, Maison Tassili puise dans la mémoire des tables algériennes — la chorba du vendredi, le tajine mijoté des jours de fête — pour en révéler la modernité.</p>
+        <p style="color:rgba(242,232,218,.6);font-size:15px;line-height:1.65;margin:0">Chaque service est pensé comme un voyage du littoral aux hauts plateaux : produits de petits producteurs, cuissons au feu de bois, et le respect absolu du goût juste.</p>
+      </div>
+      <image-slot id="mt-cheffe" shape="rounded" radius="6" fit="cover" placeholder="La cheffe en cuisine — déposez la photo" style="display:block;width:100%;aspect-ratio:4/5;border:1px solid rgba(242,232,218,.12);border-radius:6px"></image-slot>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px">
+      <sc-for list="{{ team }}" as="m" hint-placeholder-count="4">
+        <div style="background:#1c1815;border:1px solid rgba(242,232,218,.1);border-radius:6px;padding:24px">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:24px;color:#f2e8da">{{ m.name }}</div>
+          <div style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent,#d99a4e);margin:6px 0 12px">{{ m.role }}</div>
+          <div style="font-size:14px;color:rgba(242,232,218,.6);line-height:1.5">{{ m.note }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<section id="contact" style="scroll-margin-top:80px;padding:clamp(64px,9vw,120px) clamp(20px,5vw,64px);background:#1c1815">
+  <div style="max-width:1220px;margin:0 auto">
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:14px">
+      <sc-if value="{{ chapters }}"><span style="font-family:'Space Mono',monospace;font-size:12px;color:var(--accent,#d99a4e);letter-spacing:.1em">05</span></sc-if>
+      <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:rgba(242,232,218,.5)">Contact</span>
+      <span style="flex:1;height:1px;background:rgba(242,232,218,.14)"></span>
+    </div>
+    <div class="contact-grid">
+      <div>
+        <h2 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(34px,5vw,58px);line-height:1;letter-spacing:-.01em;margin:0 0 22px">Une question,<br>un événement ?</h2>
+        <p style="color:rgba(242,232,218,.66);font-size:16px;line-height:1.6;max-width:400px;margin:0 0 30px">Privatisation, presse, ou simple curiosité — écrivez-nous, nous répondons sous 24 h.</p>
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div><div style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(242,232,218,.5);margin-bottom:4px">Adresse</div><div style="font-size:15px">14, Boulevard Che Guevara — Alger-Centre, 16000</div></div>
+          <div><div style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(242,232,218,.5);margin-bottom:4px">Téléphone</div><div style="font-size:15px">+213 _ __ __ __ __</div></div>
+          <div><div style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(242,232,218,.5);margin-bottom:4px">Email</div><div style="font-size:15px">bonjour@maisontassili.dz</div></div>
+        </div>
+      </div>
+      <form onSubmit="{{ submitContact }}" style="background:#241e18;border:1px solid rgba(242,232,218,.12);border-radius:8px;padding:clamp(22px,3vw,34px);display:flex;flex-direction:column;gap:16px">
+        <sc-if value="{{ contactSent }}">
+          <div style="display:flex;gap:12px;align-items:center;background:rgba(217,154,78,.12);border:1px solid rgba(217,154,78,.3);border-radius:5px;padding:14px 16px"><span style="color:var(--accent,#d99a4e);font-size:18px">✓</span><span style="font-size:14px;color:#f2e8da">Message envoyé — merci, nous revenons vers vous très vite.</span></div>
+        </sc-if>
+        <div><label for="c-name" style="display:block;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(242,232,218,.55);margin-bottom:8px">Nom</label><input id="c-name" value="{{ cName }}" onInput="{{ onCName }}" required="{{ true }}" style="width:100%;background:#1c1815;border:1px solid rgba(242,232,218,.18);color:#f2e8da;font-size:15px;padding:13px 14px;border-radius:3px;outline:none"></div>
+        <div><label for="c-email" style="display:block;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(242,232,218,.55);margin-bottom:8px">Email</label><input id="c-email" type="email" value="{{ cEmail }}" onInput="{{ onCEmail }}" required="{{ true }}" style="width:100%;background:#1c1815;border:1px solid rgba(242,232,218,.18);color:#f2e8da;font-size:15px;padding:13px 14px;border-radius:3px;outline:none"></div>
+        <div><label for="c-msg" style="display:block;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(242,232,218,.55);margin-bottom:8px">Message</label><textarea id="c-msg" rows="4" value="{{ cMsg }}" onInput="{{ onCMsg }}" required="{{ true }}" style="width:100%;background:#1c1815;border:1px solid rgba(242,232,218,.18);color:#f2e8da;font-size:15px;padding:13px 14px;border-radius:3px;outline:none;resize:vertical"></textarea></div>
+        <label style="display:flex;gap:12px;align-items:flex-start;cursor:pointer;font-size:13px;color:rgba(242,232,218,.7);line-height:1.5">
+          <input type="checkbox" checked="{{ cConsent }}" onChange="{{ onCConsent }}" style="margin-top:3px;width:17px;height:17px;accent-color:var(--accent,#d99a4e);flex:none">
+          <span>J’accepte d’être recontacté(e) et j’ai lu la <a href="#" onClick="{{ openConf }}" style="color:var(--accent,#d99a4e)">politique de confidentialité</a>.</span>
+        </label>
+        <button type="submit" style="{{ contactBtnStyle }}">Envoyer le message</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer style="position:relative;z-index:2;padding:clamp(56px,7vw,88px) clamp(20px,5vw,64px) 32px;background:#171310;border-top:1px solid rgba(242,232,218,.1)">
+  <div style="max-width:1220px;margin:0 auto">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:40px;padding-bottom:48px;border-bottom:1px solid rgba(242,232,218,.1)">
+      <div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:28px;margin-bottom:8px">Maison Tassili</div>
+        <p style="font-size:13px;color:rgba(242,232,218,.55);line-height:1.6;max-width:240px;margin:0">Cuisine algérienne contemporaine, au cœur d’Alger. Réservation conseillée.</p>
+      </div>
+      <div>
+        <div style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent,#d99a4e);margin-bottom:14px">Visiter</div>
+        <div style="display:flex;flex-direction:column;gap:9px;font-size:14px">
+          <a href="#carte" onClick="{{ goCarte }}" style="text-decoration:none;color:rgba(242,232,218,.7)">La Carte</a>
+          <a href="#reserver" onClick="{{ goReserver }}" style="text-decoration:none;color:rgba(242,232,218,.7)">Réserver</a>
+          <a href="#avis" onClick="{{ goAvis }}" style="text-decoration:none;color:rgba(242,232,218,.7)">Avis clients</a>
+          <a href="#maison" onClick="{{ goMaison }}" style="text-decoration:none;color:rgba(242,232,218,.7)">La Maison</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent,#d99a4e);margin-bottom:14px">Informations</div>
+        <div style="display:flex;flex-direction:column;gap:9px;font-size:14px;color:rgba(242,232,218,.7)">
+          <span>14, Bd Che Guevara, Alger</span>
+          <span>+213 _ __ __ __ __</span>
+          <span>Mar–Dim · 12h–15h &amp; 19h–23h30</span>
+        </div>
+      </div>
+      <div>
+        <div style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent,#d99a4e);margin-bottom:14px">Légal</div>
+        <div style="display:flex;flex-direction:column;gap:9px;font-size:14px">
+          <a href="#" onClick="{{ openMentions }}" style="text-decoration:none;color:rgba(242,232,218,.7)">Mentions légales</a>
+          <a href="#" onClick="{{ openConf }}" style="text-decoration:none;color:rgba(242,232,218,.7)">Politique de confidentialité</a>
+          <a href="#" onClick="{{ openCookiePrefs }}" style="text-decoration:none;color:rgba(242,232,218,.7)">Gérer les cookies</a>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;padding-top:26px">
+      <span style="font-family:'Space Mono',monospace;font-size:11px;color:rgba(242,232,218,.4)">© {{ year }} Maison Tassili — Alger</span>
+      <a href="https://difarslan.com" target="_blank" rel="noopener" style="text-decoration:none;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.08em;color:rgba(242,232,218,.5);transition:color .2s" style-hover="color:var(--accent,#d99a4e)">Réalisé par Arslan DIF — difarslan.com</a>
+    </div>
+  </div>
+</footer>
+
+<sc-if value="{{ legal }}">
+  <div onClick="{{ closeLegal }}" style="position:fixed;inset:0;z-index:80;background:rgba(15,12,10,.82);backdrop-filter:blur(6px);display:flex;justify-content:center;padding:clamp(16px,5vh,60px) 16px;overflow-y:auto">
+    <div onClick="{{ stop }}" style="position:relative;max-width:760px;width:100%;background:#1c1815;border:1px solid rgba(242,232,218,.14);border-radius:8px;padding:clamp(28px,4vw,52px);height:max-content;box-shadow:0 40px 90px rgba(0,0,0,.6)">
+      <button onClick="{{ closeLegal }}" aria-label="Fermer" style="position:absolute;top:18px;right:18px;width:40px;height:40px;background:transparent;border:1px solid rgba(242,232,218,.22);border-radius:3px;color:#f2e8da;font-size:18px;cursor:pointer">×</button>
+      <h2 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(30px,4vw,46px);margin:0 0 26px;letter-spacing:-.01em">{{ legalTitle }}</h2>
+      <sc-for list="{{ legalBody }}" as="p" hint-placeholder-count="6">
+        <div style="margin-bottom:20px">
+          <sc-if value="{{ p.h }}"><div style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent,#d99a4e);margin-bottom:8px">{{ p.h }}</div></sc-if>
+          <p style="font-size:15px;line-height:1.7;color:rgba(242,232,218,.72);margin:0">{{ p.t }}</p>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</sc-if>
+
+<sc-if value="{{ showCookie }}">
+  <div role="dialog" aria-label="Préférences cookies" style="position:fixed;left:16px;right:16px;bottom:16px;z-index:70;max-width:520px;margin:0 auto;background:#231d17;border:1px solid rgba(242,232,218,.16);border-radius:8px;padding:22px 24px;box-shadow:0 26px 60px rgba(0,0,0,.5)">
+    <div style="font-family:'Cormorant Garamond',serif;font-size:22px;margin-bottom:8px">Nous respectons votre vie privée</div>
+    <p style="font-size:13px;line-height:1.6;color:rgba(242,232,218,.68);margin:0 0 18px">Nous utilisons des cookies pour améliorer votre expérience et mesurer l’audience du site. Vous pouvez accepter, refuser, ou consulter notre <a href="#" onClick="{{ openConf }}" style="color:var(--accent,#d99a4e)">politique de confidentialité</a>.</p>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <button onClick="{{ acceptCookies }}" style="flex:1;min-width:130px;background:var(--accent,#d99a4e);color:#1c1815;border:none;font-family:'Space Mono',monospace;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:13px 18px;border-radius:3px;cursor:pointer">Tout accepter</button>
+      <button onClick="{{ declineCookies }}" style="flex:1;min-width:130px;background:transparent;color:#f2e8da;border:1px solid rgba(242,232,218,.24);font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;padding:13px 18px;border-radius:3px;cursor:pointer">Refuser</button>
+    </div>
+  </div>
+</sc-if>
+
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;accentColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#d99a4e&quot;,&quot;options&quot;:[[&quot;#d99a4e&quot;,&quot;#c47b34&quot;],[&quot;#c98f6a&quot;,&quot;#a86a44&quot;],[&quot;#a8734f&quot;,&quot;#8a5636&quot;],[&quot;#8f8a5c&quot;,&quot;#6f6b42&quot;]],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Identité&quot;},&quot;defaultParty&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:2,&quot;min&quot;:1,&quot;max&quot;:12,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Réservation&quot;},&quot;showChapterNumbers&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Identité&quot;}}">
+class Component extends DCLogic {
+  state = {
+    mobileNav: false, legal: null, showCookie: false,
+    step: 1, service: 'diner', party: 2, date: '', minDate: '', time: '',
+    area: '', name: '', phone: '', email: '', requests: '', consent: false,
+    submitted: false, ref: '',
+    cName: '', cEmail: '', cMsg: '', cConsent: false, contactSent: false
+  };
+
+  componentDidMount() {
+    try { if (!localStorage.getItem('mt_cookie')) this.setState({ showCookie: true }); } catch (e) { this.setState({ showCookie: true }); }
+    const iso = (d) => d.toISOString().slice(0, 10);
+    const t = new Date(); t.setDate(t.getDate() + 1);
+    this.setState({ date: iso(t), minDate: iso(new Date()) });
+    if (this.props.defaultParty) this.setState({ party: this.props.defaultParty });
+  }
+
+  scrollTo = (id) => (e) => {
+    if (e && e.preventDefault) e.preventDefault();
+    this.setState({ mobileNav: false });
+    const go = () => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const y = el.getBoundingClientRect().top + window.pageYOffset - 74;
+      const smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({ top: y, behavior: smooth ? 'smooth' : 'auto' });
+    };
+    setTimeout(go, 10);
+  };
+
+  formatFr(iso) {
+    if (!iso) return '';
+    const d = new Date(iso + 'T00:00');
+    return d.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' });
+  }
+
+  incParty = () => this.setState((s) => ({ party: Math.min(12, s.party + 1) }));
+  decParty = () => this.setState((s) => ({ party: Math.max(1, s.party - 1) }));
+  setDiner = () => this.setState({ service: 'diner', time: '' });
+  setDejeuner = () => this.setState({ service: 'dejeuner', time: '' });
+  onDate = (e) => this.setState({ date: e.target.value, time: '' });
+
+  onName = (e) => this.setState({ name: e.target.value });
+  onPhone = (e) => this.setState({ phone: e.target.value });
+  onEmail = (e) => this.setState({ email: e.target.value });
+  onRequests = (e) => this.setState({ requests: e.target.value });
+  toggleConsent = (e) => this.setState({ consent: e.target.checked });
+
+  canNext() {
+    const s = this.state;
+    if (s.step === 1) return !!(s.date && s.time && s.party >= 1);
+    if (s.step === 2) return !!s.area;
+    if (s.step === 3) return !!(s.name.trim() && s.phone.trim() && s.email.trim() && s.consent);
+    return false;
+  }
+
+  next = () => {
+    if (!this.canNext()) return;
+    const s = this.state;
+    if (s.step < 3) { this.setState({ step: s.step + 1 }); return; }
+    if (s.step === 3) {
+      const ref = 'MT-' + (Math.floor(Math.random() * 9000) + 1000);
+      this.setState({ submitted: true, step: 4, ref });
+    }
+  };
+  back = () => this.setState((s) => ({ step: Math.max(1, s.step - 1) }));
+  resetRes = () => this.setState({ step: 1, time: '', area: '', name: '', phone: '', email: '', requests: '', consent: false, submitted: false, ref: '' });
+
+  acceptCookies = () => { try { localStorage.setItem('mt_cookie', 'accept'); } catch (e) {} this.setState({ showCookie: false }); };
+  declineCookies = () => { try { localStorage.setItem('mt_cookie', 'refuse'); } catch (e) {} this.setState({ showCookie: false }); };
+  openCookiePrefs = (e) => { if (e) e.preventDefault(); this.setState({ showCookie: true }); };
+
+  openMentions = (e) => { if (e) e.preventDefault(); this.setState({ legal: 'mentions' }); };
+  openConf = (e) => { if (e) e.preventDefault(); this.setState({ legal: 'conf' }); };
+  closeLegal = () => this.setState({ legal: null });
+  stop = (e) => { if (e) e.stopPropagation(); };
+
+  onCName = (e) => this.setState({ cName: e.target.value, contactSent: false });
+  onCEmail = (e) => this.setState({ cEmail: e.target.value, contactSent: false });
+  onCMsg = (e) => this.setState({ cMsg: e.target.value, contactSent: false });
+  onCConsent = (e) => this.setState({ cConsent: e.target.checked });
+  submitContact = (e) => {
+    if (e) e.preventDefault();
+    const s = this.state;
+    if (!s.cName.trim() || !s.cEmail.trim() || !s.cMsg.trim() || !s.cConsent) return;
+    this.setState({ contactSent: true, cName: '', cEmail: '', cMsg: '', cConsent: false });
+  };
+
+  renderVals() {
+    const S = this.state;
+    const ac = this.props.accentColor;
+    let accent = '#d99a4e', accentDeep = '#c47b34';
+    if (Array.isArray(ac)) { accent = ac[0]; accentDeep = ac[1] || ac[0]; }
+    else if (typeof ac === 'string' && ac) { accent = ac; accentDeep = ac; }
+    const chapters = this.props.showChapterNumbers !== false;
+
+    const entrees = [
+      { name: 'Chorba frik revisitée', desc: 'Velouté d’agneau, blé vert, coriandre fraîche', price: '1 200 DA' },
+      { name: 'Brick à l’œuf & thon', desc: 'Feuille croustillante, thon de Bou Ismaïl, câpres', price: '900 DA' },
+      { name: 'Salade d’oranges de Blida', desc: 'Olives, fenouil, huile d’olive de Kabylie', price: '1 100 DA' },
+      { name: 'Carpaccio de daurade', desc: 'Agrumes, piment doux, fleur de sel', price: '1 600 DA' }
+    ];
+    const plats = [
+      { name: 'Tajine d’agneau', desc: 'Pruneaux, amandes torréfiées, cannelle', price: '3 200 DA' },
+      { name: 'Rougets grillés', desc: 'Chermoula, semoule fine au beurre', price: '3 800 DA' },
+      { name: 'Couscous royal Tassili', desc: 'Agneau, merguez, légumes du marché', price: '3 400 DA' },
+      { name: 'Poulet fermier au smen', desc: 'Citron confit, olives, jus corsé', price: '2 900 DA' },
+      { name: 'Loup de mer en croûte de sel', desc: 'Herbes fraîches, huile vierge (pour 2)', price: '4 500 DA' },
+      { name: 'Mtewem', desc: 'Boulettes de veau, ail doux, cannelle', price: '2 600 DA' }
+    ];
+    const desserts = [
+      { name: 'Kalb el louz tiède', desc: 'Glace au lait d’amande, sirop d’oranger', price: '1 000 DA' },
+      { name: 'Assiette de makrout', desc: 'Dattes, miel, thé à la menthe', price: '900 DA' },
+      { name: 'Crème de dattes Deglet Nour', desc: 'Croustillant sésame, fleur de sel', price: '1 200 DA' }
+    ];
+
+    const reviews = [
+      { name: 'Yacine B.', city: 'Hydra', rating: 5, date: 'Mai 2026', text: 'Une adresse qui redéfinit la cuisine algérienne. Le tajine d’agneau était d’une finesse rare, et le service d’une élégance discrète.' },
+      { name: 'Nadia M.', city: 'Alger-Centre', rating: 5, date: 'Avr. 2026', text: 'Salon privé réservé pour un anniversaire. Cadre magnifique, menu dégustation inoubliable. On reviendra sans hésiter.' },
+      { name: 'Karim H.', city: 'Oran', rating: 4, date: 'Avr. 2026', text: 'Très belle découverte lors d’un passage à Alger. Les rougets à la chermoula valent le détour. Réservez le week-end.' },
+      { name: 'Lila A.', city: 'Kouba', rating: 5, date: 'Mars 2026', text: 'La terrasse au coucher du soleil, la vue sur la baie… et cette crème de dattes. Tout simplement parfait.' },
+      { name: 'Sofiane T.', city: 'Bab Ezzouar', rating: 5, date: 'Mars 2026', text: 'Rapport qualité-prix excellent pour ce niveau. La cheffe est passée nous saluer, un vrai moment d’hospitalité.' },
+      { name: 'Amel R.', city: 'El Biar', rating: 4, date: 'Févr. 2026', text: 'Cuisine soignée et produits de saison. Mention spéciale au kalb el louz tiède avec sa glace au lait d’amande.' }
+    ].map((r) => ({ ...r, full: '★'.repeat(r.rating), empty: '★'.repeat(5 - r.rating) }));
+
+    const team = [
+      { name: 'Rym Belkacem', role: 'Cheffe & fondatrice', note: 'Formée à Alger puis à Lyon, elle réinterprète le patrimoine culinaire algérien.' },
+      { name: 'Malik Aït-Ouyahia', role: 'Chef de salle', note: 'Vingt ans d’hôtellerie de luxe, garant d’un service d’exception.' },
+      { name: 'Inès Cherifi', role: 'Cheffe pâtissière', note: 'La douceur signée maison : dattes, amandes et fleur d’oranger.' },
+      { name: 'Reda Slimani', role: 'Accords & boissons', note: 'Jus pressés de saison, thés à la menthe et infusions, pour sublimer chaque plat.' }
+    ];
+
+    const areasData = [
+      { id: 'salle', name: 'Salle principale', desc: 'Voûtes, bois sombre et lumière tamisée — le cœur de la maison.', cap: 'jusqu’à 60 couverts' },
+      { id: 'terrasse', name: 'Terrasse', desc: 'Vue sur la baie d’Alger, à l’abri sous les oliviers en pot.', cap: 'jusqu’à 24 couverts' },
+      { id: 'salon', name: 'Salon privé', desc: 'Un écrin fermé pour vos dîners d’exception.', cap: '8 à 12 convives' }
+    ];
+
+    const slotBase = "appearance:none;cursor:pointer;font-family:'Space Mono',monospace;font-size:14px;padding:12px 4px;border-radius:3px;transition:all .18s;text-align:center;";
+    const dinner = [{ t: '19:00' }, { t: '19:30' }, { t: '20:00', full: true }, { t: '20:30' }, { t: '21:00' }, { t: '21:30' }, { t: '22:00' }];
+    const lunch = [{ t: '12:00' }, { t: '12:30' }, { t: '13:00', full: true }, { t: '13:30' }, { t: '14:00' }];
+    const rawSlots = S.service === 'diner' ? dinner : lunch;
+    const slots = rawSlots.map((sl) => {
+      const selected = S.time === sl.t;
+      let style = slotBase;
+      if (sl.full) style += 'opacity:.32;cursor:not-allowed;border:1px solid rgba(242,232,218,.1);background:transparent;color:#f2e8da;text-decoration:line-through;';
+      else if (selected) style += 'border:1px solid ' + accent + ';background:' + accent + ';color:#1c1815;font-weight:700;';
+      else style += 'border:1px solid rgba(242,232,218,.18);background:transparent;color:#f2e8da;';
+      return { t: sl.t, full: !!sl.full, style, onClick: sl.full ? (() => {}) : (() => this.setState({ time: sl.t })) };
+    });
+
+    const areaBase = "display:block;width:100%;text-align:left;cursor:pointer;border-radius:5px;padding:16px 18px;transition:all .18s;background:#241e18;";
+    const areaCards = areasData.map((a) => {
+      const selected = S.area === a.id;
+      const style = areaBase + (selected ? 'border:1px solid ' + accent + ';box-shadow:0 0 0 1px ' + accent + ' inset;' : 'border:1px solid rgba(242,232,218,.14);');
+      return { ...a, style, onClick: () => this.setState({ area: a.id }) };
+    });
+    const selectedArea = areasData.find((a) => a.id === S.area);
+
+    const stepDefs = [{ n: '01' }, { n: '02' }, { n: '03' }, { n: '04' }];
+    const stepsUi = stepDefs.map((d, i) => {
+      const idx = i + 1;
+      const stateN = idx < S.step ? 'done' : idx === S.step ? 'active' : 'todo';
+      let style = 'flex:1;height:5px;border-radius:3px;display:flex;align-items:center;justify-content:center;transition:background .25s;';
+      style += 'font-size:0;';
+      if (stateN === 'done') style = 'flex:1;height:5px;border-radius:3px;background:' + accentDeep + ';font-size:0;';
+      else if (stateN === 'active') style = 'flex:1;height:5px;border-radius:3px;background:' + accent + ';font-size:0;';
+      else style = 'flex:1;height:5px;border-radius:3px;background:rgba(242,232,218,.14);font-size:0;';
+      return { n: d.n, style };
+    });
+
+    const segBase = "flex:1;cursor:pointer;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;padding:13px;border-radius:3px;transition:all .18s;";
+    const dejStyle = segBase + (S.service === 'dejeuner' ? 'border:1px solid ' + accent + ';background:' + accent + ';color:#1c1815;font-weight:700;' : 'border:1px solid rgba(242,232,218,.18);background:transparent;color:#f2e8da;');
+    const dinStyle = segBase + (S.service === 'diner' ? 'border:1px solid ' + accent + ';background:' + accent + ';color:#1c1815;font-weight:700;' : 'border:1px solid rgba(242,232,218,.18);background:transparent;color:#f2e8da;');
+
+    const canN = this.canNext();
+    const nextBtnBase = "flex:1;border:none;font-family:'Space Mono',monospace;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:16px;border-radius:2px;transition:all .2s;";
+    const nextStyle = nextBtnBase + (canN ? 'background:' + accent + ';color:#1c1815;cursor:pointer;' : 'background:rgba(242,232,218,.12);color:rgba(242,232,218,.4);cursor:not-allowed;');
+    const primaryLabel = S.step === 3 ? 'Confirmer la réservation' : 'Continuer';
+
+    const cValid = S.cName.trim() && S.cEmail.trim() && S.cMsg.trim() && S.cConsent;
+    const contactBtnBase = "border:none;font-family:'Space Mono',monospace;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:16px;border-radius:2px;transition:all .2s;margin-top:4px;";
+    const contactBtnStyle = contactBtnBase + (cValid ? 'background:' + accent + ';color:#1c1815;cursor:pointer;' : 'background:rgba(242,232,218,.12);color:rgba(242,232,218,.45);cursor:pointer;');
+
+    const legalTitle = S.legal === 'mentions' ? 'Mentions légales' : 'Politique de confidentialité';
+    const legalMentions = [
+      { h: 'Éditeur du site', t: 'Maison Tassili SARL — 14, Boulevard Che Guevara, Alger-Centre, 16000, Algérie. Capital social : 1 000 000 DA. Registre du commerce d’Alger n° 16/00-XXXXXXX. Directrice de la publication : Rym Belkacem.' },
+      { h: 'Contact', t: 'Téléphone : +213 _ __ __ __ __ — Email : bonjour@maisontassili.dz' },
+      { h: 'Hébergement', t: 'Ce site est un site de démonstration. En production, l’hébergeur et ses coordonnées complètes seront précisés ici.' },
+      { h: 'Propriété intellectuelle', t: 'L’ensemble des contenus (textes, visuels, identité) est protégé. Toute reproduction sans autorisation est interdite.' },
+      { h: 'Données affichées', t: 'Les noms, prix, avis et disponibilités présentés sur ce site sont fictifs et fournis à titre de démonstration.' }
+    ];
+    const legalConf = [
+      { h: 'Responsable du traitement', t: 'Maison Tassili SARL est responsable du traitement des données collectées via ce site (réservations et formulaire de contact).' },
+      { h: 'Données collectées', t: 'Nous collectons uniquement les données nécessaires : nom, téléphone, email et détails de votre demande. Aucune donnée bancaire n’est traitée sur ce site.' },
+      { h: 'Finalité', t: 'Vos données servent exclusivement à gérer votre réservation ou à répondre à votre message. Elles ne sont ni vendues ni cédées à des tiers.' },
+      { h: 'Durée de conservation', t: 'Les données de réservation sont conservées 12 mois, puis supprimées. Les demandes de contact sont conservées 6 mois.' },
+      { h: 'Cookies', t: 'Ce site utilise des cookies de mesure d’audience, soumis à votre consentement. Vous pouvez les accepter, les refuser ou modifier votre choix à tout moment via « Gérer les cookies ».' },
+      { h: 'Vos droits', t: 'Conformément à la réglementation, vous disposez d’un droit d’accès, de rectification et de suppression de vos données. Pour l’exercer : bonjour@maisontassili.dz.' }
+    ];
+
+    return {
+      accent, accentDeep, chapters, year: new Date().getFullYear(),
+      mobileNav: S.mobileNav, toggleNav: () => this.setState({ mobileNav: true }), closeNav: () => this.setState({ mobileNav: false }),
+      goAccueil: this.scrollTo('accueil'), goCarte: this.scrollTo('carte'), goReserver: this.scrollTo('reserver'), goAvis: this.scrollTo('avis'), goMaison: this.scrollTo('maison'), goContact: this.scrollTo('contact'),
+      avgRating: '4,7', reviewCount: 214,
+      entrees, plats, desserts, reviews, team, areaCards,
+      stepsUi,
+      step1: S.step === 1, step2: S.step === 2, step3: S.step === 3, step4: S.step === 4,
+      showNav: S.step !== 4, showBack: S.step > 1 && S.step < 4,
+      service: S.service, setDiner: this.setDiner, setDejeuner: this.setDejeuner, dejStyle, dinStyle,
+      date: S.date, minDate: S.minDate, onDate: this.onDate,
+      party: S.party, incParty: this.incParty, decParty: this.decParty,
+      slots, time: S.time,
+      name: S.name, phone: S.phone, email: S.email, requests: S.requests, consent: S.consent,
+      onName: this.onName, onPhone: this.onPhone, onEmail: this.onEmail, onRequests: this.onRequests, toggleConsent: this.toggleConsent,
+      next: this.next, back: this.back, nextStyle, primaryLabel, resetRes: this.resetRes,
+      ref: S.ref, dateFr: this.formatFr(S.date), serviceLabel: S.service === 'diner' ? 'Dîner' : 'Déjeuner', areaName: selectedArea ? selectedArea.name : '',
+      showCookie: S.showCookie, acceptCookies: this.acceptCookies, declineCookies: this.declineCookies, openCookiePrefs: this.openCookiePrefs,
+      legal: !!S.legal, legalTitle, legalBody: S.legal === 'mentions' ? legalMentions : legalConf,
+      openMentions: this.openMentions, openConf: this.openConf, closeLegal: this.closeLegal, stop: this.stop,
+      cName: S.cName, cEmail: S.cEmail, cMsg: S.cMsg, cConsent: S.cConsent, contactSent: S.contactSent,
+      onCName: this.onCName, onCEmail: this.onCEmail, onCMsg: this.onCMsg, onCConsent: this.onCConsent, submitContact: this.submitContact, contactBtnStyle
+    };
+  }
+}
+</script>
+</body>
+</html>
