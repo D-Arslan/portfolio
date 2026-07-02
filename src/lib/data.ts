@@ -1111,7 +1111,7 @@ const THEME = {
 export const catalogue: CatalogueItem[] = [
   { slug: "le-lynde.html",            name: "Le Lynde",      category: { fr: "Restaurant · Sushi & buffet", en: "Restaurant · Sushi & buffet" }, theme: THEME.dining },
   { slug: "marsa/index.html",         name: "MARSA",         category: { fr: "Restaurant",                  en: "Restaurant" },                  theme: THEME.dining },
-  { slug: "dar-el-bahr/index.html",   name: "Dar el Bahr",   category: { fr: "Restaurant",                  en: "Restaurant" },                  theme: THEME.dining },
+  { slug: "dar-el-bahr/index.html",   name: "Dar el Bahr",   category: { fr: "Hôtel & spa bord de mer",     en: "Seaside hotel & spa" },          theme: THEME.hospitality },
   { slug: "noor/index.html",          name: "NOOR",          category: { fr: "Boutique de vêtements",       en: "Clothing store" },              theme: THEME.retail },
   { slug: "cine-lumina/index.html",   name: "Cine Lumina",   category: { fr: "Cinéma",                      en: "Cinema" },                      theme: THEME.culture },
   { slug: "galerie-diwan/index.html", name: "Galerie Diwan", category: { fr: "Galerie d'art",               en: "Art gallery" },                 theme: THEME.culture },
