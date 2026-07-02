@@ -1105,6 +1105,7 @@ const THEME = {
   culture:    { fr: "Culture & art",           en: "Culture & art" },
   wellness:   { fr: "Bien-être & loisirs",     en: "Wellness & leisure" },
   ticketing:  { fr: "Billetterie & événements", en: "Ticketing & events" },
+  hospitality:{ fr: "Hôtellerie",               en: "Hospitality" },
 } as const;
 
 export const catalogue: CatalogueItem[] = [
@@ -1117,4 +1118,8 @@ export const catalogue: CatalogueItem[] = [
   { slug: "sirocco/index.html",       name: "Sirocco",       category: { fr: "Sorties & loisirs",           en: "Outings & leisure" },           theme: THEME.wellness },
   { slug: "pose-pilates/index.html",  name: "posé",          category: { fr: "Studio de pilates",           en: "Pilates studio" },              theme: THEME.wellness },
   { slug: "yalla/index.html",         name: "Yalla",         category: { fr: "Billetterie & événements",    en: "Ticketing & events" },          theme: THEME.ticketing },
+  { slug: "cine-lumina/maison-tassili.html", name: "Maison Tassili", category: { fr: "Restaurant gastronomique", en: "Fine dining" },        theme: THEME.dining },
+  { slug: "sirocco/dar-beldi.html",          name: "Dar Beldi",      category: { fr: "Restaurant traditionnel", en: "Traditional dining" },  theme: THEME.dining },
+  { slug: "yalla/numidia.html",              name: "Numidia",        category: { fr: "Restaurant",              en: "Restaurant" },          theme: THEME.dining },
+  { slug: "galerie-diwan/dar-yasmine.html",  name: "Dar Yasmine",    category: { fr: "Hôtel bord de mer",       en: "Seaside hotel" },       theme: THEME.hospitality },
 ];
