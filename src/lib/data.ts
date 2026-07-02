@@ -12,6 +12,7 @@ export const translations = {
     blog:           { fr: "Blog",            en: "Blog" },
     certifications: { fr: "Certifications",  en: "Certifications" },
     contact:        { fr: "Contact",         en: "Contact" },
+    services:       { fr: "Prestations",     en: "Services" },
   },
   hero: {
     title:    { fr: "Développeur Full Stack", en: "Full Stack Developer" },
@@ -96,6 +97,43 @@ export const translations = {
   },
   footer: {
     made: { fr: "Conçu & développé par", en: "Designed & built by" },
+  },
+  services: {
+    nav_back:  { fr: "Retour au portfolio", en: "Back to portfolio" },
+    badge:     { fr: "Prestations · Freelance", en: "Services · Freelance" },
+    title:     { fr: "Prestations de services", en: "Services" },
+    heading:   { fr: "Je conçois & développe votre produit sur mesure", en: "I design & build your product, tailored to you" },
+    subtitle: {
+      fr: "Du site vitrine à l'application complète, je prends en charge votre projet de bout en bout — conception, développement, mise en ligne. Stack moderne, code propre, livraison soignée.",
+      en: "From a showcase website to a full application, I handle your project end to end — design, development, deployment. Modern stack, clean code, polished delivery.",
+    },
+    on_quote:  { fr: "Sur devis", en: "On quote" },
+    included:  { fr: "Inclus", en: "Included" },
+    cta:       { fr: "Demander un devis", en: "Request a quote" },
+    cta_hint:  { fr: "Réponse sous 48h · Devis gratuit & sans engagement", en: "Reply within 48h · Free quote, no commitment" },
+    process_title: { fr: "Comment ça se passe", en: "How it works" },
+    process: {
+      s1_t: { fr: "Échange", en: "Discovery" },
+      s1_d: { fr: "On cadre votre besoin, vos objectifs et vos contraintes lors d'un premier appel.", en: "We scope your need, goals and constraints in a first call." },
+      s2_t: { fr: "Devis", en: "Quote" },
+      s2_d: { fr: "Vous recevez une proposition claire : périmètre, délais et tarif, sans surprise.", en: "You get a clear proposal: scope, timeline and price — no surprises." },
+      s3_t: { fr: "Développement", en: "Build" },
+      s3_d: { fr: "Je développe avec des points d'avancement réguliers et un aperçu en ligne.", en: "I build with regular progress updates and a live preview." },
+      s4_t: { fr: "Livraison", en: "Delivery" },
+      s4_d: { fr: "Mise en ligne, formation à l'outil et support après livraison.", en: "Deployment, handover training and post-delivery support." },
+    },
+    form_title:   { fr: "Parlez-moi de votre projet", en: "Tell me about your project" },
+    form_name:    { fr: "Nom", en: "Name" },
+    form_email:   { fr: "Email", en: "Email" },
+    form_company: { fr: "Entreprise (optionnel)", en: "Company (optional)" },
+    form_type:    { fr: "Type de projet", en: "Project type" },
+    form_type_ph: { fr: "Sélectionnez…", en: "Select…" },
+    form_budget:  { fr: "Budget indicatif (optionnel)", en: "Indicative budget (optional)" },
+    form_message: { fr: "Votre projet en quelques mots", en: "Your project in a few words" },
+    form_send:    { fr: "Envoyer la demande", en: "Send request" },
+    form_sending: { fr: "Envoi…", en: "Sending…" },
+    form_success: { fr: "Message envoyé ! Je vous réponds sous 48h.", en: "Message sent! I'll get back to you within 48h." },
+    form_error:   { fr: "Une erreur est survenue. Écrivez-moi directement à difarslan@gmail.com.", en: "Something went wrong. Email me directly at difarslan@gmail.com." },
   },
 } as const;
 
@@ -967,5 +1005,83 @@ export const educations: Education[] = [
       en: "High Distinction. Mathematics 19/20, Physics-Chemistry 20/20.",
     },
     grade: "17,02/20 – Mention TB",
+  },
+];
+
+// ─── SERVICES ─────────────────────────────────────────────────────────────────
+
+export interface Service {
+  id: string;
+  icon: string; // emoji
+  title: { fr: string; en: string };
+  description: { fr: string; en: string };
+  features: { fr: string; en: string }[];
+  accent: string; // couleur d'accent de la carte
+}
+
+export const services: Service[] = [
+  {
+    id: "vitrine",
+    icon: "🌐",
+    title: { fr: "Site vitrine", en: "Showcase website" },
+    description: {
+      fr: "Une présence en ligne professionnelle qui inspire confiance. Rapide, responsive et optimisée pour le référencement.",
+      en: "A professional online presence that builds trust. Fast, responsive and SEO-optimized.",
+    },
+    features: [
+      { fr: "Design sur mesure & responsive", en: "Custom, responsive design" },
+      { fr: "Référencement (SEO) & performances", en: "SEO & performance" },
+      { fr: "Multilingue & formulaire de contact", en: "Multilingual & contact form" },
+      { fr: "Mise en ligne + nom de domaine", en: "Deployment + domain setup" },
+    ],
+    accent: "#D4AF37",
+  },
+  {
+    id: "webapp",
+    icon: "⚙️",
+    title: { fr: "Application web / SaaS", en: "Web app / SaaS" },
+    description: {
+      fr: "Des outils métier complets : espace d'administration, authentification, base de données, paiements. La stack de FIELDZ et Coiflow.",
+      en: "Complete business tools: admin dashboard, authentication, database, payments. The stack behind FIELDZ and Coiflow.",
+    },
+    features: [
+      { fr: "Tableau de bord & espace admin", en: "Dashboard & admin panel" },
+      { fr: "Authentification & rôles utilisateurs", en: "Authentication & user roles" },
+      { fr: "Base de données & API REST", en: "Database & REST API" },
+      { fr: "Intégration de paiement", en: "Payment integration" },
+    ],
+    accent: "#4FA3F7",
+  },
+  {
+    id: "mobile",
+    icon: "📱",
+    title: { fr: "Application mobile", en: "Mobile app" },
+    description: {
+      fr: "Applications iOS & Android performantes avec une seule base de code (Flutter / React Native), prêtes pour les stores.",
+      en: "High-performance iOS & Android apps from a single codebase (Flutter / React Native), store-ready.",
+    },
+    features: [
+      { fr: "iOS + Android (code unique)", en: "iOS + Android (single codebase)" },
+      { fr: "Notifications & mode hors-ligne", en: "Notifications & offline mode" },
+      { fr: "Publication App Store / Play Store", en: "App Store / Play Store publishing" },
+      { fr: "Interface fluide & animée", en: "Smooth, animated UI" },
+    ],
+    accent: "#22C55E",
+  },
+  {
+    id: "ia",
+    icon: "🤖",
+    title: { fr: "Solution IA & Data", en: "AI & Data solution" },
+    description: {
+      fr: "Automatisation intelligente : classification d'images, vision par ordinateur, chatbots et intégration de modèles en production.",
+      en: "Smart automation: image classification, computer vision, chatbots and production-grade model integration.",
+    },
+    features: [
+      { fr: "Vision & classification d'images", en: "Vision & image classification" },
+      { fr: "Chatbots & assistants IA", en: "Chatbots & AI assistants" },
+      { fr: "Automatisation de tâches", en: "Task automation" },
+      { fr: "Déploiement de modèles (API)", en: "Model deployment (API)" },
+    ],
+    accent: "#A855F7",
   },
 ];

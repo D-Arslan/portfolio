@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { useLanguage } from "@/context/LanguageContext";
 import { useTheme } from "@/context/ThemeContext";
 import { translations } from "@/lib/data";
@@ -55,7 +56,7 @@ export default function Navbar() {
     >
       <div className="w-full max-w-[1200px] mx-auto px-6 md:px-12 h-16 md:h-20 flex items-center justify-between">
         {/* Logo */}
-        <a href="#" className="flex items-center gap-2.5 hover:opacity-80 transition-opacity">
+        <Link href="/" className="flex items-center gap-2.5 hover:opacity-80 transition-opacity">
           <Image
             src="/golden-removebg-preview.png"
             alt="Arslan DIF"
@@ -63,14 +64,14 @@ export default function Navbar() {
             height={140}
             className="h-14 md:h-20 w-auto object-contain"
           />
-        </a>
+        </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden md:flex items-center gap-8">
+        <nav className="hidden md:flex items-center gap-6 lg:gap-8">
           {NAV_LINKS.map(({ key, href }) => (
             <a
               key={key}
-              href={href}
+              href={`/${href}`}
               className={`text-sm font-medium transition-colors ${
                 activeSection === href.slice(1)
                   ? "text-[var(--gold)]"
@@ -80,6 +81,12 @@ export default function Navbar() {
               {t(translations.nav[key])}
             </a>
           ))}
+          <Link
+            href="/services"
+            className="text-sm font-medium text-[var(--gold)] hover:text-[var(--gold-pale)] transition-colors"
+          >
+            {t(translations.nav.services)}
+          </Link>
         </nav>
 
         {/* Right: lang + theme + CTA */}
@@ -127,7 +134,7 @@ export default function Navbar() {
 
           {/* Contact CTA */}
           <a
-            href="#contact"
+            href="/#contact"
             className="hidden md:inline-flex items-center gap-2 text-sm font-medium font-[family-name:var(--font-heading)] border border-[var(--gold)] text-[var(--gold)] hover:bg-[var(--gold)] hover:text-black px-5 py-2 rounded-md transition-all"
           >
             Contact
@@ -156,7 +163,7 @@ export default function Navbar() {
           {NAV_LINKS.map(({ key, href }) => (
             <a
               key={key}
-              href={href}
+              href={`/${href}`}
               className={`text-sm transition-colors py-1 ${
                 activeSection === href.slice(1)
                   ? "text-[var(--gold)]"
@@ -167,8 +174,15 @@ export default function Navbar() {
               {t(translations.nav[key])}
             </a>
           ))}
+          <Link
+            href="/services"
+            className="text-sm font-medium text-[var(--gold)] hover:text-[var(--gold-pale)] transition-colors py-1"
+            onClick={() => setMenuOpen(false)}
+          >
+            {t(translations.nav.services)}
+          </Link>
           <a
-            href="#contact"
+            href="/#contact"
             className="mt-2 text-sm font-medium text-center border border-[var(--gold)] text-[var(--gold)] hover:bg-[var(--gold)] hover:text-black px-4 py-2 rounded-md transition-all"
             onClick={() => setMenuOpen(false)}
           >
