@@ -4,10 +4,10 @@ import { useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import { translations, services } from "@/lib/data";
 
-// ⚠️ Remplace cette valeur par ta clé d'accès Web3Forms (gratuite) :
-//    → va sur https://web3forms.com, entre difarslan@gmail.com, tu reçois une clé par mail.
-//    Les demandes de devis arriveront alors directement dans ta boîte.
-const WEB3FORMS_KEY = "VOTRE_CLE_WEB3FORMS";
+// Clé d'accès Web3Forms — définie dans .env.local (NEXT_PUBLIC_WEB3FORMS_KEY).
+// Publique par conception : elle sert uniquement à envoyer un mail vers ta boîte.
+// Voir .env.example pour la marche à suivre.
+const WEB3FORMS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY ?? "";
 
 type Status = "idle" | "sending" | "success" | "error";
 
