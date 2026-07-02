@@ -13,11 +13,11 @@ export default function Experience() {
   const col2 = experiences.slice(4);
 
   return (
-    <section ref={ref} id="experience" className={`py-24 fade-up${inView ? " in-view" : ""}`}>
+    <section ref={ref} id="experience" className={`py-16 md:py-24 fade-up${inView ? " in-view" : ""}`}>
       <div className="max-w-[1400px] mx-auto px-6 md:px-12">
         <SectionHeader num="04" title={t(translations.experience.title)} />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 mt-14">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 mt-10 md:mt-14">
           <Timeline items={col1} />
           <Timeline items={col2} />
         </div>

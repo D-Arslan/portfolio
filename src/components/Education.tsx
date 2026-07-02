@@ -16,11 +16,11 @@ export default function Education() {
   const { ref, inView } = useInView();
 
   return (
-    <section ref={ref} id="education" className={`py-24 bg-[var(--bg2)] fade-up${inView ? " in-view" : ""}`}>
+    <section ref={ref} id="education" className={`py-16 md:py-24 bg-[var(--bg2)] fade-up${inView ? " in-view" : ""}`}>
       <div className="max-w-[1400px] mx-auto px-6 md:px-12">
         <SectionHeader num="05" title={t(translations.education.title)} />
 
-        <div className="flex flex-col mt-14">
+        <div className="flex flex-col mt-10 md:mt-14">
           {educations.map((edu, i) => {
             const Icon = ICONS[edu.institution] ?? BookOpen;
             return (

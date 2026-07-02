@@ -24,7 +24,7 @@ export default function Hero() {
         />
       </div>
 
-      <div className="max-w-[1400px] mx-auto px-6 md:px-12 w-full py-24 md:py-32">
+      <div className="max-w-[1400px] mx-auto px-6 md:px-12 w-full py-28 md:py-32">
         <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
           {/* Left: Text */}
           <div className="flex flex-col gap-6">

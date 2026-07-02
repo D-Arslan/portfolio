@@ -20,7 +20,7 @@ export default function Blog() {
   const rest = blogPosts.filter((p) => !p.featured);
 
   return (
-    <section ref={ref} id="blog" className={`py-24 bg-[var(--bg2)] fade-up${inView ? " in-view" : ""}`}>
+    <section ref={ref} id="blog" className={`py-16 md:py-24 bg-[var(--bg2)] fade-up${inView ? " in-view" : ""}`}>
       <div className="max-w-[1400px] mx-auto px-6 md:px-12">
         <SectionHeader num="07" title={t(tr.title)} />
 

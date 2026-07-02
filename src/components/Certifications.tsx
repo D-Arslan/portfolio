@@ -12,7 +12,7 @@ export default function Certifications() {
   const { ref, inView } = useInView();
 
   return (
-    <section ref={ref} id="certifications" className={`py-24 fade-up${inView ? " in-view" : ""}`}>
+    <section ref={ref} id="certifications" className={`py-16 md:py-24 fade-up${inView ? " in-view" : ""}`}>
       <div className="max-w-[1400px] mx-auto px-6 md:px-12">
         <SectionHeader num="08" title={t(tr.title)} />
 

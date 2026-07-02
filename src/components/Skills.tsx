@@ -10,11 +10,11 @@ export default function Skills() {
   const { ref, inView } = useInView();
 
   return (
-    <section ref={ref} id="skills" className={`py-24 bg-[var(--bg2)] fade-up${inView ? " in-view" : ""}`}>
+    <section ref={ref} id="skills" className={`py-16 md:py-24 bg-[var(--bg2)] fade-up${inView ? " in-view" : ""}`}>
       <div className="max-w-[1400px] mx-auto px-6 md:px-12">
         <SectionHeader num="03" title={t(translations.skills.title)} />
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-10 mt-14">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-10 mt-10 md:mt-14">
           {skillGroups.map((group) => (
             <div key={group.icon}>
               <h3 className="font-[family-name:var(--font-mono)] text-xs tracking-[.12em] uppercase text-[var(--gold)] mb-5">

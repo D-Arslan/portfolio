@@ -11,11 +11,11 @@ export default function Contact() {
   const { ref, inView } = useInView();
 
   return (
-    <section ref={ref} id="contact" className={`py-24 bg-[var(--bg2)] fade-up${inView ? " in-view" : ""}`}>
+    <section ref={ref} id="contact" className={`py-16 md:py-24 bg-[var(--bg2)] fade-up${inView ? " in-view" : ""}`}>
       <div className="max-w-[1400px] mx-auto px-6 md:px-12">
         <SectionHeader num="09" title={t(tr.title)} />
 
-        <div className="grid md:grid-cols-[1fr_400px] gap-12 md:gap-20 mt-14 items-center">
+        <div className="grid md:grid-cols-[1fr_400px] gap-12 md:gap-20 mt-10 md:mt-14 items-center">
           {/* Left: heading + sub + email */}
           <div>
             <h3 className="font-[family-name:var(--font-heading)] text-[clamp(36px,4vw,52px)] font-bold tracking-tight leading-[1.1] mb-5">

@@ -37,7 +37,7 @@ export default function Projects() {
       : projects.filter((p) => p.categories.includes(active));
 
   return (
-    <section ref={ref} id="projects" className={`py-24 fade-up${inView ? " in-view" : ""}`}>
+    <section ref={ref} id="projects" className={`py-16 md:py-24 fade-up${inView ? " in-view" : ""}`}>
       <div className="max-w-[1400px] mx-auto px-6 md:px-12">
         <SectionHeader num="02" title={t(tr.title)} />
 

@@ -11,11 +11,11 @@ export default function About() {
   const { ref, inView } = useInView();
 
   return (
-    <section ref={ref} id="about" className={`py-24 bg-[var(--bg2)] fade-up${inView ? " in-view" : ""}`}>
+    <section ref={ref} id="about" className={`py-16 md:py-24 bg-[var(--bg2)] fade-up${inView ? " in-view" : ""}`}>
       <div className="max-w-[1400px] mx-auto px-6 md:px-12">
         <SectionHeader num="01" title={t(tr.title)} />
 
-        <div className="grid md:grid-cols-[1fr_360px] gap-12 md:gap-20 items-start mt-14">
+        <div className="grid md:grid-cols-[1fr_360px] gap-12 md:gap-20 items-start mt-10 md:mt-14">
           {/* Text + photo */}
           <div className="flex flex-col gap-6">
             <div className="flex flex-col gap-5 text-[var(--muted)] leading-[1.8]">
