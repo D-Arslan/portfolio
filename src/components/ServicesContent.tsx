@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useLanguage } from "@/context/LanguageContext";
-import { translations, services } from "@/lib/data";
+import { translations, services, catalogue } from "@/lib/data";
 import QuoteForm from "./QuoteForm";
 
 export default function ServicesContent() {
@@ -99,6 +99,72 @@ export default function ServicesContent() {
                 </ul>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Exemples / Catalogue ── */}
+      <section className="py-16 md:py-24">
+        <div className="max-w-[1400px] mx-auto px-6 md:px-12">
+          <div className="flex items-center gap-4 mb-3">
+            <span className="font-[family-name:var(--font-mono)] text-sm text-[var(--gold)] opacity-70">→</span>
+            <h2 className="font-[family-name:var(--font-heading)] text-[clamp(24px,3vw,36px)] font-bold tracking-tight">
+              {t(tr.examples_title)}
+            </h2>
+            <div className="flex-1 h-px bg-[var(--border)]" />
+          </div>
+          <p className="text-sm text-[var(--muted)] mb-10 max-w-2xl">{t(tr.examples_sub)}</p>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {catalogue.map((item) => (
+              <a
+                key={item.slug}
+                href={`/catalogue/${item.slug}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative bg-[var(--surface)] border border-[var(--border)] rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:border-[var(--gold)] hover:shadow-[0_16px_40px_rgba(0,0,0,0.25)]"
+              >
+                {/* Visual band */}
+                <div className="relative h-[150px] flex items-center justify-center overflow-hidden bg-[var(--bg2)]">
+                  <div className="absolute inset-0 opacity-[0.05]" style={{
+                    backgroundImage: "repeating-linear-gradient(135deg, transparent, transparent 10px, var(--text) 10px, var(--text) 11px)",
+                  }} />
+                  <div
+                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    style={{ background: `radial-gradient(circle at 50% 40%, ${item.accent}22, transparent 70%)` }}
+                  />
+                  <span
+                    className="relative font-[family-name:var(--font-heading)] text-2xl font-bold tracking-tight"
+                    style={{ color: item.accent }}
+                  >
+                    {item.name}
+                  </span>
+                </div>
+
+                {/* Body */}
+                <div className="p-5 flex items-center justify-between gap-3">
+                  <div>
+                    <div className="font-[family-name:var(--font-heading)] text-sm font-semibold text-[var(--text)]">{item.name}</div>
+                    <div className="text-xs text-[var(--muted)] mt-0.5">{t(item.category)}</div>
+                  </div>
+                  <span className="flex-shrink-0 font-[family-name:var(--font-mono)] text-[11px] text-[var(--muted)] group-hover:text-[var(--gold)] transition-colors whitespace-nowrap">
+                    {t(tr.view_demo)} ↗
+                  </span>
+                </div>
+              </a>
+            ))}
+          </div>
+
+          {/* Lien catalogue complet / tarifs */}
+          <div className="mt-8 flex justify-center">
+            <a
+              href="/catalogue/tarifs.html"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-sm font-medium font-[family-name:var(--font-heading)] border border-[var(--gold)] text-[var(--gold)] hover:bg-[var(--gold)] hover:text-black px-6 py-3 rounded-md transition-all"
+            >
+              {t(tr.view_catalogue)} ↗
+            </a>
           </div>
         </div>
       </section>

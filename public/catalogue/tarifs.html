@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Catalogue & tarifs — Arslan DIF</title>
+<!-- ============================================================
+     PAGE PRICING INTERACTIVE — d'après le classeur Excel
+     « Catalogue & devis » d'Arslan DIF. Cochez des fonctionnalités,
+     le devis (installation + abonnement/mois) se calcule en direct.
+     Autonome, hors-ligne. Montants en DZD, fourchettes indicatives.
+============================================================ -->
+<style>
+  :root{
+    --cream:#F5EEE0; --paper:#FFFDF8; --espresso:#241C15; --espresso2:#5B4B3D; --muted:#8B7B67;
+    --gold:#C39A46; --gold-d:#A67C2E; --gold-soft:#E8DcBc; --line:#E7DCC6; --ok:#3F7D54;
+    --maxw:1180px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--cream);color:var(--espresso);line-height:1.6;-webkit-font-smoothing:antialiased}
+  .serif{font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 22px}
+  a{color:inherit}
+
+  header{background:var(--espresso);color:var(--cream)}
+  .head{display:flex;align-items:center;justify-content:space-between;padding:18px 0}
+  .brand{display:flex;align-items:center;gap:12px}
+  .crest{width:44px;height:44px;border-radius:50%;border:1.5px solid var(--gold);display:flex;align-items:center;justify-content:center;color:var(--gold);font-weight:700;letter-spacing:.04em;font-size:15px}
+  .brand .n{font-weight:700;letter-spacing:.02em}
+  .brand .t{font-size:12px;color:#b8a68c;letter-spacing:.04em}
+  .head .contact{font-size:13px;color:#c9b89e;text-align:right}
+  .head .contact a{color:var(--gold);text-decoration:none}
+
+  .hero{padding:44px 0 26px}
+  .hero .k{color:var(--gold-d);font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:12px}
+  .hero h1{font-size:clamp(30px,4.6vw,48px);line-height:1.05;margin:10px 0 12px;font-weight:600}
+  .hero p{color:var(--espresso2);max-width:64ch}
+  .rev{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:22px}
+  .revcard{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:18px 20px}
+  .revcard .lab{font-weight:700;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--gold-d);margin-bottom:6px}
+  .revcard p{font-size:14px;color:var(--espresso2)}
+
+  .presets{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:26px 0 10px}
+  .presets .lbl{font-size:13px;color:var(--muted);margin-right:4px}
+  .pbtn{background:var(--paper);border:1px solid var(--line);border-radius:24px;padding:9px 16px;font-size:13.5px;font-weight:600;cursor:pointer;transition:.15s}
+  .pbtn:hover{border-color:var(--gold);color:var(--gold-d)}
+  .reset{background:none;border:0;color:var(--muted);text-decoration:underline;cursor:pointer;font-size:13px;margin-left:auto}
+
+  .layout{display:grid;grid-template-columns:1fr 320px;gap:30px;align-items:start;padding-bottom:80px}
+
+  .group{margin-bottom:14px;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--paper)}
+  .ghead{display:flex;align-items:center;justify-content:space-between;padding:15px 18px;cursor:pointer;background:linear-gradient(90deg,#fffdf8,#f7efe0)}
+  .ghead h3{font-size:15px;letter-spacing:.04em;text-transform:uppercase;color:var(--espresso)}
+  .ghead .gcount{font-size:12px;color:var(--muted)}
+  .glist{display:none}
+  .group.open .glist{display:block}
+  .group.open .chev{transform:rotate(90deg)}
+  .chev{transition:.2s;color:var(--gold-d)}
+  .feat{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center;padding:14px 18px;border-top:1px solid var(--line)}
+  .feat.on{background:#faf4e8}
+  .feat .nm{font-weight:600;font-size:15px}
+  .feat .ds{font-size:12.5px;color:var(--muted);margin-top:2px}
+  .feat .pr{font-size:12.5px;color:var(--espresso2);margin-top:5px}
+  .feat .pr b{color:var(--espresso)}
+  .feat .pr .abo{color:var(--gold-d)}
+  .stp{display:flex;align-items:center;gap:8px}
+  .stp button{width:34px;height:34px;border:1px solid var(--line);background:var(--cream);border-radius:9px;font-size:18px;cursor:pointer;color:var(--espresso)}
+  .stp button:hover{border-color:var(--gold)}
+  .stp .q{min-width:22px;text-align:center;font-weight:700}
+
+  .summary{position:sticky;top:16px;background:var(--espresso);color:var(--cream);border-radius:16px;padding:22px}
+  .summary h3{font-family:inherit;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+  .sline{padding:12px 0;border-bottom:1px solid rgba(255,255,255,.12)}
+  .sline .l{font-size:12px;color:#c3b298;text-transform:uppercase;letter-spacing:.05em}
+  .sline .v{font-size:22px;font-weight:700;margin-top:3px}
+  .sline .v small{font-size:13px;color:#c3b298;font-weight:400}
+  .sabo .v{color:var(--gold)}
+  .scount{font-size:12px;color:#b8a68c;margin-top:12px}
+  .snote{font-size:11.5px;color:#9c8b73;margin-top:14px;line-height:1.5}
+  .scta{display:block;width:100%;margin-top:14px;background:var(--gold);color:var(--espresso);border:0;border-radius:10px;padding:13px;font-weight:700;font-size:14px;cursor:pointer;text-align:center;text-decoration:none}
+  .scta:hover{background:var(--gold-d);color:#fff}
+
+  .sec{padding:40px 0;border-top:1px solid var(--line)}
+  .sec h2{font-size:clamp(22px,3.2vw,30px);font-weight:600;margin-bottom:6px}
+  .sec .sub{color:var(--espresso2);margin-bottom:24px}
+  .cards3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .mcard{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:22px}
+  .mcard.hi{border-color:var(--gold);box-shadow:0 14px 30px -22px rgba(166,124,46,.5)}
+  .mcard .nm{font-weight:700;font-size:16px}
+  .mcard .badge{display:inline-block;background:var(--gold-soft);color:var(--gold-d);font-size:11px;font-weight:700;padding:2px 9px;border-radius:20px;margin-left:8px}
+  .mcard .price{font-size:26px;font-weight:700;margin:12px 0 2px}
+  .mcard .price small{font-size:13px;color:var(--muted);font-weight:400}
+  .mcard p{font-size:13.5px;color:var(--espresso2);margin-top:10px}
+
+  .pay{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  .paycard{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:16px}
+  .paycard .nm{font-weight:700}.paycard .split{color:var(--gold-d);font-weight:700;font-size:20px;margin:6px 0}
+  .paycard .when{font-size:12.5px;color:var(--muted)}
+
+  footer{background:var(--espresso);color:#b8a68c;padding:34px 0;font-size:13px}
+  footer .r{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+  footer a{color:var(--gold);text-decoration:none}
+
+  @media (max-width:920px){
+    .layout{grid-template-columns:1fr}
+    .rev,.cards3,.pay{grid-template-columns:1fr}
+    .summary{position:fixed;left:0;right:0;bottom:0;top:auto;border-radius:16px 16px 0 0;z-index:40;padding:14px 18px;display:grid;grid-template-columns:1fr 1fr auto;gap:10px 16px;align-items:center;box-shadow:0 -10px 30px -12px rgba(0,0,0,.4)}
+    .summary h3,.snote{display:none}
+    .sline{padding:0;border:0}.sline .v{font-size:17px}
+    .scta{margin:0;grid-row:1/3;align-self:center;width:auto;padding:13px 16px}
+    .scount{display:none}
+    body{padding-bottom:96px}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+  :focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+</style>
+</head>
+<body>
+<header><div class="wrap head">
+  <div class="brand"><div class="crest">AD</div><div><div class="n">Arslan DIF</div><div class="t">Développement web · marché algérien</div></div></div>
+  <div class="contact">Devis personnalisé<br><a href="mailto:difarslan@gmail.com">difarslan@gmail.com</a> · difarslan.com</div>
+</div></header>
+
+<div class="wrap">
+  <section class="hero">
+    <div class="k">Catalogue de fonctionnalités & tarifs</div>
+    <h1 class="serif">Composez votre projet,<br>obtenez une estimation.</h1>
+    <p>Choisissez les fonctionnalités qui vous intéressent : l'estimation se met à jour en direct. Chaque projet fait ensuite l'objet d'un devis ferme, une fois le périmètre précisé.</p>
+    <div class="rev">
+      <div class="revcard"><div class="lab">Installation — une fois</div><p>La construction : personnalisation, développement, configuration, déploiement, tests et formation. Vous construisez une fois.</p></div>
+      <div class="revcard"><div class="lab">Abonnement — chaque mois</div><p>Ce qui fait que ça tourne : hébergement, domaine, sécurité, sauvegardes, support et fonctionnalités « live ».</p></div>
+    </div>
+  </section>
+
+  <div class="presets">
+    <span class="lbl">Partir d'un exemple :</span>
+    <button class="pbtn" onclick="preset('vitrine')">Site vitrine</button>
+    <button class="pbtn" onclick="preset('resto')">Resto + réservation</button>
+    <button class="pbtn" onclick="preset('ecom')">Boutique e-commerce</button>
+    <button class="pbtn" onclick="preset('surmesure')">Plateforme sur-mesure</button>
+    <button class="reset" onclick="resetAll()">Tout réinitialiser</button>
+  </div>
+
+  <div class="layout">
+    <div id="catalogue"></div>
+    <aside>
+      <div class="summary">
+        <h3>Votre estimation</h3>
+        <div class="sline"><div class="l">Installation (une fois)</div><div class="v" id="s-inst">—</div></div>
+        <div class="sline sabo"><div class="l">Abonnement / mois</div><div class="v" id="s-abo">—</div></div>
+        <div class="scount" id="s-count">Aucune fonctionnalité sélectionnée</div>
+        <a class="scta" href="mailto:difarslan@gmail.com?subject=Demande%20de%20devis">Demander un devis</a>
+        <div class="snote">Fourchettes indicatives en dinars (DZD). L'abonnement dépend de l'hébergement nécessaire (site statique gratuit, ou VPS ~1 200–1 500/mois). Hors passerelles de paiement et quotas (WhatsApp, SMS, IA), refacturés selon l'usage.</div>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<div class="wrap">
+  <section class="sec">
+    <h2 class="serif">La maintenance</h2>
+    <p class="sub">L'abonnement garantit que ce qui existe reste en ligne, rapide et sécurisé. Trois formules.</p>
+    <div class="cards3">
+      <div class="mcard"><div class="nm">Basique</div><div class="price">2 500 – 4 000 <small>DZD/mois</small></div>
+        <p>Hébergement, sécurité, sauvegardes, correctifs, support email, ~1 h de retouches/mois.</p></div>
+      <div class="mcard hi"><div class="nm">Pro <span class="badge">Recommandé</span></div><div class="price">6 500 – 9 000 <small>DZD/mois</small></div>
+        <p>Tout Basique + support prioritaire WhatsApp, monitoring, ~3 h de retouches/mois, mises à jour mineures.</p></div>
+      <div class="mcard"><div class="nm">Premium</div><div class="price">12 000 – 18 000 <small>DZD/mois</small></div>
+        <p>Tout Pro + intervention rapide, retouches étendues, évolutions mineures régulières, rapport mensuel.</p></div>
+    </div>
+    <p class="sub" style="margin-top:16px;font-size:13px">Nouvelles fonctionnalités, refonte, nouvelles pages ou intégrations = évolutions, facturées à part (forfait ou ~2 500–4 500 DZD/h).</p>
+  </section>
+
+  <section class="sec">
+    <h2 class="serif">Modalités de paiement</h2>
+    <p class="sub">L'installation se règle en tranches, liées aux étapes du projet.</p>
+    <div class="pay">
+      <div class="paycard"><div class="nm">50 / 50</div><div class="split">50 · 50</div><div class="when">Accord → Livraison. Idéal petit projet (vitrine).</div></div>
+      <div class="paycard"><div class="nm">40 / 30 / 30</div><div class="split">40 · 30 · 30</div><div class="when">Accord → Maquette validée → Livraison. Projet moyen.</div></div>
+      <div class="paycard"><div class="nm">En 3 fois</div><div class="split">≈ 34 · 33 · 33</div><div class="when">Lié aux jalons. Budget serré, sans brader.</div></div>
+      <div class="paycard"><div class="nm">Acompte + solde</div><div class="split">30 · 70</div><div class="when">Accord → Livraison. Acompte non remboursable.</div></div>
+    </div>
+    <p class="sub" style="margin-top:16px;font-size:13px">Abonnement prélevé d'avance chaque mois. Annuel : 2 mois offerts. Moyens : espèces, CCP, virement, BaridiMob.</p>
+  </section>
+</div>
+
+<footer><div class="wrap r">
+  <span>© <span id="yr"></span> Arslan DIF — Développement web · Tous montants en DZD, indicatifs.</span>
+  <span><a href="mailto:difarslan@gmail.com">difarslan@gmail.com</a> · difarslan.com · +213 _ __ __ __ __</span>
+</div></footer>
+
+<script>
+/* ===== Données issues du classeur « Catalogue & devis » (DZD) ===== */
+const GROUPS = [
+  {id:'A', t:'Site vitrine (présence web)', open:true, items:[
+    {n:'Pack vitrine de base (5–8 pages)', d:'Accueil, À propos, Services, Galerie, Contact. Responsive, SEO de base, formulaire.', im:70000, ix:130000, am:0, ax:1500},
+    {n:'Page supplémentaire', d:'Toute page en plus du pack de base.', im:6000, ix:12000, am:0, ax:0},
+    {n:'Galerie / portfolio avancé', d:'Galerie filtrable, lightbox, albums.', im:10000, ix:25000, am:0, ax:0},
+    {n:'Blog / actualités (CMS léger)', d:'Le client publie ses articles lui-même.', im:25000, ix:50000, am:0, ax:1500},
+    {n:'Multi-langue FR / AR / EN', d:'Site traduit, bascule de langue, RTL pour l\'arabe.', im:20000, ix:45000, am:0, ax:0},
+    {n:'Design premium / animations', d:'Motion, transitions, direction artistique poussée.', im:20000, ix:60000, am:0, ax:0},
+    {n:'Espace téléchargement (PDF)', d:'Menus, brochures téléchargeables.', im:8000, ix:18000, am:0, ax:0},
+  ]},
+  {id:'B', t:'Réservation & rendez-vous', items:[
+    {n:'Réservation en ligne + calendrier', d:'Choix date/créneau, couverts. Cœur du système.', im:50000, ix:120000, am:1500, ax:4000},
+    {n:'Tableau de bord réservations', d:'Gestion des réservations en temps réel.', im:30000, ix:70000, am:0, ax:2000},
+    {n:'Gestion d\'acompte / paiement', d:'Acompte en ligne — élimine les no-shows.', im:30000, ix:80000, am:500, ax:2000},
+    {n:'Confirmations par email', d:'Email de confirmation automatique.', im:10000, ix:25000, am:0, ax:500},
+    {n:'Confirmations / rappels WhatsApp', d:'Confirmation + rappel anti no-show.', im:15000, ix:35000, am:1000, ax:3000},
+    {n:'Confirmations par SMS', d:'Pour clients sans WhatsApp.', im:10000, ix:25000, am:500, ax:2500},
+    {n:'Gestion de capacité (buffet)', d:'Limite de couverts par créneau.', im:20000, ix:50000, am:0, ax:1000},
+    {n:'Liste d\'attente', d:'File automatique quand c\'est complet.', im:12000, ix:30000, am:0, ax:500},
+    {n:'Réservation de chambres (hôtel)', d:'Calendrier d\'occupation, types de chambres.', im:80000, ix:200000, am:2000, ax:5000},
+    {n:'RDV multi-praticiens (salon/clinique)', d:'Plusieurs agendas séparés.', im:40000, ix:100000, am:1500, ax:4000},
+  ]},
+  {id:'C', t:'E-commerce & vente en ligne', items:[
+    {n:'Boutique de base (catalogue + panier)', d:'Catalogue, panier, tunnel de commande.', im:120000, ix:300000, am:3000, ax:6000},
+    {n:'Paiement en ligne (SATIM / CIB / Dahabia)', d:'Encaissement par carte algérienne.', im:40000, ix:90000, am:500, ax:2000},
+    {n:'Paiement à la livraison + suivi', d:'Cash on delivery, suivi de statut.', im:15000, ix:35000, am:0, ax:500},
+    {n:'Gestion des commandes', d:'Statuts, préparation, historique.', im:30000, ix:70000, am:0, ax:1000},
+    {n:'Gestion de stock / inventaire', d:'Suivi des quantités, alertes rupture.', im:30000, ix:80000, am:0, ax:1500},
+    {n:'Codes promo / réductions', d:'Coupons, remises, ventes flash.', im:12000, ix:30000, am:0, ax:500},
+    {n:'Livraison 58 wilayas', d:'Frais calculés par wilaya / transporteur.', im:15000, ix:40000, am:0, ax:500},
+    {n:'Comptes clients & historique', d:'Connexion client, suivi des commandes.', im:20000, ix:45000, am:0, ax:1000},
+    {n:'Avis & notes produits', d:'Notation et commentaires clients.', im:12000, ix:30000, am:0, ax:500},
+  ]},
+  {id:'D', t:'Marketing & fidélisation', items:[
+    {n:'Bannières / promos dynamiques', d:'Le commerçant change ses promos seul.', im:12000, ix:35000, am:0, ax:1000},
+    {n:'Programme de fidélité / points', d:'Cumul de points, paliers, récompenses.', im:35000, ix:90000, am:500, ax:2000},
+    {n:'Carte de fidélité digitale / QR', d:'Carte scannable, suivi des passages.', im:20000, ix:50000, am:0, ax:1000},
+    {n:'Newsletter / emailing', d:'Campagnes email, capture d\'adresses.', im:15000, ix:35000, am:0, ax:1500},
+    {n:'Notifications push', d:'Alertes promos sur le téléphone.', im:15000, ix:40000, am:0, ax:1000},
+    {n:'Pop-up capture email / promo', d:'Fenêtre de capture à l\'arrivée.', im:8000, ix:20000, am:0, ax:0},
+    {n:'Parrainage', d:'Le client en amène un autre, récompense.', im:20000, ix:50000, am:0, ax:500},
+  ]},
+  {id:'E', t:'Gestion & opérations (back-office)', items:[
+    {n:'Tableau de bord admin (général)', d:'Pilotage de l\'activité, vue d\'ensemble.', im:30000, ix:80000, am:0, ax:2000},
+    {n:'Gestion de stock (autonome)', d:'Module stock indépendant.', im:40000, ix:100000, am:500, ax:2500},
+    {n:'Planning / gestion des employés', d:'Horaires, congés, rôles.', im:40000, ix:100000, am:500, ax:2500},
+    {n:'Caisse / point de vente (POS)', d:'Encaissement sur place, tickets.', im:60000, ix:150000, am:2000, ax:5000},
+    {n:'Facturation / devis', d:'Génération de factures et devis PDF.', im:30000, ix:80000, am:0, ax:1500},
+    {n:'Statistiques & analytics', d:'CA, fréquentation, taux de remplissage.', im:25000, ix:70000, am:0, ax:1500},
+    {n:'Multi-établissements', d:'Plusieurs points de vente, un compte.', im:50000, ix:150000, am:2000, ax:6000},
+  ]},
+  {id:'F', t:'Communication & support', items:[
+    {n:'Bouton WhatsApp / click-to-call', d:'Contact en un clic.', im:3000, ix:10000, am:0, ax:0},
+    {n:'Chat en direct', d:'Messagerie temps réel avec le visiteur.', im:20000, ix:50000, am:500, ax:2500},
+    {n:'Chatbot FAQ (à règles)', d:'Réponses automatiques aux questions courantes.', im:25000, ix:60000, am:500, ax:2000},
+  ]},
+  {id:'G', t:'IA & automatisation', items:[
+    {n:'Bot de réservation / commande WhatsApp (IA)', d:'Le client réserve en langage naturel.', im:60000, ix:180000, am:3000, ax:8000},
+    {n:'Recommandation produit (IA)', d:'Suggestions personnalisées, ventes additionnelles.', im:50000, ix:150000, am:1000, ax:4000},
+    {n:'OCR / lecture de documents', d:'Extraction auto (pièces, factures, menus).', im:50000, ix:150000, am:1000, ax:3500},
+    {n:'Reconnaissance / classification d\'images', d:'Tri, contrôle, identification automatique.', im:60000, ix:180000, am:1500, ax:5000},
+    {n:'Analyse prédictive (affluence, stock)', d:'Prévoir l\'affluence, anticiper les ruptures.', im:80000, ix:250000, am:2000, ax:6000},
+  ]},
+  {id:'H', t:'Application mobile', items:[
+    {n:'PWA — web app installable', d:'Alternative économique à une app native.', im:30000, ix:80000, am:0, ax:1500},
+    {n:'App mobile native (iOS + Android)', d:'Application publiée sur les stores.', im:300000, ix:800000, am:2000, ax:6000},
+    {n:'App de gestion interne', d:'App dédiée au commerçant (scan, gestion).', im:150000, ix:500000, am:2000, ax:6000},
+  ]},
+];
+const PRESETS = {
+  vitrine:['Pack vitrine de base (5–8 pages)','Multi-langue FR / AR / EN'],
+  resto:['Pack vitrine de base (5–8 pages)','Réservation en ligne + calendrier','Tableau de bord réservations','Gestion d\'acompte / paiement','Confirmations par email','Confirmations / rappels WhatsApp'],
+  ecom:['Boutique de base (catalogue + panier)','Paiement en ligne (SATIM / CIB / Dahabia)','Gestion des commandes','Gestion de stock / inventaire','Livraison 58 wilayas','Comptes clients & historique','Avis & notes produits'],
+  surmesure:['Tableau de bord admin (général)','Multi-établissements','Bot de réservation / commande WhatsApp (IA)','Analyse prédictive (affluence, stock)','App mobile native (iOS + Android)'],
+};
+const fmt=n=>n.toLocaleString('fr-FR');
+const qty={};  // clé "gi:ii" -> quantité
+let uid=0; const map={};
+
+const cat=document.getElementById('catalogue');
+cat.innerHTML=GROUPS.map((g,gi)=>`
+  <div class="group ${g.open?'open':''}" id="grp${gi}">
+    <div class="ghead" onclick="document.getElementById('grp${gi}').classList.toggle('open')">
+      <h3>${g.id} · ${g.t}</h3><span class="gcount">${g.items.length} fonctionnalités <span class="chev">›</span></span>
+    </div>
+    <div class="glist">
+      ${g.items.map((it,ii)=>{const key=gi+':'+ii;qty[key]=0;
+        const abo=(it.am||it.ax)?` · abo <span class="abo">${fmt(it.am)}–${fmt(it.ax)}/mois</span>`:'';
+        return `<div class="feat" id="f${gi}_${ii}">
+          <div><div class="nm">${it.n}</div><div class="ds">${it.d}</div>
+            <div class="pr">Installation <b>${fmt(it.im)}–${fmt(it.ix)}</b> DZD${abo}</div></div>
+          <div class="stp"><button onclick="chg('${key}',-1)" aria-label="moins">−</button>
+            <span class="q" id="q${gi}_${ii}">0</span>
+            <button onclick="chg('${key}',1)" aria-label="plus">+</button></div>
+        </div>`;}).join('')}
+    </div>
+  </div>`).join('');
+
+function item(key){const[gi,ii]=key.split(':').map(Number);return GROUPS[gi].items[ii];}
+function chg(key,d){qty[key]=Math.max(0,Math.min(20,qty[key]+d));
+  const[gi,ii]=key.split(':').map(Number);
+  document.getElementById('q'+gi+'_'+ii).textContent=qty[key];
+  document.getElementById('f'+gi+'_'+ii).classList.toggle('on',qty[key]>0);
+  render();}
+function render(){
+  let iMin=0,iMax=0,aMin=0,aMax=0,count=0;
+  for(const k in qty){const q=qty[k];if(!q)continue;const it=item(k);
+    iMin+=q*it.im;iMax+=q*it.ix;aMin+=q*it.am;aMax+=q*it.ax;count+=q;}
+  document.getElementById('s-inst').innerHTML=count?`${fmt(iMin)} – ${fmt(iMax)} <small>DZD</small>`:'—';
+  document.getElementById('s-abo').innerHTML=count?`${fmt(aMin)} – ${fmt(aMax)} <small>DZD</small>`:'—';
+  document.getElementById('s-count').textContent=count?`${count} fonctionnalité${count>1?'s':''} sélectionnée${count>1?'s':''}`:'Aucune fonctionnalité sélectionnée';
+}
+function setQtyByNames(names){
+  for(const k in qty)qty[k]=0;
+  GROUPS.forEach((g,gi)=>g.items.forEach((it,ii)=>{
+    const on=names.includes(it.n);qty[gi+':'+ii]=on?1:0;
+    document.getElementById('q'+gi+'_'+ii).textContent=on?1:0;
+    document.getElementById('f'+gi+'_'+ii).classList.toggle('on',on);
+  }));
+  render();
+}
+function preset(k){setQtyByNames(PRESETS[k]||[]);document.querySelectorAll('.group').forEach(g=>g.classList.add('open'));window.scrollTo({top:0,behavior:'smooth'});}
+function resetAll(){setQtyByNames([]);}
+document.getElementById('yr').textContent=new Date().getFullYear();
+render();
+</script>
+</body>
+</html>

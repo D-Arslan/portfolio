@@ -111,6 +111,10 @@ export const translations = {
     included:  { fr: "Inclus", en: "Included" },
     cta:       { fr: "Demander un devis", en: "Request a quote" },
     cta_hint:  { fr: "Réponse sous 48h · Devis gratuit & sans engagement", en: "Reply within 48h · Free quote, no commitment" },
+    examples_title: { fr: "Exemples de réalisations", en: "Example builds" },
+    examples_sub:   { fr: "Des modèles de sites que j'ai conçus. Cliquez pour ouvrir la démo interactive.", en: "Site templates I've designed. Click to open the live demo." },
+    view_demo:      { fr: "Voir la démo", en: "View demo" },
+    view_catalogue: { fr: "Voir le catalogue complet & tarifs", en: "View full catalogue & pricing" },
     process_title: { fr: "Comment ça se passe", en: "How it works" },
     process: {
       s1_t: { fr: "Échange", en: "Discovery" },
@@ -1084,4 +1088,25 @@ export const services: Service[] = [
     ],
     accent: "#A855F7",
   },
+];
+
+// ─── CATALOGUE (démos HTML statiques dans /public/catalogue) ──────────────────
+
+export interface CatalogueItem {
+  slug: string; // fichier dans /catalogue
+  name: string;
+  category: { fr: string; en: string };
+  accent: string;
+}
+
+export const catalogue: CatalogueItem[] = [
+  { slug: "le-lynde.html",         name: "Le Lynde",      category: { fr: "Restaurant · Sushi & buffet", en: "Restaurant · Sushi & buffet" }, accent: "#E11D48" },
+  { slug: "marsa.html",            name: "MARSA",         category: { fr: "Restaurant",                  en: "Restaurant" },                  accent: "#0EA5E9" },
+  { slug: "dar-el-bahr.html",      name: "Dar el Bahr",   category: { fr: "Restaurant",                  en: "Restaurant" },                  accent: "#0D9488" },
+  { slug: "cine-lumina.html",      name: "Cine Lumina",   category: { fr: "Cinéma",                      en: "Cinema" },                      accent: "#8B5CF6" },
+  { slug: "galerie-diwan.html",    name: "Galerie Diwan", category: { fr: "Galerie d'art",               en: "Art gallery" },                 accent: "#D4AF37" },
+  { slug: "noor.html",             name: "NOOR",          category: { fr: "Boutique de vêtements",       en: "Clothing store" },              accent: "#EC4899" },
+  { slug: "sirocco.html",          name: "Sirocco",       category: { fr: "Sorties & loisirs",           en: "Outings & leisure" },           accent: "#F59E0B" },
+  { slug: "pose-pilates.html",     name: "posé",          category: { fr: "Studio de pilates",           en: "Pilates studio" },              accent: "#10B981" },
+  { slug: "yalla-billetterie.html", name: "Yalla",        category: { fr: "Billetterie & événements",    en: "Ticketing & events" },          accent: "#6366F1" },
 ];

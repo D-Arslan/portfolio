@@ -1,0 +1,1310 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Le Lynde — Sushi & buffet asiatique · Dely Ibrahim, Alger</title>
+<meta name="description" content="Le Lynde · Sushi premium et buffet asiatique à volonté chaque weekend à Dely Ibrahim, Alger." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          ink:    '#0A0A0A',
+          ink2:   '#141414',
+          ink3:   '#1C1C1C',
+          ivory:  '#F5F0E8',
+          ivory2: '#EBE4D6',
+          burgundy: '#8B0000',
+          burgundy2:'#6E0000',
+          gold:   '#C9A961',
+          gold2:  '#A8893F',
+          mute:   '#8A8478',
+        },
+        fontFamily: {
+          serif: ['"Cormorant Garamond"','serif'],
+          sans:  ['Inter','ui-sans-serif','system-ui','sans-serif'],
+        },
+        letterSpacing: {
+          'wider-2': '.18em',
+          'wider-3': '.28em',
+        },
+      }
+    }
+  }
+</script>
+
+<style>
+  :root { --nav-h: 76px; }
+  html { scroll-behavior: smooth; }
+  body  { font-family: 'Inter', sans-serif; background:#0A0A0A; color:#F5F0E8; -webkit-font-smoothing:antialiased; }
+
+  /* Editorial serif */
+  .font-display { font-family: 'Cormorant Garamond', serif; font-weight: 500; letter-spacing: -0.01em; }
+
+  /* Hairline + decorative rules */
+  .hairline { background-image: linear-gradient(90deg, transparent, rgba(201,169,97,.7), transparent); height:1px; }
+  .gold-line { height:1px; background:#C9A961; width:48px; display:inline-block; vertical-align: middle; }
+
+  /* Eyebrow label */
+  .eyebrow { font-size:11px; letter-spacing:.28em; text-transform:uppercase; color:#C9A961; }
+
+  /* Image placeholders (cinematic dark gradient) */
+  .ph {
+    position:relative;
+    background:
+      radial-gradient(120% 80% at 30% 20%, rgba(201,169,97,.10), transparent 60%),
+      radial-gradient(120% 80% at 80% 90%, rgba(139,0,0,.18), transparent 60%),
+      linear-gradient(135deg,#0d0d0d 0%,#1a1814 50%,#0a0a0a 100%);
+    overflow:hidden;
+    isolation:isolate;
+  }
+  .ph::after{
+    content:""; position:absolute; inset:0;
+    background:
+      repeating-linear-gradient(45deg, rgba(255,255,255,.012) 0 2px, transparent 2px 8px);
+    mix-blend-mode:overlay; pointer-events:none;
+  }
+  .ph .ph-label {
+    position:absolute; left:14px; bottom:12px; right:14px;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size:10px; letter-spacing:.14em; text-transform:uppercase;
+    color: rgba(245,240,232,.45);
+  }
+  .ph .ph-glyph{
+    position:absolute; inset:0; display:grid; place-items:center;
+    font-size: clamp(40px, 8vw, 96px);
+    color: rgba(245,240,232,.10);
+    filter: grayscale(.4) brightness(.9);
+    user-select:none;
+  }
+
+  /* Reveal on scroll */
+  .reveal { opacity:0; transform: translateY(18px); transition: opacity .9s ease, transform .9s ease; }
+  .reveal.in { opacity:1; transform:none; }
+
+  /* Nav transitions */
+  #nav { transition: background-color .4s ease, backdrop-filter .4s ease, border-color .4s ease; }
+  #nav .nav-link { position:relative; }
+  #nav .nav-link::after{
+    content:""; position:absolute; left:0; right:0; bottom:-6px; height:1px;
+    background:#C9A961; transform: scaleX(0); transform-origin: left; transition: transform .35s ease;
+  }
+  #nav .nav-link:hover::after { transform: scaleX(1); }
+
+  /* Buttons */
+  .btn { display:inline-flex; align-items:center; justify-content:center; gap:.6rem; padding: .95rem 1.5rem; font-size:13px; letter-spacing:.22em; text-transform:uppercase; transition: all .35s ease; border:1px solid transparent; }
+  .btn-primary { background:#8B0000; color:#F5F0E8; }
+  .btn-primary:hover { background:#6E0000; }
+  .btn-ghost { border-color: rgba(245,240,232,.35); color:#F5F0E8; }
+  .btn-ghost:hover { border-color:#C9A961; color:#C9A961; }
+  .btn-gold { background:#C9A961; color:#0A0A0A; }
+  .btn-gold:hover { background:#A8893F; color:#0A0A0A; }
+  .btn-outline-dark { border-color: rgba(10,10,10,.6); color:#0A0A0A; }
+  .btn-outline-dark:hover { border-color:#8B0000; color:#8B0000; }
+
+  /* Focus visible */
+  :focus-visible { outline: 2px solid #C9A961; outline-offset: 3px; }
+
+  /* Hide scrollbars for chip rows */
+  .no-scrollbar::-webkit-scrollbar { display:none; }
+  .no-scrollbar { scrollbar-width:none; }
+
+  /* Modal backdrop */
+  #resa-modal[aria-hidden="true"]{ display:none; }
+  .stepper-dot{ width:28px; height:28px; border-radius:9999px; display:grid; place-items:center; font-size:12px; }
+  .stepper-line{ flex:1; height:1px; background: rgba(245,240,232,.18); }
+  .stepper-line.done{ background:#C9A961; }
+
+  /* Pretty form controls (dark) */
+  .field {
+    width:100%; background:transparent; color:#F5F0E8;
+    border:1px solid rgba(245,240,232,.18);
+    padding: 14px 16px; font-size:15px;
+    transition: border-color .25s ease, background-color .25s ease;
+  }
+  .field:focus { border-color:#C9A961; background: rgba(201,169,97,.04); }
+  .field::placeholder{ color: rgba(245,240,232,.35); }
+
+  .pill { padding:10px 14px; border:1px solid rgba(245,240,232,.18); font-size:13px; letter-spacing:.06em; transition: all .25s ease; cursor:pointer; user-select:none; }
+  .pill:hover:not(.is-disabled){ border-color:#C9A961; color:#C9A961; }
+  .pill.is-active{ background:#C9A961; border-color:#C9A961; color:#0A0A0A; }
+  .pill.is-disabled{ opacity:.32; cursor:not-allowed; }
+
+  .seg { display:flex; align-items:center; gap:0; }
+  .seg button { width:38px; height:38px; border:1px solid rgba(245,240,232,.2); color:#F5F0E8; }
+  .seg button:hover{ border-color:#C9A961; color:#C9A961; }
+  .seg .val { min-width:54px; text-align:center; padding:0 .9rem; height:38px; display:grid; place-items:center; border-top:1px solid rgba(245,240,232,.2); border-bottom:1px solid rgba(245,240,232,.2); font-variant-numeric: tabular-nums; }
+
+  /* Tick animation */
+  .tick-circle { stroke-dasharray: 166; stroke-dashoffset: 166; animation: drawCircle .7s ease forwards; }
+  .tick-check  { stroke-dasharray: 48; stroke-dashoffset: 48; animation: drawCheck .5s .55s ease forwards; }
+  @keyframes drawCircle { to { stroke-dashoffset: 0; } }
+  @keyframes drawCheck  { to { stroke-dashoffset: 0; } }
+
+  /* Hero slow zoom */
+  .hero-img { animation: heroZoom 18s ease-in-out infinite alternate; }
+  @keyframes heroZoom { from { transform: scale(1); } to { transform: scale(1.06); } }
+
+  /* Marquee */
+  .marquee { display:flex; gap:48px; white-space:nowrase; animation: marquee 32s linear infinite; }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* Section bg switch helpers */
+  .bg-ivory { background:#F5F0E8; color:#1a1a1a; }
+  .bg-ivory .eyebrow { color:#8B0000; }
+  .bg-ivory .hairline { background-image: linear-gradient(90deg, transparent, rgba(139,0,0,.5), transparent); }
+
+  /* Nav initial transparent state */
+  #nav.is-top { background-color: transparent; border-bottom-color: transparent; }
+  #nav.is-scrolled { background-color: rgba(10,10,10,.92); backdrop-filter: blur(12px); border-bottom-color: rgba(245,240,232,.08); }
+
+  /* Drawer (mobile menu) */
+  #drawer { transform: translateX(100%); transition: transform .45s ease; }
+  #drawer.open { transform: translateX(0); }
+
+  /* Variant toggle */
+  .variant-btn { color: rgba(245,240,232,.55); font-weight:500; }
+  .variant-btn:hover { color:#C9A961; }
+  .variant-btn.is-active { background:#C9A961; color:#0A0A0A; }
+
+  /* Reduce motion */
+  @media (prefers-reduced-motion: reduce){
+    .hero-img, .marquee { animation:none; }
+    .reveal{ opacity:1; transform:none; transition:none; }
+  }
+</style>
+</head>
+<body class="bg-ink text-ivory">
+
+<!-- ─────────────────────────  VARIANT TOGGLE (présentation client)  ───────────────────────── -->
+<div id="variant-toggle" class="fixed z-[110] left-1/2 -translate-x-1/2 top-3 sm:top-4 flex items-center gap-1 p-1 border border-gold/40 bg-ink/85 backdrop-blur-md text-[10px] sm:text-[11px] uppercase tracking-wider-2 shadow-lg" role="group" aria-label="Choix de la version du flux de réservation">
+  <span class="hidden sm:inline px-3 text-ivory/50">Flux&nbsp;:</span>
+  <button data-variant="deposit"   class="variant-btn px-3 sm:px-4 py-2 transition">Avec acompte</button>
+  <button data-variant="nodeposit" class="variant-btn px-3 sm:px-4 py-2 transition">Sans acompte</button>
+</div>
+
+<!-- ─────────────────────────  NAV  ───────────────────────── -->
+<header id="nav" class="is-top fixed top-0 inset-x-0 z-50 border-b">
+  <div class="max-w-[1400px] mx-auto px-5 sm:px-8 h-[var(--nav-h)] flex items-center justify-between">
+    <a href="#top" class="font-display text-[22px] sm:text-[24px] tracking-wider-2" aria-label="Le Lynde, accueil">
+      LE&nbsp;LYNDE
+    </a>
+    <nav class="hidden lg:flex items-center gap-9 text-[12px] tracking-wider-2 uppercase">
+      <a class="nav-link" href="#restaurant">Le restaurant</a>
+      <a class="nav-link" href="#buffet">Le buffet</a>
+      <a class="nav-link" href="#cuisine">Menu</a>
+      <a class="nav-link" href="#galerie">Galerie</a>
+      <a class="nav-link" href="#contact">Contact</a>
+    </nav>
+    <div class="flex items-center gap-3">
+      <button class="btn btn-primary hidden sm:inline-flex" data-open-resa aria-haspopup="dialog">Réserver</button>
+      <button class="lg:hidden w-10 h-10 grid place-items-center border border-ivory/30" aria-label="Ouvrir le menu" id="burger">
+        <svg width="18" height="14" viewBox="0 0 18 14" fill="none" aria-hidden="true">
+          <path d="M0 1h18M0 7h18M0 13h12" stroke="currentColor" stroke-width="1.2"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile drawer -->
+<aside id="drawer" class="fixed inset-y-0 right-0 w-[86%] max-w-sm bg-ink2 z-[60] lg:hidden p-7 flex flex-col" aria-hidden="true" aria-label="Menu mobile">
+  <div class="flex items-center justify-between mb-12">
+    <span class="font-display text-xl tracking-wider-2">LE LYNDE</span>
+    <button id="drawer-close" aria-label="Fermer le menu" class="w-10 h-10 grid place-items-center border border-ivory/30">
+      <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M1 1l12 12M13 1L1 13" stroke="currentColor" stroke-width="1.2"/></svg>
+    </button>
+  </div>
+  <nav class="flex flex-col gap-5 font-display text-3xl">
+    <a href="#restaurant" data-drawer-link>Le restaurant</a>
+    <a href="#buffet" data-drawer-link>Le buffet</a>
+    <a href="#cuisine" data-drawer-link>Menu</a>
+    <a href="#galerie" data-drawer-link>Galerie</a>
+    <a href="#contact" data-drawer-link>Contact</a>
+  </nav>
+  <div class="mt-auto">
+    <button class="btn btn-primary w-full" data-open-resa>Réserver une table</button>
+    <p class="eyebrow mt-6">Dely Ibrahim · Alger</p>
+  </div>
+</aside>
+
+<!-- ─────────────────────────  HERO  ───────────────────────── -->
+<section id="top" class="relative h-[100svh] min-h-[640px] w-full overflow-hidden">
+  <div class="ph hero-img absolute inset-0">
+    <!-- IMG: Hero plein écran — plat signature sushi sur ardoise sombre, lumière rasante, ambiance restaurant la nuit, ratio 21:9 -->
+    <div class="ph-glyph">🍣</div>
+  </div>
+  <!-- Vignette overlay -->
+  <div class="absolute inset-0 bg-gradient-to-b from-ink/70 via-ink/30 to-ink"></div>
+  <div class="absolute inset-0 bg-gradient-to-r from-ink/60 via-transparent to-transparent"></div>
+
+  <div class="relative z-10 h-full max-w-[1400px] mx-auto px-5 sm:px-8 flex flex-col justify-end pb-16 sm:pb-24">
+    <div class="max-w-3xl">
+      <div class="flex items-center gap-3 mb-6 reveal">
+        <span class="gold-line"></span>
+        <span class="eyebrow">Dely Ibrahim · Alger</span>
+      </div>
+      <h1 class="font-display font-light text-[16vw] sm:text-[11vw] lg:text-[9rem] leading-[0.9] tracking-tight reveal">
+        Le&nbsp;Lynde
+      </h1>
+      <p class="font-display italic text-2xl sm:text-3xl mt-6 text-ivory/85 reveal">
+        Sushi &amp; buffet asiatique
+      </p>
+      <p class="mt-5 max-w-xl text-ivory/65 leading-relaxed reveal">
+        Une table contemporaine où la précision du Japon rencontre la générosité de l'Asie.
+        Buffet à volonté du vendredi au dimanche.
+      </p>
+      <div class="mt-10 flex flex-col sm:flex-row gap-3 sm:gap-4 reveal">
+        <button class="btn btn-primary" data-open-resa>Réserver le buffet</button>
+        <a class="btn btn-ghost" href="#cuisine">Découvrir le menu</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- scroll cue -->
+  <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 text-ivory/40">
+    <span class="text-[10px] tracking-wider-2 uppercase">Faites défiler</span>
+    <span class="w-px h-10 bg-gradient-to-b from-ivory/40 to-transparent"></span>
+  </div>
+</section>
+
+<!-- Marquee strip -->
+<div class="border-y border-ivory/8 bg-ink overflow-hidden">
+  <div class="marquee py-5 text-ivory/45 text-[12px] tracking-wider-3 uppercase font-light">
+    <span class="flex items-center gap-12">
+      <span>Sushi préparés en direct</span><span class="text-gold">✦</span>
+      <span>Buffet à volonté · Vendredi · Samedi · Dimanche</span><span class="text-gold">✦</span>
+      <span>Cuisine ouverte</span><span class="text-gold">✦</span>
+      <span>Dely Ibrahim · Alger</span><span class="text-gold">✦</span>
+    </span>
+    <span class="flex items-center gap-12" aria-hidden="true">
+      <span>Sushi préparés en direct</span><span class="text-gold">✦</span>
+      <span>Buffet à volonté · Vendredi · Samedi · Dimanche</span><span class="text-gold">✦</span>
+      <span>Cuisine ouverte</span><span class="text-gold">✦</span>
+      <span>Dely Ibrahim · Alger</span><span class="text-gold">✦</span>
+    </span>
+  </div>
+</div>
+
+<!-- ─────────────────────────  RESTAURANT (intro)  ───────────────────────── -->
+<section id="restaurant" class="py-24 sm:py-36">
+  <div class="max-w-[1200px] mx-auto px-5 sm:px-8 grid lg:grid-cols-12 gap-10 lg:gap-16">
+    <div class="lg:col-span-5 reveal">
+      <div class="eyebrow mb-5">— Le restaurant</div>
+      <h2 class="font-display text-5xl sm:text-6xl leading-[0.95]">
+        Une parenthèse <em class="text-gold not-italic font-display">silencieuse</em><br />
+        au cœur d'Alger.
+      </h2>
+    </div>
+    <div class="lg:col-span-6 lg:col-start-7 reveal">
+      <p class="text-ivory/75 leading-[1.85] text-[17px]">
+        Le Lynde est né de l'envie de proposer, à Dely Ibrahim, une table asiatique
+        à la fois exigeante et chaleureuse. Notre chef compose chaque jour une carte
+        de sushi affinés, complétée le weekend par un buffet à volonté préparé minute,
+        dans une salle aux tons feutrés où la lumière se fait discrète.
+      </p>
+      <div class="mt-10 grid grid-cols-2 sm:grid-cols-3 gap-6 sm:gap-10">
+        <div>
+          <div class="font-display text-4xl text-gold">2021</div>
+          <div class="eyebrow mt-2">Ouverture</div>
+        </div>
+        <div>
+          <div class="font-display text-4xl text-gold">60</div>
+          <div class="eyebrow mt-2">Places assises</div>
+        </div>
+        <div>
+          <div class="font-display text-4xl text-gold">7j/7</div>
+          <div class="eyebrow mt-2">À la carte</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────  BUFFET  ───────────────────────── -->
+<section id="buffet" class="bg-ink2 py-24 sm:py-36 relative">
+  <div class="max-w-[1300px] mx-auto px-5 sm:px-8 grid lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+
+    <div class="lg:col-span-6 reveal order-2 lg:order-1">
+      <div class="aspect-[4/5] ph">
+        <!-- IMG: Buffet du weekend — plateau de makis et sashimis disposé sur table en bois noir, vapeur, lumière chaude latérale -->
+        <div class="ph-glyph">🥢</div>
+        <div class="ph-label">img · buffet · 4:5 · sombre cinéma</div>
+      </div>
+    </div>
+
+    <div class="lg:col-span-6 reveal order-1 lg:order-2">
+      <div class="eyebrow mb-5">— Vendredi · Samedi · Dimanche</div>
+      <h2 class="font-display text-5xl sm:text-6xl leading-[0.95]">
+        Le buffet<br/>
+        <em class="text-gold not-italic font-display">du weekend.</em>
+      </h2>
+      <p class="mt-6 text-ivory/70 max-w-lg leading-[1.85]">
+        Pendant deux heures, profitez d'une sélection illimitée de sushi, sashimi,
+        gyoza, rouleaux de printemps, plats wok et desserts asiatiques — chaque pièce
+        préparée à la minute par notre équipe.
+      </p>
+
+      <ul class="mt-10 divide-y divide-ivory/10 border-y border-ivory/10">
+        <li class="py-5 flex items-baseline gap-6">
+          <span class="font-display text-3xl text-gold w-10 text-right">01</span>
+          <div>
+            <div class="font-display text-2xl">Deux heures à table</div>
+            <div class="text-ivory/55 text-sm mt-1">Service par créneau de 2h, dans le respect de votre rythme.</div>
+          </div>
+        </li>
+        <li class="py-5 flex items-baseline gap-6">
+          <span class="font-display text-3xl text-gold w-10 text-right">02</span>
+          <div>
+            <div class="font-display text-2xl">Sushi préparés en direct</div>
+            <div class="text-ivory/55 text-sm mt-1">Comptoir ouvert, défilé continu de pièces nouvellement dressées.</div>
+          </div>
+        </li>
+        <li class="py-5 flex items-baseline gap-6">
+          <span class="font-display text-3xl text-gold w-10 text-right">03</span>
+          <div>
+            <div class="font-display text-2xl">3&nbsp;800&nbsp;DZD <span class="text-ivory/40 text-base font-sans">/ personne</span></div>
+            <div class="text-ivory/55 text-sm mt-1">Boissons hors prix · Tarif enfant -50% (moins de 12 ans).</div>
+          </div>
+        </li>
+      </ul>
+
+      <div class="mt-10 flex flex-col sm:flex-row gap-3">
+        <button class="btn btn-primary" data-open-resa>Réserver une table</button>
+        <a href="#cuisine" class="btn btn-ghost">Voir ce qui est servi</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────  CUISINE / Signatures  ───────────────────────── -->
+<section id="cuisine" class="py-24 sm:py-36">
+  <div class="max-w-[1300px] mx-auto px-5 sm:px-8">
+    <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-16 reveal">
+      <div>
+        <div class="eyebrow mb-5">— Notre cuisine</div>
+        <h2 class="font-display text-5xl sm:text-6xl leading-[0.95] max-w-xl">
+          Quatre pièces<br/><em class="text-gold not-italic font-display">qui nous définissent.</em>
+        </h2>
+      </div>
+      <p class="text-ivory/60 max-w-md leading-relaxed">
+        Une carte resserrée, retravaillée chaque saison autour du meilleur de l'arrivage
+        et de la sensibilité de notre chef.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+      <!-- card -->
+      <article class="reveal group">
+        <div class="aspect-[3/4] ph mb-5 group-hover:scale-[1.01] transition-transform duration-500">
+          <div class="ph-glyph">🍣</div>
+          <div class="ph-label">img · nigiri thon · 3:4</div>
+        </div>
+        <div class="flex items-baseline justify-between">
+          <h3 class="font-display text-2xl">Nigiri Otoro</h3>
+          <span class="text-gold text-sm font-light tracking-wider-2">01</span>
+        </div>
+        <p class="text-ivory/55 text-sm mt-2 leading-relaxed">Ventrèche de thon rouge, riz vinaigré tiède, soja maison.</p>
+      </article>
+
+      <article class="reveal group">
+        <div class="aspect-[3/4] ph mb-5 group-hover:scale-[1.01] transition-transform duration-500">
+          <div class="ph-glyph">🍱</div>
+          <div class="ph-label">img · sashimi platter · 3:4</div>
+        </div>
+        <div class="flex items-baseline justify-between">
+          <h3 class="font-display text-2xl">Sashimi du chef</h3>
+          <span class="text-gold text-sm font-light tracking-wider-2">02</span>
+        </div>
+        <p class="text-ivory/55 text-sm mt-2 leading-relaxed">Sélection de neuf tranches selon l'arrivage du jour.</p>
+      </article>
+
+      <article class="reveal group">
+        <div class="aspect-[3/4] ph mb-5 group-hover:scale-[1.01] transition-transform duration-500">
+          <div class="ph-glyph">🍤</div>
+          <div class="ph-label">img · ebi tempura · 3:4</div>
+        </div>
+        <div class="flex items-baseline justify-between">
+          <h3 class="font-display text-2xl">Ebi Tempura</h3>
+          <span class="text-gold text-sm font-light tracking-wider-2">03</span>
+        </div>
+        <p class="text-ivory/55 text-sm mt-2 leading-relaxed">Crevettes en tempura aérienne, ponzu yuzu et radis blanc.</p>
+      </article>
+
+      <article class="reveal group">
+        <div class="aspect-[3/4] ph mb-5 group-hover:scale-[1.01] transition-transform duration-500">
+          <div class="ph-glyph">🍜</div>
+          <div class="ph-label">img · ramen tonkotsu · 3:4</div>
+        </div>
+        <div class="flex items-baseline justify-between">
+          <h3 class="font-display text-2xl">Tonkotsu noir</h3>
+          <span class="text-gold text-sm font-light tracking-wider-2">04</span>
+        </div>
+        <p class="text-ivory/55 text-sm mt-2 leading-relaxed">Bouillon de porc 14h, huile d'ail brûlé, œuf mariné, chashu.</p>
+      </article>
+    </div>
+
+    <div class="mt-14 flex justify-center reveal">
+      <a href="#" class="btn btn-ghost">Consulter la carte complète</a>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────  LIEU + TÉMOIGNAGE  ───────────────────────── -->
+<section id="galerie" class="bg-ivory text-ink py-24 sm:py-36 bg-ivory">
+  <div class="max-w-[1300px] mx-auto px-5 sm:px-8 grid lg:grid-cols-12 gap-10 lg:gap-16">
+
+    <div class="lg:col-span-7 reveal">
+      <div class="eyebrow mb-5">— Le lieu</div>
+      <h2 class="font-display text-5xl sm:text-6xl leading-[0.95] text-ink">
+        Une salle qui<br/><em class="not-italic font-display" style="color:#8B0000">prend son temps.</em>
+      </h2>
+      <p class="mt-6 text-ink/70 max-w-xl leading-[1.85]">
+        Bois sombre, laiton mat, éclairage tamisé. Soixante couverts seulement,
+        une cuisine ouverte au fond de salle et un comptoir où l'on voit naître
+        chaque pièce. Le Lynde, c'est un cinéma, à table.
+      </p>
+
+      <figure class="mt-12 border-l-2 pl-6" style="border-color:#C9A961">
+        <blockquote class="font-display text-3xl leading-snug italic text-ink">
+          « On y va pour les sushi, on y reste pour l'atmosphère.
+          Une des seules tables d'Alger où l'on chuchote naturellement. »
+        </blockquote>
+        <figcaption class="mt-5 eyebrow text-ink/60" style="color:rgba(10,10,10,.55)">— Inès B., cliente · Octobre 2025</figcaption>
+      </figure>
+    </div>
+
+    <div class="lg:col-span-5 grid grid-cols-2 gap-4 reveal">
+      <div class="aspect-[3/4] ph">
+        <div class="ph-glyph">🏮</div>
+        <div class="ph-label">img · salle 1</div>
+      </div>
+      <div class="aspect-[3/4] mt-12 ph">
+        <div class="ph-glyph">🍶</div>
+        <div class="ph-label">img · comptoir saké</div>
+      </div>
+      <div class="aspect-square ph col-span-2">
+        <div class="ph-glyph">🐟</div>
+        <div class="ph-label">img · gros plan dressage</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─────────────────────────  CTA FINAL  ───────────────────────── -->
+<section class="relative py-32 sm:py-44 overflow-hidden">
+  <div class="absolute inset-0 ph">
+    <!-- IMG: Salle de nuit, table dressée vue de loin, bougies, profondeur de champ, ratio 21:9 -->
+    <div class="ph-glyph">✦</div>
+  </div>
+  <div class="absolute inset-0 bg-ink/75"></div>
+  <div class="relative z-10 max-w-3xl mx-auto px-5 sm:px-8 text-center reveal">
+    <div class="eyebrow mb-6">— Réservations</div>
+    <h2 class="font-display text-5xl sm:text-7xl leading-[0.95]">
+      Réservez votre table.
+    </h2>
+    <p class="mt-6 text-ivory/70 max-w-lg mx-auto">
+      Service à la carte tous les soirs, buffet à volonté du vendredi au dimanche.
+      Réservation conseillée pour les soirs de weekend.
+    </p>
+    <div class="mt-10 flex flex-col sm:flex-row gap-3 justify-center">
+      <button class="btn btn-primary" data-open-resa>Réserver le buffet</button>
+      <a href="tel:+213000000000" class="btn btn-ghost">Appeler le restaurant</a>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────  FOOTER  ───────────────────────── -->
+<footer id="contact" class="bg-ink border-t border-ivory/10 pt-20 pb-10">
+  <div class="max-w-[1300px] mx-auto px-5 sm:px-8 grid md:grid-cols-12 gap-12">
+    <div class="md:col-span-5">
+      <div class="font-display text-3xl tracking-wider-2">LE LYNDE</div>
+      <p class="mt-4 text-ivory/55 max-w-sm leading-relaxed text-sm">
+        Sushi &amp; buffet asiatique. Une table contemporaine à Dely Ibrahim, Alger.
+      </p>
+      <div class="hairline mt-8 max-w-[200px]"></div>
+    </div>
+
+    <div class="md:col-span-3">
+      <div class="eyebrow mb-4">Adresse</div>
+      <p class="text-ivory/75 leading-relaxed text-sm">
+        12, rue des Frères Khaled<br/>
+        Dely Ibrahim, 16047<br/>
+        Alger — Algérie
+      </p>
+    </div>
+
+    <div class="md:col-span-2">
+      <div class="eyebrow mb-4">Horaires</div>
+      <ul class="text-ivory/75 leading-relaxed text-sm space-y-1">
+        <li>Lun · Fermé</li>
+        <li>Mar – Jeu · 19h–23h</li>
+        <li>Ven – Dim · 12h–16h<br/><span class="text-ivory/40">19h–23h</span></li>
+      </ul>
+    </div>
+
+    <div class="md:col-span-2">
+      <div class="eyebrow mb-4">Contact</div>
+      <ul class="text-ivory/75 leading-relaxed text-sm space-y-2">
+        <li><a href="https://instagram.com/restaurant_le_lynde" class="hover:text-gold transition-colors">@restaurant_le_lynde</a></li>
+        <li><a href="https://wa.me/213000000000" class="hover:text-gold transition-colors">WhatsApp</a></li>
+        <li><a href="tel:+213000000000" class="hover:text-gold transition-colors">+213 00 00 00 00</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="max-w-[1300px] mx-auto px-5 sm:px-8 mt-16 pt-8 border-t border-ivory/10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 text-ivory/40 text-xs">
+    <div>© 2026 Le Lynde · Tous droits réservés</div>
+    <div class="flex gap-6">
+      <a href="#" class="hover:text-gold">Mentions légales</a>
+      <a href="#" class="hover:text-gold">Politique de confidentialité</a>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ═════════════════════════════════════════════════════════════
+     RÉSERVATION — MODAL 3 ÉTAPES
+     ═════════════════════════════════════════════════════════════ -->
+<div id="resa-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="resa-title" class="fixed inset-0 z-[100]">
+  <div class="absolute inset-0 bg-ink/85 backdrop-blur-sm" data-close-resa></div>
+
+  <div class="absolute inset-0 flex items-stretch sm:items-center justify-center p-0 sm:p-6">
+    <div class="relative w-full sm:max-w-[920px] max-h-full sm:max-h-[92vh] overflow-y-auto bg-ink2 border border-ivory/10 sm:rounded-none">
+
+      <!-- Topbar of modal -->
+      <div class="sticky top-0 z-10 bg-ink2/95 backdrop-blur border-b border-ivory/10 px-6 sm:px-10 py-5 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <span class="font-display text-xl tracking-wider-2">LE LYNDE</span>
+          <span class="hidden sm:inline text-ivory/30">·</span>
+          <span class="hidden sm:inline eyebrow">Réservation buffet</span>
+        </div>
+        <button data-close-resa aria-label="Fermer la réservation" class="w-10 h-10 grid place-items-center border border-ivory/20 hover:border-gold hover:text-gold transition">
+          <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M1 1l12 12M13 1L1 13" stroke="currentColor" stroke-width="1.2"/></svg>
+        </button>
+      </div>
+
+      <!-- Stepper -->
+      <div id="stepper" class="px-6 sm:px-10 pt-8 pb-2">
+        <ol class="flex items-center gap-2 sm:gap-4" aria-label="Étapes de la réservation">
+          <li class="flex items-center gap-2 sm:gap-3" data-step-indicator="1">
+            <span class="stepper-dot border border-gold bg-gold text-ink font-medium">1</span>
+            <span class="eyebrow hidden sm:inline">Date &amp; couverts</span>
+          </li>
+          <li class="stepper-line" aria-hidden="true"></li>
+          <li class="flex items-center gap-2 sm:gap-3" data-step-indicator="2">
+            <span class="stepper-dot border border-ivory/25 text-ivory/55">2</span>
+            <span class="eyebrow hidden sm:inline text-ivory/55" style="color:rgba(245,240,232,.55)">Vos infos</span>
+          </li>
+          <li class="stepper-line" aria-hidden="true"></li>
+          <li class="flex items-center gap-2 sm:gap-3" data-step-indicator="3">
+            <span class="stepper-dot border border-ivory/25 text-ivory/55">3</span>
+            <span class="eyebrow hidden sm:inline text-ivory/55" style="color:rgba(245,240,232,.55)">Confirmation</span>
+          </li>
+        </ol>
+      </div>
+
+      <!-- ───── STEP 1 ───── -->
+      <section data-step="1" class="px-6 sm:px-10 py-8 sm:py-10">
+        <h2 id="resa-title" class="font-display text-4xl sm:text-5xl leading-tight">Quand venez-vous ?</h2>
+        <p class="text-ivory/55 mt-2 text-sm max-w-md">Le buffet est servi vendredi, samedi et dimanche, déjeuner et dîner. Sélectionnez un créneau pour voir la disponibilité.</p>
+
+        <!-- Date picker -->
+        <div class="mt-10">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="eyebrow">Date</h3>
+            <div class="flex items-center gap-2">
+              <button id="cal-prev" aria-label="Mois précédent" class="w-8 h-8 grid place-items-center border border-ivory/20 hover:border-gold hover:text-gold transition">
+                <svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M7 1L3 5l4 4" stroke="currentColor" stroke-width="1.2" fill="none"/></svg>
+              </button>
+              <span id="cal-label" class="eyebrow min-w-[120px] text-center"></span>
+              <button id="cal-next" aria-label="Mois suivant" class="w-8 h-8 grid place-items-center border border-ivory/20 hover:border-gold hover:text-gold transition">
+                <svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M3 1l4 4-4 4" stroke="currentColor" stroke-width="1.2" fill="none"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-7 gap-1 text-center text-[11px] uppercase tracking-wider-2 text-ivory/40 mb-2">
+            <div>Lu</div><div>Ma</div><div>Me</div><div>Je</div><div>Ve</div><div>Sa</div><div>Di</div>
+          </div>
+          <div id="calendar" class="grid grid-cols-7 gap-1"></div>
+          <p class="text-ivory/45 text-xs mt-4 flex items-center gap-2">
+            <span class="inline-block w-2 h-2 bg-gold"></span>
+            Vendredi · Samedi · Dimanche uniquement
+          </p>
+        </div>
+
+        <!-- Service -->
+        <div class="mt-12">
+          <h3 class="eyebrow mb-4">Service</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div>
+              <div class="text-ivory/50 text-xs uppercase tracking-wider-2 mb-3">Déjeuner</div>
+              <div class="flex flex-wrap gap-2" data-slot-group="lunch">
+                <button class="pill" data-slot="12:00–14:00" data-seats="14">12h–14h <span class="text-ivory/45 ml-2 text-[11px]">14 places</span></button>
+                <button class="pill" data-slot="14:00–16:00" data-seats="22">14h–16h <span class="text-ivory/45 ml-2 text-[11px]">22 places</span></button>
+              </div>
+            </div>
+            <div>
+              <div class="text-ivory/50 text-xs uppercase tracking-wider-2 mb-3">Dîner</div>
+              <div class="flex flex-wrap gap-2" data-slot-group="dinner">
+                <button class="pill" data-slot="19:00–21:00" data-seats="6">19h–21h <span class="text-ivory/45 ml-2 text-[11px]">6 places</span></button>
+                <button class="pill" data-slot="21:00–23:00" data-seats="18">21h–23h <span class="text-ivory/45 ml-2 text-[11px]">18 places</span></button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Guests -->
+        <div class="mt-12">
+          <h3 class="eyebrow mb-4">Nombre de personnes</h3>
+          <div class="flex items-center gap-4">
+            <div class="seg" role="group" aria-label="Sélecteur du nombre de personnes">
+              <button type="button" data-guest="-1" aria-label="Retirer une personne">−</button>
+              <div class="val font-display text-xl" id="guest-val">2</div>
+              <button type="button" data-guest="+1" aria-label="Ajouter une personne">+</button>
+            </div>
+            <div class="flex flex-wrap gap-2" id="guest-pills">
+              <!-- pills 1..10 -->
+            </div>
+          </div>
+          <p class="text-ivory/40 text-xs mt-3">Pour les groupes de plus de 10, contactez-nous sur WhatsApp.</p>
+        </div>
+
+        <!-- Footer estim -->
+        <div class="mt-12 pt-6 border-t border-ivory/10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div>
+            <div class="eyebrow">Estimation</div>
+            <div class="mt-1 font-display text-3xl"><span id="total-1">7&nbsp;600</span> <span class="text-ivory/40 text-base font-sans">DZD</span></div>
+            <div class="text-ivory/45 text-xs"><span id="ppl-1">2</span> × 3 800 DZD · boissons en sus</div>
+          </div>
+          <div class="flex gap-3">
+            <button class="btn btn-ghost" data-close-resa>Annuler</button>
+            <button class="btn btn-primary" data-next="2" id="next-1" disabled>Continuer</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ───── STEP 2 ───── -->
+      <section data-step="2" hidden class="px-6 sm:px-10 py-8 sm:py-10">
+        <h2 class="font-display text-4xl sm:text-5xl leading-tight">Vos informations</h2>
+        <p class="text-ivory/55 mt-2 text-sm max-w-md">Pour confirmer votre table et vous joindre si besoin.</p>
+
+        <form id="form-2" class="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-5" novalidate>
+          <label class="block sm:col-span-2">
+            <span class="eyebrow">Nom complet</span>
+            <input required type="text" name="name" class="field mt-2" placeholder="Ex. Amine Belkacem" autocomplete="name" />
+          </label>
+
+          <label class="block">
+            <span class="eyebrow">Téléphone</span>
+            <div class="mt-2 flex">
+              <span class="field !w-auto !border-r-0 select-none text-ivory/60">+213</span>
+              <input required type="tel" name="phone" class="field !flex-1" placeholder="555 12 34 56" autocomplete="tel-national" inputmode="tel" pattern="[0-9 ]{8,}" />
+            </div>
+          </label>
+
+          <label class="block">
+            <span class="eyebrow">Email <span class="text-ivory/35 normal-case tracking-normal text-[10px]">(optionnel)</span></span>
+            <input type="email" name="email" class="field mt-2" placeholder="vous@exemple.com" autocomplete="email" />
+          </label>
+
+          <label class="block sm:col-span-2">
+            <span class="eyebrow">Note pour le restaurant <span class="text-ivory/35 normal-case tracking-normal text-[10px]">(optionnel)</span></span>
+            <textarea name="note" rows="3" class="field mt-2" placeholder="Allergies, anniversaire, table près de la fenêtre…"></textarea>
+          </label>
+
+          <label class="flex items-start gap-3 sm:col-span-2 cursor-pointer select-none">
+            <input type="checkbox" name="whatsapp" checked class="mt-1 accent-burgundy w-4 h-4" />
+            <span class="text-sm text-ivory/80">Je préfère être contacté(e) sur <span class="text-gold">WhatsApp</span> pour la confirmation et les rappels.</span>
+          </label>
+        </form>
+
+        <div class="mt-12 pt-6 border-t border-ivory/10 flex flex-col-reverse sm:flex-row sm:items-center sm:justify-between gap-4">
+          <button class="btn btn-ghost" data-prev="1">Retour</button>
+          <button class="btn btn-primary" data-next="3" id="next-2">Continuer vers le paiement</button>
+        </div>
+      </section>
+
+      <!-- ───── STEP 3 — AVEC ACOMPTE ───── -->
+      <section data-step="3" data-variant="deposit" hidden class="px-6 sm:px-10 py-8 sm:py-10">
+        <h2 class="font-display text-4xl sm:text-5xl leading-tight">Confirmation &amp; acompte</h2>
+        <p class="text-ivory/55 mt-2 text-sm max-w-md">Récapitulatif de votre venue et règlement de l'acompte.</p>
+
+        <div class="mt-10 grid lg:grid-cols-2 gap-6 lg:gap-10">
+          <!-- Récap -->
+          <div class="border border-ivory/10 p-6 sm:p-7">
+            <div class="eyebrow mb-5">Votre réservation</div>
+            <dl class="space-y-4 text-sm">
+              <div class="flex justify-between gap-6 items-baseline">
+                <dt class="text-ivory/50">Date</dt>
+                <dd class="text-ivory text-right" id="rc-date">—</dd>
+              </div>
+              <div class="flex justify-between gap-6 items-baseline">
+                <dt class="text-ivory/50">Service</dt>
+                <dd class="text-ivory text-right" id="rc-slot">—</dd>
+              </div>
+              <div class="flex justify-between gap-6 items-baseline">
+                <dt class="text-ivory/50">Couverts</dt>
+                <dd class="text-ivory text-right" id="rc-ppl">—</dd>
+              </div>
+              <div class="flex justify-between gap-6 items-baseline">
+                <dt class="text-ivory/50">Au nom de</dt>
+                <dd class="text-ivory text-right" id="rc-name">—</dd>
+              </div>
+              <div class="flex justify-between gap-6 items-baseline">
+                <dt class="text-ivory/50">Contact</dt>
+                <dd class="text-ivory text-right" id="rc-contact">—</dd>
+              </div>
+            </dl>
+
+            <div class="hairline my-6"></div>
+
+            <dl class="space-y-2 text-sm">
+              <div class="flex justify-between"><dt class="text-ivory/50">Buffet</dt><dd id="rc-buffet">—</dd></div>
+              <div class="flex justify-between"><dt class="text-ivory/50">Acompte à régler maintenant</dt><dd class="text-gold font-medium" id="rc-deposit">—</dd></div>
+              <div class="flex justify-between text-ivory/45 text-xs"><dt>Solde à régler sur place</dt><dd id="rc-rest">—</dd></div>
+            </dl>
+          </div>
+
+          <!-- Paiement + politique -->
+          <div>
+            <div class="border border-gold/30 bg-gold/[0.04] p-5 sm:p-6 text-sm leading-relaxed">
+              <div class="flex items-center gap-2 text-gold mb-2">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><circle cx="7" cy="7" r="6" stroke="currentColor"/><path d="M7 4v3.5M7 9.5v.01" stroke="currentColor" stroke-linecap="round"/></svg>
+                <span class="eyebrow">À propos de l'acompte</span>
+              </div>
+              <p class="text-ivory/75">
+                Un acompte de <span class="text-gold">1 000 DZD par personne</span> est demandé pour garantir votre table.
+                Il est <strong>intégralement déduit</strong> de votre addition sur place, et
+                <strong>remboursé</strong> en cas d'annulation au moins <strong>24h</strong> avant le service.
+              </p>
+            </div>
+
+            <div class="eyebrow mt-7 mb-3">Mode de paiement</div>
+            <div class="grid grid-cols-1 gap-3" id="pay-methods">
+              <label class="flex items-center justify-between gap-4 p-4 border border-ivory/15 cursor-pointer hover:border-gold transition has-[:checked]:border-gold has-[:checked]:bg-gold/[0.04]">
+                <span class="flex items-center gap-3">
+                  <span class="w-9 h-9 grid place-items-center border border-ivory/20 font-display text-sm">CIB</span>
+                  <span class="text-sm">Carte CIB</span>
+                </span>
+                <input type="radio" name="pay" value="cib" class="accent-gold" checked />
+              </label>
+              <label class="flex items-center justify-between gap-4 p-4 border border-ivory/15 cursor-pointer hover:border-gold transition has-[:checked]:border-gold has-[:checked]:bg-gold/[0.04]">
+                <span class="flex items-center gap-3">
+                  <span class="w-9 h-9 grid place-items-center border border-ivory/20 font-display text-sm">EDH</span>
+                  <span class="text-sm">Edahabia</span>
+                </span>
+                <input type="radio" name="pay" value="edahabia" class="accent-gold" />
+              </label>
+              <label class="flex items-center justify-between gap-4 p-4 border border-ivory/15 cursor-pointer hover:border-gold transition has-[:checked]:border-gold has-[:checked]:bg-gold/[0.04]">
+                <span class="flex items-center gap-3">
+                  <span class="w-9 h-9 grid place-items-center border border-ivory/20">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="text-gold" aria-hidden="true"><path d="M20 4a14 14 0 0 0-19.8 0 14 14 0 0 0-2 17.4L0 24l2.7-1.7A14 14 0 0 0 20 4Zm-8 18a12 12 0 0 1-6.1-1.7l-.4-.2-3.5 1 1-3.4-.3-.4A12 12 0 1 1 12 22Zm6.6-9c-.3-.2-2-1-2.3-1.1-.3-.1-.5-.2-.7.2l-1 1.2c-.2.3-.4.3-.7.1a9.6 9.6 0 0 1-4.7-4.1c-.4-.6.4-.6 1-2 .1-.2 0-.5 0-.6L9 4c-.2-.5-.4-.5-.6-.5h-.6c-.2 0-.6 0-.9.3a3 3 0 0 0-1 2.3 5.2 5.2 0 0 0 1.1 2.9 11.4 11.4 0 0 0 5.5 5c1.1.4 2 .7 2.7.8.7 0 1.7-.1 2.3-.8.7-.7.7-1.4.5-1.5l-.4-.3Z"/></svg>
+                  </span>
+                  <span class="text-sm">Payer plus tard via WhatsApp</span>
+                </span>
+                <input type="radio" name="pay" value="whatsapp" class="accent-gold" />
+              </label>
+            </div>
+
+            <p class="text-ivory/45 text-xs mt-5 leading-relaxed">
+              <strong class="text-ivory/65">Politique d'annulation</strong> — Annulation gratuite jusqu'à 24h
+              avant le service ; au-delà, l'acompte reste acquis au restaurant. Modification de date
+              possible une fois sans frais sur simple message WhatsApp.
+            </p>
+          </div>
+        </div>
+
+        <div class="mt-12 pt-6 border-t border-ivory/10 flex flex-col-reverse sm:flex-row sm:items-center sm:justify-between gap-4">
+          <button class="btn btn-ghost" data-prev="2">Retour</button>
+          <button class="btn btn-primary" id="confirm-btn">Confirmer ma réservation</button>
+        </div>
+      </section>
+
+      <!-- ───── STEP 3 — SANS ACOMPTE ───── -->
+      <section data-step="3" data-variant="nodeposit" hidden class="px-6 sm:px-10 py-8 sm:py-10">
+        <h2 class="font-display text-4xl sm:text-5xl leading-tight">Récapitulatif</h2>
+        <p class="text-ivory/55 mt-2 text-sm max-w-md">Vérifiez votre venue avant de confirmer. Aucun paiement n'est demandé en ligne.</p>
+
+        <div class="mt-10 grid lg:grid-cols-2 gap-6 lg:gap-10">
+          <!-- Récap -->
+          <div class="border border-ivory/10 p-6 sm:p-7">
+            <div class="eyebrow mb-5">Votre réservation</div>
+            <dl class="space-y-4 text-sm">
+              <div class="flex justify-between gap-6 items-baseline">
+                <dt class="text-ivory/50">Date</dt><dd class="text-ivory text-right" id="rc2-date">—</dd>
+              </div>
+              <div class="flex justify-between gap-6 items-baseline">
+                <dt class="text-ivory/50">Service</dt><dd class="text-ivory text-right" id="rc2-slot">—</dd>
+              </div>
+              <div class="flex justify-between gap-6 items-baseline">
+                <dt class="text-ivory/50">Couverts</dt><dd class="text-ivory text-right" id="rc2-ppl">—</dd>
+              </div>
+              <div class="flex justify-between gap-6 items-baseline">
+                <dt class="text-ivory/50">Au nom de</dt><dd class="text-ivory text-right" id="rc2-name">—</dd>
+              </div>
+              <div class="flex justify-between gap-6 items-baseline">
+                <dt class="text-ivory/50">Contact</dt><dd class="text-ivory text-right" id="rc2-contact">—</dd>
+              </div>
+              <div class="flex justify-between gap-6 items-baseline" id="rc2-note-row" hidden>
+                <dt class="text-ivory/50">Note</dt><dd class="text-ivory text-right text-xs max-w-[60%]" id="rc2-note">—</dd>
+              </div>
+            </dl>
+
+            <div class="hairline my-6"></div>
+
+            <dl class="space-y-2 text-sm">
+              <div class="flex justify-between"><dt class="text-ivory/50">Buffet</dt><dd id="rc2-buffet">—</dd></div>
+              <div class="flex justify-between text-ivory/55 text-xs"><dt>Réglement sur place</dt><dd>à l'addition</dd></div>
+            </dl>
+          </div>
+
+          <!-- Politique -->
+          <div>
+            <div class="border border-gold/30 bg-gold/[0.04] p-5 sm:p-6 text-sm leading-relaxed">
+              <div class="flex items-center gap-2 text-gold mb-2">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><circle cx="7" cy="7" r="6" stroke="currentColor"/><path d="M7 4v3.5M7 9.5v.01" stroke="currentColor" stroke-linecap="round"/></svg>
+                <span class="eyebrow">Politique d'annulation</span>
+              </div>
+              <p class="text-ivory/80">
+                Réservation <strong>gratuite et sans engagement</strong>. Si vous ne pouvez plus venir,
+                merci simplement de nous prévenir au moins <span class="text-gold">4&nbsp;heures avant</span> votre créneau&nbsp;:
+                un message <span class="text-gold">WhatsApp</span> suffit. Cela nous permet de proposer votre table à d'autres clients.
+              </p>
+            </div>
+
+            <div class="mt-6 flex items-center gap-3 text-ivory/70 text-sm">
+              <span class="flex items-center gap-2"><span class="inline-block w-1.5 h-1.5 bg-gold rounded-full"></span> Pas de paiement en ligne</span>
+              <span class="text-ivory/20">·</span>
+              <span class="flex items-center gap-2"><span class="inline-block w-1.5 h-1.5 bg-gold rounded-full"></span> Confirmation WhatsApp</span>
+            </div>
+
+            <label class="flex items-start gap-3 mt-7 cursor-pointer select-none p-4 border border-ivory/15 hover:border-gold transition has-[:checked]:border-gold has-[:checked]:bg-gold/[0.04]">
+              <input type="checkbox" id="accept2" class="mt-0.5 accent-gold w-4 h-4" />
+              <span class="text-sm text-ivory/85">
+                J'ai compris la politique d'annulation et je m'engage à prévenir le restaurant au moins <strong>4h avant</strong> en cas d'empêchement.
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <div class="mt-12 pt-6 border-t border-ivory/10 flex flex-col-reverse sm:flex-row sm:items-center sm:justify-between gap-4">
+          <button class="btn btn-ghost" data-prev="2">Retour</button>
+          <button class="btn btn-primary" id="confirm-btn-2" disabled>Confirmer ma réservation</button>
+        </div>
+      </section>
+
+      <!-- ───── SUCCESS — AVEC ACOMPTE ───── -->
+      <section data-step="success" data-variant="deposit" hidden class="px-6 sm:px-10 py-16 sm:py-20 text-center">
+        <svg width="84" height="84" viewBox="0 0 84 84" fill="none" class="mx-auto" aria-hidden="true">
+          <circle class="tick-circle" cx="42" cy="42" r="33" stroke="#C9A961" stroke-width="1.5"/>
+          <path class="tick-check" d="M28 43l11 11 19-22" stroke="#C9A961" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+        <h2 class="font-display text-5xl sm:text-6xl mt-8">À très bientôt.</h2>
+        <p class="text-ivory/60 mt-4 max-w-md mx-auto">
+          Votre table est réservée. Vous recevrez une confirmation
+          <span class="text-gold">WhatsApp</span> dans quelques secondes.
+        </p>
+
+        <div class="mt-10 max-w-md mx-auto border border-ivory/10 p-6 text-left">
+          <div class="eyebrow mb-4">Récapitulatif</div>
+          <dl class="space-y-3 text-sm">
+            <div class="flex justify-between"><dt class="text-ivory/55">Date</dt><dd id="sc-date">—</dd></div>
+            <div class="flex justify-between"><dt class="text-ivory/55">Service</dt><dd id="sc-slot">—</dd></div>
+            <div class="flex justify-between"><dt class="text-ivory/55">Couverts</dt><dd id="sc-ppl">—</dd></div>
+            <div class="flex justify-between"><dt class="text-ivory/55">Référence</dt><dd id="sc-ref" class="text-gold font-mono">—</dd></div>
+          </dl>
+        </div>
+
+        <div class="mt-8 flex flex-col sm:flex-row justify-center gap-3">
+          <button class="btn btn-gold" id="ics-btn">Ajouter à mon calendrier</button>
+          <button class="btn btn-ghost" data-close-resa>Fermer</button>
+        </div>
+      </section>
+
+      <!-- ───── SUCCESS — SANS ACOMPTE ───── -->
+      <section data-step="success" data-variant="nodeposit" hidden class="px-6 sm:px-10 py-16 sm:py-20 text-center">
+        <svg width="84" height="84" viewBox="0 0 84 84" fill="none" class="mx-auto" aria-hidden="true">
+          <circle class="tick-circle" cx="42" cy="42" r="33" stroke="#C9A961" stroke-width="1.5"/>
+          <path class="tick-check" d="M28 43l11 11 19-22" stroke="#C9A961" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+        <h2 class="font-display text-5xl sm:text-6xl mt-8">À très bientôt.</h2>
+        <p class="text-ivory/65 mt-4 max-w-md mx-auto">
+          Votre table est réservée. Vous recevrez une confirmation
+          <span class="text-gold">WhatsApp</span> dans quelques secondes.
+        </p>
+
+        <div class="mt-10 max-w-md mx-auto border border-ivory/10 p-6 text-left">
+          <div class="eyebrow mb-4">Récapitulatif</div>
+          <dl class="space-y-3 text-sm">
+            <div class="flex justify-between"><dt class="text-ivory/55">Date</dt><dd id="sc2-date">—</dd></div>
+            <div class="flex justify-between"><dt class="text-ivory/55">Service</dt><dd id="sc2-slot">—</dd></div>
+            <div class="flex justify-between"><dt class="text-ivory/55">Couverts</dt><dd id="sc2-ppl">—</dd></div>
+            <div class="flex justify-between"><dt class="text-ivory/55">Référence</dt><dd id="sc2-ref" class="text-gold font-mono">—</dd></div>
+          </dl>
+        </div>
+
+        <p class="text-ivory/55 text-xs mt-6 max-w-md mx-auto leading-relaxed">
+          Besoin de changer quelque chose&nbsp;? Vous pouvez modifier ou annuler à tout moment via
+          WhatsApp, en mentionnant votre référence. Merci de prévenir au moins 4h avant le service.
+        </p>
+
+        <div class="mt-8 flex flex-col sm:flex-row justify-center gap-3 flex-wrap">
+          <button class="btn btn-gold" id="ics-btn-2">Ajouter à mon calendrier</button>
+          <a id="wa-modify" href="#" target="_blank" rel="noopener" class="btn btn-ghost">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 4a14 14 0 0 0-19.8 0 14 14 0 0 0-2 17.4L0 24l2.7-1.7A14 14 0 0 0 20 4Zm-8 18a12 12 0 0 1-6.1-1.7l-.4-.2-3.5 1 1-3.4-.3-.4A12 12 0 1 1 12 22Zm6.6-9c-.3-.2-2-1-2.3-1.1-.3-.1-.5-.2-.7.2l-1 1.2c-.2.3-.4.3-.7.1a9.6 9.6 0 0 1-4.7-4.1c-.4-.6.4-.6 1-2 .1-.2 0-.5 0-.6L9 4c-.2-.5-.4-.5-.6-.5h-.6c-.2 0-.6 0-.9.3a3 3 0 0 0-1 2.3 5.2 5.2 0 0 0 1.1 2.9 11.4 11.4 0 0 0 5.5 5c1.1.4 2 .7 2.7.8.7 0 1.7-.1 2.3-.8.7-.7.7-1.4.5-1.5l-.4-.3Z"/></svg>
+            Modifier ou annuler
+          </a>
+          <button class="btn btn-ghost" data-close-resa>Fermer</button>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ─────────────────────────  JS  ───────────────────────── -->
+<script>
+/* ───── helpers ───── */
+const $ = (s, r=document) => r.querySelector(s);
+const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
+const fmt = n => n.toLocaleString('fr-FR').replace(/,/g,'\u00A0');
+
+/* ───── nav scroll state ───── */
+const nav = $('#nav');
+const onScroll = () => {
+  const top = window.scrollY < 24;
+  nav.classList.toggle('is-top', top);
+  nav.classList.toggle('is-scrolled', !top);
+};
+onScroll();
+window.addEventListener('scroll', onScroll, {passive:true});
+
+/* ───── reveal on scroll ───── */
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }});
+}, { threshold: .12 });
+$$('.reveal').forEach(el => io.observe(el));
+
+/* ───── mobile drawer ───── */
+const drawer = $('#drawer');
+const openDrawer = () => { drawer.classList.add('open'); drawer.setAttribute('aria-hidden','false'); };
+const closeDrawer = () => { drawer.classList.remove('open'); drawer.setAttribute('aria-hidden','true'); };
+$('#burger').addEventListener('click', openDrawer);
+$('#drawer-close').addEventListener('click', closeDrawer);
+$$('[data-drawer-link]').forEach(a => a.addEventListener('click', closeDrawer));
+
+/* ───────────────────────────────────────────
+   RESERVATION STATE
+   ─────────────────────────────────────────── */
+let variant = 'deposit'; // 'deposit' | 'nodeposit'
+const state = {
+  date: null,        // Date object
+  slot: null,        // "HH:MM–HH:MM"
+  service: null,     // "Déjeuner"/"Dîner"
+  guests: 2,
+  name: '', phone: '', email: '', note: '', whatsapp: true,
+  pay: 'cib',
+};
+const PRICE = 3800;
+const DEPOSIT = 1000;
+
+/* ───── modal open/close ───── */
+const modal = $('#resa-modal');
+let lastFocus = null;
+
+/* ───── variant toggle ───── */
+function setVariant(v){
+  variant = v;
+  $$('.variant-btn').forEach(b => b.classList.toggle('is-active', b.dataset.variant === v));
+  const nb2 = $('#next-2');
+  if (nb2) nb2.textContent = (v === 'deposit') ? "Continuer vers le paiement" : "Voir le récapitulatif";
+  if (modal.getAttribute('aria-hidden') === 'false') showStep(currentStep);
+}
+$$('.variant-btn').forEach(b => b.addEventListener('click', () => setVariant(b.dataset.variant)));
+setVariant('deposit');
+
+function openResa(){
+  lastFocus = document.activeElement;
+  modal.setAttribute('aria-hidden','false');
+  document.body.style.overflow = 'hidden';
+  showStep(1);
+  // focus first interactive
+  setTimeout(()=> $('#cal-next')?.focus(), 50);
+}
+function closeResa(){
+  modal.setAttribute('aria-hidden','true');
+  document.body.style.overflow = '';
+  lastFocus && lastFocus.focus?.();
+}
+$$('[data-open-resa]').forEach(b => b.addEventListener('click', openResa));
+$$('[data-close-resa]').forEach(b => b.addEventListener('click', closeResa));
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && modal.getAttribute('aria-hidden') === 'false') closeResa(); });
+
+/* ───── stepper UI ───── */
+let currentStep = '1';
+function showStep(n){
+  n = String(n);
+  currentStep = n;
+  // Hide every step section first
+  $$('[data-step]', modal).forEach(el => el.hidden = true);
+  if (n === '3' || n === 'success'){
+    const el = modal.querySelector(`[data-step="${n}"][data-variant="${variant}"]`);
+    if (el) el.hidden = false;
+  } else {
+    const el = modal.querySelector(`[data-step="${n}"]`);
+    if (el) el.hidden = false;
+  }
+  // dots + lines
+  const dots = $$('[data-step-indicator]', modal);
+  const lines = $$('#stepper .stepper-line', modal);
+  dots.forEach(d => {
+    const v = +d.dataset.stepIndicator;
+    const dot = d.querySelector('.stepper-dot');
+    const lab = d.querySelector('.eyebrow');
+    const active = (n !== 'success' && v <= +n);
+    dot.classList.toggle('bg-gold', active);
+    dot.classList.toggle('text-ink', active);
+    dot.classList.toggle('border-gold', active);
+    dot.classList.toggle('border-ivory/25', !active);
+    dot.classList.toggle('text-ivory/55', !active);
+    if (lab) lab.style.color = active ? '' : 'rgba(245,240,232,.55)';
+  });
+  lines.forEach((l, i) => l.classList.toggle('done', (n !== 'success' && (i+1) < +n)));
+
+  // refresh dynamic blocks
+  if (n === '3') renderRecap();
+  if (n === 'success') renderSuccess();
+  // scroll to top of modal section
+  modal.querySelector('.relative.w-full')?.scrollTo({top:0, behavior:'smooth'});
+}
+
+/* ───── calendar ───── */
+const calLabel = $('#cal-label');
+const calGrid  = $('#calendar');
+let calMonth = new Date(); calMonth.setDate(1);
+
+const MONTHS = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+function renderCalendar(){
+  const y = calMonth.getFullYear(), m = calMonth.getMonth();
+  calLabel.textContent = `${MONTHS[m]} ${y}`;
+  const first = new Date(y, m, 1);
+  // Monday=0
+  const startDay = (first.getDay() + 6) % 7;
+  const daysInMonth = new Date(y, m+1, 0).getDate();
+  const today = new Date(); today.setHours(0,0,0,0);
+
+  calGrid.innerHTML = '';
+  for (let i=0;i<startDay;i++){
+    const c = document.createElement('div'); c.className='aspect-square'; calGrid.appendChild(c);
+  }
+  for (let d=1; d<=daysInMonth; d++){
+    const date = new Date(y,m,d);
+    const dow = date.getDay(); // 0=Sun
+    const isWeekendBuffet = (dow === 5 || dow === 6 || dow === 0); // Fri/Sat/Sun
+    const past = date < today;
+    const enabled = isWeekendBuffet && !past;
+
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'aspect-square text-sm font-light flex items-center justify-center transition border ' +
+      (enabled ? 'border-ivory/12 hover:border-gold hover:text-gold' : 'border-transparent text-ivory/20 cursor-not-allowed');
+    btn.textContent = d;
+    btn.disabled = !enabled;
+    btn.setAttribute('aria-label', date.toLocaleDateString('fr-FR', {weekday:'long', day:'numeric', month:'long'}));
+
+    if (state.date && date.toDateString() === state.date.toDateString()){
+      btn.classList.add('bg-gold','text-ink','border-gold','hover:text-ink');
+    }
+
+    if (enabled){
+      btn.addEventListener('click', () => {
+        state.date = date;
+        renderCalendar();
+        validateStep1();
+      });
+    }
+    calGrid.appendChild(btn);
+  }
+}
+$('#cal-prev').addEventListener('click', () => { calMonth.setMonth(calMonth.getMonth()-1); renderCalendar(); });
+$('#cal-next').addEventListener('click', () => { calMonth.setMonth(calMonth.getMonth()+1); renderCalendar(); });
+renderCalendar();
+
+/* ───── service slots ───── */
+$$('[data-slot-group]').forEach(group => {
+  group.addEventListener('click', e => {
+    const btn = e.target.closest('[data-slot]');
+    if (!btn) return;
+    $$('.pill', modal).forEach(p => p.classList.remove('is-active'));
+    btn.classList.add('is-active');
+    state.slot = btn.dataset.slot;
+    state.service = group.dataset.slotGroup === 'lunch' ? 'Déjeuner' : 'Dîner';
+    validateStep1();
+  });
+});
+
+/* ───── guest pills + segmented ───── */
+const guestPills = $('#guest-pills');
+for (let i=1;i<=10;i++){
+  const b = document.createElement('button');
+  b.type = 'button';
+  b.className = 'pill !w-9 !h-9 !p-0 grid place-items-center';
+  b.textContent = i;
+  if (i === 2) b.classList.add('is-active');
+  b.addEventListener('click', () => setGuests(i));
+  guestPills.appendChild(b);
+}
+function setGuests(n){
+  state.guests = Math.max(1, Math.min(10, n));
+  $('#guest-val').textContent = state.guests;
+  $$('#guest-pills .pill').forEach(p => p.classList.toggle('is-active', +p.textContent === state.guests));
+  $('#total-1').textContent = fmt(state.guests * PRICE);
+  $('#ppl-1').textContent = state.guests;
+}
+$$('[data-guest]', modal).forEach(b => b.addEventListener('click', () => setGuests(state.guests + (+b.dataset.guest))));
+setGuests(2);
+
+/* ───── step 1 validation ───── */
+function validateStep1(){
+  $('#next-1').disabled = !(state.date && state.slot && state.guests);
+}
+
+/* ───── nav between steps ───── */
+$$('[data-next]', modal).forEach(b => b.addEventListener('click', () => {
+  const to = b.dataset.next;
+  if (to === '3'){
+    // collect step 2
+    const f = $('#form-2');
+    const name = f.name.value.trim();
+    const phone = f.phone.value.trim();
+    if (!name) { f.name.focus(); flash(f.name); return; }
+    if (!phone || phone.replace(/\D/g,'').length < 8) { f.phone.focus(); flash(f.phone); return; }
+    state.name = name;
+    state.phone = phone;
+    state.email = f.email.value.trim();
+    state.note = f.note.value.trim();
+    state.whatsapp = f.whatsapp.checked;
+  }
+  showStep(to);
+}));
+$$('[data-prev]', modal).forEach(b => b.addEventListener('click', () => showStep(b.dataset.prev)));
+
+function flash(el){
+  el.style.borderColor = '#8B0000';
+  setTimeout(()=> el.style.borderColor = '', 1200);
+}
+
+/* ───── recap (step 3) ───── */
+function renderRecap(){
+  const dateStr = state.date.toLocaleDateString('fr-FR', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
+  const slotStr = `${state.service} · ${state.slot}`;
+  const pplStr  = `${state.guests} ${state.guests > 1 ? 'personnes' : 'personne'}`;
+  const contact = '+213 ' + state.phone + (state.whatsapp ? ' · WhatsApp' : '');
+  const total = state.guests * PRICE;
+  const dep   = state.guests * DEPOSIT;
+
+  if (variant === 'deposit'){
+    $('#rc-date').textContent = dateStr;
+    $('#rc-slot').textContent = slotStr;
+    $('#rc-ppl').textContent  = pplStr;
+    $('#rc-name').textContent = state.name;
+    $('#rc-contact').textContent = contact;
+    $('#rc-buffet').textContent  = `${state.guests} × ${fmt(PRICE)} DZD = ${fmt(total)} DZD`;
+    $('#rc-deposit').textContent = `${fmt(dep)} DZD`;
+    $('#rc-rest').textContent    = `${fmt(total - dep)} DZD sur place`;
+  } else {
+    $('#rc2-date').textContent = dateStr;
+    $('#rc2-slot').textContent = slotStr;
+    $('#rc2-ppl').textContent  = pplStr;
+    $('#rc2-name').textContent = state.name;
+    $('#rc2-contact').textContent = contact;
+    $('#rc2-buffet').textContent = `${state.guests} × ${fmt(PRICE)} DZD = ${fmt(total)} DZD`;
+    const noteRow = $('#rc2-note-row');
+    if (state.note) {
+      $('#rc2-note').textContent = state.note;
+      noteRow.hidden = false;
+    } else {
+      noteRow.hidden = true;
+    }
+    // reset checkbox + confirm state
+    const acc = $('#accept2');
+    acc.checked = false;
+    $('#confirm-btn-2').disabled = true;
+  }
+}
+$('#pay-methods')?.addEventListener('change', e => {
+  if (e.target.name === 'pay') state.pay = e.target.value;
+});
+
+/* ───── confirm + success ───── */
+$('#confirm-btn').addEventListener('click', () => {
+  state.ref = 'LL-' + Math.random().toString(36).slice(2,7).toUpperCase();
+  showStep('success');
+});
+$('#accept2').addEventListener('change', e => {
+  $('#confirm-btn-2').disabled = !e.target.checked;
+});
+$('#confirm-btn-2').addEventListener('click', () => {
+  if (!$('#accept2').checked) return;
+  state.ref = 'LL-' + Math.random().toString(36).slice(2,7).toUpperCase();
+  showStep('success');
+});
+function renderSuccess(){
+  const dateStr = state.date.toLocaleDateString('fr-FR', { weekday:'long', day:'numeric', month:'long' });
+  if (variant === 'deposit'){
+    $('#sc-date').textContent = dateStr;
+    $('#sc-slot').textContent = `${state.service} · ${state.slot}`;
+    $('#sc-ppl').textContent  = `${state.guests}`;
+    $('#sc-ref').textContent  = state.ref;
+  } else {
+    $('#sc2-date').textContent = dateStr;
+    $('#sc2-slot').textContent = `${state.service} · ${state.slot}`;
+    $('#sc2-ppl').textContent  = `${state.guests}`;
+    $('#sc2-ref').textContent  = state.ref;
+    // Pre-build WhatsApp message link
+    const msg = encodeURIComponent(`Bonjour Le Lynde, je souhaite modifier ou annuler ma réservation ${state.ref} (${dateStr} · ${state.service} · ${state.slot} · ${state.guests} pers.).`);
+    $('#wa-modify').href = `https://wa.me/213000000000?text=${msg}`;
+  }
+}
+
+/* ───── ICS file (calendar) ───── */
+function downloadICS(){
+  const pad = n => String(n).padStart(2,'0');
+  const d = state.date;
+  const [sh, sm] = state.slot.split('–')[0].split(':').map(Number);
+  const [eh, em] = state.slot.split('–')[1].split(':').map(Number);
+  const dt = (h,mm) => `${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}T${pad(h)}${pad(mm)}00`;
+  const ics = [
+    'BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Le Lynde//FR','BEGIN:VEVENT',
+    `UID:${state.ref}@lelynde`,
+    `SUMMARY:Le Lynde — Buffet (${state.guests} pers.)`,
+    `DTSTART:${dt(sh,sm)}`,
+    `DTEND:${dt(eh,em)}`,
+    'LOCATION:Le Lynde, Dely Ibrahim, Alger',
+    `DESCRIPTION:Réservation ${state.ref} au nom de ${state.name}.`,
+    'END:VEVENT','END:VCALENDAR'
+  ].join('\r\n');
+  const blob = new Blob([ics], {type:'text/calendar'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = `le-lynde-${state.ref}.ics`;
+  document.body.appendChild(a); a.click(); a.remove();
+  URL.revokeObjectURL(url);
+}
+$('#ics-btn').addEventListener('click', downloadICS);
+$('#ics-btn-2').addEventListener('click', downloadICS);
+
+</script>
+</body>
+</html>
