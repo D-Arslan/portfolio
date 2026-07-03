@@ -154,7 +154,7 @@ export default function ServicesContent() {
                   {group.items.map((item) => (
                     <a
                       key={item.slug}
-                      href={`/catalogue/${item.slug}`}
+                      href={`/catalogue/${item.slug.replace(/(?:\/index)?\.html$/, "")}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="group flex items-center justify-between gap-4 bg-[var(--surface)] border border-[var(--border)] rounded-xl px-5 py-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-[var(--gold)] hover:shadow-[0_12px_28px_rgba(0,0,0,0.22)]"
@@ -178,7 +178,7 @@ export default function ServicesContent() {
           {/* Lien catalogue complet / tarifs */}
           <div className="mt-8 flex justify-center">
             <a
-              href="/catalogue/tarifs.html"
+              href="/catalogue/tarifs"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 text-sm font-medium font-[family-name:var(--font-heading)] border border-[var(--gold)] text-[var(--gold)] hover:bg-[var(--gold)] hover:text-black px-6 py-3 rounded-md transition-all"
