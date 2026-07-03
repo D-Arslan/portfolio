@@ -4,10 +4,11 @@ import { useState, useRef, useEffect } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import { translations, services } from "@/lib/data";
 
-// Clé d'accès Web3Forms — définie dans .env.local (NEXT_PUBLIC_WEB3FORMS_KEY).
-// Publique par conception : elle sert uniquement à envoyer un mail vers ta boîte.
-// Voir .env.example pour la marche à suivre.
-const WEB3FORMS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY ?? "";
+// Clé d'accès Web3Forms — publique par conception (elle ne sert qu'à envoyer un
+// mail vers difarslan@gmail.com). Mise en dur pour qu'elle soit présente en prod
+// sans config Vercel ; surchargée par NEXT_PUBLIC_WEB3FORMS_KEY si définie.
+const WEB3FORMS_KEY =
+  process.env.NEXT_PUBLIC_WEB3FORMS_KEY || "8227a17c-7c92-4dae-8723-76a02d2e6fee";
 
 type Status = "idle" | "sending" | "success" | "error" | "mailto";
 
