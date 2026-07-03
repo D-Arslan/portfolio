@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:#f2e9db;color:#241c15;font-family:'Instrument Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  ::selection{background:#cf5a25;color:#fff}
+  img{display:block;max-width:100%}
+  button{font-family:inherit;cursor:pointer}
+  input,textarea,select{font-family:inherit}
+  a{color:inherit}
+  :focus-visible{outline:2.5px solid #cf5a25;outline-offset:3px;border-radius:2px}
+  @keyframes lb-up{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+  @keyframes lb-fade{from{opacity:0}to{opacity:1}}
+  @keyframes lb-slidein{from{transform:translateX(100%)}to{transform:none}}
+  @keyframes lb-pop{from{opacity:0;transform:translateY(24px) scale(.98)}to{opacity:1;transform:none}}
+  @keyframes lb-marquee{from{transform:none}to{transform:translateX(-50%)}}
+  @keyframes lb-spin{to{transform:rotate(360deg)}}
+  @media (prefers-reduced-motion: reduce){*{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}}
+</style>
+</helmet>
+
+<div style="min-height:100vh;overflow-x:hidden">
+
+  <!-- ============ BANDEAU ANNONCE ============ -->
+  <div style="background:#241c15;color:#f2e9db;overflow:hidden;white-space:nowrap;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;padding:9px 0">
+    <div style="display:inline-block;animation:lb-marquee 26s linear infinite">
+      <span style="padding:0 26px">Feu de bois 430°</span><span style="color:#cf5a25;padding:0 26px">✦</span><span style="padding:0 26px">Pâte maturée 48 heures</span><span style="color:#cf5a25;padding:0 26px">✦</span><span style="padding:0 26px">Livraison Alger-Ouest en 35 min</span><span style="color:#cf5a25;padding:0 26px">✦</span><span style="padding:0 26px">Ouvert du mardi au dimanche</span><span style="color:#cf5a25;padding:0 26px">✦</span>
+      <span style="padding:0 26px">Feu de bois 430°</span><span style="color:#cf5a25;padding:0 26px">✦</span><span style="padding:0 26px">Pâte maturée 48 heures</span><span style="color:#cf5a25;padding:0 26px">✦</span><span style="padding:0 26px">Livraison Alger-Ouest en 35 min</span><span style="color:#cf5a25;padding:0 26px">✦</span><span style="padding:0 26px">Ouvert du mardi au dimanche</span><span style="color:#cf5a25;padding:0 26px">✦</span>
+    </div>
+  </div>
+
+  <!-- ============ HEADER ============ -->
+  <header style="position:sticky;top:0;z-index:40;background:rgba(242,233,219,.86);backdrop-filter:blur(12px);border-bottom:1px solid rgba(36,28,21,.12)">
+    <div style="max-width:1240px;margin:0 auto;padding:14px clamp(16px,4vw,40px);display:flex;align-items:center;gap:20px;flex-wrap:wrap">
+      <a href="#accueil" aria-label="LA BRAISE — accueil" style="text-decoration:none;display:flex;align-items:center;gap:12px;margin-right:auto">
+        <span aria-hidden="true" style="width:38px;height:38px;border-radius:50%;background:#cf5a25;display:grid;place-items:center;color:#f2e9db;font-family:'DM Serif Display',serif;font-size:22px;line-height:1;flex:none">B</span>
+        <span style="display:flex;flex-direction:column;line-height:1">
+          <span style="font-family:'DM Serif Display',serif;font-size:22px;letter-spacing:.02em">La Braise</span>
+          <span style="font-family:'Space Mono',monospace;font-size:9.5px;letter-spacing:.28em;text-transform:uppercase;color:#8a7a68;margin-top:3px">Pizzeria · Feu de bois</span>
+        </span>
+      </a>
+      <nav aria-label="Navigation principale" style="display:flex;align-items:center;gap:clamp(14px,2.4vw,30px);flex-wrap:wrap;font-size:14.5px;font-weight:500">
+        <a href="#carte" style="text-decoration:none;padding:8px 2px">La carte</a>
+        <a href="#lieu" style="text-decoration:none;padding:8px 2px">Le lieu</a>
+        <a href="#avis" style="text-decoration:none;padding:8px 2px">Avis</a>
+        <a href="#contact" style="text-decoration:none;padding:8px 2px">Contact</a>
+      </nav>
+      <button onClick="{{ openCart }}" aria-label="Ouvrir le panier" style="position:relative;display:inline-flex;align-items:center;gap:9px;background:#241c15;color:#f2e9db;border:none;border-radius:999px;padding:11px 18px;font-size:14px;font-weight:600;min-height:44px">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2 3h2.2l2.1 12.2a1.6 1.6 0 0 0 1.6 1.3h8.6a1.6 1.6 0 0 0 1.6-1.2L21 7H5.2"/></svg><span>Panier</span>
+        <sc-if value="{{ hasCart }}" hint-placeholder-val="{{ false }}">
+          <span style="min-width:22px;height:22px;padding:0 6px;border-radius:11px;background:#cf5a25;color:#fff;font-family:'Space Mono',monospace;font-size:12px;display:grid;place-items:center">{{ cartCount }}</span>
+        </sc-if>
+      </button>
+    </div>
+  </header>
+
+  <!-- ============ HERO ============ -->
+  <section id="accueil" style="scroll-margin-top:80px;max-width:1240px;margin:0 auto;padding:clamp(28px,5vw,64px) clamp(16px,4vw,40px) clamp(24px,4vw,48px);display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:clamp(28px,4vw,56px);align-items:center">
+    <div>
+      <div style="display:inline-flex;align-items:center;gap:8px;font-family:'Space Mono',monospace;font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;color:#cf5a25;margin-bottom:22px">
+        <span style="width:26px;height:1px;background:#cf5a25"></span>Alger · Hydra · depuis 2016
+      </div>
+      <h1 style="font-family:'DM Serif Display',serif;font-weight:400;font-size:clamp(42px,6.4vw,78px);line-height:1.02;letter-spacing:-.01em;margin:0 0 22px">La vraie pizza<br>napolitaine,<br><span style="font-style:italic;color:#cf5a25">au feu de bois.</span></h1>
+      <p style="font-size:clamp(16px,1.4vw,19px);line-height:1.6;color:#5a4e42;max-width:46ch;margin:0 0 32px">Une pâte vivante, maturée 48 heures, cuite 90 secondes dans notre four à bois à 430°. Des produits d'Italie et du terroir algérien, travaillés chaque jour.</p>
+      <div style="display:flex;gap:14px;flex-wrap:wrap">
+        <a href="#carte" style="text-decoration:none;display:inline-flex;align-items:center;gap:10px;background:#cf5a25;color:#fff;border-radius:999px;padding:15px 28px;font-weight:600;font-size:15.5px;min-height:44px;box-shadow:0 10px 24px -8px rgba(207,90,37,.55)">Commander en ligne <span aria-hidden="true">→</span></a>
+        <a href="#lieu" style="text-decoration:none;display:inline-flex;align-items:center;background:transparent;color:#241c15;border:1.5px solid rgba(36,28,21,.28);border-radius:999px;padding:15px 26px;font-weight:600;font-size:15.5px;min-height:44px">Découvrir le lieu</a>
+      </div>
+      <div style="display:flex;align-items:center;gap:16px;margin-top:34px;flex-wrap:wrap">
+        <div style="display:flex;align-items:center;gap:3px;color:#c8912f;font-size:18px" aria-hidden="true">★★★★★</div>
+        <span style="font-size:14px;color:#5a4e42"><strong style="color:#241c15">4,8/5</strong> · plus de 240 avis clients</span>
+      </div>
+    </div>
+    <div style="position:relative">
+      <div style="position:relative;border-radius:20px;overflow:hidden;background:#e7d9c4;aspect-ratio:4/5;box-shadow:0 30px 60px -30px rgba(36,28,21,.5)">
+        <img src="https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?w=900&q=80&auto=format&fit=crop" alt="Pizza margherita napolitaine sortant du four à bois" style="width:100%;height:100%;object-fit:cover">
+      </div>
+      <div style="position:absolute;bottom:-18px;left:-14px;background:#f2e9db;border:1px solid rgba(36,28,21,.12);border-radius:14px;padding:14px 18px;box-shadow:0 16px 30px -16px rgba(36,28,21,.4);display:flex;align-items:center;gap:12px">
+        <span aria-hidden="true" style="width:42px;height:42px;border-radius:10px;background:#241c15;color:#cf5a25;display:grid;place-items:center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.4-.5-2-1-3-1.1-2.1-.2-4 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.2.4-2.3 1-3a2.5 2.5 0 0 0 2.5 2.5Z"/></svg></span>
+        <div style="line-height:1.2"><div style="font-family:'DM Serif Display',serif;font-size:20px">90 sec</div><div style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#8a7a68">cuisson au feu</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ BANDEAU VALEURS ============ -->
+  <section aria-label="Nos engagements" style="border-top:1px solid rgba(36,28,21,.12);border-bottom:1px solid rgba(36,28,21,.12);background:#ede2d0">
+    <div style="max-width:1240px;margin:0 auto;padding:clamp(24px,3vw,36px) clamp(16px,4vw,40px);display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:clamp(18px,3vw,40px)">
+      <div style="display:flex;flex-direction:column;gap:11px">
+        <span aria-hidden="true" style="width:46px;height:46px;border-radius:12px;background:rgba(207,90,37,.12);color:#cf5a25;display:grid;place-items:center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.4-.5-2-1-3-1.1-2.1-.2-4 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.2.4-2.3 1-3a2.5 2.5 0 0 0 2.5 2.5Z"/></svg></span>
+        <div style="font-family:'DM Serif Display',serif;font-size:19px">Four à bois 430°</div>
+        <div style="font-size:13.5px;color:#5a4e42;line-height:1.5">Cuisson minute qui donne la vraie croûte napolitaine, gonflée et souple.</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:11px">
+        <span aria-hidden="true" style="width:46px;height:46px;border-radius:12px;background:rgba(207,90,37,.12);color:#cf5a25;display:grid;place-items:center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3v3l4 6-4 6v3M16 3v3l-4 6 4 6v3"/><path d="M6 3h12M6 21h12"/></svg></span>
+        <div style="font-family:'DM Serif Display',serif;font-size:19px">Pâte maturée 48 h</div>
+        <div style="font-size:13.5px;color:#5a4e42;line-height:1.5">Fermentation lente au levain pour une pizza légère et digeste.</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:11px">
+        <span aria-hidden="true" style="width:46px;height:46px;border-radius:12px;background:rgba(207,90,37,.12);color:#cf5a25;display:grid;place-items:center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8.3 12 2.6 2.6 4.8-5.2"/></svg></span>
+        <div style="font-family:'DM Serif Display',serif;font-size:19px">Produits sourcés</div>
+        <div style="font-size:13.5px;color:#5a4e42;line-height:1.5">San Marzano, fior di latte, farine Caputo, et le meilleur du terroir algérien.</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:11px">
+        <span aria-hidden="true" style="width:46px;height:46px;border-radius:12px;background:rgba(207,90,37,.12);color:#cf5a25;display:grid;place-items:center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1.5" y="6" width="11" height="9" rx="1"/><path d="M12.5 9H17l3.5 3.5V15h-8z"/><circle cx="5.5" cy="18" r="1.9"/><circle cx="16.5" cy="18" r="1.9"/></svg></span>
+        <div style="font-family:'DM Serif Display',serif;font-size:19px">Livraison Alger-Ouest</div>
+        <div style="font-size:13.5px;color:#5a4e42;line-height:1.5">Hydra, Ben Aknoun, Dely Ibrahim, El Biar — chaude en 35 minutes.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CARTE / MOMENT FORT ============ -->
+  <section id="carte" style="scroll-margin-top:76px;max-width:1240px;margin:0 auto;padding:clamp(48px,7vw,96px) clamp(16px,4vw,40px)">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:40px">
+      <div>
+        <div style="font-family:'Space Mono',monospace;font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;color:#cf5a25;margin-bottom:14px">La carte</div>
+        <h2 style="font-family:'DM Serif Display',serif;font-weight:400;font-size:clamp(34px,4.6vw,56px);line-height:1.05;margin:0">Choisissez, composez,<br>on enfourne.</h2>
+      </div>
+      <p style="font-size:15px;color:#5a4e42;line-height:1.6;max-width:34ch;margin:0">Cliquez sur une pizza pour choisir la taille et ajouter des suppléments. Le prix se met à jour en direct.</p>
+    </div>
+
+    <div role="tablist" aria-label="Catégories de la carte" style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:40px">
+      <sc-for list="{{ catNav }}" as="c" hint-placeholder-count="5">
+        <a href="{{ c.href }}" role="tab" style="text-decoration:none;font-family:'Space Mono',monospace;font-size:12.5px;letter-spacing:.06em;padding:10px 16px;border-radius:999px;border:1.5px solid rgba(36,28,21,.2);background:#f7f0e4;color:#241c15;min-height:40px;display:inline-flex;align-items:center">{{ c.label }}</a>
+      </sc-for>
+    </div>
+
+    <sc-for list="{{ categories }}" as="cat" hint-placeholder-count="3">
+      <div id="{{ cat.id }}" style="scroll-margin-top:90px;margin-bottom:clamp(40px,5vw,64px)">
+        <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:6px">
+          <h3 style="font-family:'DM Serif Display',serif;font-weight:400;font-size:clamp(26px,3vw,34px);margin:0">{{ cat.title }}</h3>
+          <span style="flex:1;height:1px;background:rgba(36,28,21,.16)"></span>
+          <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#8a7a68">{{ cat.tag }}</span>
+        </div>
+        <p style="font-size:14px;color:#5a4e42;margin:0 0 24px;max-width:60ch">{{ cat.subtitle }}</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:clamp(16px,2vw,26px)">
+          <sc-for list="{{ cat.items }}" as="p" hint-placeholder-count="3">
+            <article style="display:flex;flex-direction:column;background:#f9f3e8;border:1px solid rgba(36,28,21,.1);border-radius:16px;overflow:hidden;transition:transform .28s ease,box-shadow .28s ease" style-hover="transform:translateY(-4px);box-shadow:0 22px 40px -24px rgba(36,28,21,.5)">
+              <div style="position:relative;aspect-ratio:16/11;background:#e7d9c4;overflow:hidden">
+                <img src="{{ p.img }}" alt="{{ p.alt }}" loading="lazy" style="width:100%;height:100%;object-fit:cover">
+                <sc-if value="{{ p.tag }}" hint-placeholder-val="">
+                  <span style="position:absolute;top:12px;left:12px;background:rgba(36,28,21,.86);color:#f2e9db;font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;padding:6px 10px;border-radius:999px">{{ p.tag }}</span>
+                </sc-if>
+              </div>
+              <div style="padding:18px 18px 20px;display:flex;flex-direction:column;flex:1">
+                <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px">
+                  <h4 style="font-family:'DM Serif Display',serif;font-weight:400;font-size:21px;margin:0">{{ p.name }}</h4>
+                  <span style="font-family:'Space Mono',monospace;font-size:14px;color:#cf5a25;white-space:nowrap">{{ p.priceLabel }}</span>
+                </div>
+                <p style="font-size:13.5px;color:#5a4e42;line-height:1.5;margin:8px 0 18px;flex:1">{{ p.desc }}</p>
+                <button onClick="{{ p.open }}" style="align-self:flex-start;display:inline-flex;align-items:center;gap:8px;background:#241c15;color:#f2e9db;border:none;border-radius:999px;padding:11px 20px;font-weight:600;font-size:14px;min-height:44px" style-hover="background:#cf5a25">{{ p.cta }} <span aria-hidden="true">+</span></button>
+              </div>
+            </article>
+          </sc-for>
+        </div>
+      </div>
+    </sc-for>
+  </section>
+
+  <!-- ============ LE LIEU ============ -->
+  <section id="lieu" style="scroll-margin-top:76px;background:#241c15;color:#f2e9db">
+    <div style="max-width:1240px;margin:0 auto;padding:clamp(48px,7vw,96px) clamp(16px,4vw,40px);display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(32px,5vw,64px);align-items:center">
+      <div>
+        <div style="font-family:'Space Mono',monospace;font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;color:#cf5a25;margin-bottom:16px">Le lieu</div>
+        <h2 style="font-family:'DM Serif Display',serif;font-weight:400;font-size:clamp(32px,4.4vw,52px);line-height:1.06;margin:0 0 20px">Une salle chaleureuse,<br>le four en cœur de scène.</h2>
+        <p style="font-size:15.5px;line-height:1.7;color:#cdbfa d;color:#cabca6;max-width:48ch;margin:0 0 30px">Au cœur de Sidi Yahia, à Hydra, notre salle de 45 couverts s'organise autour du four à bois. Bois brut, lumière tamisée, et l'odeur du levain : on y vient pour un déjeuner rapide comme pour un dîner qui s'étire.</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:22px 30px;margin-bottom:32px">
+          <div>
+            <div style="font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:#8a7a68;margin-bottom:8px">Adresse</div>
+            <div style="font-size:15px;line-height:1.5">14, rue des Frères Kaïd<br>Sidi Yahia, Hydra — Alger</div>
+          </div>
+          <div>
+            <div style="font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:#8a7a68;margin-bottom:8px">Téléphone</div>
+            <div style="font-size:15px;line-height:1.5">+213 _ __ __ __ __<br><span style="color:#8a7a68;font-size:13px">Réservations & commandes</span></div>
+          </div>
+        </div>
+        <div style="border-top:1px solid rgba(242,233,219,.16);padding-top:24px">
+          <div style="font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:#8a7a68;margin-bottom:14px">Horaires</div>
+          <sc-for list="{{ horaires }}" as="h" hint-placeholder-count="4">
+            <div style="display:flex;justify-content:space-between;gap:16px;padding:7px 0;font-size:14.5px;border-bottom:1px solid rgba(242,233,219,.08)">
+              <span>{{ h.jour }}</span><span style="font-family:'Space Mono',monospace;color:#cabca6">{{ h.heures }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+        <div style="border-radius:16px;overflow:hidden;aspect-ratio:3/4;background:#3a2e22"><img src="https://images.unsplash.com/photo-1571066811602-716837d681de?w=700&q=80&auto=format&fit=crop" alt="Pizzaïolo enfournant une pizza dans le four à bois" loading="lazy" style="width:100%;height:100%;object-fit:cover"></div>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div style="border-radius:16px;overflow:hidden;aspect-ratio:4/3;background:#3a2e22;flex:1"><img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=700&q=80&auto=format&fit=crop" alt="Salle du restaurant, ambiance chaleureuse" loading="lazy" style="width:100%;height:100%;object-fit:cover"></div>
+          <div style="border-radius:16px;overflow:hidden;aspect-ratio:4/3;background:#3a2e22;flex:1"><img src="https://images.unsplash.com/photo-1595854341625-f33ee10dbf94?w=700&q=80&auto=format&fit=crop" alt="Pizza posée sur une table en bois" loading="lazy" style="width:100%;height:100%;object-fit:cover"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ AVIS ============ -->
+  <section id="avis" style="scroll-margin-top:76px;max-width:1240px;margin:0 auto;padding:clamp(48px,7vw,96px) clamp(16px,4vw,40px)">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:40px">
+      <div>
+        <div style="font-family:'Space Mono',monospace;font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;color:#cf5a25;margin-bottom:14px">Ils ont goûté</div>
+        <h2 style="font-family:'DM Serif Display',serif;font-weight:400;font-size:clamp(32px,4.4vw,52px);line-height:1.05;margin:0">Ce qu'en disent<br>nos clients.</h2>
+      </div>
+      <div style="display:flex;align-items:center;gap:14px;background:#f9f3e8;border:1px solid rgba(36,28,21,.1);border-radius:14px;padding:16px 22px">
+        <span style="font-family:'DM Serif Display',serif;font-size:44px;line-height:1;color:#cf5a25">4,8</span>
+        <div><div style="color:#c8912f;font-size:16px" aria-hidden="true">★★★★★</div><div style="font-size:12.5px;color:#5a4e42;margin-top:4px">240 avis vérifiés</div></div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:20px">
+      <sc-for list="{{ reviews }}" as="r" hint-placeholder-count="4">
+        <figure style="margin:0;background:#f9f3e8;border:1px solid rgba(36,28,21,.1);border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:14px">
+          <div style="color:#c8912f;font-size:15px" aria-label="{{ r.note }} étoiles sur 5">{{ r.stars }}</div>
+          <blockquote style="margin:0;font-size:15.5px;line-height:1.6;color:#241c15;flex:1">« {{ r.texte }} »</blockquote>
+          <figcaption style="display:flex;align-items:center;gap:12px;border-top:1px solid rgba(36,28,21,.1);padding-top:16px">
+            <span aria-hidden="true" style="width:40px;height:40px;border-radius:50%;background:#cf5a25;color:#fff;display:grid;place-items:center;font-family:'DM Serif Display',serif;font-size:18px">{{ r.initiale }}</span>
+            <div style="line-height:1.3"><div style="font-weight:600;font-size:14.5px">{{ r.nom }}</div><div style="font-family:'Space Mono',monospace;font-size:11px;color:#8a7a68">{{ r.date }}</div></div>
+          </figcaption>
+        </figure>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT ============ -->
+  <section id="contact" style="scroll-margin-top:76px;background:#ede2d0;border-top:1px solid rgba(36,28,21,.12)">
+    <div style="max-width:1240px;margin:0 auto;padding:clamp(48px,7vw,96px) clamp(16px,4vw,40px);display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(32px,5vw,64px)">
+      <div>
+        <div style="font-family:'Space Mono',monospace;font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;color:#cf5a25;margin-bottom:16px">Contact</div>
+        <h2 style="font-family:'DM Serif Display',serif;font-weight:400;font-size:clamp(32px,4.4vw,52px);line-height:1.05;margin:0 0 20px">Une question,<br>une réservation ?</h2>
+        <p style="font-size:15.5px;line-height:1.7;color:#5a4e42;max-width:44ch;margin:0 0 28px">Écrivez-nous pour privatiser la salle, organiser un événement ou simplement nous faire un retour. On répond sous 24 h.</p>
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div style="display:flex;gap:12px;align-items:center"><span aria-hidden="true" style="width:36px;height:36px;border-radius:9px;background:rgba(207,90,37,.12);color:#cf5a25;display:grid;place-items:center;flex:none"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></span><span style="font-size:14.5px">14, rue des Frères Kaïd, Sidi Yahia, Hydra — Alger</span></div>
+          <div style="display:flex;gap:12px;align-items:center"><span aria-hidden="true" style="width:36px;height:36px;border-radius:9px;background:rgba(207,90,37,.12);color:#cf5a25;display:grid;place-items:center;flex:none"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg></span><span style="font-size:14.5px">+213 _ __ __ __ __</span></div>
+          <div style="display:flex;gap:12px;align-items:center"><span aria-hidden="true" style="width:36px;height:36px;border-radius:9px;background:rgba(207,90,37,.12);color:#cf5a25;display:grid;place-items:center;flex:none"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4.5" width="20" height="15" rx="2"/><path d="m3 6 9 6.5L21 6"/></svg></span><span style="font-size:14.5px">bonjour@labraise-alger.dz</span></div>
+        </div>
+      </div>
+      <sc-if value="{{ contactSent }}" hint-placeholder-val="{{ false }}">
+        <div style="background:#f9f3e8;border:1px solid rgba(36,28,21,.1);border-radius:18px;padding:40px;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:14px;animation:lb-pop .4s both">
+          <span aria-hidden="true" style="width:52px;height:52px;border-radius:50%;background:#cf5a25;color:#fff;display:grid;place-items:center;font-size:26px">✓</span>
+          <h3 style="font-family:'DM Serif Display',serif;font-weight:400;font-size:26px;margin:0">Message envoyé, merci !</h3>
+          <p style="font-size:15px;color:#5a4e42;line-height:1.6;margin:0">Notre équipe vous répond très vite. À bientôt à La Braise.</p>
+        </div>
+      </sc-if>
+      <sc-if value="{{ contactNotSent }}" hint-placeholder-val="{{ true }}">
+        <form onSubmit="{{ submitContact }}" style="background:#f9f3e8;border:1px solid rgba(36,28,21,.1);border-radius:18px;padding:clamp(22px,3vw,32px);display:flex;flex-direction:column;gap:16px">
+          <label style="display:flex;flex-direction:column;gap:7px;font-size:13.5px;font-weight:600">Nom complet
+            <input value="{{ contact.nom }}" onInput="{{ onContactNom }}" type="text" required autocomplete="name" style="border:1.5px solid rgba(36,28,21,.2);border-radius:10px;padding:13px 14px;font-size:15px;background:#fff;min-height:44px">
+          </label>
+          <label style="display:flex;flex-direction:column;gap:7px;font-size:13.5px;font-weight:600">E-mail
+            <input value="{{ contact.email }}" onInput="{{ onContactEmail }}" type="email" required autocomplete="email" style="border:1.5px solid rgba(36,28,21,.2);border-radius:10px;padding:13px 14px;font-size:15px;background:#fff;min-height:44px">
+          </label>
+          <label style="display:flex;flex-direction:column;gap:7px;font-size:13.5px;font-weight:600">Message
+            <textarea value="{{ contact.message }}" onInput="{{ onContactMessage }}" required rows="4" style="border:1.5px solid rgba(36,28,21,.2);border-radius:10px;padding:13px 14px;font-size:15px;background:#fff;resize:vertical;font-family:inherit"></textarea>
+          </label>
+          <label style="display:flex;gap:11px;align-items:flex-start;font-size:13px;color:#5a4e42;line-height:1.45;cursor:pointer">
+            <input type="checkbox" checked="{{ contact.consent }}" onChange="{{ onContactConsent }}" required style="margin-top:2px;width:18px;height:18px;flex:none;accent-color:#cf5a25">
+            <span>J'accepte que mes données soient utilisées pour traiter ma demande, conformément à la <a href="#" onClick="{{ openConfid }}" style="color:#cf5a25">politique de confidentialité</a>.</span>
+          </label>
+          <sc-if value="{{ contactError }}" hint-placeholder-val="">
+            <div role="alert" style="font-size:13px;color:#b23c17;background:rgba(207,90,37,.1);border-radius:8px;padding:10px 12px">{{ contactError }}</div>
+          </sc-if>
+          <button type="submit" style="background:#cf5a25;color:#fff;border:none;border-radius:999px;padding:15px;font-weight:600;font-size:15px;min-height:48px">Envoyer le message</button>
+        </form>
+      </sc-if>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer style="background:#1b140f;color:#cabca6">
+    <div style="max-width:1240px;margin:0 auto;padding:clamp(44px,5vw,72px) clamp(16px,4vw,40px) 32px;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:36px">
+      <div style="grid-column:1/-1;max-width:none">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
+          <span aria-hidden="true" style="width:40px;height:40px;border-radius:50%;background:#cf5a25;display:grid;place-items:center;color:#f2e9db;font-family:'DM Serif Display',serif;font-size:23px">B</span>
+          <span style="font-family:'DM Serif Display',serif;font-size:26px;color:#f2e9db">La Braise</span>
+        </div>
+        <p style="font-size:14px;line-height:1.6;max-width:40ch;margin:0">Pizzeria napolitaine au feu de bois. Pâte maturée 48 h, produits frais, cuisson minute. Sidi Yahia, Hydra — Alger.</p>
+      </div>
+      <div>
+        <div style="font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:#8a7a68;margin-bottom:14px">Naviguer</div>
+        <div style="display:flex;flex-direction:column;gap:10px;font-size:14px">
+          <a href="#carte" style="text-decoration:none">La carte</a>
+          <a href="#lieu" style="text-decoration:none">Le lieu</a>
+          <a href="#avis" style="text-decoration:none">Avis clients</a>
+          <a href="#contact" style="text-decoration:none">Contact</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:#8a7a68;margin-bottom:14px">Infos</div>
+        <div style="display:flex;flex-direction:column;gap:10px;font-size:14px">
+          <button onClick="{{ openMentions }}" style="background:none;border:none;padding:0;text-align:left;color:inherit;font-size:14px">Mentions légales</button>
+          <button onClick="{{ openConfid }}" style="background:none;border:none;padding:0;text-align:left;color:inherit;font-size:14px">Politique de confidentialité</button>
+          <button onClick="{{ openCookiePrefs }}" style="background:none;border:none;padding:0;text-align:left;color:inherit;font-size:14px">Préférences cookies</button>
+        </div>
+      </div>
+      <div>
+        <div style="font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:#8a7a68;margin-bottom:14px">Nous joindre</div>
+        <div style="display:flex;flex-direction:column;gap:10px;font-size:14px">
+          <span>+213 _ __ __ __ __</span>
+          <span>bonjour@labraise-alger.dz</span>
+          <span>Mar – Dim · 12h – 23h</span>
+        </div>
+      </div>
+    </div>
+    <div style="border-top:1px solid rgba(242,233,219,.1)">
+      <div style="max-width:1240px;margin:0 auto;padding:20px clamp(16px,4vw,40px);display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;font-size:12.5px">
+        <span style="color:#8a7a68">© 2026 La Braise · Tous droits réservés</span>
+        <a href="https://difarslan.com" target="_blank" rel="noopener" style="text-decoration:none;font-family:'Space Mono',monospace;letter-spacing:.04em;color:#cabca6">Réalisé par <span style="color:#cf5a25">Arslan DIF</span> — difarslan.com</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============ MODAL CONFIGURATEUR (moment fort) ============ -->
+  <sc-if value="{{ hasModal }}" hint-placeholder-val="{{ false }}">
+    <div role="dialog" aria-modal="true" aria-label="Personnaliser votre commande" onClick="{{ closeModal }}" style="position:fixed;inset:0;z-index:60;background:rgba(27,20,15,.55);backdrop-filter:blur(4px);display:flex;align-items:flex-end;justify-content:center;padding:0;animation:lb-fade .25s both">
+      <div onClick="{{ stop }}" style="background:#f2e9db;width:100%;max-width:560px;max-height:92vh;overflow-y:auto;border-radius:22px 22px 0 0;animation:lb-pop .35s both">
+        <div style="position:relative;aspect-ratio:16/9;background:#e7d9c4;overflow:hidden">
+          {{ modal.imgEl }}
+          <button onClick="{{ closeModal }}" aria-label="Fermer" style="position:absolute;top:14px;right:14px;width:40px;height:40px;border-radius:50%;background:rgba(27,20,15,.72);color:#fff;border:none;font-size:18px;display:grid;place-items:center">✕</button>
+        </div>
+        <div style="padding:24px clamp(20px,4vw,30px) 28px">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;gap:14px;margin-bottom:8px">
+            <h3 style="font-family:'DM Serif Display',serif;font-weight:400;font-size:28px;margin:0">{{ modal.name }}</h3>
+            <span style="font-family:'Space Mono',monospace;font-size:14px;color:#cf5a25;white-space:nowrap">{{ modal.priceLabel }}</span>
+          </div>
+          <p style="font-size:14.5px;color:#5a4e42;line-height:1.55;margin:0 0 24px">{{ modal.desc }}</p>
+
+          <sc-if value="{{ modal.hasSizes }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-bottom:24px">
+              <div style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#8a7a68;margin-bottom:12px">Taille</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+                <sc-for list="{{ modal.sizeOptions }}" as="s" hint-placeholder-count="2">
+                  <button onClick="{{ s.select }}" aria-pressed="{{ s.active }}" style="{{ s.style }}">
+                    <span style="font-weight:600;font-size:15px">{{ s.label }}</span>
+                    <span style="font-family:'Space Mono',monospace;font-size:12px;opacity:.7">{{ s.cm }}</span>
+                    <span style="font-family:'Space Mono',monospace;font-size:13px;margin-left:auto">{{ s.priceFmt }}</span>
+                  </button>
+                </sc-for>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ modal.hasSupps }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-bottom:24px">
+              <div style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#8a7a68;margin-bottom:12px">Suppléments <span style="text-transform:none;letter-spacing:0">(optionnel)</span></div>
+              <div style="display:flex;flex-direction:column;gap:8px">
+                <sc-for list="{{ modal.suppOptions }}" as="sp" hint-placeholder-count="4">
+                  <button onClick="{{ sp.toggle }}" aria-pressed="{{ sp.active }}" style="{{ sp.style }}">
+                    <span aria-hidden="true" style="{{ sp.boxStyle }}">{{ sp.check }}</span>
+                    <span style="font-size:14.5px;font-weight:500">{{ sp.name }}</span>
+                    <span style="font-family:'Space Mono',monospace;font-size:13px;color:#cf5a25;margin-left:auto">+{{ sp.priceFmt }}</span>
+                  </button>
+                </sc-for>
+              </div>
+            </div>
+          </sc-if>
+
+          <div style="display:flex;align-items:center;gap:16px;margin-bottom:22px">
+            <div style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#8a7a68">Quantité</div>
+            <div style="display:flex;align-items:center;gap:2px;border:1.5px solid rgba(36,28,21,.2);border-radius:999px;overflow:hidden;background:#fff">
+              <button onClick="{{ modal.dec }}" aria-label="Diminuer" style="width:44px;height:44px;border:none;background:none;font-size:20px">−</button>
+              <span style="min-width:34px;text-align:center;font-family:'Space Mono',monospace;font-size:16px">{{ modal.qty }}</span>
+              <button onClick="{{ modal.inc }}" aria-label="Augmenter" style="width:44px;height:44px;border:none;background:none;font-size:20px">+</button>
+            </div>
+          </div>
+
+          <button onClick="{{ modal.add }}" style="width:100%;display:flex;align-items:center;justify-content:center;gap:12px;background:#cf5a25;color:#fff;border:none;border-radius:999px;padding:16px;font-weight:600;font-size:16px;min-height:52px;box-shadow:0 12px 26px -10px rgba(207,90,37,.6)">
+            Ajouter au panier <span style="opacity:.85">·</span> {{ modal.totalFmt }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- ============ PANIER (drawer) ============ -->
+  <sc-if value="{{ cartOpen }}" hint-placeholder-val="{{ false }}">
+    <div role="dialog" aria-modal="true" aria-label="Votre panier" onClick="{{ closeCart }}" style="position:fixed;inset:0;z-index:70;background:rgba(27,20,15,.5);display:flex;justify-content:flex-end;animation:lb-fade .25s both">
+      <div onClick="{{ stop }}" style="background:#f2e9db;width:min(440px,100%);height:100%;display:flex;flex-direction:column;animation:lb-slidein .35s cubic-bezier(.2,.8,.2,1) both;box-shadow:-20px 0 50px -20px rgba(0,0,0,.4)">
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:22px 24px;border-bottom:1px solid rgba(36,28,21,.12)">
+          <h3 style="font-family:'DM Serif Display',serif;font-weight:400;font-size:24px;margin:0">Votre panier</h3>
+          <button onClick="{{ closeCart }}" aria-label="Fermer le panier" style="width:40px;height:40px;border-radius:50%;background:#e7d9c4;border:none;font-size:17px">✕</button>
+        </div>
+
+        <sc-if value="{{ cartEmpty }}" hint-placeholder-val="{{ true }}">
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:40px;text-align:center">
+            <span aria-hidden="true" style="color:#cf5a25"><svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22 4 7c5-2.4 11-2.4 16 0z"/><circle cx="10" cy="10" r="1.1"/><circle cx="14" cy="12" r="1.1"/><circle cx="11.5" cy="15" r="1.1"/></svg></span>
+            <p style="font-size:16px;color:#5a4e42;margin:0">Votre panier est vide.</p>
+            <button onClick="{{ closeCart }}" style="background:#241c15;color:#f2e9db;border:none;border-radius:999px;padding:12px 24px;font-weight:600;font-size:14px;min-height:44px">Voir la carte</button>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ hasCart }}" hint-placeholder-val="{{ false }}">
+          <div style="flex:1;overflow-y:auto;padding:8px 24px">
+            <sc-for list="{{ cartLines }}" as="l" hint-placeholder-count="0">
+              <div style="display:flex;gap:14px;padding:18px 0;border-bottom:1px solid rgba(36,28,21,.1)">
+                <div style="width:64px;height:64px;border-radius:12px;overflow:hidden;background:#e7d9c4;flex:none">{{ l.imgEl }}</div>
+                <div style="flex:1;min-width:0">
+                  <div style="display:flex;justify-content:space-between;gap:10px"><span style="font-weight:600;font-size:15px">{{ l.name }}</span><button onClick="{{ l.remove }}" aria-label="Retirer" style="background:none;border:none;color:#8a7a68;font-size:13px;padding:0">Retirer</button></div>
+                  <div style="font-size:12.5px;color:#5a4e42;margin:4px 0 10px;line-height:1.4">{{ l.meta }}</div>
+                  <div style="display:flex;justify-content:space-between;align-items:center">
+                    <div style="display:flex;align-items:center;gap:2px;border:1.5px solid rgba(36,28,21,.18);border-radius:999px;background:#fff">
+                      <button onClick="{{ l.dec }}" aria-label="Diminuer" style="width:34px;height:34px;border:none;background:none;font-size:17px">−</button>
+                      <span style="min-width:26px;text-align:center;font-family:'Space Mono',monospace;font-size:14px">{{ l.qty }}</span>
+                      <button onClick="{{ l.inc }}" aria-label="Augmenter" style="width:34px;height:34px;border:none;background:none;font-size:17px">+</button>
+                    </div>
+                    <span style="font-family:'Space Mono',monospace;font-size:14px;color:#cf5a25">{{ l.totalFmt }}</span>
+                  </div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="border-top:1px solid rgba(36,28,21,.12);padding:20px 24px;background:#ede2d0">
+            <div style="display:flex;justify-content:space-between;font-size:14px;color:#5a4e42;margin-bottom:8px"><span>Sous-total</span><span style="font-family:'Space Mono',monospace">{{ subtotalFmt }}</span></div>
+            <div style="display:flex;justify-content:space-between;font-size:14px;color:#5a4e42;margin-bottom:14px"><span>Livraison estimée</span><span style="font-family:'Space Mono',monospace">{{ deliveryFmt }}</span></div>
+            <div style="display:flex;justify-content:space-between;align-items:baseline;font-size:18px;font-weight:700;margin-bottom:18px"><span>Total</span><span style="font-family:'Space Mono',monospace;color:#cf5a25;font-size:20px">{{ totalFmt }}</span></div>
+            <button onClick="{{ startCheckout }}" style="width:100%;background:#cf5a25;color:#fff;border:none;border-radius:999px;padding:16px;font-weight:600;font-size:16px;min-height:52px">Commander →</button>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- ============ CHECKOUT ============ -->
+  <sc-if value="{{ checkoutForm }}" hint-placeholder-val="{{ false }}">
+    <div role="dialog" aria-modal="true" aria-label="Finaliser la commande" onClick="{{ closeCheckout }}" style="position:fixed;inset:0;z-index:80;background:rgba(27,20,15,.6);backdrop-filter:blur(4px);display:flex;align-items:flex-start;justify-content:center;overflow-y:auto;padding:clamp(12px,4vw,48px) 12px;animation:lb-fade .25s both">
+      <div onClick="{{ stop }}" style="background:#f2e9db;width:100%;max-width:920px;border-radius:22px;overflow:hidden;animation:lb-pop .35s both;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr))">
+        <form onSubmit="{{ submitOrder }}" style="padding:clamp(24px,4vw,40px);display:flex;flex-direction:column;gap:20px">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <h3 style="font-family:'DM Serif Display',serif;font-weight:400;font-size:26px;margin:0">Vos coordonnées</h3>
+            <button type="button" onClick="{{ closeCheckout }}" aria-label="Fermer" style="width:38px;height:38px;border-radius:50%;background:#e7d9c4;border:none;font-size:16px">✕</button>
+          </div>
+
+          <div>
+            <div style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#8a7a68;margin-bottom:10px">Mode</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+              <button type="button" onClick="{{ setLivraison }}" aria-pressed="{{ isLivraison }}" style="{{ styleLivraison }}"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1.5" y="6" width="11" height="9" rx="1"/><path d="M12.5 9H17l3.5 3.5V15h-8z"/><circle cx="5.5" cy="18" r="1.9"/><circle cx="16.5" cy="18" r="1.9"/></svg> Livraison</button>
+              <button type="button" onClick="{{ setEmporter }}" aria-pressed="{{ isEmporter }}" style="{{ styleEmporter }}"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8.5h12l-1 11.5H7z"/><path d="M8.5 8.5a3.5 3.5 0 0 1 7 0"/><path d="M4 8.5h16"/></svg> À emporter</button>
+            </div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+            <label style="display:flex;flex-direction:column;gap:7px;font-size:13px;font-weight:600">Nom complet
+              <input value="{{ form.nom }}" onInput="{{ onNom }}" type="text" required autocomplete="name" style="border:1.5px solid rgba(36,28,21,.2);border-radius:10px;padding:12px 13px;font-size:15px;background:#fff;min-height:44px">
+            </label>
+            <label style="display:flex;flex-direction:column;gap:7px;font-size:13px;font-weight:600">Téléphone
+              <input value="{{ form.tel }}" onInput="{{ onTel }}" type="tel" required autocomplete="tel" placeholder="0X XX XX XX XX" style="border:1.5px solid rgba(36,28,21,.2);border-radius:10px;padding:12px 13px;font-size:15px;background:#fff;min-height:44px">
+            </label>
+          </div>
+
+          <sc-if value="{{ isLivraison }}" hint-placeholder-val="{{ true }}">
+            <label style="display:flex;flex-direction:column;gap:7px;font-size:13px;font-weight:600">Adresse de livraison
+              <input value="{{ form.adresse }}" onInput="{{ onAdresse }}" type="text" autocomplete="street-address" placeholder="Rue, quartier, étage — Alger" style="border:1.5px solid rgba(36,28,21,.2);border-radius:10px;padding:12px 13px;font-size:15px;background:#fff;min-height:44px">
+            </label>
+          </sc-if>
+
+          <label style="display:flex;flex-direction:column;gap:7px;font-size:13px;font-weight:600">Créneau souhaité
+            <select value="{{ form.creneau }}" onChange="{{ onCreneau }}" style="border:1.5px solid rgba(36,28,21,.2);border-radius:10px;padding:12px 13px;font-size:15px;background:#fff;min-height:44px">
+              <option>Dès que possible</option><option>Dans 30 minutes</option><option>Dans 1 heure</option><option>Ce soir · 19h30</option><option>Ce soir · 20h30</option><option>Ce soir · 21h30</option>
+            </select>
+          </label>
+
+          <label style="display:flex;flex-direction:column;gap:7px;font-size:13px;font-weight:600">Note pour la cuisine <span style="font-weight:400;color:#8a7a68">(optionnel)</span>
+            <textarea value="{{ form.notes }}" onInput="{{ onNotes }}" rows="2" placeholder="Bien cuite, sans oignon, interphone en panne…" style="border:1.5px solid rgba(36,28,21,.2);border-radius:10px;padding:12px 13px;font-size:15px;background:#fff;resize:vertical;font-family:inherit"></textarea>
+          </label>
+
+          <label style="display:flex;gap:11px;align-items:flex-start;font-size:13px;color:#5a4e42;line-height:1.45;cursor:pointer">
+            <input type="checkbox" checked="{{ form.consent }}" onChange="{{ onConsent }}" required style="margin-top:2px;width:18px;height:18px;flex:none;accent-color:#cf5a25">
+            <span>J'accepte que mes données soient utilisées pour traiter ma commande, conformément à la <a href="#" onClick="{{ openConfid }}" style="color:#cf5a25">politique de confidentialité</a>. *</span>
+          </label>
+
+          <sc-if value="{{ formError }}" hint-placeholder-val="">
+            <div role="alert" style="font-size:13px;color:#b23c17;background:rgba(207,90,37,.1);border-radius:8px;padding:10px 12px">{{ formError }}</div>
+          </sc-if>
+
+          <button type="submit" style="background:#cf5a25;color:#fff;border:none;border-radius:999px;padding:16px;font-weight:600;font-size:16px;min-height:52px">Valider la commande · {{ totalFmt }}</button>
+          <p style="font-size:11.5px;color:#8a7a68;text-align:center;margin:0">Paiement en espèces ou par carte à la livraison / au retrait.</p>
+        </form>
+
+        <aside style="background:#ede2d0;padding:clamp(24px,4vw,40px);border-left:1px solid rgba(36,28,21,.1)">
+          <div style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#8a7a68;margin-bottom:18px">Récapitulatif</div>
+          <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:20px">
+            <sc-for list="{{ cartLines }}" as="l" hint-placeholder-count="2">
+              <div style="display:flex;justify-content:space-between;gap:12px;font-size:14px">
+                <span><span style="font-family:'Space Mono',monospace;color:#cf5a25">{{ l.qty }}×</span> {{ l.name }}<span style="display:block;font-size:12px;color:#8a7a68;margin-top:2px">{{ l.meta }}</span></span>
+                <span style="font-family:'Space Mono',monospace;white-space:nowrap">{{ l.totalFmt }}</span>
+              </div>
+            </sc-for>
+          </div>
+          <div style="border-top:1px solid rgba(36,28,21,.14);padding-top:16px;display:flex;flex-direction:column;gap:8px">
+            <div style="display:flex;justify-content:space-between;font-size:14px;color:#5a4e42"><span>Sous-total</span><span style="font-family:'Space Mono',monospace">{{ subtotalFmt }}</span></div>
+            <div style="display:flex;justify-content:space-between;font-size:14px;color:#5a4e42"><span>Livraison</span><span style="font-family:'Space Mono',monospace">{{ deliveryFmt }}</span></div>
+            <div style="display:flex;justify-content:space-between;align-items:baseline;font-size:18px;font-weight:700;margin-top:6px"><span>Total</span><span style="font-family:'Space Mono',monospace;color:#cf5a25;font-size:20px">{{ totalFmt }}</span></div>
+          </div>
+          <div style="margin-top:22px;font-size:12.5px;color:#5a4e42;line-height:1.5;display:flex;gap:8px"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#cf5a25" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none;margin-top:1px"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9 2h6"/></svg><span>Temps estimé : <strong>{{ etaLabel }}</strong></span></div>
+        </aside>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- ============ CONFIRMATION ============ -->
+  <sc-if value="{{ checkoutDone }}" hint-placeholder-val="{{ false }}">
+    <div role="dialog" aria-modal="true" aria-label="Commande confirmée" style="position:fixed;inset:0;z-index:80;background:rgba(27,20,15,.6);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:16px;animation:lb-fade .25s both">
+      <div style="background:#f2e9db;width:100%;max-width:460px;border-radius:22px;padding:clamp(28px,5vw,44px);text-align:center;animation:lb-pop .4s both">
+        <span aria-hidden="true" style="width:64px;height:64px;border-radius:50%;background:#cf5a25;color:#fff;display:grid;place-items:center;font-size:32px;margin:0 auto 20px">✓</span>
+        <h3 style="font-family:'DM Serif Display',serif;font-weight:400;font-size:30px;margin:0 0 10px">Commande confirmée !</h3>
+        <p style="font-size:15px;color:#5a4e42;line-height:1.6;margin:0 0 24px">Merci {{ orderName }}. Votre commande <strong style="font-family:'Space Mono',monospace;color:#241c15">{{ orderNo }}</strong> est en préparation.</p>
+        <div style="background:#ede2d0;border-radius:14px;padding:18px 20px;text-align:left;display:flex;flex-direction:column;gap:10px;margin-bottom:24px">
+          <div style="display:flex;justify-content:space-between;font-size:14px"><span style="color:#5a4e42">Mode</span><span style="font-weight:600">{{ orderModeLabel }}</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:14px"><span style="color:#5a4e42">Total payé</span><span style="font-family:'Space Mono',monospace;color:#cf5a25;font-weight:700">{{ orderTotalFmt }}</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:14px"><span style="color:#5a4e42">Temps estimé</span><span style="font-weight:600">{{ orderEta }}</span></div>
+        </div>
+        <button onClick="{{ closeConfirm }}" style="width:100%;background:#241c15;color:#f2e9db;border:none;border-radius:999px;padding:15px;font-weight:600;font-size:15px;min-height:48px">Parfait, merci !</button>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- ============ MODAL LÉGAL ============ -->
+  <sc-if value="{{ hasLegal }}" hint-placeholder-val="{{ false }}">
+    <div role="dialog" aria-modal="true" aria-label="{{ legalTitle }}" onClick="{{ closeLegal }}" style="position:fixed;inset:0;z-index:90;background:rgba(27,20,15,.6);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:16px;animation:lb-fade .25s both">
+      <div onClick="{{ stop }}" style="background:#f2e9db;width:100%;max-width:640px;max-height:86vh;overflow-y:auto;border-radius:20px;padding:clamp(24px,4vw,40px);animation:lb-pop .35s both">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+          <h3 style="font-family:'DM Serif Display',serif;font-weight:400;font-size:28px;margin:0">{{ legalTitle }}</h3>
+          <button onClick="{{ closeLegal }}" aria-label="Fermer" style="width:40px;height:40px;border-radius:50%;background:#e7d9c4;border:none;font-size:17px">✕</button>
+        </div>
+        <div style="font-size:14.5px;line-height:1.7;color:#3a2e22" data-legal-body>{{ legalBody }}</div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- ============ BANDEAU COOKIES RGPD ============ -->
+  <sc-if value="{{ showCookie }}" hint-placeholder-val="{{ false }}">
+    <div role="dialog" aria-label="Gestion des cookies" style="position:fixed;left:0;right:0;bottom:0;z-index:100;padding:14px clamp(12px,4vw,24px);animation:lb-up .4s both">
+      <div style="max-width:1000px;margin:0 auto;background:#241c15;color:#f2e9db;border-radius:16px;padding:20px 24px;display:flex;gap:20px;align-items:center;flex-wrap:wrap;box-shadow:0 20px 50px -20px rgba(0,0,0,.6)">
+        <div style="flex:1;min-width:240px">
+          <div style="font-family:'DM Serif Display',serif;font-size:19px;margin-bottom:6px;display:flex;align-items:center;gap:10px"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#cf5a25" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9 3.5 3.5 0 0 1-4-4 3.5 3.5 0 0 1-5-5Z"/><circle cx="9" cy="12" r="1"/><circle cx="14" cy="15" r="1"/><circle cx="15" cy="10" r="1"/></svg> Votre vie privée</div>
+          <p style="font-size:13.5px;line-height:1.55;color:#cabca6;margin:0">Nous utilisons des cookies pour améliorer votre expérience et mesurer l'audience. Vous pouvez accepter ou refuser. En savoir plus dans notre <button onClick="{{ openConfid }}" style="background:none;border:none;color:#cf5a25;padding:0;font-size:13.5px;text-decoration:underline">politique de confidentialité</button>.</p>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <button onClick="{{ refuseCookie }}" style="background:transparent;color:#f2e9db;border:1.5px solid rgba(242,233,219,.35);border-radius:999px;padding:12px 22px;font-weight:600;font-size:14px;min-height:44px">Refuser</button>
+          <button onClick="{{ acceptCookie }}" style="background:#cf5a25;color:#fff;border:none;border-radius:999px;padding:12px 24px;font-weight:600;font-size:14px;min-height:44px">Accepter</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- ============ TOAST ============ -->
+  <sc-if value="{{ toast }}" hint-placeholder-val="">
+    <div role="status" aria-live="polite" style="position:fixed;left:50%;transform:translateX(-50%);bottom:24px;z-index:110;background:#241c15;color:#f2e9db;border-radius:999px;padding:13px 24px;font-size:14px;font-weight:500;box-shadow:0 12px 30px -10px rgba(0,0,0,.5);animation:lb-up .3s both;display:flex;align-items:center;gap:10px">
+      <span aria-hidden="true" style="color:#cf5a25">✓</span>{{ toast }}
+    </div>
+  </sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  constructor(props){
+    super(props);
+    this.state = {
+      cartOpen:false, cart:[],
+      modalId:null, modalSizeIdx:0, modalSupps:[], modalQty:1,
+      checkoutStep:0, mode:'livraison',
+      form:{nom:'',tel:'',adresse:'',creneau:'Dès que possible',notes:'',consent:false},
+      formError:'',
+      lastOrder:null,
+      cookie:null,
+      legal:null,
+      contact:{nom:'',email:'',message:'',consent:false},
+      contactSent:false, contactError:'',
+      toast:null,
+    };
+    this._toastT = null;
+
+    this.supps = [
+      {id:'bufala', name:'Mozzarella di bufala', price:250},
+      {id:'truffe', name:'Copeaux de truffe fraîche', price:400},
+      {id:'roquette', name:'Roquette & parmesan', price:150},
+      {id:'oeuf', name:'Œuf fermier', price:100},
+      {id:'piment', name:'Piment frais', price:50},
+    ];
+
+    const IMG = {
+      marg:'https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?w=700&q=80&auto=format&fit=crop',
+      napo:'https://images.unsplash.com/photo-1601924582970-9238bcb495d9?w=700&q=80&auto=format&fit=crop',
+      diavola:'https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?w=700&q=80&auto=format&fit=crop',
+      regina:'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=700&q=80&auto=format&fit=crop',
+      calzone:'https://images.unsplash.com/photo-1571997478779-2adcbbe9ab2f?w=700&q=80&auto=format&fit=crop',
+      capri:'https://images.unsplash.com/photo-1590947132387-155cc02f3212?w=700&q=80&auto=format&fit=crop',
+      quattro:'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=700&q=80&auto=format&fit=crop',
+      tartufo:'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=700&q=80&auto=format&fit=crop',
+      bufalina:'https://images.unsplash.com/photo-1595854341625-f33ee10dbf94?w=700&q=80&auto=format&fit=crop',
+      bruschetta:'https://images.unsplash.com/photo-1506280754576-f6fa8a873550?w=700&q=80&auto=format&fit=crop',
+      arancini:'https://images.unsplash.com/photo-1541014741259-de529411b96a?w=700&q=80&auto=format&fit=crop',
+      burrata:'https://images.unsplash.com/photo-1608897013039-887f21d8c804?w=700&q=80&auto=format&fit=crop',
+      tiramisu:'https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=700&q=80&auto=format&fit=crop',
+      pannacotta:'https://images.unsplash.com/photo-1488477181946-6428a0291777?w=700&q=80&auto=format&fit=crop',
+      limonata:'https://images.unsplash.com/photo-1523677011781-c91d1bbe2f9e?w=700&q=80&auto=format&fit=crop',
+    };
+    const P2 = (a,b)=>[{key:'Junior',cm:'26 cm',price:a},{key:'Sénior',cm:'33 cm',price:b}];
+    const P1 = (p,k)=>[{key:k||'Portion',cm:'',price:p}];
+
+    this.products = [
+      // Rosse
+      {id:'marg', cat:'rosse', name:'Margherita', tag:'Signature', supps:true, img:IMG.marg,
+        alt:'Pizza margherita, tomate San Marzano, mozzarella et basilic',
+        desc:'San Marzano D.O.P., fior di latte, basilic frais, huile d’olive extra-vierge.', sizes:P2(850,1200)},
+      {id:'napo', cat:'rosse', name:'Napoletana', supps:true, img:IMG.napo,
+        alt:'Pizza napoletana aux anchois et câpres',
+        desc:'Tomate, anchois de Cetara, câpres de Pantelleria, origan, ail.', sizes:P2(950,1350)},
+      {id:'diavola', cat:'rosse', name:'Diavola', tag:'Piquant', supps:true, img:IMG.diavola,
+        alt:'Pizza diavola au salami piquant',
+        desc:'Spianata piccante, mozzarella, tomate, huile pimentée maison.', sizes:P2(1100,1550)},
+      {id:'regina', cat:'rosse', name:'Regina', supps:true, img:IMG.regina,
+        alt:'Pizza regina jambon et champignons',
+        desc:'Jambon cuit supérieur, champignons de Paris frais, mozzarella, tomate.', sizes:P2(1050,1500)},
+      {id:'capri', cat:'rosse', name:'Capricciosa', supps:true, img:IMG.capri,
+        alt:'Pizza capricciosa garnie',
+        desc:'Artichauts, olives Kalamata, champignons, jambon, tomate, mozzarella.', sizes:P2(1200,1650)},
+      {id:'calzone', cat:'rosse', name:'Calzone', supps:true, img:IMG.calzone,
+        alt:'Calzone dorée fermée',
+        desc:'Chausson fermé : jambon, ricotta di bufala, mozzarella, poivre.', sizes:P2(1200,1650)},
+      // Bianche
+      {id:'quattro', cat:'bianche', name:'Quattro Formaggi', tag:'Végétarien', supps:true, img:IMG.quattro,
+        alt:'Pizza quatre fromages fondante',
+        desc:'Gorgonzola D.O.P., mozzarella, parmesan 24 mois, provola fumée.', sizes:P2(1250,1700)},
+      {id:'tartufo', cat:'bianche', name:'Tartufo', tag:'Édition limitée', supps:true, img:IMG.tartufo,
+        alt:'Pizza à la truffe et champignons',
+        desc:'Crème de truffe noire, champignons rôtis, mozzarella, roquette.', sizes:P2(1600,2100)},
+      {id:'bufalina', cat:'bianche', name:'Bufalina', tag:'Végétarien', supps:true, img:IMG.bufalina,
+        alt:'Pizza bufalina, mozzarella di bufala et tomates cerises',
+        desc:'Mozzarella di bufala D.O.P., tomates cerises confites, basilic, huile d’olive.', sizes:P2(1350,1800)},
+      // Antipasti
+      {id:'bruschetta', cat:'antipasti', name:'Bruschetta classica', supps:false, img:IMG.bruschetta,
+        alt:'Bruschetta à la tomate et basilic',
+        desc:'Pain de four grillé, tomates fraîches, ail, basilic, huile d’olive. (x2)', sizes:P1(450)},
+      {id:'arancini', cat:'antipasti', name:'Arancini', supps:false, img:IMG.arancini,
+        alt:'Arancini siciliens dorés',
+        desc:'Boulettes de risotto panées, cœur de ragù et mozzarella. (x3)', sizes:P1(650)},
+      {id:'burrata', cat:'antipasti', name:'Burrata des Pouilles', tag:'Végétarien', supps:false, img:IMG.burrata,
+        alt:'Burrata crémeuse et roquette',
+        desc:'Burrata crémeuse 125 g, roquette, tomates confites, huile d’olive.', sizes:P1(900)},
+      // Dolci
+      {id:'tiramisu', cat:'dolci', name:'Tiramisù maison', tag:'Maison', supps:false, img:IMG.tiramisu,
+        alt:'Tiramisù maison au mascarpone',
+        desc:'Mascarpone, café expresso, cacao, biscuits savoiardi.', sizes:P1(550)},
+      {id:'pannacotta', cat:'dolci', name:'Panna cotta', supps:false, img:IMG.pannacotta,
+        alt:'Panna cotta et coulis de fruits rouges',
+        desc:'Crème vanillée, coulis de fruits rouges frais.', sizes:P1(500)},
+      // Boissons
+      {id:'limonata', cat:'bevande', name:'Limonata artisanale', supps:false, img:IMG.limonata,
+        alt:'Limonade artisanale citron',
+        desc:'Citron pressé, eau pétillante, menthe fraîche. 33 cl.', sizes:P1(300)},
+    ];
+
+    this.categoriesMeta = [
+      {id:'cat-rosse', cat:'rosse', title:'Pizze Rosse', tag:'Base tomate', subtitle:'Nos classiques sur base de tomate San Marzano, cuites au feu de bois.'},
+      {id:'cat-bianche', cat:'bianche', title:'Pizze Bianche', tag:'Sans tomate', subtitle:'Les blanches, à la crème ou à l’huile — pour les amateurs de fromage et de truffe.'},
+      {id:'cat-antipasti', cat:'antipasti', title:'Antipasti', tag:'Pour commencer', subtitle:'À partager avant les pizzas, préparés minute.'},
+      {id:'cat-dolci', cat:'dolci', title:'Dolci', tag:'Desserts', subtitle:'Les douceurs maison pour finir en beauté.'},
+      {id:'cat-bevande', cat:'bevande', title:'Bevande', tag:'Boissons', subtitle:'Rafraîchissements artisanaux.'},
+    ];
+
+    this.reviews = [
+      {nom:'Yacine B.', note:5, texte:'La vraie pâte napolitaine, légère et bien levée. La Diavola est parfaite, on sent le feu de bois.', date:'Il y a 2 jours'},
+      {nom:'Amel K.', note:5, texte:'Livraison rapide à Hydra, pizza encore chaude et fondante. Devenu notre adresse du vendredi soir.', date:'Il y a 1 semaine'},
+      {nom:'Karim T.', note:4, texte:'Cadre chaleureux, on voit le four à bois depuis la salle. La Tartufo vaut vraiment le détour.', date:'Il y a 2 semaines'},
+      {nom:'Lila M.', note:5, texte:'Enfin une Margherita comme à Naples. Le fior di latte est au top, service adorable.', date:'Il y a 3 semaines'},
+      {nom:'Sofiane D.', note:5, texte:'Produits frais, ça se sent. La burrata crémeuse à souhait, les arancini croustillants.', date:'Il y a 1 mois'},
+      {nom:'Nadia R.', note:5, texte:'Commande passée en ligne en deux minutes, tout était clair. Bravo pour la Quattro Formaggi.', date:'Il y a 1 mois'},
+    ];
+
+    this.valeurs = [
+      {icon:'🔥', title:'Four à bois 430°', desc:'Cuisson minute qui donne la vraie croûte napolitaine, gonflée et souple.'},
+      {icon:'⏳', title:'Pâte maturée 48 h', desc:'Fermentation lente au levain pour une pizza légère et digeste.'},
+      {icon:'🇮🇹', title:'Produits sourcés', desc:'San Marzano, fior di latte, farine Caputo, et le meilleur du terroir algérien.'},
+      {icon:'🛵', title:'Livraison Alger-Ouest', desc:'Hydra, Ben Aknoun, Dely Ibrahim, El Biar — chaude en 35 minutes.'},
+    ];
+
+    this.horaires = [
+      {jour:'Lundi', heures:'Fermé'},
+      {jour:'Mardi – Jeudi', heures:'12h – 14h30 · 18h30 – 23h'},
+      {jour:'Vendredi – Samedi', heures:'12h – 15h · 18h30 – 23h30'},
+      {jour:'Dimanche', heures:'18h30 – 23h'},
+    ];
+  }
+
+  componentDidMount(){
+    try{ const c = localStorage.getItem('labraise_cookie'); if(c==='accepted'||c==='refused') this.setState({cookie:c}); }catch(e){}
+    this._onKey = (e)=>{ if(e.key==='Escape') this.setState({cartOpen:false, modalId:null, checkoutStep:this.state.checkoutStep===2?2:0, legal:null}); };
+    window.addEventListener('keydown', this._onKey);
+  }
+  componentWillUnmount(){ window.removeEventListener('keydown', this._onKey); if(this._toastT) clearTimeout(this._toastT); }
+
+  fmt(n){ return n.toLocaleString('fr-FR') + ' DA'; }
+  stars(n){ return '★★★★★'.slice(0,n) + '☆☆☆☆☆'.slice(0,5-n); }
+  showToast(msg){ if(this._toastT) clearTimeout(this._toastT); this.setState({toast:msg}); this._toastT=setTimeout(()=>this.setState({toast:null}),2600); }
+
+  product(id){ return this.products.find(p=>p.id===id); }
+
+  openModal(id){ this.setState({modalId:id, modalSizeIdx:0, modalSupps:[], modalQty:1}); }
+  closeModal(){ this.setState({modalId:null}); }
+  setSize(i){ this.setState({modalSizeIdx:i}); }
+  toggleSupp(id){ const s=this.state.modalSupps.slice(); const i=s.indexOf(id); if(i>=0)s.splice(i,1); else s.push(id); this.setState({modalSupps:s}); }
+  modalInc(){ this.setState(s=>({modalQty:Math.min(20,s.modalQty+1)})); }
+  modalDec(){ this.setState(s=>({modalQty:Math.max(1,s.modalQty-1)})); }
+
+  modalUnit(){
+    const p=this.product(this.state.modalId); if(!p) return 0;
+    let u=p.sizes[this.state.modalSizeIdx].price;
+    this.state.modalSupps.forEach(id=>{ const sp=this.supps.find(x=>x.id===id); if(sp)u+=sp.price; });
+    return u;
+  }
+
+  addModalToCart(){
+    const p=this.product(this.state.modalId); if(!p) return;
+    const size=p.sizes[this.state.modalSizeIdx];
+    const suppNames=this.state.modalSupps.map(id=>this.supps.find(x=>x.id===id).name);
+    const uid = p.id+'|'+size.key+'|'+this.state.modalSupps.slice().sort().join(',');
+    const unit=this.modalUnit(); const qty=this.state.modalQty;
+    const cart=this.state.cart.slice();
+    const ex=cart.find(l=>l.uid===uid);
+    if(ex){ ex.qty+=qty; } else {
+      cart.push({uid, id:p.id, name:p.name, img:p.img, sizeKey:size.key, cm:size.cm, supps:suppNames, unit, qty});
+    }
+    this.setState({cart, modalId:null});
+    this.showToast(p.name+' ajoutée au panier');
+  }
+
+  openCart(){ this.setState({cartOpen:true}); }
+  closeCart(){ this.setState({cartOpen:false}); }
+  lineInc(uid){ const c=this.state.cart.map(l=>l.uid===uid?{...l,qty:Math.min(20,l.qty+1)}:l); this.setState({cart:c}); }
+  lineDec(uid){ let c=this.state.cart.map(l=>l.uid===uid?{...l,qty:l.qty-1}:l).filter(l=>l.qty>0); this.setState({cart:c}); }
+  lineRemove(uid){ this.setState({cart:this.state.cart.filter(l=>l.uid!==uid)}); }
+
+  subtotal(){ return this.state.cart.reduce((s,l)=>s+l.unit*l.qty,0); }
+  delivery(){ if(this.state.mode!=='livraison') return 0; const st=this.subtotal(); return st>=2500||st===0?0:200; }
+  total(){ return this.subtotal()+this.delivery(); }
+
+  startCheckout(){ if(!this.state.cart.length){this.showToast('Votre panier est vide');return;} this.setState({cartOpen:false, checkoutStep:1, formError:''}); }
+  closeCheckout(){ this.setState({checkoutStep:0}); }
+  setMode(m){ this.setState({mode:m}); }
+  setField(f,v){ this.setState(s=>({form:{...s.form,[f]:v}})); }
+
+  submitOrder(e){
+    if(e&&e.preventDefault)e.preventDefault();
+    const f=this.state.form;
+    if(!f.nom.trim()||!f.tel.trim()){ this.setState({formError:'Merci d’indiquer votre nom et votre téléphone.'}); return; }
+    if(this.state.mode==='livraison'&&!f.adresse.trim()){ this.setState({formError:'Merci d’indiquer votre adresse de livraison.'}); return; }
+    if(!f.consent){ this.setState({formError:'Merci d’accepter la politique de confidentialité.'}); return; }
+    const orderNo='LB-'+Math.floor(1000+Math.random()*9000);
+    const eta=this.state.mode==='livraison'?'35 – 45 min':'20 min (retrait en boutique)';
+    this.setState({
+      lastOrder:{ orderNo, name:f.nom.trim(), mode:this.state.mode, total:this.total(), eta },
+      checkoutStep:2, cart:[],
+      form:{nom:'',tel:'',adresse:'',creneau:'Dès que possible',notes:'',consent:false}, formError:''
+    });
+  }
+  closeConfirm(){ this.setState({checkoutStep:0, lastOrder:null}); }
+
+  acceptCookie(){ try{localStorage.setItem('labraise_cookie','accepted');}catch(e){} this.setState({cookie:'accepted'}); this.showToast('Préférences enregistrées'); }
+  refuseCookie(){ try{localStorage.setItem('labraise_cookie','refused');}catch(e){} this.setState({cookie:'refused'}); this.showToast('Cookies refusés'); }
+  openCookiePrefs(){ this.setState({cookie:null}); }
+
+  openLegal(k,e){ if(e&&e.preventDefault)e.preventDefault(); this.setState({legal:k}); }
+  closeLegal(){ this.setState({legal:null}); }
+
+  setContact(f,v){ this.setState(s=>({contact:{...s.contact,[f]:v}})); }
+  submitContact(e){
+    if(e&&e.preventDefault)e.preventDefault();
+    const c=this.state.contact;
+    if(!c.nom.trim()||!c.email.trim()||!c.message.trim()){ this.setState({contactError:'Merci de remplir tous les champs.'}); return; }
+    if(!c.consent){ this.setState({contactError:'Merci d’accepter la politique de confidentialité.'}); return; }
+    this.setState({contactSent:true, contactError:''});
+  }
+
+  legalContent(){
+    const wrap=(nodes)=>React.createElement('div',{style:{display:'flex',flexDirection:'column',gap:'14px'}},nodes);
+    const P=(t,k)=>React.createElement('p',{key:k,style:{margin:0}},t);
+    const H=(t,k)=>React.createElement('div',{key:k,style:{fontWeight:700,fontSize:'15px',color:'#241c15',marginTop:'6px'}},t);
+    if(this.state.legal==='mentions'){
+      return {title:'Mentions légales', body:wrap([
+        H('Éditeur','h1'),
+        P('La Braise SARL — Pizzeria napolitaine. Capital social : 1 000 000 DA. RC n° 16/00-1234567 B 16. NIF : 0016 1234 5678 90.','p1'),
+        H('Siège','h2'),
+        P('14, rue des Frères Kaïd, Sidi Yahia, Hydra — Alger, Algérie. Téléphone : +213 _ __ __ __ __.','p2'),
+        H('Directeur de la publication','h3'),
+        P('La gérance de La Braise SARL.','p3'),
+        H('Hébergement','h4'),
+        P('Site hébergé par un prestataire d’hébergement web. Les coordonnées complètes sont disponibles sur simple demande.','p5'),
+        H('Propriété intellectuelle','h6'),
+        P('L’ensemble des contenus (textes, visuels, logo) est la propriété de La Braise SARL, sauf mention contraire. Toute reproduction est soumise à autorisation. Photographies d’illustration libres de droits.','p7'),
+        H('Conception','h8'),
+        P('Site conçu et développé par Arslan DIF — difarslan.com.','p9'),
+      ])};
+    }
+    return {title:'Politique de confidentialité', body:wrap([
+      P('La Braise accorde une grande importance à la protection de vos données personnelles. Cette politique explique quelles données nous collectons et comment nous les utilisons.','p1'),
+      H('Données collectées','h1'),
+      P('Lors d’une commande ou d’une prise de contact : nom, téléphone, adresse de livraison, e-mail et le contenu de votre message. Ces données sont strictement nécessaires au traitement de votre demande.','p2'),
+      H('Finalités','h2'),
+      P('Vos données servent uniquement à préparer et livrer vos commandes, vous recontacter, et améliorer notre service. Elles ne sont jamais revendues à des tiers.','p3'),
+      H('Cookies','h4'),
+      P('Nous utilisons des cookies de mesure d’audience. Vous pouvez les accepter ou les refuser à tout moment via le bandeau ou le lien « Préférences cookies » en pied de page.','p5'),
+      H('Conservation','h6'),
+      P('Les données de commande sont conservées le temps nécessaire à la gestion de la relation client, puis archivées ou supprimées conformément à la réglementation.','p7'),
+      H('Vos droits','h8'),
+      P('Vous disposez d’un droit d’accès, de rectification et de suppression de vos données. Pour l’exercer, écrivez à bonjour@labraise-alger.dz.','p9'),
+    ])};
+  }
+
+  renderVals(){
+    const st=this.state;
+    const cart=st.cart;
+    const cartCount=cart.reduce((s,l)=>s+l.qty,0);
+
+    const categories=this.categoriesMeta.map(c=>({
+      id:c.id, title:c.title, tag:c.tag, subtitle:c.subtitle,
+      items:this.products.filter(p=>p.cat===c.cat).map(p=>{
+        const min=Math.min(...p.sizes.map(s=>s.price));
+        const multi=p.sizes.length>1;
+        return {
+          name:p.name, desc:p.desc, img:p.img, alt:p.alt, tag:p.tag||'',
+          priceLabel: multi ? ('dès '+this.fmt(min)) : this.fmt(min),
+          cta: multi ? 'Composer' : 'Ajouter',
+          open: ()=>this.openModal(p.id),
+        };
+      })
+    }));
+
+    const catNav=this.categoriesMeta.map(c=>({label:c.title, href:'#'+c.id}));
+
+    // Modal
+    const mp=this.product(st.modalId);
+    let modal={hasSizes:false,hasSupps:false,img:this.products[0].img,alt:''};
+    if(mp){
+      const size=mp.sizes[st.modalSizeIdx];
+      const unit=this.modalUnit();
+      const min=Math.min(...mp.sizes.map(s=>s.price));
+      const multi=mp.sizes.length>1;
+      const btnBase='display:flex;align-items:center;gap:8px;padding:14px 16px;border-radius:12px;text-align:left;font-family:inherit;min-height:52px;transition:all .18s ease;';
+      modal={
+        name:mp.name, desc:mp.desc, img:mp.img, alt:mp.alt,
+        priceLabel: multi?('dès '+this.fmt(min)):this.fmt(min),
+        hasSizes:multi, hasSupps:!!mp.supps,
+        qty:st.modalQty, inc:()=>this.modalInc(), dec:()=>this.modalDec(),
+        add:()=>this.addModalToCart(),
+        totalFmt:this.fmt(unit*st.modalQty),
+        sizeOptions: mp.sizes.map((s,i)=>{
+          const active=i===st.modalSizeIdx;
+          return { label:s.key, cm:s.cm, priceFmt:this.fmt(s.price), active,
+            select:()=>this.setSize(i),
+            style: btnBase + (active?'background:#241c15;color:#f2e9db;border:1.5px solid #241c15;':'background:#fff;color:#241c15;border:1.5px solid rgba(36,28,21,.2);') };
+        }),
+        suppOptions: this.supps.map(sp=>{
+          const active=st.modalSupps.includes(sp.id);
+          return { name:sp.name, priceFmt:this.fmt(sp.price).replace(' DA',' DA'), active,
+            check: active?'✓':'', toggle:()=>this.toggleSupp(sp.id),
+            style: btnBase + 'width:100%;'+(active?'background:rgba(207,90,37,.1);border:1.5px solid #cf5a25;':'background:#fff;border:1.5px solid rgba(36,28,21,.16);'),
+            boxStyle:'width:22px;height:22px;border-radius:6px;flex:none;display:grid;place-items:center;font-size:13px;color:#fff;'+(active?'background:#cf5a25;border:1.5px solid #cf5a25;':'background:#fff;border:1.5px solid rgba(36,28,21,.3);') };
+        }),
+      };
+    }
+
+    // Cart lines
+    modal.imgEl = React.createElement('img',{src:modal.img, alt:modal.alt||'', style:{width:'100%',height:'100%',objectFit:'cover'}});
+    const imgStyle={width:'100%',height:'100%',objectFit:'cover'};
+    const cartLines=cart.map(l=>({
+      name:l.name, img:l.img, qty:l.qty,
+      imgEl: React.createElement('img',{src:l.img, alt:'', style:imgStyle}),
+      meta:(l.cm?l.sizeKey+' · '+l.cm:l.sizeKey)+(l.supps.length?' · '+l.supps.join(', '):''),
+      totalFmt:this.fmt(l.unit*l.qty),
+      inc:()=>this.lineInc(l.uid), dec:()=>this.lineDec(l.uid), remove:()=>this.lineRemove(l.uid),
+    }));
+
+    const modeBtn='display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px;border-radius:12px;font-weight:600;font-size:15px;min-height:52px;font-family:inherit;transition:all .18s ease;';
+    const lo=st.lastOrder||{};
+    const lc=this.legalContent();
+
+    return {
+      // header/cart
+      hasCart: cartCount>0, cartCount, cartOpen:st.cartOpen, cartEmpty: cart.length===0,
+      openCart:()=>this.openCart(), closeCart:()=>this.closeCart(),
+      cartLines, subtotalFmt:this.fmt(this.subtotal()), deliveryFmt: this.delivery()===0?'Offerte':this.fmt(this.delivery()), totalFmt:this.fmt(this.total()),
+      startCheckout:()=>this.startCheckout(),
+      // static lists
+      valeurs:this.valeurs, categories, catNav, horaires:this.horaires,
+      reviews:this.reviews.map(r=>({...r, stars:this.stars(r.note), initiale:r.nom.charAt(0)})),
+      // modal
+      hasModal: !!mp, modal, closeModal:()=>this.closeModal(), stop:(e)=>{e.stopPropagation();},
+      // checkout
+      checkoutForm: st.checkoutStep===1, checkoutDone: st.checkoutStep===2,
+      closeCheckout:()=>this.closeCheckout(), submitOrder:(e)=>this.submitOrder(e),
+      isLivraison: st.mode==='livraison', isEmporter: st.mode==='emporter',
+      setLivraison:()=>this.setMode('livraison'), setEmporter:()=>this.setMode('emporter'),
+      styleLivraison: modeBtn+(st.mode==='livraison'?'background:#241c15;color:#f2e9db;border:1.5px solid #241c15;':'background:#fff;color:#241c15;border:1.5px solid rgba(36,28,21,.2);'),
+      styleEmporter: modeBtn+(st.mode==='emporter'?'background:#241c15;color:#f2e9db;border:1.5px solid #241c15;':'background:#fff;color:#241c15;border:1.5px solid rgba(36,28,21,.2);'),
+      form:st.form, formError:st.formError,
+      onNom:(e)=>this.setField('nom',e.target.value), onTel:(e)=>this.setField('tel',e.target.value),
+      onAdresse:(e)=>this.setField('adresse',e.target.value), onCreneau:(e)=>this.setField('creneau',e.target.value),
+      onNotes:(e)=>this.setField('notes',e.target.value), onConsent:(e)=>this.setField('consent',e.target.checked),
+      etaLabel: st.mode==='livraison'?'35 – 45 min':'20 min',
+      // confirmation
+      orderName:lo.name||'', orderNo:lo.orderNo||'', orderModeLabel: lo.mode==='livraison'?'Livraison':'À emporter',
+      orderTotalFmt: lo.total!=null?this.fmt(lo.total):'', orderEta:lo.eta||'', closeConfirm:()=>this.closeConfirm(),
+      // legal
+      hasLegal: !!st.legal, legalTitle:lc.title, legalBody:lc.body, closeLegal:()=>this.closeLegal(),
+      openMentions:(e)=>this.openLegal('mentions',e), openConfid:(e)=>this.openLegal('confidentialite',e), openCookiePrefs:()=>this.openCookiePrefs(),
+      // cookie
+      showCookie: st.cookie===null, acceptCookie:()=>this.acceptCookie(), refuseCookie:()=>this.refuseCookie(),
+      // contact
+      contact:st.contact, contactSent:st.contactSent, contactNotSent:!st.contactSent, contactError:st.contactError,
+      onContactNom:(e)=>this.setContact('nom',e.target.value), onContactEmail:(e)=>this.setContact('email',e.target.value),
+      onContactMessage:(e)=>this.setContact('message',e.target.value), onContactConsent:(e)=>this.setContact('consent',e.target.checked),
+      submitContact:(e)=>this.submitContact(e),
+      // toast
+      toast:st.toast,
+    };
+  }
+}
+</script>
+</body>
+</html>

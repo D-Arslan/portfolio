@@ -1122,4 +1122,6 @@ export const catalogue: CatalogueItem[] = [
   { slug: "sirocco/dar-beldi.html",          name: "Dar Beldi",      category: { fr: "Restaurant traditionnel", en: "Traditional dining" },  theme: THEME.dining },
   { slug: "yalla/numidia.html",              name: "Numidia",        category: { fr: "Restaurant",              en: "Restaurant" },          theme: THEME.dining },
   { slug: "galerie-diwan/dar-yasmine.html",  name: "Dar Yasmine",    category: { fr: "Hôtel bord de mer",       en: "Seaside hotel" },       theme: THEME.hospitality },
+  { slug: "pizzaiolo/index.html",            name: "Atelier du Pizzaiolo", category: { fr: "Pizzeria au feu de bois", en: "Wood-fired pizzeria" }, theme: THEME.dining },
+  { slug: "braz/index.html",                 name: "BRAZ",           category: { fr: "Grill & fast-food",       en: "Grill & fast food" },   theme: THEME.dining },
 ];

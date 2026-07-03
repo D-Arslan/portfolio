@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:#15110d;color:#f3ead9;font-family:'Hanken Grotesk',system-ui,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  ::selection{background:#e0472c;color:#fff}
+  img{display:block;max-width:100%}
+  button{font-family:inherit;cursor:pointer}
+  input,textarea{font-family:inherit}
+  a{color:inherit}
+  :focus-visible{outline:2.5px solid #e0472c;outline-offset:3px;border-radius:2px}
+  @keyframes ap-fade{from{opacity:0}to{opacity:1}}
+  @keyframes ap-pop{from{opacity:0;transform:translateY(20px) scale(.985)}to{opacity:1;transform:none}}
+  @keyframes ap-marquee{from{transform:none}to{transform:translateX(-50%)}}
+  @media (prefers-reduced-motion: reduce){*{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}}
+</style>
+</helmet>
+
+<div style="min-height:100vh;overflow-x:hidden;position:relative">
+  <div aria-hidden="true" style="position:absolute;top:-140px;left:50%;transform:translateX(-50%);width:900px;height:520px;background:radial-gradient(ellipse at center,rgba(224,71,44,.16),transparent 68%);pointer-events:none;z-index:0"></div>
+
+  <!-- ANNONCE -->
+  <div style="position:relative;z-index:1;background:#0f0c09;color:#f3ead9;overflow:hidden;white-space:nowrap;font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;padding:9px 0;border-bottom:1px solid rgba(243,234,217,.08)">
+    <div style="display:inline-block;animation:ap-marquee 30s linear infinite">
+      <span style="padding:0 22px">3 adresses à Alger</span><span style="color:#e0472c">◆</span><span style="padding:0 22px">Dely Brahim</span><span style="color:#7ba861">◆</span><span style="padding:0 22px">Hydra</span><span style="color:#e0472c">◆</span><span style="padding:0 22px">Val d'Hydra</span><span style="color:#7ba861">◆</span><span style="padding:0 22px">Savoir-faire artisanal</span><span style="color:#e0472c">◆</span><span style="padding:0 22px">Feu de bois</span><span style="color:#7ba861">◆</span>
+      <span style="padding:0 22px">3 adresses à Alger</span><span style="color:#e0472c">◆</span><span style="padding:0 22px">Dely Brahim</span><span style="color:#7ba861">◆</span><span style="padding:0 22px">Hydra</span><span style="color:#e0472c">◆</span><span style="padding:0 22px">Val d'Hydra</span><span style="color:#7ba861">◆</span><span style="padding:0 22px">Savoir-faire artisanal</span><span style="color:#e0472c">◆</span><span style="padding:0 22px">Feu de bois</span><span style="color:#7ba861">◆</span>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header style="position:sticky;top:0;z-index:40;background:rgba(21,17,13,.82);backdrop-filter:blur(12px);border-bottom:1px solid rgba(243,234,217,.1)">
+    <div style="max-width:1240px;margin:0 auto;padding:14px clamp(16px,4vw,40px);display:flex;align-items:center;gap:18px;flex-wrap:wrap">
+      <a href="#accueil" aria-label="L'Atelier du Pizzaiolo — accueil" style="text-decoration:none;display:flex;align-items:center;gap:12px;margin-right:auto">
+        <span aria-hidden="true" style="width:40px;height:40px;border-radius:11px;background:#e0472c;display:grid;place-items:center;color:#fff;flex:none"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.4-.5-2-1-3-1.1-2.1-.2-4 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.2.4-2.3 1-3a2.5 2.5 0 0 0 2.5 2.5Z"/></svg></span>
+        <span style="display:flex;flex-direction:column;line-height:1">
+          <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:20px;letter-spacing:-.01em">L'Atelier</span>
+          <span style="font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;color:#ab9c86;margin-top:3px">du Pizzaiolo · Alger</span>
+        </span>
+      </a>
+      <nav aria-label="Navigation principale" style="display:flex;align-items:center;gap:clamp(12px,2.2vw,26px);flex-wrap:wrap;font-size:14.5px;font-weight:500">
+        <a href="#pizzas" style="text-decoration:none;padding:8px 2px">Les pizzas</a>
+        <a href="#savoir" style="text-decoration:none;padding:8px 2px">Savoir-faire</a>
+        <a href="#adresses" style="text-decoration:none;padding:8px 2px">Adresses</a>
+        <a href="#avis" style="text-decoration:none;padding:8px 2px">Avis</a>
+        <a href="#contact" style="text-decoration:none;padding:8px 2px">Contact</a>
+      </nav>
+      <a href="tel:+213541651280" style="text-decoration:none;display:inline-flex;align-items:center;gap:9px;background:#e0472c;color:#fff;border-radius:999px;padding:11px 18px;font-size:14px;font-weight:600;min-height:44px" style-hover="background:#ef5636">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg>
+        Appeler
+      </a>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section id="accueil" data-screen-label="Accueil" style="position:relative;z-index:1;scroll-margin-top:80px;max-width:1240px;margin:0 auto;padding:clamp(28px,5vw,64px) clamp(16px,4vw,40px) clamp(24px,4vw,48px);display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:clamp(28px,4vw,56px);align-items:center">
+    <div>
+      <div style="display:inline-flex;align-items:center;gap:8px;font-family:'DM Mono',monospace;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:#e0472c;margin-bottom:22px">
+        <span style="width:26px;height:1px;background:#e0472c"></span>Pizzeria artisanale · Alger
+      </div>
+      <h1 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(44px,6.6vw,82px);line-height:.98;letter-spacing:-.02em;margin:0 0 22px">L'art de la<br>pizza, <span style="color:#e0472c">au feu</span><br>de bois.</h1>
+      <p style="font-size:clamp(16px,1.4vw,19px);line-height:1.6;color:#ab9c86;max-width:46ch;margin:0 0 32px">Une pâte pétrie chaque matin, des produits frais et un vrai savoir-faire artisanal. Trois ateliers à Alger pour partager notre passion de la vraie pizza.</p>
+      <div style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:34px">
+        <a href="#pizzas" style="text-decoration:none;display:inline-flex;align-items:center;gap:10px;background:#e0472c;color:#fff;border-radius:999px;padding:15px 28px;font-weight:600;font-size:15.5px;min-height:44px" style-hover="background:#ef5636">Voir les pizzas <span aria-hidden="true">→</span></a>
+        <a href="#adresses" style="text-decoration:none;display:inline-flex;align-items:center;background:transparent;color:#f3ead9;border:1.5px solid rgba(243,234,217,.28);border-radius:999px;padding:15px 26px;font-weight:600;font-size:15.5px;min-height:44px" style-hover="border-color:#7ba861;color:#7ba861">Nos 3 adresses</a>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <span aria-hidden="true" style="width:38px;height:38px;border-radius:10px;background:rgba(243,234,217,.06);border:1px solid rgba(243,234,217,.14);display:grid;place-items:center;color:#e0472c"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></span>
+        <span style="font-size:14px;color:#ab9c86"><strong style="color:#f3ead9">70 000 abonnés</strong> sur Instagram</span>
+      </div>
+    </div>
+    <div style="position:relative">
+      <div style="position:relative;border-radius:20px;overflow:hidden;background:#241d18;aspect-ratio:4/5;box-shadow:0 40px 70px -30px rgba(0,0,0,.7)">
+        <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=900&q=80&auto=format&fit=crop" alt="Pizza artisanale au fromage fondant, sortie du four à bois" style="width:100%;height:100%;object-fit:cover">
+        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(15,12,9,.5),transparent 45%)"></div>
+      </div>
+      <div style="position:absolute;bottom:-18px;left:-14px;background:#211a14;border:1px solid rgba(243,234,217,.14);border-radius:14px;padding:14px 18px;box-shadow:0 20px 34px -18px rgba(0,0,0,.7);display:flex;align-items:center;gap:12px">
+        <span aria-hidden="true" style="width:42px;height:42px;border-radius:10px;background:#7ba861;color:#15110d;display:grid;place-items:center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></span>
+        <div style="line-height:1.2"><div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:20px">3 ateliers</div><div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#ab9c86">à Alger</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VALEURS -->
+  <section aria-label="Notre savoir-faire" style="position:relative;z-index:1;border-top:1px solid rgba(243,234,217,.1);border-bottom:1px solid rgba(243,234,217,.1);background:#1a1510">
+    <div style="max-width:1240px;margin:0 auto;padding:clamp(24px,3vw,36px) clamp(16px,4vw,40px);display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:clamp(18px,3vw,40px)">
+      <div style="display:flex;flex-direction:column;gap:11px">
+        <span aria-hidden="true" style="width:46px;height:46px;border-radius:12px;background:rgba(224,71,44,.14);color:#e0472c;display:grid;place-items:center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.4-.5-2-1-3-1.1-2.1-.2-4 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.2.4-2.3 1-3a2.5 2.5 0 0 0 2.5 2.5Z"/></svg></span>
+        <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:19px">Feu de bois</div>
+        <div style="font-size:13.5px;color:#ab9c86;line-height:1.5">Cuisson au four à bois pour une croûte dorée, croustillante et légère.</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:11px">
+        <span aria-hidden="true" style="width:46px;height:46px;border-radius:12px;background:rgba(224,71,44,.14);color:#e0472c;display:grid;place-items:center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v6l4 2"/><circle cx="12" cy="12" r="9"/></svg></span>
+        <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:19px">Pâte du jour</div>
+        <div style="font-size:13.5px;color:#ab9c86;line-height:1.5">Pétrie et travaillée chaque matin sur place, jamais la veille.</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:11px">
+        <span aria-hidden="true" style="width:46px;height:46px;border-radius:12px;background:rgba(224,71,44,.14);color:#e0472c;display:grid;place-items:center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8.3 12 2.6 2.6 4.8-5.2"/></svg></span>
+        <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:19px">Produits frais</div>
+        <div style="font-size:13.5px;color:#ab9c86;line-height:1.5">Une sélection rigoureuse d'ingrédients frais et un vrai savoir-faire.</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:11px">
+        <span aria-hidden="true" style="width:46px;height:46px;border-radius:12px;background:rgba(224,71,44,.14);color:#e0472c;display:grid;place-items:center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></span>
+        <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:19px">3 adresses</div>
+        <div style="font-size:13.5px;color:#ab9c86;line-height:1.5">Dely Brahim, Hydra et Val d'Hydra — toujours près de chez vous.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PIZZAS -->
+  <section id="pizzas" data-screen-label="Les pizzas" style="position:relative;z-index:1;max-width:1240px;margin:0 auto;padding:clamp(48px,7vw,96px) clamp(16px,4vw,40px)">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:32px">
+      <div>
+        <div style="font-family:'DM Mono',monospace;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:#e0472c;margin-bottom:14px">La carte</div>
+        <h2 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(34px,4.8vw,58px);line-height:1;letter-spacing:-.02em;margin:0">Nos pizzas</h2>
+      </div>
+      <p style="font-size:15px;color:#ab9c86;line-height:1.6;max-width:34ch;margin:0">Cliquez sur une pizza pour l'admirer en grand et découvrir sa recette. Servies en salle et à l'étage.</p>
+    </div>
+
+    <div role="tablist" aria-label="Filtrer les pizzas" style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:36px">
+      <sc-for list="{{ filters }}" as="f" hint-placeholder-count="4">
+        <button role="tab" aria-pressed="{{ f.active }}" onClick="{{ f.select }}" style="{{ f.style }}">{{ f.label }}</button>
+      </sc-for>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,280px),1fr));gap:clamp(16px,2vw,24px)">
+      <sc-for list="{{ pizzas }}" as="p" hint-placeholder-count="6">
+        <button onClick="{{ p.open }}" aria-label="Voir {{ p.name }}" style="text-align:left;padding:0;border:1px solid rgba(243,234,217,.1);border-radius:16px;overflow:hidden;background:#211a14;display:flex;flex-direction:column;transition:transform .28s ease,border-color .28s ease,box-shadow .28s ease" style-hover="transform:translateY(-4px);border-color:rgba(224,71,44,.5);box-shadow:0 26px 44px -26px rgba(0,0,0,.8)">
+          <div style="position:relative;aspect-ratio:5/4;background:#2b2119;overflow:hidden">
+            {{ p.imgEl }}
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(15,12,9,.55),transparent 55%)"></div>
+            <sc-if value="{{ p.badge }}" hint-placeholder-val="">
+              <span style="{{ p.badgeStyle }}">{{ p.badge }}</span>
+            </sc-if>
+            <span aria-hidden="true" style="position:absolute;bottom:12px;right:12px;width:34px;height:34px;border-radius:50%;background:rgba(21,17,13,.7);color:#f3ead9;display:grid;place-items:center;backdrop-filter:blur(4px)"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M14 10l7-7M9 21H3v-6M10 14l-7 7"/></svg></span>
+          </div>
+          <div style="padding:16px 17px 18px;display:flex;flex-direction:column;gap:8px;flex:1">
+            <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px">
+              <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:19px">{{ p.name }}</span>
+              <span style="font-family:'DM Mono',monospace;font-size:14px;color:#e0472c;white-space:nowrap">{{ p.priceFmt }}</span>
+            </div>
+            <p style="font-size:13px;color:#ab9c86;line-height:1.5;margin:0">{{ p.desc }}</p>
+          </div>
+        </button>
+      </sc-for>
+    </div>
+    <p style="font-size:12.5px;color:#8a7c68;margin:26px 0 0;font-family:'DM Mono',monospace">Prix indicatifs en dinars algériens · sur place, à emporter ou en livraison selon l'atelier.</p>
+  </section>
+
+  <!-- SAVOIR-FAIRE -->
+  <section id="savoir" data-screen-label="Savoir-faire" style="position:relative;z-index:1;background:#1a1510;border-top:1px solid rgba(243,234,217,.1)">
+    <div style="max-width:1240px;margin:0 auto;padding:clamp(48px,7vw,96px) clamp(16px,4vw,40px);display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(32px,5vw,64px);align-items:center">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+        <div style="border-radius:16px;overflow:hidden;aspect-ratio:3/4;background:#2b2119"><img src="https://images.unsplash.com/photo-1571066811602-716837d681de?w=700&q=80&auto=format&fit=crop" alt="Pizzaïolo enfournant une pizza dans le four à bois" loading="lazy" style="width:100%;height:100%;object-fit:cover"></div>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div style="border-radius:16px;overflow:hidden;aspect-ratio:4/3;background:#2b2119;flex:1"><img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=700&q=80&auto=format&fit=crop" alt="Pizza dorée sur le plan de travail de l'atelier" loading="lazy" style="width:100%;height:100%;object-fit:cover"></div>
+          <div style="border-radius:16px;overflow:hidden;aspect-ratio:4/3;background:#2b2119;flex:1"><img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=700&q=80&auto=format&fit=crop" alt="Ambiance chaleureuse de la salle à l'étage" loading="lazy" style="width:100%;height:100%;object-fit:cover"></div>
+        </div>
+      </div>
+      <div>
+        <div style="font-family:'DM Mono',monospace;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:#7ba861;margin-bottom:16px">Le savoir-faire</div>
+        <h2 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(32px,4.6vw,54px);line-height:1.02;letter-spacing:-.02em;margin:0 0 20px">Le geste de<br>l'artisan.</h2>
+        <p style="font-size:15.5px;line-height:1.7;color:#ab9c86;max-width:48ch;margin:0 0 24px">Chez L'Atelier du Pizzaiolo, tout part de la pâte : une fermentation patiente, un façonnage à la main, puis le passage au feu de bois qui donne à chaque pizza son caractère. Nos pizzaïolos travaillent sous vos yeux, avec des produits choisis et de vrais fromages.</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:20px 28px">
+          <div><div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:34px;color:#e0472c;line-height:1">100%</div><div style="font-size:13px;color:#ab9c86;margin-top:4px">fait maison, chaque jour</div></div>
+          <div><div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:34px;color:#e0472c;line-height:1">70k</div><div style="font-size:13px;color:#ab9c86;margin-top:4px">abonnés sur Instagram</div></div>
+          <div><div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:34px;color:#e0472c;line-height:1">3</div><div style="font-size:13px;color:#ab9c86;margin-top:4px">ateliers à Alger</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ADRESSES -->
+  <section id="adresses" data-screen-label="Adresses" style="position:relative;z-index:1;max-width:1240px;margin:0 auto;padding:clamp(48px,7vw,96px) clamp(16px,4vw,40px)">
+    <div style="margin-bottom:40px">
+      <div style="font-family:'DM Mono',monospace;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:#e0472c;margin-bottom:14px">Nous trouver</div>
+      <h2 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(34px,4.8vw,58px);line-height:1;letter-spacing:-.02em;margin:0">Nos trois ateliers</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:20px">
+      <sc-for list="{{ adresses }}" as="a" hint-placeholder-count="3">
+        <div style="background:#211a14;border:1px solid rgba(243,234,217,.1);border-radius:16px;padding:26px;display:flex;flex-direction:column;gap:16px">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+            <h3 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:23px;margin:0">{{ a.ville }}</h3>
+            <span style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#7ba861;border:1px solid rgba(123,168,97,.4);padding:4px 8px;border-radius:999px">{{ a.badge }}</span>
+          </div>
+          <div style="display:flex;gap:11px;align-items:flex-start;font-size:14.5px;color:#ab9c86;line-height:1.5">
+            <span aria-hidden="true" style="color:#e0472c;margin-top:1px;flex:none"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></span>
+            <span>{{ a.adresse }}</span>
+          </div>
+          <div style="display:flex;gap:11px;align-items:center;font-size:14.5px;color:#ab9c86">
+            <span aria-hidden="true" style="color:#e0472c;flex:none"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v6l4 2"/><circle cx="12" cy="12" r="9"/></svg></span>
+            <span>{{ a.horaires }}</span>
+          </div>
+          <a href="{{ a.telHref }}" style="text-decoration:none;margin-top:auto;display:inline-flex;align-items:center;justify-content:center;gap:9px;background:rgba(224,71,44,.12);color:#e0472c;border:1px solid rgba(224,71,44,.4);border-radius:999px;padding:12px;font-weight:600;font-size:15px;min-height:46px" style-hover="background:#e0472c;color:#fff">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg>
+            {{ a.tel }}
+          </a>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- AVIS -->
+  <section id="avis" data-screen-label="Avis" style="position:relative;z-index:1;background:#1a1510;border-top:1px solid rgba(243,234,217,.1)">
+    <div style="max-width:1240px;margin:0 auto;padding:clamp(48px,7vw,96px) clamp(16px,4vw,40px)">
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:40px">
+        <div>
+          <div style="font-family:'DM Mono',monospace;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:#7ba861;margin-bottom:14px">Ils ont goûté</div>
+          <h2 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(32px,4.6vw,54px);line-height:1;letter-spacing:-.02em;margin:0">Avis clients</h2>
+        </div>
+        <div style="display:flex;align-items:center;gap:14px;background:#211a14;border:1px solid rgba(243,234,217,.1);border-radius:14px;padding:16px 22px">
+          <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:40px;line-height:1;color:#e0472c">4,6</span>
+          <div><div style="color:#e8b73f;font-size:16px" aria-hidden="true">★★★★★</div><div style="font-size:12.5px;color:#ab9c86;margin-top:4px">sur les 3 ateliers</div></div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:20px">
+        <sc-for list="{{ reviews }}" as="r" hint-placeholder-count="4">
+          <figure style="margin:0;background:#211a14;border:1px solid rgba(243,234,217,.1);border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:14px">
+            <div style="color:#e8b73f;font-size:15px" aria-label="{{ r.note }} étoiles sur 5">{{ r.stars }}</div>
+            <blockquote style="margin:0;font-size:15.5px;line-height:1.6;color:#f3ead9;flex:1">« {{ r.texte }} »</blockquote>
+            <figcaption style="display:flex;align-items:center;gap:12px;border-top:1px solid rgba(243,234,217,.1);padding-top:16px">
+              <span aria-hidden="true" style="width:40px;height:40px;border-radius:50%;background:#e0472c;color:#fff;display:grid;place-items:center;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:17px">{{ r.initiale }}</span>
+              <div style="line-height:1.3"><div style="font-weight:600;font-size:14.5px">{{ r.nom }}</div><div style="font-family:'DM Mono',monospace;font-size:11px;color:#ab9c86">{{ r.lieu }}</div></div>
+            </figcaption>
+          </figure>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" data-screen-label="Contact" style="position:relative;z-index:1;max-width:1240px;margin:0 auto;padding:clamp(48px,7vw,96px) clamp(16px,4vw,40px);display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(32px,5vw,64px)">
+    <div>
+      <div style="font-family:'DM Mono',monospace;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:#e0472c;margin-bottom:16px">Contact</div>
+      <h2 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(32px,4.6vw,54px);line-height:1.02;letter-spacing:-.02em;margin:0 0 20px">Une envie,<br>une question ?</h2>
+      <p style="font-size:15.5px;line-height:1.7;color:#ab9c86;max-width:44ch;margin:0 0 28px">Privatisation, événement, retour sur votre visite : écrivez-nous ou passez nous voir dans l'un de nos ateliers.</p>
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <a href="https://instagram.com/latelier_du_pizzaiolo" target="_blank" rel="noopener" style="text-decoration:none;display:flex;gap:12px;align-items:center;color:#f3ead9"><span aria-hidden="true" style="color:#e0472c"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></span><span style="font-size:14.5px">@latelier_du_pizzaiolo</span></a>
+        <div style="display:flex;gap:12px;align-items:center"><span aria-hidden="true" style="color:#e0472c"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg></span><span style="font-size:14.5px">Dely Brahim 05 41 65 12 80 · Hydra 05 42 72 37 39 · Val d'Hydra 07 96 74 39 62</span></div>
+      </div>
+    </div>
+    <sc-if value="{{ contactSent }}" hint-placeholder-val="{{ false }}">
+      <div style="background:#211a14;border:1px solid rgba(123,168,97,.4);border-radius:18px;padding:40px;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:14px;animation:ap-pop .4s both">
+        <span aria-hidden="true" style="width:52px;height:52px;border-radius:50%;background:#7ba861;color:#15110d;display:grid;place-items:center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-11"/></svg></span>
+        <h3 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:26px;margin:0">Message bien reçu !</h3>
+        <p style="font-size:15px;color:#ab9c86;line-height:1.6;margin:0">Merci, on vous répond très vite. À très bientôt à l'Atelier.</p>
+      </div>
+    </sc-if>
+    <sc-if value="{{ contactNotSent }}" hint-placeholder-val="{{ true }}">
+      <form onSubmit="{{ submitContact }}" style="background:#211a14;border:1px solid rgba(243,234,217,.1);border-radius:18px;padding:clamp(22px,3vw,32px);display:flex;flex-direction:column;gap:16px">
+        <label style="display:flex;flex-direction:column;gap:7px;font-size:13.5px;font-weight:600">Nom complet
+          <input value="{{ contact.nom }}" onInput="{{ onNom }}" type="text" required autocomplete="name" style="border:1.5px solid rgba(243,234,217,.16);border-radius:10px;padding:13px 14px;font-size:15px;background:#15110d;color:#f3ead9;min-height:44px">
+        </label>
+        <label style="display:flex;flex-direction:column;gap:7px;font-size:13.5px;font-weight:600">E-mail
+          <input value="{{ contact.email }}" onInput="{{ onEmail }}" type="email" required autocomplete="email" style="border:1.5px solid rgba(243,234,217,.16);border-radius:10px;padding:13px 14px;font-size:15px;background:#15110d;color:#f3ead9;min-height:44px">
+        </label>
+        <label style="display:flex;flex-direction:column;gap:7px;font-size:13.5px;font-weight:600">Message
+          <textarea value="{{ contact.message }}" onInput="{{ onMessage }}" required rows="4" style="border:1.5px solid rgba(243,234,217,.16);border-radius:10px;padding:13px 14px;font-size:15px;background:#15110d;color:#f3ead9;resize:vertical;font-family:inherit"></textarea>
+        </label>
+        <label style="display:flex;gap:11px;align-items:flex-start;font-size:13px;color:#ab9c86;line-height:1.45;cursor:pointer">
+          <input type="checkbox" checked="{{ contact.consent }}" onChange="{{ onConsent }}" required style="margin-top:2px;width:18px;height:18px;flex:none;accent-color:#e0472c">
+          <span>J'accepte que mes données soient utilisées pour traiter ma demande, conformément à la <a href="#" onClick="{{ openConfid }}" style="color:#e0472c">politique de confidentialité</a>.</span>
+        </label>
+        <sc-if value="{{ contactError }}" hint-placeholder-val="">
+          <div role="alert" style="font-size:13px;color:#ff8a6a;background:rgba(224,71,44,.12);border-radius:8px;padding:10px 12px">{{ contactError }}</div>
+        </sc-if>
+        <button type="submit" style="background:#e0472c;color:#fff;border:none;border-radius:999px;padding:15px;font-weight:600;font-size:15px;min-height:48px" style-hover="background:#ef5636">Envoyer le message</button>
+      </form>
+    </sc-if>
+  </section>
+
+  <!-- FOOTER -->
+  <footer style="position:relative;z-index:1;background:#0f0c09;color:#ab9c86;border-top:1px solid rgba(243,234,217,.1)">
+    <div style="max-width:1240px;margin:0 auto;padding:clamp(44px,5vw,72px) clamp(16px,4vw,40px) 32px;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:36px">
+      <div style="grid-column:1/-1">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
+          <span aria-hidden="true" style="width:40px;height:40px;border-radius:11px;background:#e0472c;display:grid;place-items:center;color:#fff"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.4-.5-2-1-3-1.1-2.1-.2-4 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.2.4-2.3 1-3a2.5 2.5 0 0 0 2.5 2.5Z"/></svg></span>
+          <span style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:24px;color:#f3ead9">L'Atelier du Pizzaiolo</span>
+        </div>
+        <p style="font-size:14px;line-height:1.6;max-width:44ch;margin:0">Pizzeria artisanale au feu de bois. Produits frais et vrai savoir-faire, à Dely Brahim, Hydra et Val d'Hydra — Alger.</p>
+      </div>
+      <div>
+        <div style="font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#7a6d5a;margin-bottom:14px">Naviguer</div>
+        <div style="display:flex;flex-direction:column;gap:10px;font-size:14px">
+          <a href="#pizzas" style="text-decoration:none">Les pizzas</a>
+          <a href="#savoir" style="text-decoration:none">Savoir-faire</a>
+          <a href="#adresses" style="text-decoration:none">Nos adresses</a>
+          <a href="#avis" style="text-decoration:none">Avis clients</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#7a6d5a;margin-bottom:14px">Infos</div>
+        <div style="display:flex;flex-direction:column;gap:10px;font-size:14px">
+          <button onClick="{{ openMentions }}" style="background:none;border:none;padding:0;text-align:left;color:inherit;font-size:14px">Mentions légales</button>
+          <button onClick="{{ openConfid }}" style="background:none;border:none;padding:0;text-align:left;color:inherit;font-size:14px">Politique de confidentialité</button>
+          <button onClick="{{ openCookiePrefs }}" style="background:none;border:none;padding:0;text-align:left;color:inherit;font-size:14px">Préférences cookies</button>
+        </div>
+      </div>
+      <div>
+        <div style="font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#7a6d5a;margin-bottom:14px">Suivez-nous</div>
+        <div style="display:flex;flex-direction:column;gap:10px;font-size:14px">
+          <a href="https://instagram.com/latelier_du_pizzaiolo" target="_blank" rel="noopener" style="text-decoration:none">Instagram · 70k</a>
+          <span>Dely Brahim · 05 41 65 12 80</span>
+          <span>Tous les jours · 11h – 23h30</span>
+        </div>
+      </div>
+    </div>
+    <div style="border-top:1px solid rgba(243,234,217,.08)">
+      <div style="max-width:1240px;margin:0 auto;padding:20px clamp(16px,4vw,40px);display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;font-size:12.5px">
+        <span style="color:#7a6d5a">© 2026 L'Atelier du Pizzaiolo · Site de démonstration</span>
+        <a href="https://difarslan.com" target="_blank" rel="noopener" style="text-decoration:none;font-family:'DM Mono',monospace;letter-spacing:.03em;color:#ab9c86">Réalisé par <span style="color:#e0472c">Arslan DIF</span> — difarslan.com</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- LIGHTBOX -->
+  <sc-if value="{{ hasLightbox }}" hint-placeholder-val="{{ false }}">
+    <div role="dialog" aria-modal="true" aria-label="{{ light.name }}" onClick="{{ backdropClick }}" style="position:fixed;inset:0;z-index:80;background:rgba(9,7,5,.82);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:clamp(12px,4vw,40px);animation:ap-fade .25s both">
+      <button onClick="{{ prevLightbox }}" aria-label="Pizza précédente" style="position:absolute;left:clamp(8px,2vw,24px);top:50%;transform:translateY(-50%);width:48px;height:48px;border-radius:50%;background:rgba(33,26,20,.9);color:#f3ead9;border:1px solid rgba(243,234,217,.16);display:grid;place-items:center;z-index:2"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+      <button onClick="{{ nextLightbox }}" aria-label="Pizza suivante" style="position:absolute;right:clamp(8px,2vw,24px);top:50%;transform:translateY(-50%);width:48px;height:48px;border-radius:50%;background:rgba(33,26,20,.9);color:#f3ead9;border:1px solid rgba(243,234,217,.16);display:grid;place-items:center;z-index:2"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+      <div onClick="{{ stop }}" style="background:#1a1510;width:100%;max-width:860px;max-height:90vh;overflow-y:auto;border-radius:20px;border:1px solid rgba(243,234,217,.12);animation:ap-pop .35s both;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))">
+        <div style="position:relative;min-height:260px;background:#2b2119">
+          {{ light.imgEl }}
+          <sc-if value="{{ light.badge }}" hint-placeholder-val="">
+            <span style="position:absolute;top:16px;left:16px;background:#e0472c;color:#fff;font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;padding:6px 11px;border-radius:999px">{{ light.badge }}</span>
+          </sc-if>
+        </div>
+        <div style="padding:clamp(24px,3vw,34px);display:flex;flex-direction:column">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:14px;margin-bottom:6px">
+            <h3 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:30px;letter-spacing:-.01em;margin:0">{{ light.name }}</h3>
+            <button onClick="{{ closeLightbox }}" aria-label="Fermer" style="width:38px;height:38px;border-radius:50%;background:#2b2119;color:#f3ead9;border:none;font-size:16px;flex:none">✕</button>
+          </div>
+          <div style="font-family:'DM Mono',monospace;font-size:15px;color:#e0472c;margin-bottom:18px">{{ light.priceFmt }}</div>
+          <p style="font-size:15px;line-height:1.6;color:#ab9c86;margin:0 0 22px">{{ light.desc }}</p>
+          <div style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#7a6d5a;margin-bottom:12px">Garniture</div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px">
+            <sc-for list="{{ light.ingredients }}" as="ing" hint-placeholder-count="4">
+              <span style="font-size:13px;color:#f3ead9;background:#211a14;border:1px solid rgba(243,234,217,.12);border-radius:999px;padding:7px 13px">{{ ing }}</span>
+            </sc-for>
+          </div>
+          <div style="margin-top:auto;padding-top:24px;display:flex;align-items:center;gap:8px;font-size:12.5px;color:#7a6d5a;font-family:'DM Mono',monospace">
+            <span aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.4-.5-2-1-3-1.1-2.1-.2-4 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.2.4-2.3 1-3a2.5 2.5 0 0 0 2.5 2.5Z"/></svg></span>
+            Cuite au feu de bois · {{ light.counter }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- LÉGAL -->
+  <sc-if value="{{ hasLegal }}" hint-placeholder-val="{{ false }}">
+    <div role="dialog" aria-modal="true" aria-label="{{ legalTitle }}" onClick="{{ closeLegal }}" style="position:fixed;inset:0;z-index:90;background:rgba(9,7,5,.8);backdrop-filter:blur(5px);display:flex;align-items:center;justify-content:center;padding:16px;animation:ap-fade .25s both">
+      <div onClick="{{ stop }}" style="background:#1a1510;border:1px solid rgba(243,234,217,.12);width:100%;max-width:640px;max-height:86vh;overflow-y:auto;border-radius:20px;padding:clamp(24px,4vw,40px);animation:ap-pop .35s both">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+          <h3 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:28px;margin:0">{{ legalTitle }}</h3>
+          <button onClick="{{ closeLegal }}" aria-label="Fermer" style="width:40px;height:40px;border-radius:50%;background:#2b2119;color:#f3ead9;border:none;font-size:17px">✕</button>
+        </div>
+        <div style="font-size:14.5px;line-height:1.7;color:#c9bca6">{{ legalBody }}</div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- COOKIES -->
+  <sc-if value="{{ showCookie }}" hint-placeholder-val="{{ false }}">
+    <div role="dialog" aria-label="Gestion des cookies" style="position:fixed;left:0;right:0;bottom:0;z-index:100;padding:14px clamp(12px,4vw,24px);animation:ap-fade .4s both">
+      <div style="max-width:1000px;margin:0 auto;background:#211a14;color:#f3ead9;border:1px solid rgba(243,234,217,.14);border-radius:16px;padding:20px 24px;display:flex;gap:20px;align-items:center;flex-wrap:wrap;box-shadow:0 20px 50px -20px rgba(0,0,0,.8)">
+        <div style="flex:1;min-width:240px">
+          <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:19px;margin-bottom:6px;display:flex;align-items:center;gap:10px"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#e0472c" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9 3.5 3.5 0 0 1-4-4 3.5 3.5 0 0 1-5-5Z"/><circle cx="9" cy="12" r="1"/><circle cx="14" cy="15" r="1"/><circle cx="15" cy="10" r="1"/></svg> Votre vie privée</div>
+          <p style="font-size:13.5px;line-height:1.55;color:#ab9c86;margin:0">Nous utilisons des cookies pour améliorer votre expérience et mesurer l'audience. En savoir plus dans notre <button onClick="{{ openConfid }}" style="background:none;border:none;color:#e0472c;padding:0;font-size:13.5px;text-decoration:underline">politique de confidentialité</button>.</p>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <button onClick="{{ refuseCookie }}" style="background:transparent;color:#f3ead9;border:1.5px solid rgba(243,234,217,.3);border-radius:999px;padding:12px 22px;font-weight:600;font-size:14px;min-height:44px">Refuser</button>
+          <button onClick="{{ acceptCookie }}" style="background:#e0472c;color:#fff;border:none;border-radius:999px;padding:12px 24px;font-weight:600;font-size:14px;min-height:44px">Accepter</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  constructor(props){
+    super(props);
+    this.state = {
+      filter:'toutes', lightboxId:null,
+      cookie:null, legal:null,
+      contact:{nom:'',email:'',message:'',consent:false}, contactSent:false, contactError:'',
+    };
+    const I=(id,w)=>`https://images.unsplash.com/photo-${id}?w=${w||800}&q=80&auto=format&fit=crop`;
+
+    this.pizzas=[
+      {id:'margherita', cat:'rosso', name:'Margherita', price:900, img:I('1604382354936-07c5d9983bd3'),
+        alt:'Pizza Margherita, sauce tomate, mozzarella et basilic',
+        desc:'La classique, tout en équilibre : sauce tomate, mozzarella et basilic frais.',
+        ingredients:['Sauce tomate','Mozzarella','Basilic frais','Huile d’olive']},
+      {id:'reine', cat:'rosso', name:'La Reine', price:1200, img:I('1513104890138-7c749659a591'),
+        alt:'Pizza Reine au jambon et champignons',
+        desc:'Un grand classique généreux, jambon et champignons frais.',
+        ingredients:['Sauce tomate','Mozzarella','Jambon','Champignons']},
+      {id:'diavola', cat:'rosso', badge:'Piquante', name:'Diavola', price:1300, img:I('1593560708920-61dd98c46a4e'),
+        alt:'Pizza Diavola au pepperoni piquant',
+        desc:'Pour les amateurs de piquant : pepperoni relevé et huile pimentée.',
+        ingredients:['Sauce tomate','Mozzarella','Pepperoni','Huile pimentée']},
+      {id:'boisee', cat:'bianco', badge:'Signature', name:'La Boisée', price:1450, img:I('1574071318508-1cdbab80d002'),
+        alt:'Pizza Boisée à la crème, champignons et lardons',
+        desc:'Notre signature crémeuse aux champignons et lardons fumés.',
+        ingredients:['Crème fraîche','Mozzarella','Champignons','Lardons fumés','Oignons']},
+      {id:'saisons', cat:'rosso', name:'Quatre Saisons', price:1350, img:I('1590947132387-155cc02f3212'),
+        alt:'Pizza Quatre Saisons aux quatre garnitures',
+        desc:'Quatre quartiers, quatre plaisirs : jambon, champignons, artichauts, olives.',
+        ingredients:['Sauce tomate','Mozzarella','Jambon','Champignons','Artichauts','Olives']},
+      {id:'calzone', cat:'rosso', name:'Calzone', price:1300, img:I('1571997478779-2adcbbe9ab2f'),
+        alt:'Calzone dorée refermée',
+        desc:'Le chausson doré, garni et refermé, à l’œuf fondant.',
+        ingredients:['Sauce tomate','Mozzarella','Jambon','Œuf']},
+      {id:'savoyarde', cat:'bianco', badge:'Signature', name:'La Savoyarde', price:1600, img:I('1565299624946-b28f40a0ae38'),
+        alt:'Pizza Savoyarde au reblochon et pommes de terre',
+        desc:'Montagnarde et réconfortante : reblochon fondu, pommes de terre et lardons.',
+        ingredients:['Crème fraîche','Reblochon','Pommes de terre','Lardons','Oignons']},
+      {id:'fromages', cat:'bianco', name:'Quatre Fromages', price:1400, img:I('1595854341625-f33ee10dbf94'),
+        alt:'Pizza aux quatre fromages fondants',
+        desc:'Le rendez-vous des fromages : mozzarella, gorgonzola, chèvre et parmesan.',
+        ingredients:['Crème fraîche','Mozzarella','Gorgonzola','Chèvre','Parmesan']},
+      {id:'truffe', cat:'bianco', badge:'Signature', name:'La Truffe', price:1900, img:I('1601924582970-9238bcb495d9'),
+        alt:'Pizza à la crème de truffe et roquette',
+        desc:'La plus raffinée : crème de truffe, champignons rôtis et roquette.',
+        ingredients:['Crème de truffe','Mozzarella','Champignons','Roquette','Copeaux de parmesan']},
+      {id:'bbq', cat:'rosso', name:'Poulet BBQ', price:1350, img:I('1594007654729-407eedc4be65'),
+        alt:'Pizza poulet sauce barbecue',
+        desc:'Gourmande et fumée : sauce BBQ, poulet mariné, oignons et poivrons.',
+        ingredients:['Sauce BBQ','Mozzarella','Poulet','Oignons','Poivrons']},
+      {id:'vegetarienne', cat:'rosso', name:'La Végétarienne', price:1250, img:I('1512152272829-e3139592d56f'),
+        alt:'Pizza végétarienne aux légumes grillés',
+        desc:'Pleine de fraîcheur : légumes grillés du moment et roquette.',
+        ingredients:['Sauce tomate','Mozzarella','Courgettes','Poivrons','Aubergines','Roquette']},
+      {id:'fruitsmer', cat:'rosso', name:'Fruits de mer', price:1700, img:I('1548369937-47519962c11a'),
+        alt:'Pizza aux fruits de mer',
+        desc:'Iodée et parfumée : fruits de mer, ail et persil frais.',
+        ingredients:['Sauce tomate','Mozzarella','Fruits de mer','Ail','Persil']},
+    ];
+
+    this.filtersMeta=[
+      {key:'toutes', label:'Toutes'},
+      {key:'rosso', label:'Base tomate'},
+      {key:'bianco', label:'Base crème'},
+      {key:'signature', label:'Signatures'},
+    ];
+
+    this.adresses=[
+      {ville:'Dely Brahim', badge:'Atelier', adresse:'140, Haï El Bina — Dely Ibrahim, Alger', horaires:'Tous les jours · 11h – 23h30', tel:'05 41 65 12 80', telHref:'tel:+213541651280'},
+      {ville:'Hydra', badge:'Atelier', adresse:'Rue Kaddour Rahim — Hydra, Alger', horaires:'Tous les jours · 11h – 23h30', tel:'05 42 72 37 39', telHref:'tel:+213542723739'},
+      {ville:"Val d'Hydra", badge:'Atelier', adresse:"Val d'Hydra — Alger", horaires:'Tous les jours · 11h – 23h30', tel:'07 96 74 39 62', telHref:'tel:+213796743962'},
+    ];
+
+    this.reviews=[
+      {nom:'Riad M.', lieu:'Dely Brahim', note:5, texte:'Plaisir pour les yeux et un goût magnifique. La Boisée est une tuerie, pâte parfaite.'},
+      {nom:'Sarah B.', lieu:'Hydra', note:5, texte:'La Savoyarde est incroyable, généreuse et bien cuite. Salle à l’étage très agréable.'},
+      {nom:'Amine K.', lieu:'Val d’Hydra', note:4, texte:'Bonnes pizzas, service rapide et personnel accueillant. On revient sans hésiter.'},
+      {nom:'Lydia T.', lieu:'Dely Brahim', note:5, texte:'Meilleure pizza du quartier, pâte fine et croustillante, vrais produits frais.'},
+      {nom:'Nabil D.', lieu:'Hydra', note:5, texte:'La Truffe vaut vraiment le détour. Cadre soigné et cuisson au feu de bois au top.'},
+      {nom:'Yasmine A.', lieu:'Val d’Hydra', note:4, texte:'Très bon rapport qualité-prix, portions généreuses. Idéal en famille le week-end.'},
+    ];
+  }
+
+  componentDidMount(){
+    try{ const c=localStorage.getItem('atelier_cookie'); if(c==='accepted'||c==='refused') this.setState({cookie:c}); }catch(e){}
+    this._onKey=(e)=>{
+      if(e.key==='Escape') this.setState({lightboxId:null, legal:null});
+      else if(this.state.lightboxId){ if(e.key==='ArrowRight') this.nav(1); else if(e.key==='ArrowLeft') this.nav(-1); }
+    };
+    window.addEventListener('keydown', this._onKey);
+  }
+  componentWillUnmount(){ window.removeEventListener('keydown', this._onKey); }
+
+  fmt(n){ return n.toLocaleString('fr-FR')+' DA'; }
+  stars(n){ return '★★★★★'.slice(0,n)+'☆☆☆☆☆'.slice(0,5-n); }
+
+  filtered(){
+    const f=this.state.filter;
+    if(f==='toutes') return this.pizzas;
+    if(f==='signature') return this.pizzas.filter(p=>p.badge==='Signature');
+    return this.pizzas.filter(p=>p.cat===f);
+  }
+
+  setFilter(k){ this.setState({filter:k}); }
+  openLightbox(id){ this.setState({lightboxId:id}); }
+  closeLightbox(){ this.setState({lightboxId:null}); }
+  backdropClick(e){ if(e.target===e.currentTarget) this.setState({lightboxId:null}); }
+  nav(dir){
+    const list=this.filtered(); if(!list.length) return;
+    let i=list.findIndex(p=>p.id===this.state.lightboxId);
+    if(i<0){ this.setState({lightboxId:list[0].id}); return; }
+    i=(i+dir+list.length)%list.length;
+    this.setState({lightboxId:list[i].id});
+  }
+
+  acceptCookie(){ try{localStorage.setItem('atelier_cookie','accepted');}catch(e){} this.setState({cookie:'accepted'}); }
+  refuseCookie(){ try{localStorage.setItem('atelier_cookie','refused');}catch(e){} this.setState({cookie:'refused'}); }
+  openCookiePrefs(){ this.setState({cookie:null}); }
+
+  openLegal(k,e){ if(e&&e.preventDefault)e.preventDefault(); this.setState({legal:k}); }
+  closeLegal(){ this.setState({legal:null}); }
+
+  setContact(f,v){ this.setState(s=>({contact:{...s.contact,[f]:v}})); }
+  submitContact(e){
+    if(e&&e.preventDefault)e.preventDefault();
+    const c=this.state.contact;
+    if(!c.nom.trim()||!c.email.trim()||!c.message.trim()){ this.setState({contactError:'Merci de remplir tous les champs.'}); return; }
+    if(!c.consent){ this.setState({contactError:'Merci d’accepter la politique de confidentialité.'}); return; }
+    this.setState({contactSent:true, contactError:''});
+  }
+
+  imgEl(src,alt){ return React.createElement('img',{src, alt, loading:'lazy', style:{width:'100%',height:'100%',objectFit:'cover'}}); }
+
+  legalContent(){
+    const wrap=(nodes)=>React.createElement('div',{style:{display:'flex',flexDirection:'column',gap:'14px'}},nodes);
+    const P=(t,k)=>React.createElement('p',{key:k,style:{margin:0}},t);
+    const H=(t,k)=>React.createElement('div',{key:k,style:{fontWeight:700,fontSize:'15px',color:'#f3ead9',marginTop:'6px'}},t);
+    if(this.state.legal==='mentions'){
+      return {title:'Mentions légales', body:wrap([
+        H('Éditeur','h1'),
+        P('L’Atelier du Pizzaiolo — restaurant pizzeria. Établissements à Dely Ibrahim, Hydra et Val d’Hydra, Alger.','p1'),
+        H('Contact','h2'),
+        P('Dely Brahim : 140, Haï El Bina — 05 41 65 12 80. Hydra : 05 42 72 37 39. Val d’Hydra : 07 96 74 39 62.','p2'),
+        H('Hébergement','h3'),
+        P('Site hébergé par un prestataire d’hébergement web. Coordonnées disponibles sur demande.','p4'),
+        H('Propriété intellectuelle','h5'),
+        P('Les contenus de ce site sont protégés. Photographies d’illustration libres de droits. Ceci est un site de démonstration.','p6'),
+        H('Conception','h7'),
+        P('Site conçu et développé par Arslan DIF — difarslan.com.','p8'),
+      ])};
+    }
+    return {title:'Politique de confidentialité', body:wrap([
+      P('Nous accordons une grande importance à la protection de vos données personnelles.','p1'),
+      H('Données collectées','h1'),
+      P('Via le formulaire de contact : nom, e-mail et le contenu de votre message. Ces données servent uniquement à répondre à votre demande.','p2'),
+      H('Cookies','h3'),
+      P('Nous utilisons des cookies de mesure d’audience. Vous pouvez les accepter ou les refuser via le bandeau ou le lien « Préférences cookies ».','p4'),
+      H('Vos droits','h5'),
+      P('Vous disposez d’un droit d’accès, de rectification et de suppression de vos données. Contactez-nous via l’un de nos ateliers pour l’exercer.','p6'),
+    ])};
+  }
+
+  renderVals(){
+    const st=this.state;
+    const chip='font-family:\'DM Mono\',monospace;font-size:12.5px;letter-spacing:.04em;padding:10px 16px;border-radius:999px;min-height:40px;display:inline-flex;align-items:center;transition:all .18s ease;';
+    const filters=this.filtersMeta.map(f=>{
+      const active=st.filter===f.key;
+      return { label:f.label, active, select:()=>this.setFilter(f.key),
+        style: chip+(active?'background:#e0472c;color:#fff;border:1.5px solid #e0472c;':'background:#211a14;color:#f3ead9;border:1.5px solid rgba(243,234,217,.16);') };
+    });
+
+    const badgeStyle='position:absolute;top:12px;left:12px;background:#e0472c;color:#fff;font-family:\'DM Mono\',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:5px 10px;border-radius:999px';
+    const pizzas=this.filtered().map(p=>({
+      name:p.name, desc:p.desc, priceFmt:this.fmt(p.price),
+      badge:p.badge||'', badgeStyle,
+      imgEl:this.imgEl(p.img,p.alt),
+      open:()=>this.openLightbox(p.id),
+    }));
+
+    // Lightbox
+    const lp=this.pizzas.find(p=>p.id===st.lightboxId);
+    let light={};
+    if(lp){
+      const list=this.filtered();
+      const idx=list.findIndex(p=>p.id===lp.id);
+      light={
+        name:lp.name, desc:lp.desc, priceFmt:this.fmt(lp.price), badge:lp.badge||'',
+        ingredients:lp.ingredients, imgEl:this.imgEl(lp.img,lp.alt),
+        counter:(idx>=0?idx+1:1)+' / '+list.length,
+      };
+    }
+
+    const lc=this.legalContent();
+
+    return {
+      filters, pizzas,
+      adresses:this.adresses, reviews:this.reviews.map(r=>({...r, stars:this.stars(r.note), initiale:r.nom.charAt(0)})),
+      hasLightbox:!!lp, light, closeLightbox:()=>this.closeLightbox(), backdropClick:(e)=>this.backdropClick(e), stop:(e)=>e.stopPropagation(),
+      prevLightbox:(e)=>{if(e&&e.stopPropagation)e.stopPropagation();this.nav(-1);}, nextLightbox:(e)=>{if(e&&e.stopPropagation)e.stopPropagation();this.nav(1);},
+      hasLegal:!!st.legal, legalTitle:lc.title, legalBody:lc.body, closeLegal:()=>this.closeLegal(),
+      openMentions:(e)=>this.openLegal('mentions',e), openConfid:(e)=>this.openLegal('confidentialite',e), openCookiePrefs:()=>this.openCookiePrefs(),
+      showCookie: st.cookie===null, acceptCookie:()=>this.acceptCookie(), refuseCookie:()=>this.refuseCookie(),
+      contact:st.contact, contactSent:st.contactSent, contactNotSent:!st.contactSent, contactError:st.contactError,
+      onNom:(e)=>this.setContact('nom',e.target.value), onEmail:(e)=>this.setContact('email',e.target.value),
+      onMessage:(e)=>this.setContact('message',e.target.value), onConsent:(e)=>this.setContact('consent',e.target.checked),
+      submitContact:(e)=>this.submitContact(e),
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+<!doctype html><html><head><meta charset="utf8"><style>body{margin:0;background:#222;font-family:sans-serif;display:grid;grid-template-columns:repeat(4,1fr);gap:2px}figure{margin:0;position:relative}img{width:100%;height:150px;object-fit:cover;display:block}figcaption{position:absolute;left:0;bottom:0;right:0;background:rgba(0,0,0,.72);color:#fff;font-size:11px;padding:3px 5px}</style></head><body>
+<script>
+const items=[["classic 1568","1568901346375-23c9450c58cd"],["double 1610","1610440042657-612c34d95e9f"],["double 1607","1607013251379-e6eecfffe234"],["burger 1571","1571091718767-18b5b1457add"],["burger 1550","1550547660-d9450f859349"],["burger 1586","1586190848861-99aa4a171e90"],["chicken 1606","1606755962773-d324e0a13086"],["veggie 1520","1520072959219-c595dc870360"],["frites cheddar 1585","1585109649139-366815a0d713"],["frites 1573","1573080496219-bb080dd4f877"],["milkshake 1452","1452251889946-8ff5ea7b27ab"],["food 1486","1486297678162-eb2a19b0a32d"],["interior 1517","1517248135467-4c7edcad34c4"],["restaurant 1414","1414235077428-338989a2e8c0"],["food 1552","1552526881-721ce8509abb"],["cheese 1628","1628294895950-9805252327bc"]];
+document.body.innerHTML=items.map(([l,id])=>`<figure><img src="https://images.unsplash.com/photo-${id}?w=400&q=60&fit=crop" alt="${l}"><figcaption>${l}</figcaption></figure>`).join('');
+</script>
+</body></html>

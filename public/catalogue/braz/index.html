@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{margin:0;background:#F4EDE1;color:#221E19;font-family:'Hanken Grotesk',system-ui,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none;padding:0;margin:0}
+a{color:inherit;text-decoration:none}
+input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2.5px solid #DB4B16;outline-offset:2px;border-radius:3px}
+img{max-width:100%;display:block}
+@keyframes braz-marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes braz-bump{0%{transform:scale(1)}30%{transform:scale(1.4)}100%{transform:scale(1)}}
+@keyframes braz-fadeup{from{transform:translateY(14px)}to{transform:translateY(0)}}
+@keyframes braz-toast{from{opacity:0;transform:translate(-50%,14px)}to{opacity:1;transform:translate(-50%,0)}}
+@keyframes braz-slide{from{transform:translateX(100%)}to{transform:translateX(0)}}
+@keyframes braz-pop{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
+.braz-track{animation:braz-marquee 30s linear infinite}
+.braz-fadeup{animation:braz-fadeup .55s cubic-bezier(.2,.7,.2,1) both}
+.show-mobile{display:none}
+@media(max-width:820px){.hide-mobile{display:none!important}.show-mobile{display:flex!important}}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.001s!important;animation-iteration-count:1!important;transition-duration:.001s!important}.braz-track{animation:none!important;transform:none!important}}
+</style>
+</helmet>
+
+<div style="--acc:{{ acc }};--acc-d:{{ accD }};--gold:#E0A73E;min-height:100vh;display:flex;flex-direction:column">
+
+<!-- ============ HEADER ============ -->
+<header style="position:sticky;top:0;z-index:60;background:rgba(244,237,225,.86);backdrop-filter:blur(12px);border-bottom:1px solid rgba(34,30,25,.1)">
+  <div style="max-width:1200px;margin:0 auto;padding:0 clamp(16px,4vw,40px);height:66px;display:flex;align-items:center;gap:16px">
+    <button onClick="{{ goHome }}" aria-label="BRAZ, accueil" style="display:flex;align-items:baseline;gap:8px">
+      <span style="font-family:'Bricolage Grotesque';font-weight:800;font-size:26px;letter-spacing:-.03em;color:#1C1915">BRAZ</span>
+      <span style="font-family:'Hanken Grotesk';font-weight:700;font-size:10px;letter-spacing:.28em;color:var(--acc-d);align-self:center;transform:translateY(-1px)">ALGER</span>
+    </button>
+    <nav class="hide-mobile" aria-label="Navigation principale" style="display:flex;align-items:center;gap:4px;margin-left:22px">
+      <button onClick="{{ goHome }}" style="padding:9px 14px;border-radius:999px;font-weight:600;font-size:14.5px;color:#3A342D">Accueil</button>
+      <button onClick="{{ goMenu }}" style="padding:9px 14px;border-radius:999px;font-weight:600;font-size:14.5px;color:#3A342D">Menu</button>
+      <button onClick="{{ goApropos }}" style="padding:9px 14px;border-radius:999px;font-weight:600;font-size:14.5px;color:#3A342D">Le resto</button>
+      <button onClick="{{ goContact }}" style="padding:9px 14px;border-radius:999px;font-weight:600;font-size:14.5px;color:#3A342D">Contact</button>
+    </nav>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:10px">
+      <button class="hide-mobile" onClick="{{ goMenu }}" style="background:var(--acc);color:#fff;font-weight:700;font-size:14px;padding:11px 18px;border-radius:999px" style-hover="background:var(--acc-d)">Commander</button>
+      <button onClick="{{ openCart }}" aria-label="{{ cartAria }}" style="position:relative;display:flex;align-items:center;gap:8px;background:#1C1915;color:#F4EDE1;font-weight:700;font-size:14px;padding:11px 15px;border-radius:999px" style-hover="background:#2A241E">
+        <span aria-hidden="true">Panier</span>
+        <span style="{{ badgeStyle }}">{{ cartCount }}</span>
+      </button>
+      <button class="show-mobile" onClick="{{ toggleNav }}" aria-label="Ouvrir le menu" aria-expanded="{{ navOpen }}" style="width:42px;height:42px;border-radius:12px;border:1px solid rgba(34,30,25,.15);display:none;align-items:center;justify-content:center;flex-direction:column;gap:4px">
+        <span style="width:18px;height:2px;background:#1C1915;border-radius:2px"></span>
+        <span style="width:18px;height:2px;background:#1C1915;border-radius:2px"></span>
+        <span style="width:18px;height:2px;background:#1C1915;border-radius:2px"></span>
+      </button>
+    </div>
+  </div>
+  <sc-if value="{{ navOpen }}">
+    <div class="show-mobile" style="display:none;flex-direction:column;padding:8px 16px 16px;border-top:1px solid rgba(34,30,25,.08);gap:2px">
+      <button onClick="{{ goHome }}" style="text-align:left;padding:13px 12px;border-radius:12px;font-weight:600;font-size:16px" style-hover="background:rgba(34,30,25,.05)">Accueil</button>
+      <button onClick="{{ goMenu }}" style="text-align:left;padding:13px 12px;border-radius:12px;font-weight:600;font-size:16px" style-hover="background:rgba(34,30,25,.05)">Menu</button>
+      <button onClick="{{ goApropos }}" style="text-align:left;padding:13px 12px;border-radius:12px;font-weight:600;font-size:16px" style-hover="background:rgba(34,30,25,.05)">Le resto</button>
+      <button onClick="{{ goContact }}" style="text-align:left;padding:13px 12px;border-radius:12px;font-weight:600;font-size:16px" style-hover="background:rgba(34,30,25,.05)">Contact</button>
+      <button onClick="{{ goMenu }}" style="margin-top:6px;background:var(--acc);color:#fff;font-weight:700;font-size:16px;padding:14px;border-radius:14px">Commander maintenant</button>
+    </div>
+  </sc-if>
+</header>
+
+<main style="flex:1">
+
+<!-- ============ HOME ============ -->
+<sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+<div class="braz-fadeup">
+
+  <!-- HERO -->
+  <section style="max-width:1200px;margin:0 auto;padding:clamp(28px,5vw,64px) clamp(16px,4vw,40px) clamp(20px,3vw,40px);display:flex;flex-wrap:wrap;gap:clamp(28px,4vw,56px);align-items:center">
+    <div style="flex:1 1 380px;min-width:280px">
+      <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(219,75,22,.1);color:var(--acc-d);font-weight:700;font-size:12.5px;letter-spacing:.02em;padding:7px 13px;border-radius:999px">
+        <span style="width:7px;height:7px;border-radius:50%;background:var(--acc);display:inline-block"></span>Ouvert · 11h – 00h · 7j/7
+      </div>
+      <h1 style="font-family:'Bricolage Grotesque';font-weight:800;font-size:clamp(42px,7.5vw,84px);line-height:.94;letter-spacing:-.03em;margin:18px 0 0;color:#1C1915">Grillé sur la<br>braise, servi<br><span style="color:var(--acc)">brûlant.</span></h1>
+      <p style="font-size:clamp(16px,2vw,19px);line-height:1.5;color:#5C554C;max-width:44ch;margin:20px 0 0">Burgers smashés, tacos généreux et chawarma maison. Commandez en ligne, livré chaud en 30 minutes dans tout Alger.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:28px">
+        <button onClick="{{ goMenu }}" style="display:inline-flex;align-items:center;gap:9px;background:var(--acc);color:#fff;font-weight:700;font-size:16px;padding:16px 26px;border-radius:999px" style-hover="background:var(--acc-d);transform:translateY(-1px)">Commander maintenant →</button>
+        <button onClick="{{ goMenu }}" style="display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:16px;padding:16px 24px;border-radius:999px;border:1.5px solid rgba(34,30,25,.2);color:#1C1915" style-hover="border-color:#1C1915;background:rgba(34,30,25,.04)">Voir le menu</button>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:22px;margin-top:32px">
+        <div><div style="font-family:'Bricolage Grotesque';font-weight:800;font-size:24px;color:#1C1915">4,8<span style="color:var(--gold)">★</span></div><div style="font-size:12.5px;color:#6B6357;font-weight:500">1 240 avis</div></div>
+        <div style="width:1px;background:rgba(34,30,25,.14)"></div>
+        <div><div style="font-family:'Bricolage Grotesque';font-weight:800;font-size:24px;color:#1C1915">~30 min</div><div style="font-size:12.5px;color:#6B6357;font-weight:500">livraison moyenne</div></div>
+        <div style="width:1px;background:rgba(34,30,25,.14)"></div>
+        <div><div style="font-family:'Bricolage Grotesque';font-weight:800;font-size:24px;color:#1C1915">12</div><div style="font-size:12.5px;color:#6B6357;font-weight:500">communes livrées</div></div>
+      </div>
+    </div>
+    <!-- hero visual -->
+    <div style="flex:1 1 380px;min-width:280px;position:relative">
+      <div style="position:relative;aspect-ratio:4/5;border-radius:28px;overflow:hidden;background:radial-gradient(120% 120% at 25% 18%, #F0A24E 0%, #C85A22 44%, #6E2A12 100%);box-shadow:0 30px 60px -24px rgba(110,42,18,.55)">
+        <sc-if value="{{ heroImg }}"><img src="{{ heroImg }}" alt="Le Braz Classique : steak smashé, cheddar fondu et sauce Braz dans un pain brioché" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></sc-if>
+        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(20,15,10,.35),transparent 50%)"></div>
+        <div style="position:absolute;top:18px;left:18px;background:#1C1915;color:#F4EDE1;font-weight:700;font-size:12px;padding:7px 12px;border-radius:999px;display:inline-flex;align-items:center;gap:6px"><svg width="13" height="13" viewBox="0 0 24 24" fill="var(--acc)" aria-hidden="true"><path d="M12 23a7 7 0 0 0 7-7c0-4-3-7-4-9-1 2-2 3-3 3-2 0-2-2-2-4-3 2-5 5-5 10a7 7 0 0 0 7 7z"/></svg>Best-seller</div>
+      </div>
+      <div style="position:absolute;right:-6px;top:34%;background:#FBF6EC;border:1px solid rgba(34,30,25,.1);box-shadow:0 12px 30px -10px rgba(28,25,21,.3);border-radius:16px;padding:12px 16px;transform:rotate(3deg)">
+        <div style="font-size:11px;color:#6B6357;font-weight:600;white-space:nowrap">Le Braz Classique</div>
+        <div style="font-family:'Bricolage Grotesque';font-weight:800;font-size:22px;color:var(--acc);white-space:nowrap">650 DA</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TICKER -->
+  <sc-if value="{{ showTicker }}" hint-placeholder-val="{{ true }}">
+  <div style="background:#1C1915;overflow:hidden;padding:14px 0;margin-top:8px">
+    <div class="braz-track" style="display:flex;white-space:nowrap;width:max-content">
+      <span style="font-family:'Bricolage Grotesque';font-weight:700;font-size:15px;letter-spacing:.04em;color:#F4EDE1;text-transform:uppercase">{{ tickerText }}</span>
+      <span aria-hidden="true" style="font-family:'Bricolage Grotesque';font-weight:700;font-size:15px;letter-spacing:.04em;color:#F4EDE1;text-transform:uppercase">{{ tickerText }}</span>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- CATEGORIES -->
+  <section style="max-width:1200px;margin:0 auto;padding:clamp(48px,6vw,80px) clamp(16px,4vw,40px) clamp(20px,3vw,32px)">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:26px">
+      <div>
+        <div style="font-weight:700;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--acc-d)">La carte</div>
+        <h2 style="font-family:'Bricolage Grotesque';font-weight:800;font-size:clamp(28px,4.2vw,46px);line-height:1;letter-spacing:-.02em;margin:8px 0 0;color:#1C1915">Choisissez votre camp</h2>
+      </div>
+      <button onClick="{{ goMenu }}" style="font-weight:700;font-size:14.5px;color:var(--acc-d)" style-hover="color:var(--acc)">Tout le menu →</button>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px">
+      <sc-for list="{{ catCards }}" as="c" hint-placeholder-count="6">
+        <button onClick="{{ c.onClick }}" style="position:relative;text-align:left;aspect-ratio:1/1;border-radius:20px;overflow:hidden;background:{{ c.grad }}" style-hover="transform:translateY(-3px)">
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(20,15,10,.6),transparent 62%)"></div>
+          <div style="position:absolute;inset:0;background-image:repeating-linear-gradient(135deg,rgba(255,255,255,.05) 0 2px,transparent 2px 20px)"></div>
+          <div style="position:absolute;left:14px;bottom:12px;right:12px">
+            <div style="font-family:'Bricolage Grotesque';font-weight:800;font-size:18px;color:#fff;line-height:1.05">{{ c.label }}</div>
+            <div style="font-size:12px;color:rgba(255,255,255,.8);font-weight:600">{{ c.count }} plats</div>
+          </div>
+        </button>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- BEST SELLERS -->
+  <section style="max-width:1200px;margin:0 auto;padding:clamp(28px,4vw,48px) clamp(16px,4vw,40px)">
+    <div style="margin-bottom:26px">
+      <div style="font-weight:700;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--acc-d)">Les incontournables</div>
+      <h2 style="font-family:'Bricolage Grotesque';font-weight:800;font-size:clamp(28px,4.2vw,46px);line-height:1;letter-spacing:-.02em;margin:8px 0 0;color:#1C1915">On commande quoi&nbsp;?</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:18px">
+      <sc-for list="{{ bestSellers }}" as="p" hint-placeholder-count="4">
+        <button onClick="{{ p.onOpen }}" style="text-align:left;background:#FBF6EC;border:1px solid rgba(34,30,25,.09);border-radius:22px;overflow:hidden;display:flex;flex-direction:column" style-hover="transform:translateY(-4px);box-shadow:0 20px 40px -22px rgba(28,25,21,.4);border-color:rgba(34,30,25,.16)">
+          <div style="position:relative;aspect-ratio:4/3;background:{{ p.grad }};overflow:hidden"><img src="{{ p.img }}" alt="{{ p.alt }}" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"><div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(20,15,10,.42),transparent 55%)"></div>
+            <sc-if value="{{ p.tag }}"><span style="position:absolute;top:12px;left:12px;background:#1C1915;color:#F4EDE1;font-weight:700;font-size:11px;padding:5px 10px;border-radius:999px">{{ p.tag }}</span></sc-if>
+          </div>
+          <div style="padding:15px 16px 16px;display:flex;flex-direction:column;flex:1">
+            <div style="font-family:'Bricolage Grotesque';font-weight:700;font-size:18px;color:#1C1915;line-height:1.1">{{ p.name }}</div>
+            <div style="font-size:13.5px;color:#6B6357;line-height:1.4;margin:6px 0 14px;flex:1">{{ p.short }}</div>
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+              <span style="font-family:'Bricolage Grotesque';font-weight:800;font-size:18px;color:#1C1915">{{ p.priceLabel }}</span>
+              <span style="display:inline-flex;align-items:center;gap:6px;background:var(--acc);color:#fff;font-weight:700;font-size:13.5px;padding:9px 14px;border-radius:999px">+ Composer</span>
+            </div>
+          </div>
+        </button>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section style="max-width:1200px;margin:0 auto;padding:clamp(40px,5vw,72px) clamp(16px,4vw,40px)">
+    <div style="background:#1C1915;border-radius:28px;padding:clamp(28px,4vw,52px);color:#F4EDE1">
+      <div style="font-weight:700;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold)">Simple comme bonjour</div>
+      <h2 style="font-family:'Bricolage Grotesque';font-weight:800;font-size:clamp(26px,3.6vw,40px);letter-spacing:-.02em;margin:10px 0 30px">De l'envie à la première bouchée</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:24px">
+        <sc-for list="{{ steps }}" as="s" hint-placeholder-count="3">
+          <div>
+            <div style="font-family:'Bricolage Grotesque';font-weight:800;font-size:40px;color:var(--acc)">{{ s.n }}</div>
+            <div style="font-weight:700;font-size:18px;margin:6px 0 6px">{{ s.title }}</div>
+            <div style="font-size:14.5px;line-height:1.5;color:rgba(244,237,225,.72)">{{ s.text }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section style="max-width:1200px;margin:0 auto;padding:clamp(28px,4vw,48px) clamp(16px,4vw,40px)">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:24px">
+      <div>
+        <div style="font-weight:700;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--acc-d)">On en parle</div>
+        <h2 style="font-family:'Bricolage Grotesque';font-weight:800;font-size:clamp(28px,4.2vw,46px);line-height:1;letter-spacing:-.02em;margin:8px 0 0;color:#1C1915">Ce que disent nos clients</h2>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;background:#FBF6EC;border:1px solid rgba(34,30,25,.1);border-radius:14px;padding:10px 16px">
+        <span style="font-family:'Bricolage Grotesque';font-weight:800;font-size:26px;color:#1C1915">4,8</span>
+        <div><div style="color:var(--gold);font-size:14px;letter-spacing:2px">★★★★★</div><div style="font-size:12px;color:#6B6357;font-weight:600">1 240 avis vérifiés</div></div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px">
+      <sc-for list="{{ reviews }}" as="r" hint-placeholder-count="6">
+        <figure style="margin:0;background:#FBF6EC;border:1px solid rgba(34,30,25,.09);border-radius:18px;padding:20px">
+          <div style="color:var(--gold);font-size:14px;letter-spacing:2px">{{ r.stars }}</div>
+          <blockquote style="margin:12px 0 16px;font-size:15px;line-height:1.55;color:#332E28">{{ r.text }}</blockquote>
+          <figcaption style="display:flex;align-items:center;gap:11px">
+            <span style="width:38px;height:38px;border-radius:50%;background:{{ r.grad }};display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:15px">{{ r.initial }}</span>
+            <span><span style="display:block;font-weight:700;font-size:14px;color:#1C1915">{{ r.name }}</span><span style="display:block;font-size:12.5px;color:#6B6357">{{ r.meta }}</span></span>
+          </figcaption>
+        </figure>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- DELIVERY / CTA -->
+  <section style="max-width:1200px;margin:0 auto;padding:clamp(40px,5vw,80px) clamp(16px,4vw,40px)">
+    <div style="display:flex;flex-wrap:wrap;gap:clamp(24px,3vw,44px);align-items:center;background:linear-gradient(120% 120% at 80% 0%, #F0A24E 0%, var(--acc) 45%, var(--acc-d) 100%);border-radius:28px;padding:clamp(28px,4vw,52px);color:#fff">
+      <div style="flex:1 1 320px;min-width:260px">
+        <h2 style="font-family:'Bricolage Grotesque';font-weight:800;font-size:clamp(28px,4vw,48px);line-height:1;letter-spacing:-.02em;margin:0">Une petite faim&nbsp;?<br>On arrive en 30 min.</h2>
+        <p style="font-size:16px;line-height:1.5;color:rgba(255,255,255,.9);margin:16px 0 24px;max-width:46ch">Livraison gratuite dès {{ freeShipLabel }} de commande. Sinon {{ deliveryFeeLabel }} de frais, partout dans Alger.</p>
+        <button onClick="{{ goMenu }}" style="background:#1C1915;color:#F4EDE1;font-weight:700;font-size:16px;padding:16px 28px;border-radius:999px" style-hover="background:#000">Je commande →</button>
+      </div>
+      <div style="flex:1 1 260px;min-width:220px;display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <sc-for list="{{ zones }}" as="z" hint-placeholder-count="8">
+          <div style="background:rgba(255,255,255,.16);border-radius:12px;padding:11px 14px;font-weight:600;font-size:14px;backdrop-filter:blur(4px)">{{ z }}</div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+</div>
+</sc-if>
+
+<!-- ============ MENU ============ -->
+<sc-if value="{{ isMenu }}">
+<section class="braz-fadeup" style="max-width:1200px;margin:0 auto;padding:clamp(28px,4vw,52px) clamp(16px,4vw,40px) clamp(48px,6vw,90px)">
+  <div style="font-weight:700;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--acc-d)">Notre carte</div>
+  <h1 style="font-family:'Bricolage Grotesque';font-weight:800;font-size:clamp(34px,5.2vw,60px);line-height:.98;letter-spacing:-.03em;margin:8px 0 22px;color:#1C1915">Le menu BRAZ</h1>
+  <div role="tablist" aria-label="Catégories" style="display:flex;gap:9px;overflow-x:auto;padding:4px 0 14px;margin-bottom:8px;-webkit-overflow-scrolling:touch">
+    <sc-for list="{{ catTabs }}" as="t" hint-placeholder-count="7">
+      <button role="tab" aria-selected="{{ t.active }}" onClick="{{ t.onClick }}" style="{{ t.style }}">{{ t.label }}</button>
+    </sc-for>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:18px;margin-top:14px">
+    <sc-for list="{{ menuItems }}" as="p" hint-placeholder-count="8">
+      <button onClick="{{ p.onOpen }}" style="text-align:left;background:#FBF6EC;border:1px solid rgba(34,30,25,.09);border-radius:22px;overflow:hidden;display:flex;flex-direction:column" style-hover="transform:translateY(-4px);box-shadow:0 20px 40px -22px rgba(28,25,21,.4);border-color:rgba(34,30,25,.16)">
+        <div style="position:relative;aspect-ratio:4/3;background:{{ p.grad }};overflow:hidden"><img src="{{ p.img }}" alt="{{ p.alt }}" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"><div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(20,15,10,.42),transparent 55%)"></div>
+          <sc-if value="{{ p.tag }}"><span style="position:absolute;top:12px;left:12px;background:#1C1915;color:#F4EDE1;font-weight:700;font-size:11px;padding:5px 10px;border-radius:999px">{{ p.tag }}</span></sc-if>
+        </div>
+        <div style="padding:15px 16px 16px;display:flex;flex-direction:column;flex:1">
+          <div style="font-family:'Bricolage Grotesque';font-weight:700;font-size:18px;color:#1C1915;line-height:1.1">{{ p.name }}</div>
+          <div style="font-size:13.5px;color:#6B6357;line-height:1.4;margin:6px 0 14px;flex:1">{{ p.short }}</div>
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+            <span style="font-family:'Bricolage Grotesque';font-weight:800;font-size:18px;color:#1C1915">{{ p.priceLabel }}</span>
+            <span style="display:inline-flex;align-items:center;gap:6px;background:var(--acc);color:#fff;font-weight:700;font-size:13.5px;padding:9px 14px;border-radius:999px">{{ p.cta }}</span>
+          </div>
+        </div>
+      </button>
+    </sc-for>
+  </div>
+</section>
+</sc-if>
+
+<!-- ============ A PROPOS ============ -->
+<sc-if value="{{ isApropos }}">
+<div class="braz-fadeup">
+  <section style="max-width:1200px;margin:0 auto;padding:clamp(28px,4vw,56px) clamp(16px,4vw,40px)">
+    <div style="display:flex;flex-wrap:wrap;gap:clamp(28px,4vw,56px);align-items:center">
+      <div style="flex:1 1 380px;min-width:280px">
+        <div style="font-weight:700;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--acc-d)">Le resto</div>
+        <h1 style="font-family:'Bricolage Grotesque';font-weight:800;font-size:clamp(34px,5.2vw,60px);line-height:.98;letter-spacing:-.03em;margin:10px 0 0;color:#1C1915">Né rue Didouche,<br>fait pour Alger.</h1>
+        <p style="font-size:16.5px;line-height:1.6;color:#5C554C;margin:20px 0 14px;max-width:52ch">BRAZ, c'est parti d'une plancha, d'un pain brioché et d'une obsession : le smash burger parfait. Depuis 2021, on grille chaque steak minute, on coupe nos frites le matin et on prépare nos sauces maison chaque jour.</p>
+        <p style="font-size:16.5px;line-height:1.6;color:#5C554C;margin:0;max-width:52ch">Aujourd'hui, notre cuisine d'Alger-Centre régale tout le quartier et livre dans 12 communes. La même exigence, du comptoir jusqu'à votre porte.</p>
+      </div>
+      <div style="flex:1 1 320px;min-width:260px;aspect-ratio:4/5;border-radius:26px;background:radial-gradient(120% 120% at 30% 20%, #F4C24A 0%, #C85A22 50%, #6E2A12 100%);position:relative;overflow:hidden">
+        <sc-if value="{{ aproposImg }}"><img src="{{ aproposImg }}" alt="L'équipe BRAZ en cuisine, préparant les burgers sur la plancha" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></sc-if>
+      </div>
+    </div>
+  </section>
+  <section style="max-width:1200px;margin:0 auto;padding:clamp(20px,3vw,40px) clamp(16px,4vw,40px)">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px">
+      <sc-for list="{{ values }}" as="v" hint-placeholder-count="3">
+        <div style="background:#FBF6EC;border:1px solid rgba(34,30,25,.09);border-radius:18px;padding:24px">
+          <div style="font-family:'Bricolage Grotesque';font-weight:800;font-size:20px;color:var(--acc-d)">{{ v.title }}</div>
+          <p style="font-size:14.5px;line-height:1.55;color:#5C554C;margin:10px 0 0">{{ v.text }}</p>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+  <section style="max-width:1200px;margin:0 auto;padding:clamp(28px,4vw,56px) clamp(16px,4vw,40px)">
+    <div style="background:#1C1915;border-radius:24px;padding:clamp(26px,4vw,44px);display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:24px;color:#F4EDE1">
+      <sc-for list="{{ stats }}" as="s" hint-placeholder-count="4">
+        <div><div style="font-family:'Bricolage Grotesque';font-weight:800;font-size:clamp(30px,4vw,44px);color:var(--gold);line-height:1">{{ s.num }}</div><div style="font-size:13.5px;color:rgba(244,237,225,.7);font-weight:500;margin-top:4px">{{ s.label }}</div></div>
+      </sc-for>
+    </div>
+  </section>
+</div>
+</sc-if>
+
+<!-- ============ CONTACT ============ -->
+<sc-if value="{{ isContact }}">
+<section class="braz-fadeup" style="max-width:1200px;margin:0 auto;padding:clamp(28px,4vw,56px) clamp(16px,4vw,40px) clamp(48px,6vw,90px)">
+  <div style="font-weight:700;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--acc-d)">Contact</div>
+  <h1 style="font-family:'Bricolage Grotesque';font-weight:800;font-size:clamp(34px,5.2vw,60px);line-height:.98;letter-spacing:-.03em;margin:8px 0 26px;color:#1C1915">On vous écoute</h1>
+  <div style="display:flex;flex-wrap:wrap;gap:clamp(20px,3vw,40px)">
+    <form onSubmit="{{ onContactSubmit }}" style="flex:1 1 360px;min-width:280px;background:#FBF6EC;border:1px solid rgba(34,30,25,.09);border-radius:22px;padding:clamp(20px,3vw,32px);display:flex;flex-direction:column;gap:15px">
+      <div style="display:flex;flex-wrap:wrap;gap:14px">
+        <label style="flex:1 1 160px;font-weight:600;font-size:13.5px;color:#332E28">Nom complet
+          <input required value="{{ cform.nom }}" onInput="{{ cform.onNom }}" placeholder="Ex : Mehdi Salah" style="margin-top:6px;width:100%;background:#fff;border:1px solid rgba(34,30,25,.16);border-radius:12px;padding:12px 14px;font-size:15px" />
+        </label>
+        <label style="flex:1 1 160px;font-weight:600;font-size:13.5px;color:#332E28">Téléphone
+          <input value="{{ cform.tel }}" onInput="{{ cform.onTel }}" placeholder="+213 _ __ __ __ __" style="margin-top:6px;width:100%;background:#fff;border:1px solid rgba(34,30,25,.16);border-radius:12px;padding:12px 14px;font-size:15px" />
+        </label>
+      </div>
+      <label style="font-weight:600;font-size:13.5px;color:#332E28">E-mail
+        <input type="email" value="{{ cform.email }}" onInput="{{ cform.onEmail }}" placeholder="vous@email.com" style="margin-top:6px;width:100%;background:#fff;border:1px solid rgba(34,30,25,.16);border-radius:12px;padding:12px 14px;font-size:15px" />
+      </label>
+      <label style="font-weight:600;font-size:13.5px;color:#332E28">Votre message
+        <textarea required value="{{ cform.message }}" onInput="{{ cform.onMessage }}" rows="4" placeholder="Une question, une réservation de groupe, un événement…" style="margin-top:6px;width:100%;background:#fff;border:1px solid rgba(34,30,25,.16);border-radius:12px;padding:12px 14px;font-size:15px;resize:vertical;font-family:inherit"></textarea>
+      </label>
+      <label style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:#5C554C;line-height:1.45;cursor:pointer">
+        <input type="checkbox" checked="{{ cform.consent }}" onChange="{{ cform.onConsent }}" style="margin-top:2px;width:18px;height:18px;accent-color:var(--acc);flex:none" />
+        <span>J'accepte que mes données soient utilisées pour traiter ma demande, conformément à la <button type="button" onClick="{{ goLegal }}" style="color:var(--acc-d);font-weight:700;text-decoration:underline">politique de confidentialité</button>.</span>
+      </label>
+      <button type="submit" style="align-self:flex-start;background:var(--acc);color:#fff;font-weight:700;font-size:15.5px;padding:14px 26px;border-radius:999px" style-hover="background:var(--acc-d)">Envoyer le message</button>
+    </form>
+    <div style="flex:1 1 300px;min-width:260px;display:flex;flex-direction:column;gap:16px">
+      <div style="background:#FBF6EC;border:1px solid rgba(34,30,25,.09);border-radius:18px;padding:22px">
+        <div style="font-weight:700;font-size:16px;color:#1C1915;margin-bottom:12px">Nous trouver</div>
+        <div style="display:flex;flex-direction:column;gap:11px;font-size:14.5px;color:#5C554C">
+          <div style="display:flex;align-items:center;gap:11px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--acc-d)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>Rue Didouche Mourad, Alger-Centre</div>
+          <div style="display:flex;align-items:center;gap:11px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--acc-d)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>+213 _ __ __ __ __</div>
+          <div style="display:flex;align-items:center;gap:11px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--acc-d)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>bonjour@braz-alger.dz</div>
+        </div>
+      </div>
+      <div style="background:#FBF6EC;border:1px solid rgba(34,30,25,.09);border-radius:18px;padding:22px">
+        <div style="font-weight:700;font-size:16px;color:#1C1915;margin-bottom:12px">Horaires</div>
+        <sc-for list="{{ hours }}" as="h" hint-placeholder-count="3">
+          <div style="display:flex;justify-content:space-between;font-size:14px;color:#5C554C;padding:5px 0">
+            <span style="font-weight:600;color:#332E28">{{ h.day }}</span><span>{{ h.time }}</span>
+          </div>
+        </sc-for>
+      </div>
+      <div role="img" aria-label="Carte de localisation du restaurant à Alger-Centre" style="aspect-ratio:16/10;border-radius:18px;background:linear-gradient(135deg,#DCD3C2,#C9BEA8);position:relative;overflow:hidden;border:1px solid rgba(34,30,25,.1)">
+        <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(34,30,25,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(34,30,25,.06) 1px,transparent 1px);background-size:26px 26px"></div>
+        <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-100%)"><span style="display:block;width:20px;height:20px;background:var(--acc);border:3px solid #fff;border-radius:50% 50% 50% 0;transform:rotate(-45deg);box-shadow:0 6px 14px rgba(0,0,0,.25)"></span></div>
+        <span style="position:absolute;left:14px;bottom:12px;font-family:ui-monospace,Menlo,monospace;font-size:11px;color:#6B6357">carte · Alger-Centre</span>
+      </div>
+    </div>
+  </div>
+</section>
+</sc-if>
+
+<!-- ============ CHECKOUT ============ -->
+<sc-if value="{{ isCheckout }}">
+<section class="braz-fadeup" style="max-width:1100px;margin:0 auto;padding:clamp(28px,4vw,52px) clamp(16px,4vw,40px) clamp(48px,6vw,90px)">
+  <button onClick="{{ goMenu }}" style="font-weight:600;font-size:14px;color:#6B6357;margin-bottom:14px" style-hover="color:#1C1915">← Continuer mes achats</button>
+  <h1 style="font-family:'Bricolage Grotesque';font-weight:800;font-size:clamp(30px,4.6vw,52px);line-height:1;letter-spacing:-.03em;margin:0 0 26px;color:#1C1915">Finaliser la commande</h1>
+  <sc-if value="{{ cartEmpty }}">
+    <div style="background:#FBF6EC;border:1px solid rgba(34,30,25,.1);border-radius:22px;padding:48px;text-align:center">
+      <div style="font-family:'Bricolage Grotesque';font-weight:800;font-size:22px;color:#1C1915">Votre panier est vide</div>
+      <p style="color:#6B6357;margin:10px 0 20px">Ajoutez quelques plats pour continuer.</p>
+      <button onClick="{{ goMenu }}" style="background:var(--acc);color:#fff;font-weight:700;padding:14px 26px;border-radius:999px">Voir le menu</button>
+    </div>
+  </sc-if>
+  <sc-if value="{{ cartHasItems }}">
+  <form onSubmit="{{ onPlaceOrder }}" style="display:flex;flex-wrap:wrap;gap:clamp(20px,3vw,36px);align-items:flex-start">
+    <div style="flex:1 1 340px;min-width:280px;display:flex;flex-direction:column;gap:18px">
+      <fieldset style="border:0;padding:0;margin:0">
+        <legend style="font-weight:700;font-size:16px;color:#1C1915;margin-bottom:10px">Mode de récupération</legend>
+        <div style="display:flex;gap:10px">
+          <button type="button" onClick="{{ setLivraison }}" aria-pressed="{{ isLivraison }}" style="{{ modeLivStyle }}"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 18V6a1 1 0 0 0-1-1H2v13"/><path d="M14 9h4l4 4v5h-8"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg>Livraison</button>
+          <button type="button" onClick="{{ setEmporter }}" aria-pressed="{{ isEmporter }}" style="{{ modeEmpStyle }}"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>À emporter</button>
+        </div>
+      </fieldset>
+      <div style="background:#FBF6EC;border:1px solid rgba(34,30,25,.09);border-radius:20px;padding:clamp(18px,3vw,26px);display:flex;flex-direction:column;gap:15px">
+        <div style="display:flex;flex-wrap:wrap;gap:14px">
+          <label style="flex:1 1 160px;font-weight:600;font-size:13.5px;color:#332E28">Nom complet
+            <input required value="{{ form.nom }}" onInput="{{ form.onNom }}" placeholder="Ex : Sarah Belkacem" style="margin-top:6px;width:100%;background:#fff;border:1px solid rgba(34,30,25,.16);border-radius:12px;padding:12px 14px;font-size:15px" />
+          </label>
+          <label style="flex:1 1 160px;font-weight:600;font-size:13.5px;color:#332E28">Téléphone
+            <input required value="{{ form.tel }}" onInput="{{ form.onTel }}" placeholder="+213 _ __ __ __ __" style="margin-top:6px;width:100%;background:#fff;border:1px solid rgba(34,30,25,.16);border-radius:12px;padding:12px 14px;font-size:15px" />
+          </label>
+        </div>
+        <sc-if value="{{ isLivraison }}">
+        <div style="display:flex;flex-wrap:wrap;gap:14px">
+          <label style="flex:1 1 140px;font-weight:600;font-size:13.5px;color:#332E28">Commune
+            <select value="{{ form.commune }}" onChange="{{ form.onCommune }}" style="margin-top:6px;width:100%;background:#fff;border:1px solid rgba(34,30,25,.16);border-radius:12px;padding:12px 14px;font-size:15px">
+              <sc-for list="{{ communes }}" as="c" hint-placeholder-count="8"><option value="{{ c }}">{{ c }}</option></sc-for>
+            </select>
+          </label>
+          <label style="flex:2 1 200px;font-weight:600;font-size:13.5px;color:#332E28">Adresse de livraison
+            <input required value="{{ form.adresse }}" onInput="{{ form.onAdresse }}" placeholder="N°, rue, résidence, étage…" style="margin-top:6px;width:100%;background:#fff;border:1px solid rgba(34,30,25,.16);border-radius:12px;padding:12px 14px;font-size:15px" />
+          </label>
+        </div>
+        </sc-if>
+        <label style="font-weight:600;font-size:13.5px;color:#332E28">Créneau souhaité
+          <select value="{{ form.creneau }}" onChange="{{ form.onCreneau }}" style="margin-top:6px;width:100%;background:#fff;border:1px solid rgba(34,30,25,.16);border-radius:12px;padding:12px 14px;font-size:15px">
+            <sc-for list="{{ creneaux }}" as="c" hint-placeholder-count="4"><option value="{{ c }}">{{ c }}</option></sc-for>
+          </select>
+        </label>
+        <label style="font-weight:600;font-size:13.5px;color:#332E28">Note pour la cuisine (facultatif)
+          <textarea value="{{ form.note }}" onInput="{{ form.onNote }}" rows="2" placeholder="Ex : sans oignon, bien cuit, sonner à l'interphone…" style="margin-top:6px;width:100%;background:#fff;border:1px solid rgba(34,30,25,.16);border-radius:12px;padding:12px 14px;font-size:15px;resize:vertical;font-family:inherit"></textarea>
+        </label>
+        <label style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:#5C554C;line-height:1.45;cursor:pointer">
+          <input type="checkbox" checked="{{ form.consent }}" onChange="{{ form.onConsent }}" style="margin-top:2px;width:18px;height:18px;accent-color:var(--acc);flex:none" />
+          <span>J'accepte le traitement de mes données pour la préparation et la livraison de ma commande (<button type="button" onClick="{{ goLegal }}" style="color:var(--acc-d);font-weight:700;text-decoration:underline">politique de confidentialité</button>).</span>
+        </label>
+      </div>
+    </div>
+    <!-- summary -->
+    <aside style="flex:1 1 300px;min-width:280px;background:#1C1915;color:#F4EDE1;border-radius:22px;padding:clamp(20px,3vw,28px);position:sticky;top:82px">
+      <div style="font-family:'Bricolage Grotesque';font-weight:800;font-size:20px;margin-bottom:16px">Votre commande</div>
+      <div style="display:flex;flex-direction:column;gap:12px;max-height:320px;overflow:auto;padding-right:4px">
+        <sc-for list="{{ cartLines }}" as="l" hint-placeholder-count="2">
+          <div style="display:flex;gap:10px;font-size:14px">
+            <span style="font-weight:700;color:var(--gold);flex:none">{{ l.qty }}×</span>
+            <span style="flex:1"><span style="font-weight:600;display:block">{{ l.name }}</span><sc-if value="{{ l.meta }}"><span style="font-size:12px;color:rgba(244,237,225,.6);display:block">{{ l.meta }}</span></sc-if></span>
+            <span style="font-weight:700;flex:none">{{ l.lineLabel }}</span>
+          </div>
+        </sc-for>
+      </div>
+      <div style="border-top:1px solid rgba(244,237,225,.16);margin-top:16px;padding-top:14px;display:flex;flex-direction:column;gap:8px;font-size:14.5px">
+        <div style="display:flex;justify-content:space-between;color:rgba(244,237,225,.8)"><span>Sous-total</span><span>{{ subtotalLabel }}</span></div>
+        <div style="display:flex;justify-content:space-between;color:rgba(244,237,225,.8)"><span>Livraison</span><span>{{ feeLabel }}</span></div>
+        <div style="display:flex;justify-content:space-between;font-family:'Bricolage Grotesque';font-weight:800;font-size:20px;margin-top:4px"><span>Total</span><span style="color:var(--gold)">{{ totalLabel }}</span></div>
+      </div>
+      <button type="submit" style="width:100%;margin-top:18px;background:var(--acc);color:#fff;font-weight:700;font-size:16px;padding:15px;border-radius:14px" style-hover="background:var(--acc-d)">Passer la commande →</button>
+      <p style="font-size:11.5px;color:rgba(244,237,225,.55);text-align:center;margin:12px 0 0">Paiement à la livraison ou sur place (démonstration).</p>
+    </aside>
+  </form>
+  </sc-if>
+</section>
+</sc-if>
+
+<!-- ============ CONFIRMATION ============ -->
+<sc-if value="{{ isConfirm }}">
+<section class="braz-fadeup" style="max-width:680px;margin:0 auto;padding:clamp(40px,7vw,90px) clamp(16px,4vw,40px);text-align:center">
+  <div style="width:76px;height:76px;border-radius:50%;background:var(--acc);margin:0 auto;display:flex;align-items:center;justify-content:center;box-shadow:0 16px 34px -12px rgba(219,75,22,.6)">
+    <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+  </div>
+  <h1 style="font-family:'Bricolage Grotesque';font-weight:800;font-size:clamp(30px,5vw,48px);letter-spacing:-.02em;margin:22px 0 8px;color:#1C1915">Commande confirmée&nbsp;!</h1>
+  <p style="font-size:16.5px;color:#5C554C;margin:0 auto;max-width:44ch">Merci {{ confirmName }}, on s'y met tout de suite. {{ confirmEta }}</p>
+  <div style="display:inline-flex;flex-direction:column;gap:2px;background:#1C1915;color:#F4EDE1;border-radius:16px;padding:16px 30px;margin:26px 0">
+    <span style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(244,237,225,.6)">Numéro de commande</span>
+    <span style="font-family:'Bricolage Grotesque';font-weight:800;font-size:28px;color:var(--gold)">{{ orderNo }}</span>
+  </div>
+  <div style="background:#FBF6EC;border:1px solid rgba(34,30,25,.1);border-radius:20px;padding:22px;text-align:left;margin-bottom:26px">
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <sc-for list="{{ confirmLines }}" as="l" hint-placeholder-count="2">
+        <div style="display:flex;gap:10px;font-size:14.5px">
+          <span style="font-weight:700;color:var(--acc-d);flex:none">{{ l.qty }}×</span>
+          <span style="flex:1;color:#332E28">{{ l.name }}<sc-if value="{{ l.meta }}"><span style="color:#8A8175;font-size:12.5px"> · {{ l.meta }}</span></sc-if></span>
+          <span style="font-weight:700;flex:none">{{ l.lineLabel }}</span>
+        </div>
+      </sc-for>
+    </div>
+    <div style="border-top:1px solid rgba(34,30,25,.12);margin-top:14px;padding-top:12px;display:flex;justify-content:space-between;font-family:'Bricolage Grotesque';font-weight:800;font-size:19px;color:#1C1915"><span>Total {{ confirmMode }}</span><span>{{ confirmTotal }}</span></div>
+  </div>
+  <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+    <button onClick="{{ goHome }}" style="background:var(--acc);color:#fff;font-weight:700;font-size:15.5px;padding:14px 26px;border-radius:999px" style-hover="background:var(--acc-d)">Retour à l'accueil</button>
+    <button onClick="{{ goMenu }}" style="font-weight:700;font-size:15.5px;padding:14px 24px;border-radius:999px;border:1.5px solid rgba(34,30,25,.2);color:#1C1915" style-hover="background:rgba(34,30,25,.05)">Recommander</button>
+  </div>
+</section>
+</sc-if>
+
+<!-- ============ LEGAL ============ -->
+<sc-if value="{{ isLegal }}">
+<section class="braz-fadeup" style="max-width:800px;margin:0 auto;padding:clamp(28px,4vw,56px) clamp(16px,4vw,40px) clamp(48px,6vw,90px)">
+  <div style="font-weight:700;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--acc-d)">Informations légales</div>
+  <h1 style="font-family:'Bricolage Grotesque';font-weight:800;font-size:clamp(30px,4.6vw,52px);line-height:1;letter-spacing:-.03em;margin:8px 0 30px;color:#1C1915">Mentions légales &amp; confidentialité</h1>
+  <sc-for list="{{ legalSections }}" as="sec" hint-placeholder-count="6">
+    <div style="margin-bottom:26px">
+      <h2 style="font-family:'Bricolage Grotesque';font-weight:700;font-size:20px;color:#1C1915;margin:0 0 8px">{{ sec.title }}</h2>
+      <p style="font-size:15px;line-height:1.65;color:#5C554C;margin:0;white-space:pre-line">{{ sec.body }}</p>
+    </div>
+  </sc-for>
+</section>
+</sc-if>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer style="background:#1C1915;color:#F4EDE1;margin-top:auto">
+  <div style="max-width:1200px;margin:0 auto;padding:clamp(40px,5vw,64px) clamp(16px,4vw,40px) 28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:32px">
+    <div style="grid-column:1/-1;max-width:340px">
+      <div style="display:flex;align-items:baseline;gap:8px"><span style="font-family:'Bricolage Grotesque';font-weight:800;font-size:28px;letter-spacing:-.03em">BRAZ</span><span style="font-weight:700;font-size:10px;letter-spacing:.28em;color:var(--gold)">ALGER</span></div>
+      <p style="font-size:14px;line-height:1.55;color:rgba(244,237,225,.65);margin:12px 0 0">Smash burgers, tacos et chawarma faits maison. Grillé sur la braise, livré brûlant dans tout Alger.</p>
+    </div>
+    <div>
+      <div style="font-weight:700;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:rgba(244,237,225,.5);margin-bottom:12px">Menu</div>
+      <div style="display:flex;flex-direction:column;gap:9px;font-size:14.5px;align-items:flex-start">
+        <button onClick="{{ goMenu }}" style="color:rgba(244,237,225,.85)" style-hover="color:#fff">Burgers</button>
+        <button onClick="{{ goMenu }}" style="color:rgba(244,237,225,.85)" style-hover="color:#fff">Tacos</button>
+        <button onClick="{{ goMenu }}" style="color:rgba(244,237,225,.85)" style-hover="color:#fff">Chawarma</button>
+        <button onClick="{{ goMenu }}" style="color:rgba(244,237,225,.85)" style-hover="color:#fff">Boissons &amp; desserts</button>
+      </div>
+    </div>
+    <div>
+      <div style="font-weight:700;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:rgba(244,237,225,.5);margin-bottom:12px">Le resto</div>
+      <div style="display:flex;flex-direction:column;gap:9px;font-size:14.5px;align-items:flex-start">
+        <button onClick="{{ goApropos }}" style="color:rgba(244,237,225,.85)" style-hover="color:#fff">Notre histoire</button>
+        <button onClick="{{ goContact }}" style="color:rgba(244,237,225,.85)" style-hover="color:#fff">Contact</button>
+        <button onClick="{{ goLegal }}" style="color:rgba(244,237,225,.85)" style-hover="color:#fff">Mentions légales</button>
+        <button onClick="{{ goLegal }}" style="color:rgba(244,237,225,.85)" style-hover="color:#fff">Confidentialité</button>
+      </div>
+    </div>
+    <div>
+      <div style="font-weight:700;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:rgba(244,237,225,.5);margin-bottom:12px">Infos</div>
+      <div style="font-size:14.5px;line-height:1.7;color:rgba(244,237,225,.75)">Rue Didouche Mourad,<br>Alger-Centre<br>+213 _ __ __ __ __<br>11h – 00h · 7j/7</div>
+    </div>
+  </div>
+  <div style="border-top:1px solid rgba(244,237,225,.12)">
+    <div style="max-width:1200px;margin:0 auto;padding:18px clamp(16px,4vw,40px);display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;font-size:13px;color:rgba(244,237,225,.55)">
+      <span>© 2026 BRAZ Alger — Tous droits réservés.</span>
+      <span>Réalisé par <a href="https://difarslan.com" target="_blank" rel="noopener" style="color:var(--gold);font-weight:700" style-hover="text-decoration:underline">Arslan DIF — difarslan.com</a></span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ CART DRAWER ============ -->
+<sc-if value="{{ cartOpen }}">
+<div style="position:fixed;inset:0;z-index:80">
+  <div onClick="{{ closeCart }}" style="position:absolute;inset:0;background:rgba(20,15,10,.5);animation:braz-pop .2s ease"></div>
+  <aside role="dialog" aria-label="Votre panier" style="position:absolute;right:0;top:0;height:100%;width:min(420px,92vw);background:#F4EDE1;box-shadow:-20px 0 50px -20px rgba(0,0,0,.4);display:flex;flex-direction:column;animation:braz-slide .28s cubic-bezier(.2,.7,.2,1)">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:20px 22px;border-bottom:1px solid rgba(34,30,25,.1)">
+      <span style="font-family:'Bricolage Grotesque';font-weight:800;font-size:22px;color:#1C1915">Votre panier</span>
+      <button onClick="{{ closeCart }}" aria-label="Fermer" style="width:38px;height:38px;border-radius:10px;font-size:20px;color:#6B6357" style-hover="background:rgba(34,30,25,.06)">✕</button>
+    </div>
+    <sc-if value="{{ cartEmpty }}">
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:30px;gap:14px">
+        <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="var(--acc)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11h18a1 1 0 0 0 1-1 6 6 0 0 0-6-6H8a6 6 0 0 0-6 6 1 1 0 0 0 1 1Z"/><path d="M4 15h16a1 1 0 0 1 0 4H8a4 4 0 0 1-4-4 0 0 0 0 0 0Z"/><path d="M2 11v1a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-1"/></svg>
+        <div style="font-family:'Bricolage Grotesque';font-weight:800;font-size:20px;color:#1C1915">Panier vide</div>
+        <p style="color:#6B6357;margin:0;font-size:15px">Il est temps de se régaler.</p>
+        <button onClick="{{ goMenu }}" style="background:var(--acc);color:#fff;font-weight:700;padding:13px 24px;border-radius:999px">Voir le menu</button>
+      </div>
+    </sc-if>
+    <sc-if value="{{ cartHasItems }}">
+      <div style="flex:1;overflow:auto;padding:16px 18px;display:flex;flex-direction:column;gap:12px">
+        <sc-for list="{{ cartLines }}" as="l" hint-placeholder-count="3">
+          <div style="display:flex;gap:12px;background:#FBF6EC;border:1px solid rgba(34,30,25,.08);border-radius:16px;padding:12px">
+            <div style="width:56px;height:56px;border-radius:12px;background:{{ l.grad }};flex:none;overflow:hidden"><img src="{{ l.img }}" alt="" style="width:100%;height:100%;object-fit:cover"></div>
+            <div style="flex:1;min-width:0">
+              <div style="font-weight:700;font-size:14.5px;color:#1C1915">{{ l.name }}</div>
+              <sc-if value="{{ l.meta }}"><div style="font-size:12px;color:#8A8175;line-height:1.35;margin-top:2px">{{ l.meta }}</div></sc-if>
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-top:8px">
+                <div style="display:flex;align-items:center;gap:8px;background:#fff;border:1px solid rgba(34,30,25,.14);border-radius:999px;padding:3px">
+                  <button onClick="{{ l.onDec }}" aria-label="Réduire la quantité" style="width:26px;height:26px;border-radius:50%;font-size:17px;color:#1C1915;display:flex;align-items:center;justify-content:center" style-hover="background:rgba(34,30,25,.06)">−</button>
+                  <span style="min-width:16px;text-align:center;font-weight:700;font-size:14px">{{ l.qty }}</span>
+                  <button onClick="{{ l.onInc }}" aria-label="Augmenter la quantité" style="width:26px;height:26px;border-radius:50%;font-size:16px;color:#1C1915;display:flex;align-items:center;justify-content:center" style-hover="background:rgba(34,30,25,.06)">+</button>
+                </div>
+                <span style="font-family:'Bricolage Grotesque';font-weight:800;font-size:15px;color:#1C1915">{{ l.lineLabel }}</span>
+              </div>
+            </div>
+            <button onClick="{{ l.onRemove }}" aria-label="Retirer l'article" style="flex:none;color:#B0A99C;font-size:13px;align-self:flex-start" style-hover="color:var(--acc)">✕</button>
+          </div>
+        </sc-for>
+        <sc-if value="{{ showFreeShipHint }}">
+          <div style="background:rgba(219,75,22,.08);border:1px dashed rgba(219,75,22,.4);border-radius:14px;padding:12px 14px;font-size:13px;color:var(--acc-d);font-weight:600;display:flex;align-items:center;gap:8px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none" aria-hidden="true"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg><span>Plus que {{ freeShipRemaining }} pour la livraison offerte&nbsp;!</span></div>
+        </sc-if>
+      </div>
+      <div style="border-top:1px solid rgba(34,30,25,.1);padding:18px 20px;background:#F4EDE1">
+        <div style="display:flex;justify-content:space-between;font-size:14px;color:#5C554C;margin-bottom:6px"><span>Sous-total</span><span>{{ subtotalLabel }}</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:14px;color:#5C554C;margin-bottom:10px"><span>Livraison</span><span>{{ feeLabel }}</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px"><span style="font-family:'Bricolage Grotesque';font-weight:800;font-size:20px;color:#1C1915">Total</span><span style="font-family:'Bricolage Grotesque';font-weight:800;font-size:22px;color:var(--acc-d)">{{ totalLabel }}</span></div>
+        <button onClick="{{ goCheckout }}" style="width:100%;background:var(--acc);color:#fff;font-weight:700;font-size:16px;padding:15px;border-radius:14px" style-hover="background:var(--acc-d)">Commander · {{ totalLabel }}</button>
+      </div>
+    </sc-if>
+  </aside>
+</div>
+</sc-if>
+
+<!-- ============ CONFIG MODAL ============ -->
+<sc-if value="{{ modalOpen }}">
+<div style="position:fixed;inset:0;z-index:90;display:flex;align-items:flex-end;justify-content:center;padding:0">
+  <div onClick="{{ closeModal }}" style="position:absolute;inset:0;background:rgba(20,15,10,.55);animation:braz-pop .2s ease"></div>
+  <div role="dialog" aria-label="Composer votre plat" style="position:relative;background:#F4EDE1;width:min(560px,100%);max-height:92vh;overflow:auto;border-radius:26px 26px 0 0;animation:braz-fadeup .3s cubic-bezier(.2,.7,.2,1)">
+    <div style="position:relative;aspect-ratio:16/9;background:{{ modal.grad }};overflow:hidden">
+      <img src="{{ modal.img }}" alt="{{ modal.alt }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+      <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(20,15,10,.3),transparent 55%)"></div>
+      <button onClick="{{ closeModal }}" aria-label="Fermer" style="position:absolute;top:14px;right:14px;width:38px;height:38px;border-radius:50%;background:rgba(20,15,10,.4);color:#fff;font-size:18px;backdrop-filter:blur(4px)" style-hover="background:rgba(20,15,10,.6)">✕</button>
+    </div>
+    <div style="padding:22px clamp(18px,4vw,28px) 26px">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:14px">
+        <h2 style="font-family:'Bricolage Grotesque';font-weight:800;font-size:26px;line-height:1.05;letter-spacing:-.02em;margin:0;color:#1C1915">{{ modal.name }}</h2>
+        <span style="color:var(--gold);font-size:14px;font-weight:700;white-space:nowrap">{{ modal.rating }}★</span>
+      </div>
+      <p style="font-size:15px;line-height:1.55;color:#5C554C;margin:10px 0 0">{{ modal.desc }}</p>
+
+      <sc-if value="{{ modal.hasSizes }}">
+        <div style="margin-top:22px">
+          <div style="font-weight:700;font-size:14px;color:#1C1915;margin-bottom:10px">Taille</div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <sc-for list="{{ modal.sizes }}" as="s" hint-placeholder-count="3">
+              <button onClick="{{ s.onSelect }}" aria-pressed="{{ s.active }}" style="{{ s.style }}">
+                <span style="font-family:'Bricolage Grotesque';font-weight:800;font-size:16px">{{ s.label }}</span>
+                <span style="font-size:12.5px;opacity:.75">{{ s.priceLabel }}</span>
+              </button>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ modal.hasSauce }}">
+        <div style="margin-top:20px">
+          <label style="font-weight:700;font-size:14px;color:#1C1915;display:block;margin-bottom:8px">Sauce</label>
+          <select value="{{ modal.sauce }}" onChange="{{ modal.onSauce }}" style="width:100%;background:#fff;border:1px solid rgba(34,30,25,.16);border-radius:12px;padding:12px 14px;font-size:15px">
+            <sc-for list="{{ sauces }}" as="x" hint-placeholder-count="5"><option value="{{ x }}">{{ x }}</option></sc-for>
+          </select>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ modal.hasSupps }}">
+        <div style="margin-top:20px">
+          <div style="font-weight:700;font-size:14px;color:#1C1915;margin-bottom:10px">Suppléments</div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <sc-for list="{{ modal.supps }}" as="s" hint-placeholder-count="4">
+              <label style="display:flex;align-items:center;gap:12px;background:#FBF6EC;border:1px solid rgba(34,30,25,.1);border-radius:12px;padding:11px 14px;cursor:pointer;font-size:14.5px" style-hover="border-color:rgba(34,30,25,.24)">
+                <input type="checkbox" checked="{{ s.checked }}" onChange="{{ s.onToggle }}" style="width:18px;height:18px;accent-color:var(--acc)" />
+                <span style="flex:1;font-weight:600;color:#332E28">{{ s.label }}</span>
+                <span style="font-weight:700;color:var(--acc-d)">{{ s.priceLabel }}</span>
+              </label>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <div style="display:flex;align-items:center;gap:16px;margin-top:24px">
+        <div style="display:flex;align-items:center;gap:10px;background:#fff;border:1px solid rgba(34,30,25,.16);border-radius:999px;padding:5px">
+          <button onClick="{{ modal.onDec }}" aria-label="Réduire" style="width:34px;height:34px;border-radius:50%;font-size:20px;color:#1C1915;display:flex;align-items:center;justify-content:center" style-hover="background:rgba(34,30,25,.06)">−</button>
+          <span style="min-width:22px;text-align:center;font-weight:800;font-size:17px;font-family:'Bricolage Grotesque'">{{ modal.qty }}</span>
+          <button onClick="{{ modal.onInc }}" aria-label="Augmenter" style="width:34px;height:34px;border-radius:50%;font-size:18px;color:#1C1915;display:flex;align-items:center;justify-content:center" style-hover="background:rgba(34,30,25,.06)">+</button>
+        </div>
+        <button onClick="{{ modal.onAdd }}" style="flex:1;background:var(--acc);color:#fff;font-weight:700;font-size:16px;padding:15px;border-radius:14px;display:flex;align-items:center;justify-content:center;gap:8px" style-hover="background:var(--acc-d)">Ajouter · {{ modal.priceLabel }}</button>
+      </div>
+    </div>
+  </div>
+</div>
+</sc-if>
+
+<!-- ============ TOAST ============ -->
+<sc-if value="{{ showToast }}">
+  <div role="status" style="position:fixed;left:50%;bottom:26px;z-index:95;background:#1C1915;color:#F4EDE1;font-weight:600;font-size:14.5px;padding:13px 22px;border-radius:999px;box-shadow:0 14px 34px -10px rgba(0,0,0,.5);animation:braz-toast .3s ease">{{ toast }}</div>
+</sc-if>
+
+<!-- ============ COOKIE BANNER ============ -->
+<sc-if value="{{ showCookie }}">
+  <div role="dialog" aria-label="Consentement aux cookies" style="position:fixed;left:14px;right:14px;bottom:14px;z-index:96;max-width:720px;margin:0 auto;background:#1C1915;color:#F4EDE1;border-radius:18px;padding:18px 20px;box-shadow:0 20px 50px -16px rgba(0,0,0,.6);display:flex;flex-wrap:wrap;gap:14px;align-items:center">
+    <p style="flex:1 1 260px;margin:0;font-size:14px;line-height:1.5;color:rgba(244,237,225,.82)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;margin-right:6px" aria-hidden="true"><path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"/><path d="M8.5 8.5v.01M16 15.5v.01M12 12v.01M11 17v.01M7 14v.01"/></svg>Nous utilisons des cookies pour améliorer votre expérience et mesurer l'audience. Consultez notre <button onClick="{{ goLegal }}" style="color:var(--gold);font-weight:700;text-decoration:underline">politique de confidentialité</button>.</p>
+    <div style="display:flex;gap:10px;flex:none">
+      <button onClick="{{ refuseCookies }}" style="font-weight:700;font-size:14px;padding:11px 18px;border-radius:999px;border:1.5px solid rgba(244,237,225,.3);color:#F4EDE1" style-hover="background:rgba(244,237,225,.1)">Refuser</button>
+      <button onClick="{{ acceptCookies }}" style="font-weight:700;font-size:14px;padding:11px 20px;border-radius:999px;background:var(--acc);color:#fff" style-hover="background:var(--acc-d)">Tout accepter</button>
+    </div>
+  </div>
+</sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:&quot;100%&quot;,&quot;height&quot;:900},&quot;accentColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#DB4B16&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Marque&quot;,&quot;options&quot;:[&quot;#DB4B16&quot;,&quot;#C42A2A&quot;,&quot;#1F7A5A&quot;,&quot;#B5892A&quot;,&quot;#7A3FB0&quot;]},&quot;showTicker&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Accueil&quot;},&quot;freeShipThreshold&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:2500,&quot;min&quot;:0,&quot;max&quot;:5000,&quot;step&quot;:100,&quot;unit&quot;:&quot; DA&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Livraison&quot;},&quot;deliveryFee&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:200,&quot;min&quot;:0,&quot;max&quot;:600,&quot;step&quot;:50,&quot;unit&quot;:&quot; DA&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Livraison&quot;}}">
+class Component extends DCLogic {
+  constructor(props){
+    super(props);
+    let cookie = null;
+    try { cookie = localStorage.getItem('braz_cookie'); } catch(e){}
+    this.state = {
+      view:'home', cat:'tous', navOpen:false, cartOpen:false,
+      modalId:null, cfgSize:null, cfgSauce:'Sauce Braz', cfgSupps:{}, cfgQty:1,
+      cart:[], mode:'livraison', cartBump:false,
+      form:{nom:'',tel:'',commune:'Alger-Centre',adresse:'',creneau:'Dès que possible',note:'',consent:false},
+      cform:{nom:'',email:'',tel:'',message:'',consent:false},
+      orderNo:null, order:null,
+      cookie, toast:null,
+    };
+    this.SAUCES = ['Sauce Braz','Algérienne','Blanche à l\u2019ail','Harissa','BBQ fumée','Samouraï','Biggy'];
+    this.SUPP = [
+      {k:'cheddar', label:'Cheddar suppl\u00e9mentaire', price:80},
+      {k:'bacon', label:'Bacon de b\u0153uf', price:120},
+      {k:'oeuf', label:'\u0152uf au plat', price:60},
+      {k:'oignons', label:'Oignons caram\u00e9lis\u00e9s', price:60},
+      {k:'sauceextra', label:'Sauce suppl\u00e9mentaire', price:50},
+    ];
+    this.GRAD = {
+      burgers:'radial-gradient(120% 120% at 25% 20%, #F0A24E 0%, #C85A22 46%, #6E2A12 100%)',
+      tacos:'radial-gradient(120% 120% at 25% 20%, #F2864B 0%, #C23A1E 50%, #6E1F16 100%)',
+      chawarma:'radial-gradient(120% 120% at 25% 20%, #F4C24A 0%, #D68A24 52%, #7C4A12 100%)',
+      sides:'radial-gradient(120% 120% at 25% 20%, #F3D060 0%, #D89A2A 55%, #7E5416 100%)',
+      boissons:'radial-gradient(120% 120% at 25% 20%, #7FC6B8 0%, #2E8C86 55%, #123E3E 100%)',
+      desserts:'radial-gradient(120% 120% at 25% 20%, #C89B72 0%, #7A4A2C 55%, #3A2114 100%)',
+    };
+    this.CATLABEL = {burgers:'Burgers', tacos:'Tacos', chawarma:'Chawarma', sides:'Accompagnements', boissons:'Boissons', desserts:'Desserts'};
+    this.PRODUCTS = [
+      {id:'braz-classique', cat:'burgers', name:'Le Braz Classique', price:650, tag:'Best-seller', rating:'4,9', sauce:true, supps:true,
+        short:'Steak smash\u00e9, cheddar, oignons caram\u00e9lis\u00e9s, sauce Braz.',
+        desc:'Steak smash\u00e9 100% b\u0153uf, cheddar affin\u00e9 fondu, oignons caram\u00e9lis\u00e9s et sauce Braz maison, dans un pain brioch\u00e9 toast\u00e9.'},
+      {id:'double-braise', cat:'burgers', name:'Double Braise', price:1050, tag:'Signature', rating:'4,8', sauce:true, supps:true,
+        short:'Double steak, double cheddar, bacon de b\u0153uf, sauce fum\u00e9e.',
+        desc:'Double steak smash\u00e9, double cheddar, bacon de b\u0153uf grill\u00e9 et sauce fum\u00e9e. Pour les grosses faims.'},
+      {id:'chicken-crispy', cat:'burgers', name:'Chicken Crispy', price:720, tag:'', rating:'4,7', sauce:true, supps:true,
+        short:'Poulet pan\u00e9 croustillant, coleslaw, pickles, miel-moutarde.',
+        desc:'Filet de poulet pan\u00e9 extra-croustillant, coleslaw frais, pickles et sauce miel-moutarde.'},
+      {id:'le-vege', cat:'burgers', name:'Le V\u00e9g\u00e9', price:580, tag:'V\u00e9g\u00e9', rating:'4,6', sauce:true, supps:true,
+        short:'Galette de l\u00e9gumes, cheddar, roquette, tomates confites.',
+        desc:'Galette de l\u00e9gumes maison, cheddar, roquette et tomates confites. 100% v\u00e9g\u00e9tarien.'},
+      {id:'tacos-poulet', cat:'tacos', name:'Tacos Poulet', tag:'Best-seller', rating:'4,8', sauce:true, supps:true,
+        sizes:[{key:'M',price:550},{key:'L',price:750},{key:'XL',price:950}],
+        short:'Poulet grill\u00e9, frites, sauce fromag\u00e8re.',
+        desc:'Poulet marin\u00e9 et grill\u00e9, frites maison, sauce fromag\u00e8re coulante et la sauce de votre choix.'},
+      {id:'tacos-hache', cat:'tacos', name:'Tacos Viande Hach\u00e9e', tag:'', rating:'4,7', sauce:true, supps:true,
+        sizes:[{key:'M',price:600},{key:'L',price:800},{key:'XL',price:1000}],
+        short:'Viande hach\u00e9e, frites, sauce fromag\u00e8re.',
+        desc:'Viande hach\u00e9e assaisonn\u00e9e, frites maison, sauce fromag\u00e8re et sauce au choix.'},
+      {id:'tacos-mixte', cat:'tacos', name:'Tacos Mixte', tag:'Le +', rating:'4,9', sauce:true, supps:true,
+        sizes:[{key:'M',price:700},{key:'L',price:900},{key:'XL',price:1100}],
+        short:'Poulet + viande, frites, double fromag\u00e8re.',
+        desc:'Poulet et viande hach\u00e9e, frites maison, double sauce fromag\u00e8re. Le tacos des ind\u00e9cis.'},
+      {id:'chawarma-poulet', cat:'chawarma', name:'Chawarma Poulet', price:450, tag:'Populaire', rating:'4,8', sauce:true, supps:true,
+        short:'Poulet \u00e0 la broche, crudit\u00e9s, frites, sauce ail.',
+        desc:'Poulet marin\u00e9 \u00e0 la broche, pain arabe, crudit\u00e9s, frites et sauce blanche \u00e0 l\u2019ail.'},
+      {id:'chawarma-viande', cat:'chawarma', name:'Chawarma Viande', price:550, tag:'', rating:'4,7', sauce:true, supps:true,
+        short:'Viande \u00e0 la broche, crudit\u00e9s, frites, samoura\u00ef.',
+        desc:'Viande marin\u00e9e \u00e0 la broche, pain arabe, crudit\u00e9s, frites et sauce samoura\u00ef.'},
+      {id:'frites-maison', cat:'sides', name:'Frites Maison', price:250, tag:'', rating:'4,7',
+        short:'Frites fra\u00eeches coup\u00e9es maison.', desc:'Frites fra\u00eeches coup\u00e9es maison, croustillantes dehors, moelleuses dedans.'},
+      {id:'frites-cheddar', cat:'sides', name:'Frites Cheddar-Bacon', price:450, tag:'Nouveau', rating:'4,9', sauce:false, supps:false,
+        short:'Frites, cheddar fondu, bacon de b\u0153uf.', desc:'Frites maison napp\u00e9es de cheddar fondu et d\u2019\u00e9clats de bacon de b\u0153uf.'},
+      {id:'onion-rings', cat:'sides', name:'Onion Rings', price:350, tag:'', rating:'4,6', sauce:true,
+        short:'Oignons pan\u00e9s croustillants, sauce Braz.', desc:'Anneaux d\u2019oignon pan\u00e9s et croustillants, servis avec sauce Braz.'},
+      {id:'nuggets', cat:'sides', name:'Nuggets x6', price:400, tag:'', rating:'4,6', sauce:true,
+        short:'6 nuggets de poulet, sauce au choix.', desc:'Six nuggets de poulet croustillants, sauce au choix.'},
+      {id:'canette', cat:'boissons', name:'Canette 33 cl', price:120, tag:'', rating:'4,8',
+        short:'Soda 33 cl au choix, bien frais.', desc:'Coca-Cola, Fanta, Sprite ou Hamoud Boualem. 33 cl bien fra\u00eeche.'},
+      {id:'jus-orange', cat:'boissons', name:'Jus d\u2019orange press\u00e9', price:200, tag:'', rating:'4,9',
+        short:'Orange press\u00e9e minute, 40 cl.', desc:'Jus d\u2019orange press\u00e9 minute, sans sucre ajout\u00e9. 40 cl.'},
+      {id:'eau', cat:'boissons', name:'Eau min\u00e9rale 50 cl', price:60, tag:'', rating:'4,7',
+        short:'Eau min\u00e9rale 50 cl.', desc:'Eau min\u00e9rale naturelle 50 cl.'},
+      {id:'brownie', cat:'desserts', name:'Brownie fondant', price:300, tag:'', rating:'4,9',
+        short:'Chocolat noir, c\u0153ur fondant, p\u00e9can.', desc:'Brownie au chocolat noir, c\u0153ur fondant, \u00e9clats de noix de p\u00e9can.'},
+      {id:'tiramisu', cat:'desserts', name:'Tiramisu maison', price:350, tag:'', rating:'4,8',
+        short:'Caf\u00e9, mascarpone, fait maison.', desc:'Tiramisu maison au caf\u00e9 et mascarpone, dress\u00e9 en pot.'},
+      {id:'donut', cat:'desserts', name:'Donut glac\u00e9', price:200, tag:'', rating:'4,6',
+        short:'Donut glac\u00e9, parfum du jour.', desc:'Donut moelleux glac\u00e9, parfum du jour.'},
+    ];
+    this.REVIEWS = [
+      {name:'Amine B.', meta:'Hydra \u00b7 il y a 2 j', stars:'\u2605\u2605\u2605\u2605\u2605', initial:'A', grad:this.GRAD.burgers, text:'Franchement le meilleur smash d\u2019Alger. La sauce Braz est incroyable, je recommande les yeux ferm\u00e9s.'},
+      {name:'Lila M.', meta:'Bab Ezzouar \u00b7 il y a 5 j', stars:'\u2605\u2605\u2605\u2605\u2606', initial:'L', grad:this.GRAD.tacos, text:'Tacos XL \u00e9norme et livr\u00e9 chaud en 25 min. Parfait pour la pause d\u00e9jeuner au bureau.'},
+      {name:'Yacine K.', meta:'Kouba \u00b7 il y a 1 sem', stars:'\u2605\u2605\u2605\u2605\u2605', initial:'Y', grad:this.GRAD.chawarma, text:'Chawarma poulet au top, pain moelleux et portions g\u00e9n\u00e9reuses. Rapport qualit\u00e9-prix imbattable.'},
+      {name:'Nawal S.', meta:'El Biar \u00b7 il y a 3 j', stars:'\u2605\u2605\u2605\u2605\u2605', initial:'N', grad:this.GRAD.desserts, text:'Command\u00e9 pour toute la famille, tout le monde a ador\u00e9. Emballage soign\u00e9 et livreur adorable.'},
+      {name:'Karim D.', meta:'Alger-Centre \u00b7 il y a 6 j', stars:'\u2605\u2605\u2605\u2605\u2606', initial:'K', grad:this.GRAD.sides, text:'Les frites cheddar-bacon \u00e0 tomber. Un peu d\u2019attente le vendredi soir mais \u00e7a vaut le coup.'},
+      {name:'Sofiane T.', meta:'Ch\u00e9raga \u00b7 il y a 4 j', stars:'\u2605\u2605\u2605\u2605\u2605', initial:'S', grad:this.GRAD.burgers, text:'Le Double Braise est une tuerie. Service rapide, souriant et toujours \u00e0 l\u2019heure.'},
+    ];
+    this.COMMUNES = ['Alger-Centre','Hydra','El Biar','Bab Ezzouar','Kouba','Bir Mourad Ra\u00efs','Ben Aknoun','Ch\u00e9raga','D\u00e9ly Ibrahim','Bologhine'];
+    this.CRENEAUX = ['D\u00e8s que possible','Dans 30 min','Dans 1 h','Ce soir 20:00','Ce soir 21:00'];
+    this.ZONES = ['Alger-Centre','Hydra','El Biar','Kouba','Bab Ezzouar','Ch\u00e9raga','Ben Aknoun','Bir Mourad Ra\u00efs'];
+    this.HOURS = [
+      {day:'Lundi \u2013 Jeudi', time:'11h00 \u2013 00h00'},
+      {day:'Vendredi \u2013 Samedi', time:'11h00 \u2013 01h00'},
+      {day:'Dimanche', time:'12h00 \u2013 00h00'},
+    ];
+    this.VALUES = [
+      {title:'Grill\u00e9 minute', text:'Aucun steak pr\u00e9-cuit. On smashe et on grille \u00e0 la commande, jamais avant.'},
+      {title:'Fait maison', text:'Pains toast\u00e9s, frites coup\u00e9es le matin, sauces pr\u00e9par\u00e9es chaque jour dans notre cuisine.'},
+      {title:'Livr\u00e9 chaud', text:'Emballage isotherme et tourn\u00e9es optimis\u00e9es : 30 minutes en moyenne, partout dans Alger.'},
+    ];
+    this.STATS = [
+      {num:'2021', label:'Depuis'},
+      {num:'+120k', label:'Burgers servis'},
+      {num:'4,8/5', label:'Note moyenne'},
+      {num:'12', label:'Communes livr\u00e9es'},
+    ];
+    this.STEPS = [
+      {n:'1', title:'Choisissez', text:'Parcourez la carte et ajoutez vos plats pr\u00e9f\u00e9r\u00e9s au panier.'},
+      {n:'2', title:'Composez', text:'Taille, suppl\u00e9ments, sauce\u2026 personnalisez chaque plat comme vous l\u2019aimez.'},
+      {n:'3', title:'D\u00e9gustez', text:'Livraison en 30 min ou \u00e0 emporter. On s\u2019occupe du reste.'},
+    ];
+    this.LEGAL = [
+      {title:'\u00c9diteur du site', body:'Restaurant BRAZ Alger \u2014 SARL BRAZ Food.\nRue Didouche Mourad, Alger-Centre, Alg\u00e9rie.\nT\u00e9l\u00e9phone : +213 _ __ __ __ __\nE-mail : bonjour@braz-alger.dz\nRC : 16/00-XXXXXXX B 21 \u00b7 NIF : XXXXXXXXXXXXXXX'},
+      {title:'Directeur de la publication', body:'Le repr\u00e9sentant l\u00e9gal de la SARL BRAZ Food.'},
+      {title:'H\u00e9bergement', body:'Ce site de d\u00e9monstration est h\u00e9berg\u00e9 par un prestataire d\u2019infrastructure cloud. Les coordonn\u00e9es compl\u00e8tes de l\u2019h\u00e9bergeur sont disponibles sur demande.'},
+      {title:'Donn\u00e9es collect\u00e9es et finalit\u00e9', body:'Lors d\u2019une commande ou d\u2019une prise de contact, nous collectons votre nom, num\u00e9ro de t\u00e9l\u00e9phone, adresse de livraison et, le cas \u00e9ch\u00e9ant, votre e-mail. Ces donn\u00e9es servent uniquement \u00e0 traiter et livrer votre commande, et \u00e0 vous recontacter en cas de besoin.'},
+      {title:'Conservation et droits', body:'Vos donn\u00e9es sont conserv\u00e9es le temps n\u00e9cessaire au traitement de la commande puis archiv\u00e9es conform\u00e9ment aux obligations l\u00e9gales. Vous disposez d\u2019un droit d\u2019acc\u00e8s, de rectification et de suppression de vos donn\u00e9es : \u00e9crivez-nous \u00e0 bonjour@braz-alger.dz.'},
+      {title:'Cookies', body:'Nous utilisons des cookies de mesure d\u2019audience et de confort de navigation. Vous pouvez les accepter ou les refuser via le bandeau d\u00e9di\u00e9. Le refus n\u2019emp\u00eache pas la commande.'},
+    ];
+  }
+
+  fmt(n){ return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g,' ') + ' DA'; }
+  darken(h,f){ if(!h||h[0]!=='#') return h; let m=h.slice(1); if(m.length===3) m=m.split('').map(c=>c+c).join(''); const n=parseInt(m,16); let r=Math.round(((n>>16)&255)*f), g=Math.round(((n>>8)&255)*f), b=Math.round((n&255)*f); return '#'+[r,g,b].map(x=>x.toString(16).padStart(2,'0')).join(''); }
+
+  scrollTop(){ try{ if(this.el&&this.el.ownerDocument) this.el.ownerDocument.defaultView.scrollTo(0,0); else window.scrollTo(0,0);}catch(e){} }
+  go(view){ this.setState({view, navOpen:false, cartOpen:false, modalId:null}); this.scrollTop(); }
+  toast(msg){ this.setState({toast:msg}); clearTimeout(this._t); this._t=setTimeout(()=>this.setState({toast:null}),2600); }
+
+  openModal(id){ const p=this.PRODUCTS.find(x=>x.id===id); this.setState({modalId:id, cfgSize:p&&p.sizes?p.sizes[0].key:null, cfgSauce:'Sauce Braz', cfgSupps:{}, cfgQty:1}); }
+
+  toggleSupp(k){ this.setState(s=>({cfgSupps:{...s.cfgSupps,[k]:!s.cfgSupps[k]}})); }
+
+  cfgUnit(){ const p=this.PRODUCTS.find(x=>x.id===this.state.modalId); if(!p) return 0;
+    const base = p.sizes ? (p.sizes.find(s=>s.key===this.state.cfgSize)||p.sizes[0]).price : p.price;
+    const st = p.supps ? this.SUPP.reduce((t,s)=>t+(this.state.cfgSupps[s.k]?s.price:0),0) : 0;
+    return base + st; }
+
+  addFromModal(){ const p=this.PRODUCTS.find(x=>x.id===this.state.modalId); if(!p) return;
+    const size = p.sizes ? (this.state.cfgSize||p.sizes[0].key) : null;
+    const supps = p.supps ? this.SUPP.filter(s=>this.state.cfgSupps[s.k]).map(s=>s.label) : [];
+    const sauce = p.sauce ? this.state.cfgSauce : null;
+    const unit = this.cfgUnit(); const qty=this.state.cfgQty;
+    const sig=[p.id,size||'',sauce||'',supps.join('+')].join('|');
+    this.setState(s=>{ const cart=s.cart.map(l=>({...l})); const i=cart.findIndex(l=>l.sig===sig);
+      if(i>=0) cart[i].qty+=qty; else cart.push({uid:Date.now()+''+Math.random().toString(36).slice(2,6), sig, id:p.id, name:p.name, grad:this.GRAD[p.cat], size, sauce, supps, qty, unit});
+      return {cart, modalId:null, cartBump:true}; });
+    this.toast(p.name+' ajout\u00e9 au panier');
+    clearTimeout(this._b); this._b=setTimeout(()=>this.setState({cartBump:false}),450);
+  }
+
+  lineMeta(l){ const parts=[]; if(l.size) parts.push('Taille '+l.size); if(l.sauce&&l.sauce!=='Sauce Braz') parts.push(l.sauce); if(l.supps&&l.supps.length) parts.push(l.supps.join(', ')); return parts.join(' \u00b7 '); }
+  incLine(uid){ this.setState(s=>({cart:s.cart.map(l=>l.uid===uid?{...l,qty:l.qty+1}:l)})); }
+  decLine(uid){ this.setState(s=>({cart:s.cart.map(l=>l.uid===uid?{...l,qty:Math.max(1,l.qty-1)}:l)})); }
+  removeLine(uid){ this.setState(s=>({cart:s.cart.filter(l=>l.uid!==uid)})); }
+
+  totals(){ const sub=this.state.cart.reduce((t,l)=>t+l.unit*l.qty,0);
+    const thr=this.props.freeShipThreshold??2500; const df=this.props.deliveryFee??200;
+    const fee = this.state.mode==='livraison' ? (this.state.cart.length===0?0:(sub>=thr?0:df)) : 0;
+    return {sub, fee, total:sub+fee, thr, df}; }
+
+  setForm(k,v){ this.setState(s=>({form:{...s.form,[k]:v}})); }
+  setCForm(k,v){ this.setState(s=>({cform:{...s.cform,[k]:v}})); }
+
+  placeOrder(e){ if(e&&e.preventDefault) e.preventDefault();
+    const f=this.state.form;
+    if(this.state.cart.length===0){ this.toast('Votre panier est vide'); return; }
+    if(!f.nom.trim()||!f.tel.trim()){ this.toast('Nom et t\u00e9l\u00e9phone requis'); return; }
+    if(this.state.mode==='livraison' && !f.adresse.trim()){ this.toast('Adresse de livraison requise'); return; }
+    if(!f.consent){ this.toast('Merci d\u2019accepter la politique de confidentialit\u00e9'); return; }
+    const t=this.totals();
+    const order={ no:'BRZ-'+Math.floor(1000+Math.random()*9000), mode:this.state.mode, nom:f.nom,
+      lines:this.state.cart.map(l=>({qty:l.qty, name:l.name, meta:this.lineMeta(l), lineLabel:this.fmt(l.unit*l.qty)})),
+      total:this.fmt(t.total) };
+    this.setState({order, orderNo:order.no, view:'confirmation', cart:[], cartOpen:false}); this.scrollTop();
+  }
+
+  contactSubmit(e){ if(e&&e.preventDefault) e.preventDefault();
+    const c=this.state.cform;
+    if(!c.nom.trim()||!c.message.trim()){ this.toast('Nom et message requis'); return; }
+    if(!c.consent){ this.toast('Merci d\u2019accepter la politique de confidentialit\u00e9'); return; }
+    this.setState({cform:{nom:'',email:'',tel:'',message:'',consent:false}});
+    this.toast('Message envoy\u00e9, merci ! On vous r\u00e9pond vite.');
+  }
+
+  setCookie(v){ try{ localStorage.setItem('braz_cookie',v);}catch(e){} this.setState({cookie:v}); }
+
+  renderVals(){
+    const s=this.state;
+    const acc=this.props.accentColor||'#DB4B16'; const accD=this.darken(acc,0.78);
+    const thr=this.props.freeShipThreshold??2500; const df=this.props.deliveryFee??200;
+    const showTicker=this.props.showTicker!==false;
+    const t=this.totals();
+
+    const IMG={'braz-classique':'1568901346375-23c9450c58cd','double-braise':'1607013251379-e6eecfffe234','chicken-crispy':'1606755962773-d324e0a13086','le-vege':'1520072959219-c595dc870360','tacos-poulet':'1611250188496-e966043a0629','tacos-hache':'1613514785940-daed07799d9b','tacos-mixte':'1552332386-f8dd00dc2f85','chawarma-poulet':'1529006557810-274b9b2fc783','chawarma-viande':'1573225342350-16731dd9bf3d','frites-maison':'1573080496219-bb080dd4f877','frites-cheddar':'1585109649139-366815a0d713','onion-rings':'1639024471283-03518883512d','nuggets':'1562967914-608f82629710','canette':'1554866585-cd94860890b7','jus-orange':'1600271886742-f049cd451bba','eau':'1560023907-5f339617ea30','brownie':'1606313564200-e75d5e30476c','tiramisu':'1571877227200-a0d98ea607e9','donut':'1551024601-bec78aea704b'};
+    const imgUrl=(id)=>'https://images.unsplash.com/photo-'+id+'?w=900&q=72&fit=crop&auto=format';
+    const imgErr=(e)=>{ e.target.style.display='none'; };
+    const mkProd=(p)=>{ const priceLabel = p.sizes ? ('d\u00e8s '+this.fmt(p.sizes[0].price)) : this.fmt(p.price);
+      return {...p, grad:this.GRAD[p.cat], priceLabel, img:imgUrl(IMG[p.id]),
+        alt:p.name+' \u2014 '+p.short, tag:p.tag||'',
+        cta: p.sizes||p.supps ? '+ Composer' : '+ Ajouter',
+        onOpen:()=>this.openModal(p.id)}; };
+
+    const bestIds=['braz-classique','tacos-poulet','chicken-crispy','chawarma-poulet'];
+    const bestSellers=bestIds.map(id=>mkProd(this.PRODUCTS.find(p=>p.id===id)));
+    const menuItems=(s.cat==='tous'?this.PRODUCTS:this.PRODUCTS.filter(p=>p.cat===s.cat)).map(mkProd);
+
+    const cats=['burgers','tacos','chawarma','sides','boissons','desserts'];
+    const catCards=cats.map(k=>({label:this.CATLABEL[k], grad:this.GRAD[k], count:this.PRODUCTS.filter(p=>p.cat===k).length,
+      onClick:()=>{ this.setState({view:'menu',cat:k,navOpen:false,cartOpen:false}); this.scrollTop(); }}));
+
+    const tabDefs=[{k:'tous',label:'Tout le menu'}].concat(cats.map(k=>({k,label:this.CATLABEL[k]})));
+    const catTabs=tabDefs.map(d=>{ const active=s.cat===d.k;
+      const style='white-space:nowrap;flex:none;padding:10px 18px;border-radius:999px;font-weight:700;font-size:14px;border:1.5px solid '+(active?accD:'rgba(34,30,25,.16)')+';background:'+(active?acc:'transparent')+';color:'+(active?'#fff':'#3A342D');
+      return {label:d.label, active, style, onClick:()=>this.setState({cat:d.k})}; });
+
+    const cartLines=s.cart.map(l=>({uid:l.uid, name:l.name, grad:l.grad, img:imgUrl(IMG[l.id]), qty:l.qty, meta:this.lineMeta(l),
+      lineLabel:this.fmt(l.unit*l.qty), onInc:()=>this.incLine(l.uid), onDec:()=>this.decLine(l.uid), onRemove:()=>this.removeLine(l.uid)}));
+
+    // modal VM
+    const mp=this.PRODUCTS.find(p=>p.id===s.modalId);
+    let modal=null;
+    if(mp){ const sizes = mp.sizes ? mp.sizes.map(z=>{ const active=(s.cfgSize||mp.sizes[0].key)===z.key;
+        const style='min-width:88px;display:flex;flex-direction:column;gap:2px;padding:12px 16px;border-radius:14px;cursor:pointer;border:1.5px solid '+(active?accD:'rgba(34,30,25,.16)')+';background:'+(active?'rgba(219,75,22,.1)':'#FBF6EC')+';color:'+(active?accD:'#332E28');
+        return {label:z.key, priceLabel:this.fmt(z.price), active, style, onSelect:()=>this.setState({cfgSize:z.key})}; }) : null;
+      const supps = mp.supps ? this.SUPP.map(x=>({label:x.label, priceLabel:'+'+this.fmt(x.price), checked:!!s.cfgSupps[x.k], onToggle:()=>this.toggleSupp(x.k)})) : null;
+      modal={ name:mp.name, desc:mp.desc, grad:this.GRAD[mp.cat], rating:mp.rating||'4,7',
+        img:imgUrl(IMG[mp.id]), alt:mp.name+' \u2014 '+mp.short,
+        hasSizes:!!mp.sizes, sizes, hasSauce:!!mp.sauce, sauce:s.cfgSauce,
+        hasSupps:!!mp.supps, supps, qty:s.cfgQty,
+        priceLabel:this.fmt(this.cfgUnit()*s.cfgQty),
+        onSauce:(e)=>this.setState({cfgSauce:e.target.value}),
+        onInc:()=>this.setState(st=>({cfgQty:st.cfgQty+1})),
+        onDec:()=>this.setState(st=>({cfgQty:Math.max(1,st.cfgQty-1)})),
+        onAdd:()=>this.addFromModal() }; }
+
+    const badgeStyle='min-width:22px;height:22px;padding:0 6px;border-radius:999px;background:'+acc+';color:#fff;font-size:12px;font-weight:800;display:inline-flex;align-items:center;justify-content:center'+(s.cartBump?';animation:braz-bump .45s ease':'');
+
+    const modeBtn=(on)=>'flex:1;display:flex;align-items:center;justify-content:center;gap:7px;padding:14px;border-radius:14px;font-weight:700;font-size:15px;cursor:pointer;border:1.5px solid '+(on?accD:'rgba(34,30,25,.16)')+';background:'+(on?'rgba(219,75,22,.1)':'#FBF6EC')+';color:'+(on?accD:'#332E28');
+
+    const ord=s.order||{};
+
+    return {
+      acc, accD, showTicker, imgErr,
+      heroImg:imgUrl(IMG['braz-classique']), aproposImg:imgUrl('1596662951482-0c4ba74a6df6'),
+      tickerText:'LIVRAISON EN 30 MIN \u2014 GRILL\u00c9 SUR LA BRAISE \u2014 100% B\u0152UF FRAIS \u2014 OUVERT 7J/7 JUSQU\u2019\u00c0 MINUIT \u2014 SMASH \u00b7 TACOS \u00b7 CHAWARMA \u2014 ',
+      isHome:s.view==='home', isMenu:s.view==='menu', isApropos:s.view==='apropos',
+      isContact:s.view==='contact', isCheckout:s.view==='checkout', isConfirm:s.view==='confirmation', isLegal:s.view==='legal',
+      navOpen:s.navOpen, cartOpen:s.cartOpen,
+      goHome:()=>this.go('home'), goMenu:()=>this.go('menu'), goApropos:()=>this.go('apropos'),
+      goContact:()=>this.go('contact'), goLegal:()=>this.go('legal'),
+      goCheckout:()=>this.go('checkout'),
+      toggleNav:()=>this.setState(st=>({navOpen:!st.navOpen})),
+      openCart:()=>this.setState({cartOpen:true}), closeCart:()=>this.setState({cartOpen:false}),
+      cartCount:s.cart.reduce((a,l)=>a+l.qty,0), badgeStyle,
+      cartAria:'Panier, '+s.cart.reduce((a,l)=>a+l.qty,0)+' articles',
+      catCards, bestSellers, steps:this.STEPS, reviews:this.REVIEWS, zones:this.ZONES,
+      catTabs, menuItems,
+      values:this.VALUES, stats:this.STATS, hours:this.HOURS, legalSections:this.LEGAL,
+      communes:this.COMMUNES, creneaux:this.CRENEAUX, sauces:this.SAUCES,
+      modalOpen:!!mp, modal, closeModal:()=>this.setState({modalId:null}),
+      cartLines, cartEmpty:s.cart.length===0, cartHasItems:s.cart.length>0,
+      subtotalLabel:this.fmt(t.sub), feeLabel:t.fee===0?'Offerte':this.fmt(t.fee), totalLabel:this.fmt(t.total),
+      showFreeShipHint:s.mode==='livraison'&&s.cart.length>0&&t.sub<thr, freeShipRemaining:this.fmt(Math.max(0,thr-t.sub)),
+      freeShipLabel:this.fmt(thr), deliveryFeeLabel:this.fmt(df),
+      isLivraison:s.mode==='livraison', isEmporter:s.mode==='emporter',
+      setLivraison:()=>this.setState({mode:'livraison'}), setEmporter:()=>this.setState({mode:'emporter'}),
+      modeLivStyle:modeBtn(s.mode==='livraison'), modeEmpStyle:modeBtn(s.mode==='emporter'),
+      form:{ nom:s.form.nom, tel:s.form.tel, commune:s.form.commune, adresse:s.form.adresse, creneau:s.form.creneau, note:s.form.note, consent:s.form.consent,
+        onNom:e=>this.setForm('nom',e.target.value), onTel:e=>this.setForm('tel',e.target.value),
+        onCommune:e=>this.setForm('commune',e.target.value), onAdresse:e=>this.setForm('adresse',e.target.value),
+        onCreneau:e=>this.setForm('creneau',e.target.value), onNote:e=>this.setForm('note',e.target.value),
+        onConsent:e=>this.setForm('consent',e.target.checked) },
+      onPlaceOrder:(e)=>this.placeOrder(e),
+      cform:{ nom:s.cform.nom, email:s.cform.email, tel:s.cform.tel, message:s.cform.message, consent:s.cform.consent,
+        onNom:e=>this.setCForm('nom',e.target.value), onEmail:e=>this.setCForm('email',e.target.value),
+        onTel:e=>this.setCForm('tel',e.target.value), onMessage:e=>this.setCForm('message',e.target.value),
+        onConsent:e=>this.setCForm('consent',e.target.checked) },
+      onContactSubmit:(e)=>this.contactSubmit(e),
+      orderNo:s.orderNo,
+      confirmName:ord.nom||'', confirmLines:ord.lines||[], confirmTotal:ord.total||'',
+      confirmMode: ord.mode==='emporter'?'\u00e0 emporter':'livraison',
+      confirmEta: ord.mode==='emporter'?'Votre commande sera pr\u00eate \u00e0 r\u00e9cup\u00e9rer sous 15 minutes.':'Livraison estim\u00e9e dans 30 \u00e0 40 minutes.',
+      showToast:!!s.toast, toast:s.toast,
+      showCookie:s.cookie===null||s.cookie===undefined,
+      acceptCookies:()=>this.setCookie('accepted'), refuseCookies:()=>this.setCookie('refused'),
+    };
+  }
+}
+</script>
+</body>
+</html>
