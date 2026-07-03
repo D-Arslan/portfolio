@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>L'ENVOL — École privée & crèche · Alger</title>
+<meta name="description" content="L'ENVOL, établissement privé à Alger : crèche, maternelle et primaire. Projet pédagogique bienveillant, effectifs réduits, cantine et périscolaire. Inscription en ligne.">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Mulish:wght@400;500;600;700&display=swap');
+
+:root{
+  --creme:#FBF6EC;
+  --creme-2:#FFFDF7;
+  --ocre:#E8A93C;
+  --ocre-2:#F2BE55;
+  --ocre-soft:#FBEAC9;
+  --vert:#5E9A57;
+  --vert-2:#78B36F;
+  --vert-soft:#DCEBD6;
+  --terra:#D08A6A;
+  --terra-soft:#F6E0D4;
+  --bleu:#5B8FB0;
+  --bleu-soft:#DCEAF0;
+  --encre:#2F3A2E;
+  --texte:#37402F;
+  --texte-2:#5F6B54;
+  --muted:#9AA187;
+  --ligne:rgba(55,64,47,.13);
+  --ligne-2:rgba(55,64,47,.07);
+  --shadow:0 22px 50px -30px rgba(55,64,47,.4);
+  --shadow-sm:0 12px 30px -20px rgba(55,64,47,.4);
+  --r:24px;--r-sm:14px;
+  --disp:'Fredoka',sans-serif;--body:'Mulish',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:var(--body);background:var(--creme);color:var(--texte);line-height:1.65;font-size:16px;overflow-x:hidden}
+img,svg{display:block;max-width:100%}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+a{color:inherit;text-decoration:none}
+input,select,textarea{font-family:inherit;font-size:1rem;color:inherit}
+ul{list-style:none}
+h1,h2,h3,h4{font-family:var(--disp);font-weight:600;line-height:1.12}
+:focus-visible{outline:3px solid var(--ocre);outline-offset:3px;border-radius:8px}
+.skip{position:absolute;left:-999px;background:var(--vert);color:#fff;padding:.7rem 1.2rem;z-index:200;border-radius:10px}
+.skip:focus{left:1rem;top:1rem}
+
+.wrap{max-width:1180px;margin:0 auto;padding:0 clamp(1.1rem,4vw,2.4rem)}
+.section{padding:clamp(3.5rem,8vw,6.5rem) 0}
+.eyebrow{font-family:var(--disp);font-weight:600;font-size:.82rem;letter-spacing:.04em;color:var(--vert);text-transform:uppercase;display:inline-flex;align-items:center;gap:.5rem}
+.eyebrow.oc{color:var(--ocre)}.eyebrow.tr{color:var(--terra)}
+.center{text-align:center}.center .eyebrow{justify-content:center}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.6rem;font-family:var(--disp);font-weight:600;font-size:1rem;padding:.9rem 1.7rem;border-radius:40px;transition:transform .3s,background .3s,color .3s,box-shadow .3s}
+.btn-ocre{background:var(--ocre);color:#fff}
+.btn-ocre:hover{background:#D89A2E;transform:translateY(-2px);box-shadow:var(--shadow-sm)}
+.btn-vert{background:var(--vert);color:#fff}
+.btn-vert:hover{background:#4F8749;transform:translateY(-2px);box-shadow:var(--shadow-sm)}
+.btn-outline{border:2px solid var(--vert);color:var(--vert)}
+.btn-outline:hover{background:var(--vert);color:#fff;transform:translateY(-2px)}
+.btn-ghost{border:2px solid var(--ligne);color:var(--texte-2)}
+.btn-ghost:hover{border-color:var(--vert);color:var(--vert)}
+.btn-block{width:100%}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
+
+/* HEADER */
+.header{position:sticky;top:0;z-index:90;background:rgba(251,246,236,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--ligne-2)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:80px;gap:1rem}
+.brand{display:flex;align-items:center;gap:.6rem;font-family:var(--disp);font-weight:700;font-size:1.5rem;color:var(--vert)}
+.brand .logo{width:40px;height:40px}
+.nav-links{display:flex;gap:1.7rem;align-items:center}
+.nav-links a{font-family:var(--disp);font-weight:500;font-size:.96rem;color:var(--texte-2);position:relative;padding:.4rem 0;transition:color .3s}
+.nav-links a::after{content:"";position:absolute;left:0;bottom:-2px;height:3px;width:0;background:var(--ocre);border-radius:3px;transition:width .3s}
+.nav-links a:hover,.nav-links a[aria-current="page"]{color:var(--vert)}
+.nav-links a:hover::after,.nav-links a[aria-current="page"]::after{width:100%}
+.nav-right{display:flex;align-items:center;gap:.8rem}
+.burger{display:none;flex-direction:column;gap:5px;padding:8px}
+.burger span{width:22px;height:2.5px;background:var(--vert);border-radius:3px;transition:.3s}
+
+/* HERO */
+.hero{position:relative;overflow:hidden}
+.hero-shape{position:absolute;z-index:0;opacity:.5}
+.hs1{top:-80px;right:-60px;width:340px;height:340px;background:var(--ocre-soft);border-radius:50%}
+.hs2{bottom:-100px;left:-80px;width:300px;height:300px;background:var(--vert-soft);border-radius:50%;opacity:.6}
+.hs3{top:40%;left:44%;width:120px;height:120px;background:var(--terra-soft);border-radius:40% 60% 55% 45%;opacity:.5}
+.hero-inner{position:relative;z-index:1;display:grid;grid-template-columns:1.05fr .95fr;gap:3rem;align-items:center;padding:clamp(2.5rem,6vw,4.5rem) 0}
+.hero h1{font-size:clamp(2.6rem,6vw,4.4rem);color:var(--vert);font-weight:700;line-height:1.02}
+.hero h1 .oc{color:var(--ocre)}
+.hero p.lead{color:var(--texte-2);font-size:1.12rem;max-width:44ch;margin:1.3rem 0 2rem}
+.hero-cta{display:flex;gap:.9rem;flex-wrap:wrap}
+.hero-badges{display:flex;gap:1.4rem;margin-top:2.2rem;flex-wrap:wrap}
+.hbadge{display:flex;align-items:center;gap:.5rem;font-weight:600;font-size:.9rem;color:var(--texte-2)}
+.hbadge svg{color:var(--vert)}
+.hero-visual{position:relative}
+.hero-card{background:var(--creme-2);border-radius:var(--r);padding:1.6rem;box-shadow:var(--shadow);border:3px solid #fff}
+.hero-illus{border-radius:18px;overflow:hidden;margin-bottom:1.2rem}
+.hero-mini{display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem}
+.hmini{background:var(--creme);border-radius:14px;padding:.9rem;text-align:center}
+.hmini .n{font-family:var(--disp);font-weight:700;font-size:1.5rem}
+.hmini.oc .n{color:var(--ocre)}.hmini.vt .n{color:var(--vert)}.hmini.tr .n{color:var(--terra)}
+.hmini .l{font-size:.68rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.02em}
+
+/* SECTION HEAD */
+.shead{max-width:640px}.shead.center{margin:0 auto}
+.shead h2{font-size:clamp(2rem,4.6vw,3.2rem);color:var(--vert)}
+.shead h2 .oc{color:var(--ocre)}
+.shead p{color:var(--texte-2);margin-top:.9rem;font-size:1.05rem}
+
+/* CYCLES */
+.cycles-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.6rem}
+.cycle-card{background:var(--creme-2);border-radius:var(--r);overflow:hidden;border:1px solid var(--ligne-2);transition:transform .4s,box-shadow .4s;display:flex;flex-direction:column}
+.cycle-card:hover{transform:translateY(-6px);box-shadow:var(--shadow)}
+.cycle-top{padding:1.8rem;color:#fff;position:relative;overflow:hidden}
+.cycle-top.creche{background:linear-gradient(140deg,var(--terra),#B87254)}
+.cycle-top.maternelle{background:linear-gradient(140deg,var(--ocre),#D08E20)}
+.cycle-top.primaire{background:linear-gradient(140deg,var(--vert),#487E42)}
+.cycle-top .age{font-family:var(--disp);font-weight:500;font-size:.85rem;opacity:.9}
+.cycle-top h3{font-size:1.8rem;color:#fff;margin-top:.2rem}
+.cycle-icon{position:absolute;top:1.4rem;right:1.4rem;opacity:.85}
+.cycle-body{padding:1.6rem;flex:1;display:flex;flex-direction:column}
+.cycle-body p{color:var(--texte-2);font-size:.95rem;flex:1;margin-bottom:1.2rem}
+.cycle-facts{display:flex;gap:1.2rem;padding-top:1rem;border-top:1px solid var(--ligne-2);flex-wrap:wrap}
+.cfact{display:flex;flex-direction:column}
+.cfact .n{font-family:var(--disp);font-weight:600;font-size:1.2rem;color:var(--vert)}
+.cfact .l{font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.02em}
+
+/* RASSURANCE */
+.reassure{background:var(--vert-soft)}
+.reassure-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.4rem;margin-top:2.6rem}
+.rcard{background:var(--creme-2);border-radius:var(--r-sm);padding:1.6rem;text-align:center}
+.rcard .ric{width:56px;height:56px;border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;color:#fff}
+.rcard h3{font-size:1.2rem;margin-bottom:.4rem;color:var(--encre)}
+.rcard p{font-size:.88rem;color:var(--texte-2)}
+
+/* VIE À L'ÉCOLE — journée type */
+.journee{position:relative;padding-left:2rem;margin-top:2.6rem}
+.journee::before{content:"";position:absolute;left:8px;top:8px;bottom:8px;width:3px;background:var(--ocre-soft);border-radius:3px}
+.jstep{position:relative;padding:0 0 1.6rem 1.6rem}
+.jstep::before{content:"";position:absolute;left:-1.55rem;top:4px;width:16px;height:16px;border-radius:50%;background:var(--ocre);border:3px solid var(--creme)}
+.jstep .jtime{font-family:var(--disp);font-weight:600;color:var(--ocre);font-size:.95rem}
+.jstep h4{font-size:1.15rem;color:var(--encre);margin:.1rem 0 .2rem}
+.jstep p{font-size:.9rem;color:var(--texte-2)}
+
+/* EDT */
+.edt-wrap{overflow-x:auto;margin-top:1.5rem;border-radius:var(--r-sm);border:1px solid var(--ligne-2)}
+.edt{width:100%;border-collapse:collapse;min-width:560px;background:var(--creme-2)}
+.edt th{background:var(--vert);color:#fff;font-family:var(--disp);font-weight:500;padding:.8rem;font-size:.85rem}
+.edt th:first-child{background:#487E42}
+.edt td{padding:.8rem;text-align:center;border:1px solid var(--ligne-2);font-size:.85rem}
+.edt td.time{font-family:var(--disp);font-weight:600;color:var(--vert);background:var(--vert-soft)}
+.edt .act{border-radius:8px;padding:.3rem .5rem;font-weight:600;font-size:.8rem;display:inline-block}
+.a-vert{background:var(--vert-soft);color:#487E42}.a-ocre{background:var(--ocre-soft);color:#B87A10}.a-terra{background:var(--terra-soft);color:#A85F3E}.a-bleu{background:var(--bleu-soft);color:#3E6E8E}
+
+/* ACTIVITÉS */
+.activ-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-top:1.5rem}
+.activ{background:var(--creme-2);border:1px solid var(--ligne-2);border-radius:var(--r-sm);padding:1.4rem;display:flex;gap:1rem;align-items:flex-start}
+.activ .aic{width:46px;height:46px;border-radius:13px;display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0}
+.activ h4{font-size:1.1rem;color:var(--encre)}
+.activ p{font-size:.85rem;color:var(--texte-2)}
+
+/* CANTINE / allergènes */
+.cantine-box{background:var(--ocre-soft);border-radius:var(--r);padding:1.8rem;display:flex;gap:1.2rem;align-items:flex-start;margin-top:2rem}
+.cantine-box .cic{width:52px;height:52px;border-radius:15px;background:var(--ocre);color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.cantine-box h3{color:#B87A10;margin-bottom:.4rem}
+.cantine-box p{color:#8A6420;font-size:.92rem}
+
+/* CALENDRIER */
+.cal-year{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-top:1.5rem}
+.cal-row{background:var(--creme-2);border:1px solid var(--ligne-2);border-radius:var(--r-sm);padding:1.1rem 1.3rem;display:flex;justify-content:space-between;align-items:center;gap:1rem}
+.cal-row .cl{font-family:var(--disp);font-weight:600;color:var(--encre)}
+.cal-row .cd{font-size:.85rem;color:var(--texte-2);font-weight:600}
+.cal-row.hl{background:var(--vert-soft);border-color:var(--vert-2)}
+
+/* TARIFS */
+.tarifs-table{width:100%;border-collapse:collapse;background:var(--creme-2);border-radius:var(--r);overflow:hidden;border:1px solid var(--ligne-2);margin-top:1.5rem}
+.tarifs-table th{background:var(--vert);color:#fff;font-family:var(--disp);font-weight:500;padding:1rem 1.2rem;text-align:left;font-size:.9rem}
+.tarifs-table td{padding:1rem 1.2rem;border-top:1px solid var(--ligne-2)}
+.tarifs-table td.tc{font-family:var(--disp);font-weight:600;color:var(--encre)}
+.tarifs-table td.tp{font-family:var(--disp);font-weight:600;color:var(--vert)}
+.tarif-note{font-size:.82rem;color:var(--muted);margin-top:.8rem}
+
+/* ÉQUIPE */
+.team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.4rem}
+.team-card{background:var(--creme-2);border-radius:var(--r);overflow:hidden;border:1px solid var(--ligne-2);transition:transform .4s,box-shadow .4s}
+.team-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-sm)}
+.team-photo{aspect-ratio:1;display:flex;align-items:center;justify-content:center}
+.team-photo .ini{font-family:var(--disp);font-weight:700;font-size:2.8rem;color:#fff}
+.team-body{padding:1.3rem}
+.team-body h3{font-size:1.3rem;color:var(--encre)}
+.team-body .role{font-size:.8rem;color:var(--vert);font-family:var(--disp);font-weight:600;margin:.2rem 0 .6rem}
+.team-body p{font-size:.86rem;color:var(--texte-2)}
+
+/* TÉMOIGNAGES */
+.temo-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.4rem}
+.temo{background:var(--creme-2);border:1px solid var(--ligne-2);border-radius:var(--r);padding:1.8rem}
+.stars{color:var(--ocre);letter-spacing:.1em;margin-bottom:.7rem}
+.temo p{font-size:1.02rem;color:var(--texte);margin-bottom:1rem}
+.temo .who{font-family:var(--disp);font-weight:600;color:var(--vert);font-size:.9rem}
+
+/* INSCRIPTION — MOMENT FORT */
+.insc-grid{display:grid;grid-template-columns:1.5fr .9fr;gap:2rem;align-items:start}
+.insc-shell{background:var(--creme-2);border-radius:var(--r);border:1px solid var(--ligne-2);overflow:hidden;box-shadow:var(--shadow-sm)}
+.insc-steps{display:flex;background:var(--vert-soft);padding:1rem clamp(1rem,3vw,1.6rem);gap:.4rem;flex-wrap:wrap}
+.istep{display:flex;align-items:center;gap:.5rem;font-family:var(--disp);font-weight:600;font-size:.82rem;color:var(--muted);flex:1;min-width:110px}
+.istep .n{width:26px;height:26px;border-radius:50%;background:#fff;color:var(--muted);display:flex;align-items:center;justify-content:center;font-size:.8rem;flex-shrink:0;transition:.3s;border:2px solid #fff}
+.istep.active{color:var(--vert)}.istep.active .n{background:var(--vert);color:#fff}
+.istep.done .n{background:var(--ocre);color:#fff}
+.insc-panel{padding:clamp(1.5rem,4vw,2.4rem)}
+.insc-panel h3{font-size:1.5rem;color:var(--vert);margin-bottom:.3rem}
+.insc-panel .sub{color:var(--texte-2);margin-bottom:1.4rem;font-size:.95rem}
+.cyc-choices{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem}
+.cyc-pick{padding:1.2rem;border:2px solid var(--ligne);border-radius:var(--r-sm);text-align:center;background:var(--creme);transition:.25s}
+.cyc-pick:hover{border-color:var(--vert-2)}
+.cyc-pick[aria-pressed="true"]{border-color:var(--vert);background:var(--vert-soft)}
+.cyc-pick .ci{width:44px;height:44px;border-radius:13px;display:flex;align-items:center;justify-content:center;color:#fff;margin:0 auto .6rem}
+.cyc-pick h4{font-size:1.05rem;color:var(--encre)}
+.cyc-pick .cage{font-size:.74rem;color:var(--muted)}
+.opt-check{display:flex;align-items:center;gap:1rem;padding:1.1rem 1.3rem;border:2px solid var(--ligne);border-radius:var(--r-sm);margin-bottom:.8rem;cursor:pointer;transition:.25s;background:var(--creme)}
+.opt-check:hover{border-color:var(--vert-2)}
+.opt-check:has(input:checked){border-color:var(--vert);background:var(--vert-soft)}
+.opt-check .oic{width:44px;height:44px;border-radius:12px;background:var(--ocre-soft);color:var(--ocre);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.opt-check:has(input:checked) .oic{background:var(--vert);color:#fff}
+.opt-check .otxt{flex:1}
+.opt-check h4{font-size:1.02rem;color:var(--encre)}
+.opt-check p{font-size:.8rem;color:var(--texte-2)}
+.opt-check .oprice{font-family:var(--disp);font-weight:600;color:var(--vert);white-space:nowrap}
+.opt-check input{position:absolute;opacity:0}
+.opt-box{width:24px;height:24px;border:2px solid var(--muted);border-radius:7px;display:flex;align-items:center;justify-content:center;background:#fff;flex-shrink:0;transition:.2s}
+.opt-check:has(input:checked) .opt-box{background:var(--vert);border-color:var(--vert)}
+.opt-box svg{opacity:0}.opt-check:has(input:checked) .opt-box svg{opacity:1}
+
+.insc-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:1.8rem;flex-wrap:wrap}
+
+/* Résumé frais (sticky) */
+.fee-card{position:sticky;top:100px;background:var(--vert);color:#fff;border-radius:var(--r);padding:1.6rem;box-shadow:var(--shadow)}
+.fee-card h3{color:#fff;font-size:1.35rem;margin-bottom:1rem}
+.fee-line{display:flex;justify-content:space-between;padding:.6rem 0;border-bottom:1px solid rgba(255,255,255,.18);font-size:.92rem}
+.fee-line .fl{color:rgba(255,255,255,.85)}
+.fee-line .fv{font-family:var(--disp);font-weight:600}
+.fee-section-t{font-family:var(--disp);font-weight:600;font-size:.78rem;text-transform:uppercase;letter-spacing:.05em;color:rgba(255,255,255,.7);margin:1rem 0 .3rem}
+.fee-total{display:flex;justify-content:space-between;align-items:baseline;margin-top:1rem;padding-top:1rem;border-top:2px solid rgba(255,255,255,.3)}
+.fee-total .fl{font-family:var(--disp);font-weight:600}
+.fee-total .fv{font-family:var(--disp);font-weight:700;font-size:1.6rem}
+.fee-monthly{background:rgba(255,255,255,.14);border-radius:12px;padding:.9rem 1.1rem;margin-top:1rem;display:flex;justify-content:space-between;align-items:baseline}
+.fee-monthly .fl{font-size:.85rem;color:rgba(255,255,255,.9)}
+.fee-monthly .fv{font-family:var(--disp);font-weight:700;font-size:1.3rem}
+.fee-empty{color:rgba(255,255,255,.75);font-size:.9rem;text-align:center;padding:1.5rem 0}
+
+/* FORMS */
+.field{margin-bottom:1.1rem}
+.field label{display:block;font-family:var(--disp);font-weight:600;font-size:.88rem;color:var(--texte);margin-bottom:.4rem}
+.field input,.field select,.field textarea{width:100%;padding:.85rem 1rem;border:2px solid var(--ligne);border-radius:var(--r-sm);background:#fff;transition:border-color .25s,box-shadow .25s}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--vert);box-shadow:0 0 0 3px rgba(94,154,87,.14);outline:none}
+.field textarea{resize:vertical;min-height:90px}
+.field.two{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.consent{display:flex;gap:.8rem;align-items:flex-start;margin:1rem 0;font-size:.88rem;color:var(--texte-2)}
+.consent a{color:var(--vert);text-decoration:underline}
+.chk{position:relative;width:22px;height:22px;border:2px solid var(--muted);border-radius:7px;flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;background:#fff;transition:.2s}
+input[type=checkbox].c{position:absolute;opacity:0;width:100%;height:100%;cursor:pointer;margin:0}
+label:has(input.c:checked) .chk{background:var(--vert);border-color:var(--vert)}
+.chk svg{opacity:0}label:has(input.c:checked) .chk svg{opacity:1}
+.privacy-note{background:var(--bleu-soft);border-radius:var(--r-sm);padding:1rem 1.2rem;display:flex;gap:.8rem;align-items:flex-start;font-size:.85rem;color:#3E6E8E;margin-top:1rem}
+.privacy-note svg{flex-shrink:0;margin-top:2px}
+
+.cal-dates{display:flex;gap:.6rem;overflow-x:auto;padding-bottom:.5rem;margin-bottom:1.2rem}
+.cal-date{flex-shrink:0;min-width:64px;padding:.7rem .4rem;border:2px solid var(--ligne);border-radius:var(--r-sm);text-align:center;background:var(--creme);transition:.25s}
+.cal-date[aria-pressed="true"]{background:var(--vert);color:#fff;border-color:var(--vert)}
+.cal-date .d{font-size:.64rem;text-transform:uppercase;opacity:.7}
+.cal-date .n{font-family:var(--disp);font-weight:700;font-size:1.4rem}
+.cal-date .m{font-size:.64rem;text-transform:uppercase}
+.slots{display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:.5rem}
+.slot{padding:.6rem;border:2px solid var(--ligne);border-radius:10px;font-family:var(--disp);font-weight:600;font-size:.88rem;background:var(--creme);color:var(--texte-2);transition:.25s}
+.slot[aria-pressed="true"]{background:var(--ocre);color:#fff;border-color:var(--ocre)}
+.slot:disabled{opacity:.35;text-decoration:line-through;cursor:not-allowed}
+
+/* CONFIRM */
+.confirm{text-align:center;padding:1rem 0}
+.confirm .badge{width:76px;height:76px;border-radius:50%;background:var(--vert-soft);display:flex;align-items:center;justify-content:center;margin:0 auto 1.2rem;color:var(--vert)}
+.confirm h3{font-size:1.9rem;color:var(--vert);margin-bottom:.6rem}
+.confirm p{color:var(--texte-2);max-width:42ch;margin:0 auto .5rem}
+.confirm .ref{display:inline-block;margin:1rem 0;font-family:var(--disp);font-weight:700;color:var(--vert);background:var(--vert-soft);padding:.5rem 1.4rem;border-radius:30px}
+
+/* CONTACT */
+.contact-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(2rem,5vw,3.5rem);align-items:start}
+.info-card{background:var(--creme-2);border:1px solid var(--ligne-2);border-radius:var(--r);padding:1.8rem}
+.info-card li{display:flex;gap:1rem;padding:1rem 0;border-bottom:1px solid var(--ligne-2);align-items:flex-start}
+.info-card .cico{width:44px;height:44px;border-radius:13px;background:var(--vert-soft);color:var(--vert);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.info-card .lab{font-size:.72rem;color:var(--muted);font-weight:600;text-transform:uppercase}
+.info-card .v{font-family:var(--disp);font-weight:600;color:var(--encre);margin-top:.1rem}
+.info-card .v small{display:block;font-family:var(--body);font-weight:400;color:var(--texte-2);font-size:.85rem}
+.map-holder{aspect-ratio:16/9;border-radius:var(--r);background:linear-gradient(150deg,var(--vert-soft),var(--ocre-soft));position:relative;display:flex;align-items:center;justify-content:center;margin-top:1.2rem}
+.map-holder .pin{color:var(--vert)}
+.map-holder .maplab{position:absolute;bottom:1rem;left:1rem;background:var(--creme-2);padding:.5rem 1rem;border-radius:30px;font-family:var(--disp);font-weight:600;font-size:.82rem;color:var(--vert)}
+.card-form{background:var(--creme-2);border:1px solid var(--ligne-2);border-radius:var(--r);padding:clamp(1.5rem,3vw,2.2rem)}
+
+/* FOOTER */
+.footer{background:var(--encre);color:rgba(251,246,236,.8)}
+.footer-top{display:grid;grid-template-columns:1.6fr 1fr 1fr 1.2fr;gap:2.2rem;padding:clamp(3rem,6vw,4.5rem) 0 3rem}
+.footer .brand{color:#fff;margin-bottom:1rem}
+.footer-about{font-size:.9rem;color:rgba(251,246,236,.65);max-width:32ch;line-height:1.6}
+.footer-col h4{font-family:var(--disp);font-size:.82rem;letter-spacing:.04em;text-transform:uppercase;color:var(--ocre-2);margin-bottom:1rem;font-weight:600}
+.footer-col a,.footer-col li{display:block;font-size:.9rem;color:rgba(251,246,236,.7);padding:.3rem 0;transition:color .25s}
+.footer-col a:hover{color:#fff}
+.footer-bottom{border-top:1px solid rgba(251,246,236,.15);padding:1.5rem 0;display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between;align-items:center;font-size:.8rem}
+.footer-bottom .legal-links{display:flex;gap:1.3rem;flex-wrap:wrap}
+.footer-bottom button{color:rgba(251,246,236,.7);font-size:.8rem}
+.footer-bottom button:hover{color:#fff}
+.signature a{color:var(--ocre-2);border-bottom:1px solid transparent}
+.signature a:hover{border-color:var(--ocre-2)}
+
+/* MODAL / COOKIE / TOAST */
+.overlay{position:fixed;inset:0;background:rgba(47,58,46,.45);backdrop-filter:blur(2px);opacity:0;visibility:hidden;transition:.3s;z-index:100}
+.overlay.on{opacity:1;visibility:visible}
+.modal{position:fixed;inset:0;z-index:120;display:flex;align-items:center;justify-content:center;padding:1.2rem;opacity:0;visibility:hidden;transition:.3s}
+.modal.on{opacity:1;visibility:visible}
+.modal-bg{position:absolute;inset:0;background:rgba(47,58,46,.5);backdrop-filter:blur(3px)}
+.modal-card{position:relative;background:var(--creme);border-radius:20px;max-width:560px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:var(--shadow);transform:translateY(14px);transition:.3s}
+.modal.on .modal-card{transform:none}
+.modal-head{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;padding:1.6rem 1.8rem 1rem}
+.modal-head h2{color:var(--vert);font-size:1.5rem}
+.modal-close{width:38px;height:38px;border-radius:50%;background:var(--vert-soft);color:var(--vert);display:flex;align-items:center;justify-content:center}
+.modal-body{padding:0 1.8rem 1.8rem}
+.legal-body{font-size:.92rem;color:var(--texte-2);line-height:1.7}
+.legal-body h3{font-family:var(--disp);color:var(--vert);font-size:1.2rem;margin:1.3rem 0 .5rem}
+.legal-body p{margin-bottom:.7rem}
+
+.cookie{position:fixed;left:1rem;right:1rem;bottom:1rem;z-index:130;max-width:560px;margin:0 auto;background:var(--creme-2);border:2px solid var(--ligne);border-radius:20px;padding:1.4rem 1.5rem;box-shadow:var(--shadow);transform:translateY(160%);transition:transform .5s cubic-bezier(.2,.8,.3,1)}
+.cookie.on{transform:translateY(0)}
+.cookie p{font-size:.88rem;color:var(--texte-2);margin-bottom:1rem}
+.cookie p a{color:var(--vert);text-decoration:underline}
+.cookie-actions{display:flex;gap:.7rem;flex-wrap:wrap}
+.cookie-actions .btn{padding:.7rem 1.3rem;font-size:.9rem}
+
+.toast{position:fixed;bottom:1.5rem;left:50%;transform:translate(-50%,160%);z-index:140;background:var(--vert);color:#fff;padding:.9rem 1.5rem;border-radius:40px;font-family:var(--disp);font-weight:600;font-size:.9rem;display:flex;gap:.6rem;align-items:center;box-shadow:var(--shadow);transition:transform .4s}
+.toast.on{transform:translate(-50%,0)}
+.toast svg{color:var(--ocre-2)}
+
+.view{display:none}.view.active{display:block;animation:vin .45s ease}
+@keyframes vin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.7,.3,1)}
+.reveal.in{opacity:1;transform:none}
+.reveal.d1{transition-delay:.08s}.reveal.d2{transition-delay:.16s}.reveal.d3{transition-delay:.24s}
+
+@media(max-width:960px){
+  .hero-inner,.insc-grid,.contact-grid{grid-template-columns:1fr}
+  .fee-card{position:static;order:-1}
+  .cycles-grid,.activ-grid,.cal-year{grid-template-columns:1fr 1fr}
+  .reassure-grid,.team-grid{grid-template-columns:1fr 1fr}
+  .temo-grid{grid-template-columns:1fr}
+  .footer-top{grid-template-columns:1fr 1fr}
+}
+@media(max-width:640px){
+  .nav-links{position:fixed;inset:80px 0 auto 0;flex-direction:column;background:var(--creme);padding:1rem clamp(1.1rem,4vw,2.4rem) 1.6rem;gap:0;transform:translateY(-130%);transition:transform .4s;box-shadow:var(--shadow);border-bottom:1px solid var(--ligne)}
+  .nav-links.open{transform:translateY(0)}
+  .nav-links a{padding:1rem 0;border-bottom:1px solid var(--ligne-2);width:100%}
+  .nav-links a::after{display:none}
+  .burger{display:flex}
+  .burger.open span:nth-child(1){transform:translateY(7.5px) rotate(45deg)}
+  .burger.open span:nth-child(2){opacity:0}
+  .burger.open span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg)}
+  .cycles-grid,.activ-grid,.cal-year,.reassure-grid,.team-grid,.cyc-choices{grid-template-columns:1fr}
+  .footer-top{grid-template-columns:1fr}
+  .field.two{grid-template-columns:1fr}
+  .istep span.txt{display:none}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<a href="#main" class="skip">Aller au contenu</a>
+
+<header class="header">
+  <div class="wrap">
+    <nav class="nav" aria-label="Navigation principale">
+      <a href="#" class="brand" data-nav="accueil" aria-label="L'ENVOL, accueil">
+        <span class="logo"><svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="20" cy="20" r="20" fill="#DCEBD6"/><path d="M11 24c4-8 10-11 18-11-3 6-9 12-18 11z" fill="#5E9A57"/><path d="M14 27c3-5 7-7 12-7-2 4-6 8-12 7z" fill="#E8A93C"/></svg></span>
+        L'ENVOL
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#" data-nav="accueil" aria-current="page">Accueil</a></li>
+        <li><a href="#" data-nav="projet">Projet pédagogique</a></li>
+        <li><a href="#" data-nav="vie">La vie à l'école</a></li>
+        <li><a href="#" data-nav="equipe">L'équipe</a></li>
+        <li><a href="#" data-nav="contact">Contact</a></li>
+      </ul>
+      <div class="nav-right">
+        <button class="btn btn-ocre" data-nav="inscription" style="padding:.6rem 1.3rem;font-size:.92rem">Inscription</button>
+        <button class="burger" id="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ACCUEIL -->
+<section class="view active" id="view-accueil">
+  <div class="hero">
+    <span class="hero-shape hs1"></span><span class="hero-shape hs2"></span><span class="hero-shape hs3"></span>
+    <div class="wrap">
+      <div class="hero-inner">
+        <div class="reveal">
+          <span class="eyebrow oc">Crèche · Maternelle · Primaire</span>
+          <h1>Grandir, apprendre et <span class="oc">s'épanouir</span></h1>
+          <p class="lead">Un établissement privé à taille humaine à Alger, où chaque enfant avance à son rythme, entouré et en sécurité, de la crèche au primaire.</p>
+          <div class="hero-cta">
+            <button class="btn btn-ocre" data-nav="inscription">Demander une inscription</button>
+            <button class="btn btn-outline" data-nav="projet">Notre projet</button>
+          </div>
+          <div class="hero-badges">
+            <span class="hbadge"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9.5 12l1.7 1.7L15 10"/></svg> Établissement agréé</span>
+            <span class="hbadge"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="3"/><circle cx="16" cy="9" r="2.5"/><path d="M4 19c0-3 2-5 5-5s5 2 5 5M14 19c0-2 1-3.5 2.5-4"/></svg> Effectifs réduits</span>
+            <span class="hbadge"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-4.3-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.7-7 10-7 10z"/></svg> Encadrement bienveillant</span>
+          </div>
+        </div>
+        <div class="reveal d1">
+          <div class="hero-visual">
+            <div class="hero-card">
+              <div class="hero-illus">
+                <svg viewBox="0 0 340 220" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <rect width="340" height="220" fill="#DCEBD6"/>
+                  <circle cx="285" cy="45" r="26" fill="#F2BE55"/>
+                  <path d="M0 175h340v45H0z" fill="#78B36F"/>
+                  <rect x="40" y="95" width="120" height="80" fill="#FFFDF7"/><polygon points="30,95 100,55 170,95" fill="#D08A6A"/><rect x="70" y="130" width="26" height="45" fill="#5E9A57"/><rect x="115" y="115" width="26" height="26" fill="#5B8FB0"/>
+                  <circle cx="215" cy="150" r="15" fill="#E8A93C"/><path d="M205 175c0-8 4-14 10-14s10 6 10 14" fill="#D08A6A"/>
+                  <circle cx="255" cy="152" r="13" fill="#5B8FB0"/><path d="M247 175c0-7 3-12 8-12s8 5 8 12" fill="#5E9A57"/>
+                  <path d="M180 120c8-4 18-4 26 0" stroke="#5E9A57" stroke-width="3" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div class="hero-mini">
+                <div class="hmini tr"><div class="n">3</div><div class="l">Cycles</div></div>
+                <div class="hmini oc"><div class="n">18</div><div class="l">Élèves / classe</div></div>
+                <div class="hmini vt"><div class="n">1/8</div><div class="l">Encadrement</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cycles -->
+  <div class="section">
+    <div class="wrap">
+      <div class="shead center reveal"><span class="eyebrow">Nos cycles</span><h2>Un parcours, <span class="oc">trois âges</span></h2>
+        <p>De la crèche au primaire, un accompagnement continu et cohérent, adapté à chaque étape du développement de l'enfant.</p></div>
+      <div class="cycles-grid" id="cyclesHome" style="margin-top:2.8rem"></div>
+    </div>
+  </div>
+
+  <!-- Rassurance -->
+  <div class="reassure section">
+    <div class="wrap">
+      <div class="shead center reveal"><span class="eyebrow">En confiance</span><h2>Ce qui rassure les <span class="oc">parents</span></h2></div>
+      <div class="reassure-grid">
+        <div class="rcard reveal"><span class="ric" style="background:var(--vert)"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/></svg></span><h3>Sécurité</h3><p>Accès contrôlé, personnel formé aux premiers secours et sorties surveillées.</p></div>
+        <div class="rcard reveal d1"><span class="ric" style="background:var(--ocre)"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="9" cy="8" r="3"/><path d="M4 19c0-3 2-5 5-5s5 2 5 5"/><circle cx="17" cy="9" r="2.5"/></svg></span><h3>Effectifs réduits</h3><p>18 élèves maximum par classe pour un suivi individualisé de chaque enfant.</p></div>
+        <div class="rcard reveal d2"><span class="ric" style="background:var(--terra)"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 20c2-6 6-9 8-9s6 3 8 9"/><circle cx="12" cy="7" r="3"/></svg></span><h3>Taux d'encadrement</h3><p>Un adulte pour huit enfants, davantage encore en crèche.</p></div>
+        <div class="rcard reveal d3"><span class="ric" style="background:var(--bleu)"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 3h12v6a6 6 0 0 1-12 0zM9 21h6M12 15v6"/></svg></span><h3>Cantine maison</h3><p>Repas équilibrés préparés sur place, allergènes affichés chaque semaine.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Témoignages -->
+  <div class="section">
+    <div class="wrap">
+      <div class="shead center reveal"><span class="eyebrow">Ils nous font confiance</span><h2>La parole aux <span class="oc">familles</span></h2></div>
+      <div class="temo-grid" id="temoHome" style="margin-top:2.6rem"></div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="section" style="padding-top:0">
+    <div class="wrap">
+      <div style="background:linear-gradient(135deg,var(--vert),#487E42);border-radius:var(--r);padding:clamp(2.2rem,5vw,3.6rem);text-align:center;color:#fff" class="reveal">
+        <h2 style="color:#fff;font-size:clamp(1.8rem,4vw,2.6rem)">Envie de visiter l'école ?</h2>
+        <p style="color:rgba(255,255,255,.85);max-width:44ch;margin:1rem auto 1.8rem">Lancez une demande d'inscription en ligne et réservez une visite avec la directrice. Réponse sous 48 h.</p>
+        <button class="btn btn-ocre" data-nav="inscription">Commencer l'inscription</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJET PÉDAGOGIQUE -->
+<section class="view" id="view-projet">
+  <div class="section">
+    <div class="wrap">
+      <div class="shead center reveal"><span class="eyebrow">Notre pédagogie</span><h2>Un projet <span class="oc">bienveillant</span></h2>
+        <p>Apprendre en confiance, par le jeu, l'expérience et l'autonomie. Chaque cycle a ses objectifs, dans une continuité rassurante.</p></div>
+      <div id="projetCycles" style="margin-top:2.8rem"></div>
+      <div class="shead center reveal" style="margin-top:3rem"><h2 style="font-size:2rem">Grille tarifaire</h2><p>Des tarifs clairs en dinars, sans frais cachés. Options facturées au mois.</p></div>
+      <table class="tarifs-table reveal">
+        <thead><tr><th>Cycle</th><th>Frais d'inscription</th><th>Mensualité</th></tr></thead>
+        <tbody id="tarifsBody"></tbody>
+      </table>
+      <p class="tarif-note">Options mensuelles : cantine 6 000 DA · transport 8 000 DA · périscolaire (garderie & étude) 5 000 DA. Réduction de 10 % dès le 2ᵉ enfant inscrit.</p>
+      <div class="center" style="margin-top:2.4rem"><button class="btn btn-ocre" data-nav="inscription">Simuler & s'inscrire</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- LA VIE À L'ÉCOLE -->
+<section class="view" id="view-vie">
+  <div class="section">
+    <div class="wrap">
+      <div class="shead center reveal"><span class="eyebrow">Au quotidien</span><h2>La vie à <span class="oc">l'école</span></h2></div>
+
+      <div style="margin-top:2.8rem" class="reveal">
+        <h3 style="font-size:1.7rem;color:var(--vert)">Une journée type <span style="color:var(--muted);font-size:1rem;font-weight:400">— maternelle</span></h3>
+        <div class="journee" id="journee"></div>
+      </div>
+
+      <div style="margin-top:3rem" class="reveal">
+        <h3 style="font-size:1.7rem;color:var(--vert)">Emploi du temps hebdomadaire <span style="color:var(--muted);font-size:1rem;font-weight:400">— grande section</span></h3>
+        <div class="edt-wrap"><table class="edt" id="edtTable"></table></div>
+      </div>
+
+      <div style="margin-top:3rem" class="reveal">
+        <h3 style="font-size:1.7rem;color:var(--vert)">Activités périscolaires</h3>
+        <div class="activ-grid" id="activGrid"></div>
+      </div>
+
+      <div class="cantine-box reveal">
+        <span class="cic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 3v8a3 3 0 0 0 6 0V3M9 3v18M15 3c-1 2-1 4 0 6v12"/></svg></span>
+        <div><h3>Cantine & allergènes</h3><p>Les repas sont préparés sur place à partir de produits frais. Le menu de la semaine et la liste des allergènes sont affichés à l'entrée et transmis aux familles. Les régimes particuliers sont pris en compte sur signalement.</p></div>
+      </div>
+
+      <div style="margin-top:3rem" class="reveal">
+        <h3 style="font-size:1.7rem;color:var(--vert)">Calendrier de l'année <span style="color:var(--muted);font-size:1rem;font-weight:400">— 2025 / 2026</span></h3>
+        <div class="cal-year" id="calYear"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ÉQUIPE -->
+<section class="view" id="view-equipe">
+  <div class="section">
+    <div class="wrap">
+      <div class="shead center reveal"><span class="eyebrow">Notre équipe</span><h2>Des adultes <span class="oc">de confiance</span></h2></div>
+      <div class="team-grid" id="teamGrid" style="margin-top:2.8rem"></div>
+    </div>
+  </div>
+</section>
+
+<!-- INSCRIPTION (MOMENT FORT) -->
+<section class="view" id="view-inscription">
+  <div class="section">
+    <div class="wrap">
+      <div class="shead reveal"><span class="eyebrow">Inscription en ligne</span><h2>Inscrivez votre <span class="oc">enfant</span></h2>
+        <p>Quelques étapes simples : les frais se calculent en direct, et vous réservez une visite à la fin. Aucun engagement à cette étape.</p></div>
+      <div class="insc-grid" style="margin-top:2.4rem">
+        <div class="insc-shell reveal">
+          <div class="insc-steps" id="inscSteps">
+            <div class="istep active" data-s="1"><span class="n">1</span><span class="txt">Enfant</span></div>
+            <div class="istep" data-s="2"><span class="n">2</span><span class="txt">Niveau</span></div>
+            <div class="istep" data-s="3"><span class="n">3</span><span class="txt">Parents</span></div>
+            <div class="istep" data-s="4"><span class="n">4</span><span class="txt">Options</span></div>
+            <div class="istep" data-s="5"><span class="n">5</span><span class="txt">Visite</span></div>
+          </div>
+          <div class="insc-panel" id="inscPanel"></div>
+        </div>
+        <aside class="fee-card" id="feeCard" aria-label="Estimation des frais"></aside>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="view" id="view-contact">
+  <div class="section">
+    <div class="wrap">
+      <div class="shead center reveal"><span class="eyebrow">Contact & accès</span><h2>Venez nous <span class="oc">rencontrer</span></h2></div>
+      <div class="contact-grid" style="margin-top:2.8rem">
+        <div class="reveal">
+          <div class="info-card">
+            <ul>
+              <li><span class="cico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.6"/></svg></span>
+                <div><div class="lab">Adresse</div><div class="v">Rue des Jardins<small>Ouled Fayet · Alger</small></div></div></li>
+              <li><span class="cico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M5 4h4l2 5-3 2a12 12 0 0 0 5 5l2-3 5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></span>
+                <div><div class="lab">Téléphone</div><div class="v">+213 _ __ __ __ __</div></div></li>
+              <li><span class="cico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 5h16v14H4z"/><path d="M4 7l8 6 8-6"/></svg></span>
+                <div><div class="lab">Email</div><div class="v" style="font-size:.98rem">bonjour@lenvol-ecole.dz</div></div></li>
+              <li><span class="cico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+                <div><div class="lab">Horaires</div><div class="v" style="font-size:.98rem">Dim – Jeu : 8h – 16h30<small>Accueil : 7h45 · Périscolaire jusqu'à 18h</small></div></div></li>
+            </ul>
+          </div>
+          <div class="map-holder"><span class="pin"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.6"/></svg></span><span class="maplab">Ouled Fayet, Alger</span></div>
+        </div>
+        <div class="card-form reveal d1">
+          <form id="contactForm" novalidate>
+            <div class="field two"><div><label for="c-nom">Nom du parent</label><input id="c-nom" required></div><div><label for="c-tel">Téléphone</label><input id="c-tel" type="tel" placeholder="+213 _ __ __ __ __" required></div></div>
+            <div class="field"><label for="c-email">Email (facultatif)</label><input id="c-email" type="email"></div>
+            <div class="field"><label for="c-msg">Message</label><textarea id="c-msg" required></textarea></div>
+            <label class="consent"><span style="position:relative;display:inline-flex"><input type="checkbox" class="c" id="c-consent" required><span class="chk"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span></span><span>J'accepte d'être recontacté(e) au sujet de ma demande (<a href="#" data-legal="confidentialite">confidentialité</a>).</span></label>
+            <button type="submit" class="btn btn-vert btn-block">Envoyer</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <div>
+        <div class="brand"><span class="logo"><svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="20" cy="20" r="20" fill="rgba(255,255,255,.12)"/><path d="M11 24c4-8 10-11 18-11-3 6-9 12-18 11z" fill="#78B36F"/><path d="M14 27c3-5 7-7 12-7-2 4-6 8-12 7z" fill="#F2BE55"/></svg></span>L'ENVOL</div>
+        <p class="footer-about">Établissement privé à Alger : crèche, maternelle et primaire. Un cadre bienveillant, sûr et structuré pour grandir sereinement.</p>
+      </div>
+      <div class="footer-col"><h4>L'école</h4>
+        <a href="#" data-nav="projet">Projet pédagogique</a><a href="#" data-nav="vie">La vie à l'école</a><a href="#" data-nav="equipe">L'équipe</a><a href="#" data-nav="projet">Tarifs</a></div>
+      <div class="footer-col"><h4>Inscription</h4>
+        <a href="#" data-nav="inscription">S'inscrire en ligne</a><a href="#" data-nav="inscription">Visiter l'école</a><a href="#" data-nav="contact">Contact & accès</a></div>
+      <div class="footer-col"><h4>École</h4>
+        <li>Rue des Jardins</li><li>Ouled Fayet, Alger</li><li>Dim – Jeu : 8h – 16h30</li><li>+213 _ __ __ __ __</li></div>
+    </div>
+    <div class="footer-bottom">
+      <div class="legal-links">
+        <button data-legal="mentions">Mentions légales</button>
+        <button data-legal="confidentialite">Politique de confidentialité</button>
+        <button id="cookieReopen">Gérer les cookies</button>
+      </div>
+      <span class="signature">Réalisé par <a href="https://difarslan.com" target="_blank" rel="noopener">Arslan DIF — difarslan.com</a></span>
+    </div>
+  </div>
+</footer>
+
+<div class="overlay" id="overlay"></div>
+<div class="modal" id="modalLegal" role="dialog" aria-modal="true" aria-labelledby="legalTitle">
+  <div class="modal-bg" data-close></div>
+  <div class="modal-card">
+    <div class="modal-head"><h2 id="legalTitle"></h2><button class="modal-close" data-close aria-label="Fermer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+    <div class="modal-body legal-body" id="legalBody"></div>
+  </div>
+</div>
+
+<div class="cookie" id="cookie" role="dialog" aria-label="Cookies">
+  <p>Nous utilisons des cookies pour améliorer votre visite et mesurer l'audience. <a href="#" data-legal="confidentialite">En savoir plus</a>.</p>
+  <div class="cookie-actions"><button class="btn btn-vert" id="cookieAccept">Accepter</button><button class="btn btn-ghost" id="cookieRefuse">Refuser</button></div>
+</div>
+
+<div class="toast" id="toast"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg><span id="toastMsg"></span></div>
+
+<script>
+/* ===== DONNÉES ===== */
+const CYCLES=[
+  {id:'creche',nom:'Crèche',age:'3 mois – 3 ans',cls:'creche',color:'var(--terra)',
+   desc:"Un premier lieu de vie doux et sécurisant, où l'on éveille les sens, encourage la motricité et accompagne les premières séparations en douceur.",
+   effectif:12,taux:'1/5',inscription:15000,mensualite:18000,
+   long:"À la crèche, le rythme de l'enfant prime : sommeil, repas et jeux libres. Éveil sensoriel, comptines, motricité et socialisation progressive dans un cadre chaleureux."},
+  {id:'maternelle',nom:'Maternelle',age:'3 – 5 ans',cls:'maternelle',color:'var(--ocre)',
+   desc:"On apprend en jouant : langage, motricité fine, vivre-ensemble et curiosité. L'enfant gagne en autonomie et prend plaisir à découvrir.",
+   effectif:18,taux:'1/9',inscription:20000,mensualite:22000,
+   long:"En maternelle, l'enfant développe le langage, la motricité et l'autonomie à travers des ateliers, des projets et beaucoup de jeu. Éveil artistique, musical et premiers repères de lecture et de nombres."},
+  {id:'primaire',nom:'Primaire',age:'6 – 11 ans',cls:'primaire',color:'var(--vert)',
+   desc:"Les apprentissages fondamentaux — lire, écrire, compter — dans un cadre structuré mais bienveillant, qui cultive la confiance et l'esprit critique.",
+   effectif:18,taux:'1/12',inscription:25000,mensualite:25000,
+   long:"Au primaire, les fondamentaux sont consolidés avec méthode et douceur. Projets, sciences, arts, sport et éducation aux valeurs. Un suivi individualisé et un lien étroit avec les familles."}
+];
+const OPTIONS=[
+  {id:'cantine',nom:'Cantine',desc:'Repas équilibrés préparés sur place',prix:6000,ic:'<path d="M6 3v8a3 3 0 0 0 6 0V3M9 3v18M15 3c-1 2-1 4 0 6v12"/>'},
+  {id:'transport',nom:'Transport scolaire',desc:'Ramassage matin & soir, encadré',prix:8000,ic:'<rect x="3" y="6" width="18" height="10" rx="2"/><path d="M3 12h18"/><circle cx="7.5" cy="18" r="1.6"/><circle cx="16.5" cy="18" r="1.6"/>'},
+  {id:'periscolaire',nom:'Périscolaire',desc:'Garderie & étude jusqu\'à 18h',prix:5000,ic:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>'}
+];
+const JOURNEE=[
+  {t:'7h45 – 8h30',h:'Accueil échelonné',p:"Arrivée en douceur, jeux libres et retrouvailles avec les copains."},
+  {t:'8h30 – 10h00',h:'Ateliers du matin',p:"Langage, découverte du monde et motricité fine en petits groupes."},
+  {t:'10h00 – 10h30',h:'Récréation & collation',p:"Un fruit, de l'eau et du grand air dans la cour sécurisée."},
+  {t:'10h30 – 11h45',h:'Activités dirigées',p:"Arts plastiques, musique ou éveil mathématique selon le jour."},
+  {t:'11h45 – 13h00',h:'Déjeuner à la cantine',p:"Repas maison, puis temps calme."},
+  {t:'13h00 – 14h30',h:'Sieste ou repos',p:"Sieste pour les plus jeunes, activités calmes pour les autres."},
+  {t:'14h30 – 16h00',h:'Projets & jeux',p:"Coins jeux, lecture d'histoires et projet de la semaine."},
+  {t:'16h00 – 18h00',h:'Périscolaire',p:"Goûter, aide aux devoirs et activités pour ceux qui restent."}
+];
+const EDT={
+  head:['','Lundi','Mardi','Mercredi','Jeudi'],
+  rows:[
+    ['8h30',['Langage','a-vert'],['Découverte','a-ocre'],['Langage','a-vert'],['Motricité','a-bleu']],
+    ['10h30',['Arts','a-terra'],['Maths','a-vert'],['Musique','a-ocre'],['Sciences','a-bleu']],
+    ['14h30',['Motricité','a-bleu'],['Lecture','a-vert'],['Ateliers','a-ocre'],['Projet','a-terra']]
+  ]
+};
+const ACTIVITES=[
+  {n:'Éveil musical',c:'var(--ocre)',ic:'<path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>'},
+  {n:'Arts plastiques',c:'var(--terra)',ic:'<circle cx="12" cy="12" r="9"/><circle cx="8" cy="10" r="1"/><circle cx="16" cy="10" r="1"/><circle cx="10" cy="15" r="1"/>'},
+  {n:'Sport & motricité',c:'var(--vert)',ic:'<circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18"/>'},
+  {n:'Anglais ludique',c:'var(--bleu)',ic:'<path d="M4 5h16v12H4zM4 9h16M9 5v12"/>'},
+  {n:'Jardinage',c:'var(--vert-2)',ic:'<path d="M12 21V11M12 11c0-3-2-5-5-5 0 3 2 5 5 5zM12 11c0-3 2-5 5-5 0 3-2 5-5 5z"/>'},
+  {n:'Contes & lecture',c:'var(--ocre)',ic:'<path d="M4 5h7v14H4zM13 5h7v14h-7zM11 5v14"/>'}
+];
+const CALENDRIER=[
+  {l:'Rentrée scolaire',d:'7 septembre 2025',hl:true},
+  {l:'Vacances d\'automne',d:'26 oct. – 2 nov. 2025'},
+  {l:'Vacances d\'hiver',d:'21 déc. – 4 jan. 2026'},
+  {l:'Vacances de printemps',d:'15 – 29 mars 2026'},
+  {l:'Fête de fin d\'année',d:'20 juin 2026',hl:true},
+  {l:'Fin des cours',d:'30 juin 2026'}
+];
+const TEAM=[
+  {ini:'FM',nom:'Mme Farida M.',role:'Directrice',grad:'linear-gradient(150deg,#5E9A57,#487E42)',bio:"Éducatrice depuis 20 ans, elle veille au bien-être de chaque enfant et au dialogue avec les familles."},
+  {ini:'SK',nom:'Mme Samira K.',role:'Maternelle',grad:'linear-gradient(150deg,#E8A93C,#D08E20)',bio:"Passionnée d'éveil artistique, elle transforme chaque journée en aventure."},
+  {ini:'NB',nom:'M. Nabil B.',role:'Primaire',grad:'linear-gradient(150deg,#5B8FB0,#3E6E8E)',bio:"Exigeant et bienveillant, il donne le goût d'apprendre et de se dépasser."},
+  {ini:'LA',nom:'Mme Lynda A.',role:'Crèche',grad:'linear-gradient(150deg,#D08A6A,#B87254)',bio:"Douceur et patience pour accompagner les tout-petits et rassurer les parents."}
+];
+const TEMO=[
+  {s:5,t:"Ma fille adore y aller chaque matin. L'équipe est à l'écoute et les effectifs réduits font toute la différence.",w:"Souad — maman de Maya (maternelle)"},
+  {s:5,t:"La simulation des frais en ligne avant l'inscription nous a beaucoup aidés à choisir. Tout est clair et transparent.",w:"Réda — papa de Adam (primaire)"},
+  {s:5,t:"Un cadre sécurisé et une vraie attention à chaque enfant. Notre fils a pris confiance en lui.",w:"Nawal — maman de Rayan (primaire)"},
+  {s:5,t:"La crèche a rendu la reprise du travail sereine. On sent que les tout-petits sont entre de bonnes mains.",w:"Imane — maman de Lina (crèche)"}
+];
+
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const fmt=n=>Math.round(n).toLocaleString('fr-FR').replace(/\u202f/g,' ')+' DA';
+function svg(inner){return `<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${inner}</svg>`;}
+
+/* ===== RENDU CONTENU ===== */
+function cycleCardHome(c){return `<article class="cycle-card reveal">
+  <div class="cycle-top ${c.cls}"><span class="cycle-icon">${svg(c.id==='creche'?'<path d="M12 3l2 4 4-1-2 4 2 4-4-1-2 4-2-4-4 1 2-4-2-4 4 1z"/>':c.id==='maternelle'?'<circle cx="12" cy="8" r="4"/><path d="M5 20c0-4 3-7 7-7s7 3 7 7"/>':'<path d="M3 8l9-4 9 4-9 4z"/><path d="M7 10v5c0 1 2 3 5 3s5-2 5-3v-5"/>')}</span><div class="age">${c.age}</div><h3>${c.nom}</h3></div>
+  <div class="cycle-body"><p>${c.desc}</p><div class="cycle-facts"><div class="cfact"><span class="n">${c.effectif}</span><span class="l">Élèves max</span></div><div class="cfact"><span class="n">${c.taux}</span><span class="l">Encadrement</span></div><div class="cfact"><span class="n">${fmt(c.mensualite).replace(' DA','')}</span><span class="l">DA / mois</span></div></div></div>
+</article>`;}
+function renderHome(){
+  $('#cyclesHome').innerHTML=CYCLES.map(cycleCardHome).join('');
+  $('#temoHome').innerHTML=TEMO.slice(0,2).map(t=>`<div class="temo reveal"><div class="stars" aria-label="${t.s} sur 5">${'★'.repeat(t.s)}</div><p>« ${t.t} »</p><div class="who">${t.w}</div></div>`).join('');
+}
+function renderProjet(){
+  $('#projetCycles').innerHTML=CYCLES.map((c,i)=>`<div class="reveal" style="display:grid;grid-template-columns:${i%2?'1fr 1.4fr':'1.4fr 1fr'};gap:2rem;align-items:center;margin-bottom:2.4rem">
+    <div style="${i%2?'order:2':''}"><span class="eyebrow" style="color:${c.color}">${c.age}</span><h3 style="font-size:1.8rem;color:var(--vert);margin:.4rem 0 .6rem">${c.nom}</h3><p style="color:var(--texte-2)">${c.long}</p>
+      <div style="display:flex;gap:1.6rem;margin-top:1rem"><div><div style="font-family:var(--disp);font-weight:600;font-size:1.4rem;color:${c.color}">${c.effectif}</div><div style="font-size:.72rem;color:var(--muted);text-transform:uppercase">Élèves max</div></div><div><div style="font-family:var(--disp);font-weight:600;font-size:1.4rem;color:${c.color}">${c.taux}</div><div style="font-size:.72rem;color:var(--muted);text-transform:uppercase">Encadrement</div></div></div></div>
+    <div style="${i%2?'order:1':''};aspect-ratio:4/3;border-radius:var(--r);background:${c.cls==='creche'?'var(--terra-soft)':c.cls==='maternelle'?'var(--ocre-soft)':'var(--vert-soft)'};display:flex;align-items:center;justify-content:center;color:${c.color}"><span style="font-family:var(--disp);font-weight:700;font-size:3rem;opacity:.5">${c.nom}</span></div>
+  </div>`).join('');
+  $('#tarifsBody').innerHTML=CYCLES.map(c=>`<tr><td class="tc">${c.nom} <span style="font-weight:400;color:var(--muted);font-size:.82rem">(${c.age})</span></td><td>${fmt(c.inscription)}</td><td class="tp">${fmt(c.mensualite)} <span style="font-weight:400;color:var(--muted);font-size:.8rem">/ mois</span></td></tr>`).join('');
+}
+function renderVie(){
+  $('#journee').innerHTML=JOURNEE.map(j=>`<div class="jstep"><div class="jtime">${j.t}</div><h4>${j.h}</h4><p>${j.p}</p></div>`).join('');
+  $('#edtTable').innerHTML=`<thead><tr>${EDT.head.map((h,i)=>`<th>${h}</th>`).join('')}</tr></thead><tbody>${EDT.rows.map(r=>`<tr><td class="time">${r[0]}</td>${r.slice(1).map(c=>`<td><span class="act ${c[1]}">${c[0]}</span></td>`).join('')}</tr>`).join('')}</tbody>`;
+  $('#activGrid').innerHTML=ACTIVITES.map(a=>`<div class="activ reveal"><span class="aic" style="background:${a.c}">${svg(a.ic)}</span><div><h4>${a.n}</h4><p>Chaque semaine, encadré par l'équipe.</p></div></div>`).join('');
+  $('#calYear').innerHTML=CALENDRIER.map(c=>`<div class="cal-row ${c.hl?'hl':''}"><span class="cl">${c.l}</span><span class="cd">${c.d}</span></div>`).join('');
+}
+function renderTeam(){$('#teamGrid').innerHTML=TEAM.map(t=>`<article class="team-card reveal"><div class="team-photo" style="background:${t.grad}"><span class="ini">${t.ini}</span></div><div class="team-body"><h3>${t.nom}</h3><div class="role">${t.role}</div><p>${t.bio}</p></div></article>`).join('');}
+
+/* ===== INSCRIPTION WIZARD ===== */
+const insc={step:1,enfant:{},cycle:null,annee:'2025 / 2026',parent:{},options:new Set(),visite:{date:0,slot:null}};
+function baseCycle(){return CYCLES.find(c=>c.id===insc.cycle);}
+function monthlyTotal(){let m=insc.cycle?baseCycle().mensualite:0;insc.options.forEach(o=>m+=OPTIONS.find(x=>x.id===o).prix);return m;}
+function inscriptionFee(){return insc.cycle?baseCycle().inscription:0;}
+function firstPayment(){return inscriptionFee()+monthlyTotal();}
+
+function renderFee(){
+  const f=$('#feeCard');
+  if(!insc.cycle){f.innerHTML=`<h3>Estimation des frais</h3><p class="fee-empty">Choisissez un niveau à l'étape 2 pour voir l'estimation en direct.</p>`;return;}
+  const c=baseCycle();
+  const optLines=[...insc.options].map(o=>{const op=OPTIONS.find(x=>x.id===o);return `<div class="fee-line"><span class="fl">${op.nom}</span><span class="fv">${fmt(op.prix)}</span></div>`;}).join('');
+  f.innerHTML=`<h3>Estimation des frais</h3>
+    <div class="fee-line"><span class="fl">Niveau</span><span class="fv">${c.nom}</span></div>
+    <div class="fee-section-t">Frais d'inscription (une fois)</div>
+    <div class="fee-line"><span class="fl">Inscription</span><span class="fv">${fmt(c.inscription)}</span></div>
+    <div class="fee-section-t">Mensualité</div>
+    <div class="fee-line"><span class="fl">Scolarité ${c.nom}</span><span class="fv">${fmt(c.mensualite)}</span></div>
+    ${optLines}
+    <div class="fee-monthly"><span class="fl">Total mensuel</span><span class="fv">${fmt(monthlyTotal())}</span></div>
+    <div class="fee-total"><span class="fl">1ᵉʳ versement</span><span class="fv">${fmt(firstPayment())}</span></div>
+    <p style="font-size:.74rem;color:rgba(255,255,255,.7);margin-top:.8rem">Inscription + 1ʳᵉ mensualité. Estimation indicative, hors réductions.</p>`;
+}
+
+function renderInsc(){
+  const p=$('#inscPanel');
+  $$('#inscSteps .istep').forEach(s=>{const n=+s.dataset.s;s.classList.toggle('active',n===insc.step);s.classList.toggle('done',n<insc.step);});
+  renderFee();
+  if(insc.step===1){
+    p.innerHTML=`<h3>Votre enfant</h3><p class="sub">Quelques informations de base. Nous ne collectons que le nécessaire.</p>
+      <div class="field two"><div><label for="e-prenom">Prénom de l'enfant</label><input id="e-prenom" value="${insc.enfant.prenom||''}"></div><div><label for="e-naiss">Date de naissance</label><input id="e-naiss" type="date" value="${insc.enfant.naiss||''}"></div></div>
+      <div class="privacy-note"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><p><strong>Données d'un mineur :</strong> ces informations sont confidentielles et servent uniquement à préparer l'entretien d'inscription.</p></div>
+      <div class="insc-nav"><span></span><button class="btn btn-vert" id="iNext">Continuer</button></div>`;
+    $('#iNext').onclick=()=>{insc.enfant={prenom:$('#e-prenom').value,naiss:$('#e-naiss').value};insc.step=2;renderInsc();};
+  }
+  else if(insc.step===2){
+    p.innerHTML=`<h3>Niveau & année scolaire</h3><p class="sub">Le niveau détermine les frais, affichés en direct à droite.</p>
+      <div class="cyc-choices">${CYCLES.map(c=>`<button class="cyc-pick" data-cyc="${c.id}" aria-pressed="${insc.cycle===c.id}"><span class="ci" style="background:${c.color}">${svg(c.id==='creche'?'<path d="M12 3l2 4 4-1-2 4 2 4-4-1-2 4-2-4-4 1 2-4-2-4 4 1z"/>':c.id==='maternelle'?'<circle cx="12" cy="8" r="4"/><path d="M5 20c0-4 3-7 7-7s7 3 7 7"/>':'<path d="M3 8l9-4 9 4-9 4z"/>')}</span><h4>${c.nom}</h4><div class="cage">${c.age}</div></button>`).join('')}</div>
+      <div class="field" style="margin-top:1.4rem"><label for="i-annee">Année scolaire</label><select id="i-annee"><option ${insc.annee==='2025 / 2026'?'selected':''}>2025 / 2026</option><option ${insc.annee==='2026 / 2027'?'selected':''}>2026 / 2027</option></select></div>
+      <div class="insc-nav"><button class="btn btn-ghost" id="iBack">Retour</button><button class="btn btn-vert" id="iNext" ${insc.cycle?'':'disabled'}>Continuer</button></div>`;
+    p.querySelector('.cyc-choices').onclick=e=>{const b=e.target.closest('[data-cyc]');if(!b)return;insc.cycle=b.dataset.cyc;renderInsc();};
+    $('#iBack').onclick=()=>{insc.step=1;renderInsc();};
+    $('#iNext').onclick=()=>{insc.annee=$('#i-annee').value;insc.step=3;renderInsc();};
+  }
+  else if(insc.step===3){
+    p.innerHTML=`<h3>Parent / responsable légal</h3><p class="sub">Pour vous recontacter et préparer le dossier.</p>
+      <div class="field two"><div><label for="p-nom">Nom & prénom</label><input id="p-nom" value="${insc.parent.nom||''}"></div><div><label for="p-lien">Lien avec l'enfant</label><select id="p-lien"><option>Parent</option><option>Tuteur légal</option><option>Autre responsable</option></select></div></div>
+      <div class="field two"><div><label for="p-tel">Téléphone</label><input id="p-tel" type="tel" placeholder="+213 _ __ __ __ __" value="${insc.parent.tel||''}"></div><div><label for="p-email">Email (facultatif)</label><input id="p-email" type="email" value="${insc.parent.email||''}"></div></div>
+      <div class="insc-nav"><button class="btn btn-ghost" id="iBack">Retour</button><button class="btn btn-vert" id="iNext">Continuer</button></div>`;
+    $('#iBack').onclick=()=>{insc.step=2;renderInsc();};
+    $('#iNext').onclick=()=>{const nom=$('#p-nom').value.trim(),tel=$('#p-tel').value.trim();if(!nom||!tel){toast('Nom et téléphone requis');return;}insc.parent={nom,tel,email:$('#p-email').value,lien:$('#p-lien').value};insc.step=4;renderInsc();};
+  }
+  else if(insc.step===4){
+    p.innerHTML=`<h3>Options</h3><p class="sub">Ajoutez la cantine, le transport ou le périscolaire. Le total mensuel s'ajuste en direct.</p>
+      ${OPTIONS.map(o=>`<label class="opt-check"><span style="position:relative;display:inline-flex"><input type="checkbox" data-opt="${o.id}" ${insc.options.has(o.id)?'checked':''}><span class="opt-box"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span></span><span class="oic">${svg(o.ic)}</span><span class="otxt"><h4>${o.nom}</h4><p>${o.desc}</p></span><span class="oprice">+ ${fmt(o.prix)}<span style="font-weight:400;font-size:.72rem;color:var(--muted)">/mois</span></span></label>`).join('')}
+      <div class="insc-nav"><button class="btn btn-ghost" id="iBack">Retour</button><button class="btn btn-vert" id="iNext">Continuer vers la visite</button></div>`;
+    p.querySelectorAll('[data-opt]').forEach(i=>i.onchange=()=>{i.checked?insc.options.add(i.dataset.opt):insc.options.delete(i.dataset.opt);renderFee();});
+    $('#iBack').onclick=()=>{insc.step=3;renderInsc();};
+    $('#iNext').onclick=()=>{insc.step=5;renderInsc();};
+  }
+  else{
+    const JN=['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'],MN=['jan','fév','mar','avr','mai','juin','juil','août','sep','oct','nov','déc'];
+    const days=[];let d=new Date();let c=0;while(c<6){d=new Date(d);d.setDate(d.getDate()+1);if(d.getDay()!==5&&d.getDay()!==6){days.push(new Date(d));c++;}}
+    p.innerHTML=`<h3>Réserver une visite</h3><p class="sub">Rencontrez la directrice, visitez les locaux et finalisez le dossier. Aucun engagement.</p>
+      <div class="cal-dates" id="vDates">${days.map((dd,i)=>`<button class="cal-date" data-vd="${i}" aria-pressed="${insc.visite.date===i}"><span class="d">${JN[dd.getDay()]}</span><span class="n">${dd.getDate()}</span><span class="m">${MN[dd.getMonth()]}</span></button>`).join('')}</div>
+      <div class="slots" id="vSlots">${['09:00','10:00','11:00','14:00','15:00','16:00'].map((s,i)=>`<button class="slot" data-vs="${s}" ${i===1?'disabled':''} aria-pressed="${insc.visite.slot===s}">${s}</button>`).join('')}</div>
+      <label class="consent" style="margin-top:1.2rem"><span style="position:relative;display:inline-flex"><input type="checkbox" class="c" id="i-consent"><span class="chk"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span></span><span>En tant que parent / responsable légal, j'autorise le traitement des données de mon enfant pour cette demande d'inscription, conformément à la <a href="#" data-legal="confidentialite">politique de confidentialité</a>.</span></label>
+      <div class="privacy-note"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/></svg><p>Données minimales, confidentielles, jamais partagées avec des tiers. Le consentement parental est requis.</p></div>
+      <div class="insc-nav"><button class="btn btn-ghost" id="iBack">Retour</button><button class="btn btn-ocre" id="iConfirm">Confirmer la demande</button></div>`;
+    bindLegal();
+    $('#vDates').onclick=e=>{const b=e.target.closest('[data-vd]');if(!b)return;insc.visite.date=+b.dataset.vd;$$('#vDates .cal-date').forEach(x=>x.setAttribute('aria-pressed',x===b));};
+    $('#vSlots').onclick=e=>{const b=e.target.closest('[data-vs]');if(!b||b.disabled)return;insc.visite.slot=b.dataset.vs;$$('#vSlots .slot').forEach(x=>x.setAttribute('aria-pressed',x===b));};
+    $('#iBack').onclick=()=>{insc.step=4;renderInsc();};
+    $('#iConfirm').onclick=()=>{
+      if(!insc.visite.slot){toast('Choisissez un créneau de visite');return;}
+      if(!$('#i-consent').checked){toast('Le consentement parental est requis');return;}
+      const dd=days[insc.visite.date];const ref='INS-'+Math.floor(1000+Math.random()*8999);const c=baseCycle();
+      p.innerHTML=`<div class="confirm"><div class="badge"><svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 13l4 4L19 7"/></svg></div>
+        <h3>Demande envoyée !</h3>
+        <p>Merci ${insc.parent.nom.split(' ')[0]}. Votre demande pour <strong>${insc.enfant.prenom||'votre enfant'}</strong> en <strong>${c.nom}</strong> est enregistrée.</p>
+        <p>Visite prévue le <strong>${JN[dd.getDay()]} ${dd.getDate()} ${MN[dd.getMonth()]} à ${insc.visite.slot}</strong>.</p>
+        <span class="ref">${ref}</span>
+        <p style="font-size:.86rem;color:var(--muted)">La directrice vous confirmera le rendez-vous par téléphone sous 48 h.</p>
+        <button class="btn btn-vert" id="iDone" style="margin-top:1.2rem">Terminer</button></div>`;
+      $('#feeCard').style.opacity='.6';
+      $('#iDone').onclick=()=>{Object.assign(insc,{step:1,enfant:{},cycle:null,parent:{},options:new Set(),visite:{date:0,slot:null}});$('#feeCard').style.opacity='1';showView('accueil');};
+      toast('Inscription enregistrée');
+    };
+  }
+}
+
+/* ===== NAV ===== */
+function showView(name){$$('.view').forEach(v=>v.classList.remove('active'));const el=$('#view-'+name);if(el)el.classList.add('active');
+  $$('.nav-links a').forEach(a=>a.removeAttribute('aria-current'));$$(`.nav-links a[data-nav="${name}"]`).forEach(a=>a.setAttribute('aria-current','page'));
+  if(name==='inscription')renderInsc();
+  closeMenu();window.scrollTo({top:0,behavior:'instant'});requestAnimationFrame(initReveal);}
+
+/* ===== LEGAL ===== */
+const LEGAL={
+  mentions:{t:'Mentions légales',h:`<h3>Éditeur</h3><p>L'ENVOL — Établissement scolaire privé (crèche, maternelle, primaire). Rue des Jardins, Ouled Fayet, Alger. Téléphone : +213 _ __ __ __ __. Email : bonjour@lenvol-ecole.dz.</p><h3>Agrément</h3><p>Établissement agréé par les autorités compétentes. Numéro d'agrément à compléter.</p><h3>Hébergement</h3><p>Site hébergé par un prestataire technique dont les coordonnées sont disponibles sur demande.</p><p style="color:var(--muted);font-size:.82rem;margin-top:1rem">Site de démonstration.</p>`},
+  confidentialite:{t:'Politique de confidentialité',h:`<h3>Protection des données des enfants</h3><p>Les données concernant un mineur sont particulièrement sensibles. Nous appliquons une confidentialité renforcée et exigeons le consentement explicite du parent ou responsable légal pour toute collecte.</p><h3>Ce que nous collectons</h3><p>Pour une demande d'inscription : le prénom et la date de naissance de l'enfant, ainsi que le nom, le téléphone et éventuellement l'email du parent. Rien de plus.</p><h3>Utilisation</h3><p>Ces informations servent uniquement à préparer l'entretien et le dossier d'inscription. Elles ne sont jamais cédées à des tiers.</p><h3>Vos droits</h3><p>Vous pouvez à tout moment consulter, rectifier ou supprimer les données en écrivant à bonjour@lenvol-ecole.dz.</p>`}
+};
+function openLegal(k){const L=LEGAL[k];if(!L)return;$('#legalTitle').textContent=L.t;$('#legalBody').innerHTML=L.h;$('#modalLegal').classList.add('on');$('#overlay').classList.add('on');document.body.style.overflow='hidden';}
+function closeModal(){$$('.modal.on').forEach(m=>m.classList.remove('on'));$('#overlay').classList.remove('on');document.body.style.overflow='';}
+function bindLegal(){$$('[data-legal]').forEach(b=>b.onclick=e=>{e.preventDefault();openLegal(b.dataset.legal);});}
+
+let io;function initReveal(){if(!io)io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.1,rootMargin:'0px 0px -40px 0px'});$$('.reveal:not(.in)').forEach(el=>{if(el.closest('.view:not(.active)'))return;io.observe(el);});}
+function closeMenu(){$('#navLinks').classList.remove('open');$('#burger').classList.remove('open');$('#burger').setAttribute('aria-expanded','false');}
+let toastT;function toast(m){$('#toastMsg').textContent=m;$('#toast').classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>$('#toast').classList.remove('on'),2400);}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  renderHome();renderProjet();renderVie();renderTeam();renderInsc();
+  initReveal();setTimeout(()=>$('#cookie').classList.add('on'),1200);
+
+  document.body.addEventListener('click',e=>{const n=e.target.closest('[data-nav]');if(n){e.preventDefault();showView(n.dataset.nav);}});
+  $('#burger').onclick=()=>{const o=$('#navLinks').classList.toggle('open');$('#burger').classList.toggle('open',o);$('#burger').setAttribute('aria-expanded',o);};
+  $('#overlay').onclick=closeModal;$$('[data-close]').forEach(b=>b.onclick=closeModal);
+  $('#cookieAccept').onclick=()=>{$('#cookie').classList.remove('on');toast('Cookies acceptés');};
+  $('#cookieRefuse').onclick=()=>{$('#cookie').classList.remove('on');toast('Cookies refusés');};
+  $('#cookieReopen').onclick=()=>$('#cookie').classList.add('on');
+  $('#contactForm').addEventListener('submit',e=>{e.preventDefault();let ok=true;$$('#contactForm [required]').forEach(f=>{const bad=f.type==='checkbox'?!f.checked:!f.value.trim();f.style.borderColor=bad?'#D08A6A':'';if(bad)ok=false;});if(!ok){toast('Complétez les champs requis');return;}$('#contactForm').reset();toast('Message envoyé — merci !');});
+  bindLegal();
+  addEventListener('scroll',()=>requestAnimationFrame(initReveal),{passive:true});
+  addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal();closeMenu();}});
+});
+</script>
+</body>
+</html>

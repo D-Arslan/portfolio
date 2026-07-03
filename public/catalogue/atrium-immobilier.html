@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ATRIUM — Agence & promotion immobilière · Ouest d'Alger</title>
+<meta name="description" content="ATRIUM, agence immobilière dans l'ouest d'Alger : vente, location et programmes neufs à Chéraga, Dely Ibrahim, Ben Aknoun, Ouled Fayet, Aïn Benian. Recherchez, filtrez, visitez.">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500&display=swap');
+
+:root{
+  --encre:#1B2735;
+  --encre-2:#26364A;
+  --anthracite:#222831;
+  --pierre:#E7E1D6;
+  --pierre-2:#D9D0C0;
+  --sable:#EFEAE0;
+  --offwhite:#F5F2EC;
+  --blanc:#FCFAF6;
+  --terra:#C0603F;
+  --terra-2:#A94E30;
+  --texte:#1B2735;
+  --texte-2:#4A5567;
+  --muted:#8B93A0;
+  --ligne:rgba(27,39,53,.14);
+  --ligne-2:rgba(27,39,53,.08);
+  --ok:#3E7C5A;--warn:#C79A3A;--stop:#B4553F;
+  --shadow:0 26px 60px -36px rgba(27,39,53,.55);
+  --shadow-sm:0 14px 34px -22px rgba(27,39,53,.45);
+  --disp:'Space Grotesk',sans-serif;--serif:'Fraunces',Georgia,serif;--body:'Inter',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:var(--body);background:var(--offwhite);color:var(--texte);line-height:1.6;font-size:16px;overflow-x:hidden}
+img,svg{display:block;max-width:100%}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+a{color:inherit;text-decoration:none}
+input,select,textarea{font-family:inherit;font-size:1rem;color:inherit}
+ul{list-style:none}
+h1,h2,h3,h4{font-family:var(--disp);font-weight:600;line-height:1.08;letter-spacing:-.02em}
+.serif{font-family:var(--serif)}
+:focus-visible{outline:2px solid var(--terra);outline-offset:2px;border-radius:2px}
+.skip{position:absolute;left:-999px;background:var(--encre);color:#fff;padding:.7rem 1.2rem;z-index:200}
+.skip:focus{left:1rem;top:1rem}
+
+.wrap{max-width:1240px;margin:0 auto;padding:0 clamp(1.1rem,4vw,2.4rem)}
+.section{padding:clamp(3.5rem,7vw,6rem) 0}
+.eyebrow{font-family:var(--disp);font-weight:600;font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;color:var(--terra);display:inline-flex;align-items:center;gap:.6rem}
+.eyebrow::before{content:"";width:24px;height:2px;background:var(--terra)}
+.center{text-align:center}.center .eyebrow{justify-content:center}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;font-family:var(--disp);font-weight:600;font-size:.86rem;letter-spacing:.01em;padding:.9rem 1.6rem;border-radius:3px;transition:transform .3s,background .3s,color .3s,box-shadow .3s}
+.btn-solid{background:var(--encre);color:var(--blanc)}
+.btn-solid:hover{background:var(--encre-2);transform:translateY(-2px);box-shadow:var(--shadow-sm)}
+.btn-terra{background:var(--terra);color:#fff}
+.btn-terra:hover{background:var(--terra-2);transform:translateY(-2px)}
+.btn-outline{border:1px solid var(--encre);color:var(--encre)}
+.btn-outline:hover{background:var(--encre);color:var(--blanc)}
+.btn-ghost{border:1px solid var(--ligne);color:var(--texte-2)}
+.btn-ghost:hover{border-color:var(--encre);color:var(--encre)}
+.btn-block{width:100%}
+.btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+
+/* HEADER */
+.header{position:sticky;top:0;z-index:90;background:rgba(245,242,236,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--ligne-2)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:74px;gap:1rem}
+.brand{display:flex;align-items:center;gap:.6rem;font-family:var(--disp);font-weight:700;font-size:1.4rem;letter-spacing:.02em;color:var(--encre)}
+.brand .mark{width:30px;height:30px;background:var(--encre);color:var(--blanc);display:flex;align-items:center;justify-content:center;border-radius:3px;font-family:var(--serif);font-size:1rem}
+.nav-links{display:flex;gap:1.8rem;align-items:center}
+.nav-links a{font-family:var(--disp);font-weight:500;font-size:.88rem;color:var(--texte-2);position:relative;padding:.4rem 0;transition:color .3s}
+.nav-links a::after{content:"";position:absolute;left:0;bottom:-1px;height:2px;width:0;background:var(--terra);transition:width .3s}
+.nav-links a:hover,.nav-links a[aria-current="page"]{color:var(--encre)}
+.nav-links a:hover::after,.nav-links a[aria-current="page"]::after{width:100%}
+.nav-right{display:flex;align-items:center;gap:.9rem}
+.fav-btn{position:relative;display:flex;align-items:center;gap:.4rem;font-family:var(--disp);font-weight:500;font-size:.82rem}
+.fav-count{position:absolute;top:-8px;right:-11px;min-width:17px;height:17px;padding:0 4px;border-radius:9px;background:var(--terra);color:#fff;font-size:.6rem;font-weight:700;display:flex;align-items:center;justify-content:center;transform:scale(0);transition:transform .3s cubic-bezier(.2,1.5,.4,1)}
+.fav-count.show{transform:scale(1)}
+.burger{display:none;flex-direction:column;gap:5px;padding:6px}
+.burger span{width:22px;height:2px;background:var(--encre);transition:.3s}
+
+/* HERO + SEARCH */
+.hero{position:relative;background:var(--encre);color:var(--blanc);overflow:hidden}
+.hero::after{content:"";position:absolute;inset:0;background:
+  linear-gradient(120deg,rgba(27,39,53,.96),rgba(38,54,74,.7)),
+  repeating-linear-gradient(90deg,transparent 0 78px,rgba(255,255,255,.03) 78px 79px),
+  repeating-linear-gradient(0deg,transparent 0 78px,rgba(255,255,255,.03) 78px 79px);z-index:0}
+.hero-inner{position:relative;z-index:1;padding:clamp(3rem,7vw,5rem) 0 clamp(2rem,4vw,3rem)}
+.hero-top{display:grid;grid-template-columns:1.2fr .8fr;gap:2rem;align-items:end;margin-bottom:2.6rem}
+.hero h1{font-family:var(--serif);font-weight:400;font-size:clamp(2.6rem,6vw,4.6rem);line-height:1;letter-spacing:-.01em}
+.hero h1 em{font-style:italic;color:var(--pierre-2)}
+.hero .lead{color:rgba(245,242,236,.75);font-size:1.05rem;max-width:40ch}
+.terra-line{width:60px;height:3px;background:var(--terra);margin-bottom:1.4rem}
+
+.search-box{background:var(--blanc);border-radius:8px;padding:1.4rem;box-shadow:var(--shadow);color:var(--texte)}
+.search-tabs{display:flex;gap:.4rem;margin-bottom:1.2rem}
+.search-tab{flex:1;padding:.7rem;font-family:var(--disp);font-weight:600;font-size:.85rem;border-radius:4px;background:var(--offwhite);color:var(--texte-2);transition:.25s;border:1px solid var(--ligne-2)}
+.search-tab[aria-pressed="true"]{background:var(--encre);color:var(--blanc);border-color:var(--encre)}
+.search-fields{display:grid;grid-template-columns:repeat(4,1fr);gap:.8rem;align-items:end}
+.sf label{display:block;font-family:var(--disp);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:.4rem}
+.sf select{width:100%;padding:.8rem .9rem;border:1px solid var(--ligne);border-radius:4px;background:var(--blanc);font-family:var(--disp);font-weight:500;transition:border-color .25s}
+.sf select:focus{border-color:var(--terra);outline:none}
+.search-box .btn{margin-top:.2rem}
+.hero-metrics{display:flex;gap:2.4rem;margin-top:2.4rem;flex-wrap:wrap;position:relative;z-index:1}
+.hmetric .n{font-family:var(--serif);font-size:2.2rem;color:var(--blanc)}
+.hmetric .l{font-family:var(--disp);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(245,242,236,.6)}
+
+/* SECTION HEAD */
+.shead{max-width:640px}.shead.center{margin:0 auto}
+.shead h2{font-family:var(--serif);font-weight:400;font-size:clamp(2rem,4.4vw,3.2rem);margin-top:.6rem;letter-spacing:-.01em}
+.shead h2 em{font-style:italic;color:var(--terra)}
+.shead p{color:var(--texte-2);margin-top:.9rem}
+.shead-row{display:flex;justify-content:space-between;align-items:flex-end;gap:1rem;flex-wrap:wrap}
+
+/* PROPERTY CARD */
+.prop-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.6rem}
+.prop-card{background:var(--blanc);border:1px solid var(--ligne-2);border-radius:8px;overflow:hidden;display:flex;flex-direction:column;transition:transform .4s,box-shadow .4s;cursor:pointer}
+.prop-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-sm)}
+.prop-media{position:relative;aspect-ratio:4/3;overflow:hidden}
+.prop-media svg{width:100%;height:100%}
+.prop-status{position:absolute;top:.8rem;left:.8rem;font-family:var(--disp);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;font-weight:600;padding:.3rem .7rem;border-radius:3px;color:#fff;z-index:2}
+.st-disponible{background:var(--ok)}.st-réservé{background:var(--warn)}.st-vendu{background:var(--stop)}.st-loué{background:var(--stop)}
+.prop-tag{position:absolute;top:.8rem;right:3.2rem;font-family:var(--disp);font-size:.64rem;letter-spacing:.06em;text-transform:uppercase;font-weight:600;padding:.3rem .6rem;border-radius:3px;background:rgba(252,250,246,.92);color:var(--encre);z-index:2}
+.fav-heart{position:absolute;top:.7rem;right:.7rem;width:34px;height:34px;border-radius:50%;background:rgba(252,250,246,.92);display:flex;align-items:center;justify-content:center;color:var(--encre);z-index:3;transition:.2s}
+.fav-heart:hover{transform:scale(1.1)}
+.fav-heart.on{color:var(--terra)}
+.fav-heart.on svg{fill:var(--terra)}
+.prop-body{padding:1.2rem 1.3rem 1.4rem;display:flex;flex-direction:column;flex:1}
+.prop-body .loc{font-family:var(--disp);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--terra);font-weight:600;display:flex;align-items:center;gap:.35rem}
+.prop-body h3{font-family:var(--disp);font-size:1.15rem;font-weight:600;margin:.4rem 0 .7rem}
+.prop-specs{display:flex;gap:1rem;flex-wrap:wrap;font-size:.82rem;color:var(--texte-2);margin-bottom:1rem;flex:1}
+.prop-specs span{display:flex;align-items:center;gap:.35rem}
+.prop-foot{display:flex;justify-content:space-between;align-items:baseline;padding-top:1rem;border-top:1px solid var(--ligne-2)}
+.prop-price{font-family:var(--serif);font-size:1.4rem;font-weight:500}
+.prop-price small{font-family:var(--body);font-size:.78rem;color:var(--muted)}
+.prop-price .mill{display:block;font-family:var(--body);font-size:.72rem;color:var(--muted);font-weight:400}
+
+/* RÉSULTATS layout */
+.results-layout{display:grid;grid-template-columns:270px 1fr;gap:2rem;align-items:start}
+.filters-panel{position:sticky;top:90px;background:var(--blanc);border:1px solid var(--ligne-2);border-radius:8px;padding:1.4rem}
+.filters-panel h3{font-family:var(--disp);font-size:1.05rem;margin-bottom:1rem;display:flex;justify-content:space-between;align-items:center}
+.filters-panel h3 button{font-family:var(--body);font-size:.74rem;color:var(--terra);font-weight:500}
+.fgroup{border-top:1px solid var(--ligne-2);padding:1.1rem 0}
+.fgroup:first-of-type{border-top:none;padding-top:0}
+.fgroup .flabel{font-family:var(--disp);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:.7rem}
+.fcheck{display:flex;align-items:center;gap:.6rem;padding:.3rem 0;font-size:.9rem;cursor:pointer}
+.fcheck .box{width:18px;height:18px;border:1px solid var(--ligne);border-radius:3px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:.2s;background:#fff}
+.fcheck input{position:absolute;opacity:0;width:0;height:0}
+.fcheck input:checked+.box{background:var(--encre);border-color:var(--encre)}
+.fcheck .box svg{opacity:0}
+.fcheck input:checked+.box svg{opacity:1}
+.fcheck .cnt{margin-left:auto;font-size:.76rem;color:var(--muted)}
+.fseg{display:flex;gap:.3rem;background:var(--offwhite);border-radius:5px;padding:.25rem}
+.fseg button{flex:1;padding:.5rem;font-family:var(--disp);font-size:.78rem;font-weight:600;border-radius:4px;color:var(--texte-2);transition:.2s}
+.fseg button[aria-pressed="true"]{background:var(--encre);color:var(--blanc)}
+.frange input[type=range]{width:100%;accent-color:var(--terra)}
+.frange .vals{display:flex;justify-content:space-between;font-family:var(--serif);font-size:.9rem;margin-top:.3rem;color:var(--texte-2)}
+.fselect{width:100%;padding:.6rem .7rem;border:1px solid var(--ligne);border-radius:4px;background:#fff;font-size:.88rem}
+
+.results-head{display:flex;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:1.4rem;flex-wrap:wrap}
+.results-count{font-family:var(--disp);font-weight:600;font-size:1.1rem}
+.results-count span{color:var(--terra)}
+.sort-select{padding:.6rem .9rem;border:1px solid var(--ligne);border-radius:4px;background:var(--blanc);font-family:var(--disp);font-weight:500;font-size:.85rem}
+.results-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.4rem}
+.no-results{grid-column:1/-1;text-align:center;padding:3rem 1rem;color:var(--muted)}
+.no-results h3{font-family:var(--serif);font-weight:400;font-size:1.6rem;color:var(--texte);margin-bottom:.5rem}
+.filter-toggle{display:none}
+
+/* FICHE BIEN */
+.pd-head{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;flex-wrap:wrap;margin-bottom:1.4rem}
+.pd-loc{font-family:var(--disp);font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--terra);font-weight:600}
+.pd-head h1{font-family:var(--serif);font-weight:400;font-size:clamp(1.8rem,4vw,2.8rem);margin:.4rem 0}
+.pd-price-big{font-family:var(--serif);font-size:2.2rem;font-weight:500;text-align:right}
+.pd-price-big small{display:block;font-family:var(--body);font-size:.8rem;color:var(--muted);font-weight:400}
+.pd-gallery{display:grid;grid-template-columns:2fr 1fr;gap:.8rem;margin-bottom:2rem}
+.pd-main-img{aspect-ratio:16/10;border-radius:8px;overflow:hidden}
+.pd-main-img svg{width:100%;height:100%}
+.pd-side-imgs{display:grid;grid-template-rows:1fr 1fr;gap:.8rem}
+.pd-side-imgs .si{border-radius:8px;overflow:hidden;position:relative}
+.pd-side-imgs .si svg{width:100%;height:100%}
+.pd-side-imgs .si.plan{background:var(--sable);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:.4rem;color:var(--encre)}
+.pd-side-imgs .si.plan span{font-family:var(--disp);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase}
+.pd-cols{display:grid;grid-template-columns:1.5fr 1fr;gap:2.4rem;align-items:start}
+.pd-status-badge{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--disp);font-weight:600;font-size:.8rem;padding:.4rem .9rem;border-radius:4px;color:#fff;margin-bottom:1.2rem}
+.specs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--ligne-2);border:1px solid var(--ligne-2);border-radius:8px;overflow:hidden;margin:1.4rem 0}
+.spec-cell{background:var(--blanc);padding:1.1rem 1.2rem}
+.spec-cell .sl{font-family:var(--disp);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.spec-cell .sv{font-family:var(--serif);font-size:1.3rem;margin-top:.2rem}
+.pd-desc{color:var(--texte-2);margin:1.2rem 0}
+.pd-features{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin:1.2rem 0}
+.pd-features li{display:flex;gap:.5rem;align-items:center;font-size:.9rem;color:var(--texte-2)}
+.pd-features svg{color:var(--terra);flex-shrink:0}
+.map-holder{aspect-ratio:16/9;border-radius:8px;background:linear-gradient(150deg,var(--pierre),var(--pierre-2));position:relative;display:flex;align-items:center;justify-content:center;margin-top:1.4rem;overflow:hidden}
+.map-holder::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 40px,rgba(27,39,53,.05) 40px 41px),repeating-linear-gradient(0deg,transparent 0 40px,rgba(27,39,53,.05) 40px 41px)}
+.map-holder .pin{color:var(--terra);z-index:1}
+.map-holder .maplab{position:absolute;bottom:1rem;left:1rem;background:var(--blanc);padding:.4rem 1rem;border-radius:4px;font-family:var(--disp);font-weight:600;font-size:.8rem;z-index:1}
+.agent-card{background:var(--blanc);border:1px solid var(--ligne-2);border-radius:8px;padding:1.6rem;position:sticky;top:90px}
+.agent-top{display:flex;gap:1rem;align-items:center;margin-bottom:1.2rem}
+.agent-av{width:56px;height:56px;border-radius:50%;background:var(--encre);color:var(--blanc);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:1.4rem;flex-shrink:0}
+.agent-top h4{font-family:var(--disp);font-size:1.05rem}
+.agent-top .arole{font-size:.8rem;color:var(--muted)}
+.visit-form .field{margin-bottom:.9rem}
+
+/* PROGRAMMES */
+.prog-card{background:var(--blanc);border:1px solid var(--ligne-2);border-radius:8px;overflow:hidden;transition:transform .4s,box-shadow .4s;cursor:pointer}
+.prog-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-sm)}
+.prog-media{aspect-ratio:16/9;position:relative}
+.prog-media svg{width:100%;height:100%}
+.prog-prog{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(27,39,53,.85));padding:1.4rem 1.2rem .9rem;color:#fff}
+.prog-bar{height:6px;background:rgba(255,255,255,.25);border-radius:4px;overflow:hidden;margin-top:.5rem}
+.prog-bar span{display:block;height:100%;background:var(--terra);border-radius:4px}
+.prog-body{padding:1.3rem}
+.prog-body h3{font-family:var(--disp);font-size:1.3rem}
+.prog-body .ploc{font-size:.78rem;color:var(--terra);font-family:var(--disp);font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+.prog-body .prange{font-family:var(--serif);font-size:1.1rem;margin-top:.6rem}
+
+.plans-table{width:100%;border-collapse:collapse;margin:1.4rem 0;background:var(--blanc);border-radius:8px;overflow:hidden;border:1px solid var(--ligne-2)}
+.plans-table th{font-family:var(--disp);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:left;padding:.9rem 1.1rem;background:var(--sable);font-weight:600}
+.plans-table td{padding:1rem 1.1rem;border-top:1px solid var(--ligne-2);font-size:.92rem}
+.plans-table td.ptype{font-family:var(--disp);font-weight:600}
+.plans-table td.pprice{font-family:var(--serif);font-size:1.1rem}
+.dispo-pill{font-family:var(--disp);font-size:.72rem;font-weight:600;padding:.2rem .6rem;border-radius:20px}
+.dispo-ok{background:rgba(62,124,90,.14);color:var(--ok)}
+.dispo-low{background:rgba(199,154,58,.16);color:var(--warn)}
+.echeance{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:1.4rem 0}
+.ech-step{background:var(--blanc);border:1px solid var(--ligne-2);border-radius:8px;padding:1.2rem;position:relative}
+.ech-step .en{font-family:var(--serif);font-size:2rem;color:var(--terra)}
+.ech-step h4{font-family:var(--disp);font-size:1rem;margin:.3rem 0}
+.ech-step p{font-size:.85rem;color:var(--texte-2)}
+.ech-pct{position:absolute;top:1rem;right:1.1rem;font-family:var(--disp);font-weight:700;color:var(--encre)}
+
+/* AGENCE */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,5vw,4rem);align-items:center}
+.split-visual{aspect-ratio:4/5;border-radius:8px;overflow:hidden;background:var(--encre)}
+.split-visual svg{width:100%;height:100%}
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;margin-top:2rem;border-top:1px solid var(--ligne);padding-top:1.6rem}
+.stat .n{font-family:var(--serif);font-size:2.4rem;color:var(--terra)}
+.stat .l{font-family:var(--disp);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.agents-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.6rem;margin-top:2.6rem}
+.agent-tile{background:var(--blanc);border:1px solid var(--ligne-2);border-radius:8px;padding:1.6rem;text-align:center}
+.agent-tile .av{width:72px;height:72px;border-radius:50%;background:var(--encre);color:var(--blanc);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:1.8rem;margin:0 auto 1rem}
+.agent-tile h4{font-family:var(--disp);font-size:1.15rem}
+.agent-tile .sect{font-size:.8rem;color:var(--terra);font-family:var(--disp);font-weight:600;margin:.3rem 0}
+.agent-tile p{font-size:.85rem;color:var(--texte-2)}
+
+/* CONTACT */
+.contact-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(2rem,5vw,3.5rem);align-items:start}
+.info-card li{display:flex;gap:1rem;padding:1.1rem 0;border-bottom:1px solid var(--ligne-2);align-items:flex-start}
+.info-card .cico{color:var(--terra);flex-shrink:0;margin-top:2px}
+.info-card .lab{font-family:var(--disp);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.info-card .v{font-family:var(--disp);font-weight:600;font-size:1.05rem;margin-top:.1rem}
+.info-card .v small{display:block;font-family:var(--body);font-weight:400;font-size:.85rem;color:var(--texte-2)}
+.card-form{background:var(--blanc);border:1px solid var(--ligne-2);border-radius:8px;padding:clamp(1.5rem,3vw,2.2rem)}
+
+/* FORMS */
+.field{margin-bottom:1rem}
+.field label{display:block;font-family:var(--disp);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--texte-2);font-weight:600;margin-bottom:.4rem}
+.field input,.field select,.field textarea{width:100%;padding:.8rem 1rem;border:1px solid var(--ligne);border-radius:4px;background:var(--blanc);transition:border-color .25s,box-shadow .25s}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--terra);box-shadow:0 0 0 3px rgba(192,96,63,.13);outline:none}
+.field textarea{resize:vertical;min-height:90px}
+.field.two{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.consent{display:flex;gap:.7rem;align-items:flex-start;margin:.9rem 0;font-size:.85rem;color:var(--texte-2)}
+.consent a{color:var(--terra);text-decoration:underline}
+.chk{position:relative;width:18px;height:18px;border:1px solid var(--muted);border-radius:3px;flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;background:#fff}
+input[type=checkbox].c{position:absolute;opacity:0;width:100%;height:100%;cursor:pointer;margin:0}
+label:has(input.c:checked) .chk{background:var(--terra);border-color:var(--terra)}
+.chk svg{opacity:0}
+label:has(input.c:checked) .chk svg{opacity:1}
+.cal-dates{display:flex;gap:.5rem;overflow-x:auto;padding-bottom:.4rem;margin-bottom:1rem}
+.cal-date{flex-shrink:0;min-width:58px;padding:.6rem .3rem;border:1px solid var(--ligne);border-radius:5px;text-align:center;background:var(--offwhite);transition:.25s}
+.cal-date[aria-pressed="true"]{background:var(--encre);color:var(--blanc);border-color:var(--encre)}
+.cal-date .d{font-size:.6rem;text-transform:uppercase;opacity:.7}
+.cal-date .n{font-family:var(--serif);font-size:1.3rem}
+.slots{display:grid;grid-template-columns:repeat(3,1fr);gap:.45rem;margin-bottom:1rem}
+.slot{padding:.55rem;border:1px solid var(--ligne);border-radius:4px;font-family:var(--disp);font-weight:600;font-size:.82rem;background:var(--offwhite);color:var(--texte-2);transition:.25s}
+.slot[aria-pressed="true"]{background:var(--terra);color:#fff;border-color:var(--terra)}
+
+/* CONFIRM */
+.confirm{text-align:center;padding:1.5rem 0}
+.confirm .badge{width:66px;height:66px;border-radius:50%;background:var(--sable);display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;color:var(--terra)}
+.confirm h3{font-family:var(--serif);font-weight:400;font-size:1.7rem;margin-bottom:.5rem}
+.confirm p{color:var(--texte-2);max-width:40ch;margin:0 auto .4rem}
+.confirm .ref{display:inline-block;margin:.8rem 0;font-family:var(--disp);font-weight:600;color:var(--terra);border:1px dashed var(--terra);padding:.4rem 1.2rem;border-radius:4px}
+
+/* FOOTER */
+.footer{background:var(--encre);color:rgba(245,242,236,.8)}
+.footer-top{display:grid;grid-template-columns:1.6fr 1fr 1fr 1.2fr;gap:2.2rem;padding:clamp(3rem,6vw,4.5rem) 0 3rem}
+.footer .brand{color:var(--blanc);margin-bottom:1rem}.footer .brand .mark{background:var(--terra)}
+.footer-about{font-size:.9rem;color:rgba(245,242,236,.65);max-width:32ch;line-height:1.6}
+.footer-col h4{font-family:var(--disp);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--pierre-2);margin-bottom:1rem;font-weight:600}
+.footer-col a,.footer-col li{display:block;font-size:.9rem;color:rgba(245,242,236,.7);padding:.3rem 0;transition:color .25s}
+.footer-col a:hover{color:var(--blanc)}
+.footer-bottom{border-top:1px solid rgba(245,242,236,.15);padding:1.5rem 0;display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between;align-items:center;font-size:.8rem}
+.footer-bottom .legal-links{display:flex;gap:1.3rem;flex-wrap:wrap}
+.footer-bottom button{color:rgba(245,242,236,.7);font-size:.8rem}
+.footer-bottom button:hover{color:var(--blanc)}
+.signature a{color:var(--pierre-2);border-bottom:1px solid transparent}
+.signature a:hover{border-color:var(--pierre-2)}
+
+/* MODAL / COOKIE / TOAST */
+.overlay{position:fixed;inset:0;background:rgba(27,39,53,.5);backdrop-filter:blur(2px);opacity:0;visibility:hidden;transition:.3s;z-index:100}
+.overlay.on{opacity:1;visibility:visible}
+.modal{position:fixed;inset:0;z-index:120;display:flex;align-items:center;justify-content:center;padding:1.2rem;opacity:0;visibility:hidden;transition:.3s}
+.modal.on{opacity:1;visibility:visible}
+.modal-bg{position:absolute;inset:0;background:rgba(27,39,53,.55);backdrop-filter:blur(3px)}
+.modal-card{position:relative;background:var(--offwhite);border-radius:10px;max-width:560px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:var(--shadow);transform:translateY(14px);transition:.3s}
+.modal.on .modal-card{transform:none}
+.modal-head{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;padding:1.6rem 1.8rem 1rem}
+.modal-head h2{font-family:var(--serif);font-weight:400;font-size:1.6rem}
+.modal-close{width:38px;height:38px;border-radius:50%;background:var(--sable);color:var(--encre);display:flex;align-items:center;justify-content:center}
+.modal-body{padding:0 1.8rem 1.8rem}
+.legal-body{font-size:.92rem;color:var(--texte-2);line-height:1.7}
+.legal-body h3{font-family:var(--disp);color:var(--encre);font-size:1.1rem;margin:1.3rem 0 .5rem}
+.legal-body p{margin-bottom:.7rem}
+
+.cookie{position:fixed;left:1rem;right:1rem;bottom:1rem;z-index:130;max-width:560px;margin:0 auto;background:var(--blanc);border:1px solid var(--ligne);border-radius:8px;padding:1.4rem 1.5rem;box-shadow:var(--shadow);transform:translateY(160%);transition:transform .5s cubic-bezier(.2,.8,.3,1)}
+.cookie.on{transform:translateY(0)}
+.cookie p{font-size:.86rem;color:var(--texte-2);margin-bottom:1rem}
+.cookie p a{color:var(--terra);text-decoration:underline}
+.cookie-actions{display:flex;gap:.7rem;flex-wrap:wrap}
+.cookie-actions .btn{padding:.7rem 1.3rem}
+
+.toast{position:fixed;bottom:1.5rem;left:50%;transform:translate(-50%,160%);z-index:140;background:var(--encre);color:var(--blanc);padding:.9rem 1.4rem;border-radius:6px;font-family:var(--disp);font-weight:500;font-size:.85rem;display:flex;gap:.6rem;align-items:center;box-shadow:var(--shadow);transition:transform .4s}
+.toast.on{transform:translate(-50%,0)}
+.toast svg{color:var(--pierre-2)}
+
+.view{display:none}.view.active{display:block;animation:vin .4s ease}
+@keyframes vin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.7,.3,1)}
+.reveal.in{opacity:1;transform:none}
+.reveal.d1{transition-delay:.08s}.reveal.d2{transition-delay:.16s}
+
+@media(max-width:960px){
+  .hero-top{grid-template-columns:1fr}
+  .search-fields{grid-template-columns:1fr 1fr}
+  .results-layout{grid-template-columns:1fr}
+  .filters-panel{position:static;display:none}
+  .filters-panel.open{display:block}
+  .filter-toggle{display:inline-flex}
+  .prop-grid{grid-template-columns:1fr 1fr}
+  .pd-cols,.split,.contact-grid{grid-template-columns:1fr}
+  .agent-card{position:static}
+  .agents-grid,.echeance{grid-template-columns:1fr}
+  .footer-top{grid-template-columns:1fr 1fr}
+  .results-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:660px){
+  .nav-links{position:fixed;inset:74px 0 auto 0;flex-direction:column;background:var(--offwhite);padding:1rem clamp(1.1rem,4vw,2.4rem) 1.6rem;gap:0;transform:translateY(-130%);transition:transform .4s;box-shadow:var(--shadow);border-bottom:1px solid var(--ligne)}
+  .nav-links.open{transform:translateY(0)}
+  .nav-links a{padding:1rem 0;border-bottom:1px solid var(--ligne-2);width:100%}
+  .nav-links a::after{display:none}
+  .burger{display:flex}
+  .burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .burger.open span:nth-child(2){opacity:0}
+  .burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+  .search-fields{grid-template-columns:1fr}
+  .prop-grid,.results-grid{grid-template-columns:1fr}
+  .pd-gallery{grid-template-columns:1fr}
+  .specs-grid{grid-template-columns:1fr 1fr}
+  .footer-top{grid-template-columns:1fr}
+  .field.two{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<a href="#main" class="skip">Aller au contenu</a>
+
+<header class="header">
+  <div class="wrap">
+    <nav class="nav" aria-label="Navigation principale">
+      <a href="#" class="brand" data-nav="accueil" aria-label="ATRIUM, accueil"><span class="mark">A</span>ATRIUM</a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#" data-nav="accueil" aria-current="page">Accueil</a></li>
+        <li><a href="#" data-nav="resultats">Rechercher</a></li>
+        <li><a href="#" data-nav="programmes">Programmes neufs</a></li>
+        <li><a href="#" data-nav="agence">L'agence</a></li>
+        <li><a href="#" data-nav="contact">Contact</a></li>
+      </ul>
+      <div class="nav-right">
+        <button class="fav-btn" data-nav="resultats" aria-label="Mes favoris">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 21s-7-4.3-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.7-7 10-7 10z"/></svg>
+          Favoris<span class="fav-count" id="favCount">0</span>
+        </button>
+        <button class="btn btn-terra" data-nav="resultats" style="padding:.6rem 1.1rem;font-size:.82rem">Rechercher</button>
+        <button class="burger" id="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ACCUEIL -->
+<section class="view active" id="view-accueil">
+  <div class="hero">
+    <div class="wrap">
+      <div class="hero-inner">
+        <div class="hero-top">
+          <div>
+            <div class="terra-line"></div>
+            <span class="eyebrow" style="color:var(--pierre-2)">Agence & promotion · Ouest d'Alger</span>
+            <h1 style="margin-top:1rem">Trouver l'adresse <em>juste</em></h1>
+          </div>
+          <p class="lead">Vente, location et programmes neufs à Chéraga, Dely Ibrahim, Ben Aknoun, Ouled Fayet et Aïn Benian. Des annonces honnêtes, un agent dédié par bien.</p>
+        </div>
+        <div class="search-box" role="search" aria-label="Recherche de biens">
+          <div class="search-tabs">
+            <button class="search-tab" data-tx="vente" aria-pressed="true">Acheter</button>
+            <button class="search-tab" data-tx="location" aria-pressed="false">Louer</button>
+          </div>
+          <div class="search-fields">
+            <div class="sf"><label for="s-type">Type de bien</label><select id="s-type"><option value="">Tous types</option><option>Appartement</option><option>Villa</option><option>Duplex</option><option>Local</option><option>Terrain</option></select></div>
+            <div class="sf"><label for="s-commune">Commune</label><select id="s-commune"><option value="">Toutes communes</option></select></div>
+            <div class="sf"><label for="s-budget">Budget max</label><select id="s-budget"><option value="">Indifférent</option></select></div>
+            <button class="btn btn-terra btn-block" id="searchGo"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg> Rechercher</button>
+          </div>
+        </div>
+        <div class="hero-metrics">
+          <div class="hmetric"><div class="n" id="mCount">—</div><div class="l">Biens disponibles</div></div>
+          <div class="hmetric"><div class="n">6</div><div class="l">Communes ouest</div></div>
+          <div class="hmetric"><div class="n">2</div><div class="l">Programmes neufs</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sélection -->
+  <div class="section">
+    <div class="wrap">
+      <div class="shead-row reveal">
+        <div class="shead"><span class="eyebrow">Notre sélection</span><h2>Les biens du <em>moment</em></h2></div>
+        <button class="btn btn-ghost" data-nav="resultats">Voir tous les biens</button>
+      </div>
+      <div class="prop-grid" id="homeProps" style="margin-top:2.4rem"></div>
+    </div>
+  </div>
+
+  <!-- Programmes teaser -->
+  <div class="section" style="background:var(--sable)">
+    <div class="wrap">
+      <div class="shead-row reveal">
+        <div class="shead"><span class="eyebrow">Neuf</span><h2>Programmes en <em>construction</em></h2></div>
+        <button class="btn btn-ghost" data-nav="programmes">Tous les programmes</button>
+      </div>
+      <div class="prop-grid" id="homeProgs" style="margin-top:2.4rem;grid-template-columns:repeat(2,1fr)"></div>
+    </div>
+  </div>
+</section>
+
+<!-- RÉSULTATS -->
+<section class="view" id="view-resultats">
+  <div class="section">
+    <div class="wrap">
+      <div class="shead reveal" style="margin-bottom:1.6rem"><span class="eyebrow">Recherche</span><h2 style="font-size:2.2rem">Nos biens à la vente & location</h2></div>
+      <button class="btn btn-outline filter-toggle" id="filterToggle" style="margin-bottom:1rem"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6h16M7 12h10M10 18h4"/></svg> Filtres</button>
+      <div class="results-layout">
+        <aside class="filters-panel" id="filtersPanel" aria-label="Filtres">
+          <h3>Filtres <button id="resetFilters">Réinitialiser</button></h3>
+          <div class="fgroup">
+            <div class="flabel">Transaction</div>
+            <div class="fseg" id="fTx">
+              <button data-txf="tous" aria-pressed="true">Tous</button>
+              <button data-txf="vente" aria-pressed="false">Vente</button>
+              <button data-txf="location" aria-pressed="false">Location</button>
+            </div>
+          </div>
+          <div class="fgroup">
+            <div class="flabel">Type de bien</div>
+            <div id="fTypes"></div>
+          </div>
+          <div class="fgroup">
+            <div class="flabel">Commune</div>
+            <div id="fCommunes"></div>
+          </div>
+          <div class="fgroup">
+            <div class="flabel">Budget maximum</div>
+            <div class="frange"><input type="range" id="fPrix" min="0" max="100" value="100"><div class="vals"><span>0</span><span id="fPrixVal">Indifférent</span></div></div>
+          </div>
+          <div class="fgroup">
+            <div class="flabel">Surface minimum</div>
+            <select class="fselect" id="fSurface"><option value="0">Indifférent</option><option value="50">50 m²</option><option value="80">80 m²</option><option value="100">100 m²</option><option value="150">150 m²</option><option value="200">200 m²</option></select>
+          </div>
+          <div class="fgroup">
+            <div class="flabel">Pièces (min)</div>
+            <div class="fseg" id="fPieces">
+              <button data-pf="0" aria-pressed="true">Tous</button>
+              <button data-pf="2" aria-pressed="false">2+</button>
+              <button data-pf="3" aria-pressed="false">3+</button>
+              <button data-pf="4" aria-pressed="false">4+</button>
+            </div>
+          </div>
+          <div class="fgroup">
+            <div class="flabel">État</div>
+            <div class="fseg" id="fNeuf">
+              <button data-nf="tous" aria-pressed="true">Tous</button>
+              <button data-nf="neuf" aria-pressed="false">Neuf</button>
+              <button data-nf="ancien" aria-pressed="false">Ancien</button>
+            </div>
+          </div>
+          <div class="fgroup">
+            <label class="fcheck"><input type="checkbox" id="fStanding"><span class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span> Standing / haut de gamme</label>
+            <label class="fcheck"><input type="checkbox" id="fFav"><span class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span> Mes favoris uniquement</label>
+          </div>
+        </aside>
+        <div>
+          <div class="results-head">
+            <div class="results-count"><span id="rCount">0</span> bien(s) trouvé(s)</div>
+            <label style="display:flex;align-items:center;gap:.5rem;font-family:var(--disp);font-size:.82rem;color:var(--texte-2)">Trier
+              <select class="sort-select" id="sortSel">
+                <option value="recent">Plus récents</option>
+                <option value="prix-asc">Prix croissant</option>
+                <option value="prix-desc">Prix décroissant</option>
+                <option value="surface-desc">Plus grande surface</option>
+              </select>
+            </label>
+          </div>
+          <div class="results-grid" id="resultsGrid"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FICHE BIEN -->
+<section class="view" id="view-bien">
+  <div class="section">
+    <div class="wrap" id="bienContent"></div>
+  </div>
+  <div class="section" style="background:var(--sable)">
+    <div class="wrap">
+      <div class="shead reveal"><span class="eyebrow">À proximité</span><h2 style="font-size:2rem">Biens similaires</h2></div>
+      <div class="prop-grid" id="bienSuggest" style="margin-top:2rem"></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROGRAMMES -->
+<section class="view" id="view-programmes">
+  <div class="section">
+    <div class="wrap">
+      <div class="shead reveal"><span class="eyebrow">Promotion immobilière</span><h2>Nos programmes <em>neufs</em></h2>
+        <p>Des résidences pensées pour bien vivre, avec des plans clairs, un avancement transparent et un échéancier de paiement lisible.</p></div>
+      <div class="prop-grid" id="progGrid" style="margin-top:2.6rem;grid-template-columns:repeat(2,1fr)"></div>
+    </div>
+  </div>
+</section>
+
+<!-- FICHE PROGRAMME -->
+<section class="view" id="view-programme">
+  <div class="section"><div class="wrap" id="progContent"></div></div>
+</section>
+
+<!-- AGENCE -->
+<section class="view" id="view-agence">
+  <div class="section">
+    <div class="wrap">
+      <div class="split">
+        <div class="reveal">
+          <span class="eyebrow">L'agence</span>
+          <h2 class="serif" style="font-weight:400;font-size:clamp(2rem,4vw,3rem);margin:.6rem 0 1rem">L'immobilier, sans détour</h2>
+          <p style="color:var(--texte-2);margin-bottom:1rem">ATRIUM accompagne acheteurs, locataires et investisseurs dans l'ouest d'Alger depuis plus de dix ans. Notre conviction : une annonce honnête vaut mieux qu'une belle promesse.</p>
+          <p style="color:var(--texte-2)">Chaque bien est confié à un agent unique, qui connaît son secteur, ses prix et ses écoles. Un statut clair — disponible, réservé, vendu, loué — affiché en toute transparence.</p>
+          <div class="stat-row">
+            <div class="stat"><div class="n">10+</div><div class="l">Années d'expérience</div></div>
+            <div class="stat"><div class="n">6</div><div class="l">Communes couvertes</div></div>
+            <div class="stat"><div class="n">450+</div><div class="l">Transactions</div></div>
+          </div>
+        </div>
+        <div class="split-visual reveal d1" aria-hidden="true">
+          <svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+            <rect width="400" height="500" fill="#1B2735"/>
+            <rect x="40" y="180" width="90" height="280" fill="#26364A"/><rect x="150" y="120" width="110" height="340" fill="#2E4058"/><rect x="280" y="220" width="90" height="240" fill="#26364A"/>
+            <g fill="#C0603F" opacity=".9"><rect x="56" y="200" width="16" height="16"/><rect x="86" y="200" width="16" height="16"/><rect x="56" y="240" width="16" height="16"/><rect x="86" y="240" width="16" height="16"/></g>
+            <g fill="#E7E1D6" opacity=".7"><rect x="170" y="150" width="18" height="20"/><rect x="205" y="150" width="18" height="20"/><rect x="170" y="190" width="18" height="20"/><rect x="205" y="190" width="18" height="20"/><rect x="170" y="230" width="18" height="20"/><rect x="205" y="230" width="18" height="20"/></g>
+            <g fill="#C0603F" opacity=".8"><rect x="300" y="250" width="16" height="16"/><rect x="332" y="250" width="16" height="16"/></g>
+          </svg>
+        </div>
+      </div>
+      <div class="agents-grid" id="agentsGrid"></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="view" id="view-contact">
+  <div class="section">
+    <div class="wrap">
+      <div class="shead center reveal"><span class="eyebrow">Nous contacter</span><h2>Parlons de votre projet</h2></div>
+      <div class="contact-grid" style="margin-top:2.8rem">
+        <div class="reveal">
+          <ul class="info-card">
+            <li><span class="cico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.6"/></svg></span>
+              <div><div class="lab">Agence</div><div class="v">Route de Chéraga<small>Dely Ibrahim · Alger</small></div></div></li>
+            <li><span class="cico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M5 4h4l2 5-3 2a12 12 0 0 0 5 5l2-3 5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></span>
+              <div><div class="lab">Téléphone</div><div class="v">+213 _ __ __ __ __</div></div></li>
+            <li><span class="cico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 5h16v14H4z"/><path d="M4 7l8 6 8-6"/></svg></span>
+              <div><div class="lab">Email</div><div class="v" style="font-size:.98rem">contact@atrium-immo.dz</div></div></li>
+            <li><span class="cico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+              <div><div class="lab">Horaires</div><div class="v" style="font-size:.98rem">Dim – Jeu : 9h – 18h<small>Samedi : 9h – 13h</small></div></div></li>
+          </ul>
+        </div>
+        <div class="card-form reveal d1">
+          <form id="contactForm" novalidate>
+            <div class="field two"><div><label for="c-nom">Nom & prénom</label><input id="c-nom" required></div><div><label for="c-tel">Téléphone</label><input id="c-tel" type="tel" placeholder="+213 _ __ __ __ __" required></div></div>
+            <div class="field"><label for="c-obj">Votre projet</label><select id="c-obj"><option>Acheter un bien</option><option>Louer un bien</option><option>Vendre / confier un bien</option><option>Investir dans le neuf</option><option>Autre</option></select></div>
+            <div class="field"><label for="c-msg">Message</label><textarea id="c-msg" required></textarea></div>
+            <label class="consent"><span style="position:relative;display:inline-flex"><input type="checkbox" class="c" id="c-consent" required><span class="chk"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span></span><span>J'accepte d'être recontacté(e) au sujet de mon projet (<a href="#" data-legal="confidentialite">confidentialité</a>).</span></label>
+            <button type="submit" class="btn btn-solid btn-block">Envoyer</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <div>
+        <div class="brand"><span class="mark">A</span>ATRIUM</div>
+        <p class="footer-about">Agence & promotion immobilière dans l'ouest d'Alger. Vente, location et programmes neufs, avec un agent dédié par bien.</p>
+      </div>
+      <div class="footer-col"><h4>Rechercher</h4>
+        <a href="#" data-nav="resultats">Acheter</a><a href="#" data-nav="resultats">Louer</a><a href="#" data-nav="programmes">Programmes neufs</a><a href="#" data-nav="resultats">Mes favoris</a></div>
+      <div class="footer-col"><h4>L'agence</h4>
+        <a href="#" data-nav="agence">Qui sommes-nous</a><a href="#" data-nav="agence">Nos agents</a><a href="#" data-nav="contact">Contact</a></div>
+      <div class="footer-col"><h4>Agence</h4>
+        <li>Route de Chéraga</li><li>Dely Ibrahim, Alger</li><li>Dim – Jeu : 9h – 18h</li><li>+213 _ __ __ __ __</li></div>
+    </div>
+    <div class="footer-bottom">
+      <div class="legal-links">
+        <button data-legal="mentions">Mentions légales</button>
+        <button data-legal="confidentialite">Politique de confidentialité</button>
+        <button id="cookieReopen">Gérer les cookies</button>
+      </div>
+      <span class="signature">Réalisé par <a href="https://difarslan.com" target="_blank" rel="noopener">Arslan DIF — difarslan.com</a></span>
+    </div>
+  </div>
+</footer>
+
+<div class="overlay" id="overlay"></div>
+<div class="modal" id="modalLegal" role="dialog" aria-modal="true" aria-labelledby="legalTitle">
+  <div class="modal-bg" data-close></div>
+  <div class="modal-card">
+    <div class="modal-head"><h2 id="legalTitle"></h2><button class="modal-close" data-close aria-label="Fermer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+    <div class="modal-body legal-body" id="legalBody"></div>
+  </div>
+</div>
+
+<div class="cookie" id="cookie" role="dialog" aria-label="Cookies">
+  <p>Nous utilisons des cookies pour mesurer l'audience et améliorer votre recherche. <a href="#" data-legal="confidentialite">En savoir plus</a>.</p>
+  <div class="cookie-actions"><button class="btn btn-terra" id="cookieAccept">Accepter</button><button class="btn btn-ghost" id="cookieRefuse">Refuser</button></div>
+</div>
+
+<div class="toast" id="toast"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg><span id="toastMsg"></span></div>
+
+<script>
+/* ===== DONNÉES ===== */
+const COMMUNES=['Chéraga','Dely Ibrahim','Ben Aknoun','Bois des Cars','Ouled Fayet','Aïn Benian'];
+const PROPS=[
+  {id:1,titre:'Appartement F3 lumineux',type:'Appartement',tx:'vente',commune:'Chéraga',prix:22000000,surface:95,pieces:3,ch:2,etage:4,neuf:false,standing:true,statut:'disponible',agent:'NM',recence:1,feat:['Ascenseur','Parking','Balcon','Cuisine équipée'],desc:"Bel F3 traversant au 4ᵉ étage, très lumineux, dans une résidence calme et sécurisée de Chéraga. Séjour spacieux ouvert sur balcon, deux chambres, cuisine équipée."},
+  {id:2,titre:'Villa contemporaine',type:'Villa',tx:'vente',commune:'Dely Ibrahim',prix:85000000,surface:320,pieces:7,ch:5,etage:0,neuf:false,standing:true,statut:'disponible',agent:'YB',recence:2,feat:['Jardin','Garage 2 voitures','Terrasse','Sous-sol'],desc:"Villa d'architecte sur un terrain arboré, offrant de vastes volumes, un jardin paysager et une terrasse plein sud. Un bien rare à Dely Ibrahim."},
+  {id:3,titre:'Duplex avec terrasse',type:'Duplex',tx:'vente',commune:'Ben Aknoun',prix:48000000,surface:180,pieces:5,ch:3,etage:5,neuf:false,standing:true,statut:'disponible',agent:'YB',recence:3,feat:['Terrasse','Ascenseur','Double séjour','Parking'],desc:"Duplex en dernier étage avec grande terrasse dominant les hauteurs de Ben Aknoun. Double séjour, trois chambres, prestations soignées."},
+  {id:4,titre:'Appartement F4 familial',type:'Appartement',tx:'vente',commune:'Ouled Fayet',prix:18500000,surface:110,pieces:4,ch:3,etage:2,neuf:true,standing:false,statut:'disponible',agent:'NM',recence:1,feat:['Neuf','Parking','Local vélo','Proche écoles'],desc:"F4 neuf jamais habité, idéal pour une famille, proche des écoles et commerces d'Ouled Fayet. Livré avec cuisine et placards."},
+  {id:5,titre:'Appartement F2 meublé',type:'Appartement',tx:'location',commune:'Aïn Benian',prix:45000,surface:60,pieces:2,ch:1,etage:3,neuf:false,standing:false,statut:'disponible',agent:'RH',recence:2,feat:['Meublé','Proche mer','Balcon'],desc:"F2 meublé et fonctionnel à deux pas du front de mer d'Aïn Benian. Idéal jeune couple ou pied-à-terre."},
+  {id:6,titre:'Local commercial',type:'Local',tx:'location',commune:'Chéraga',prix:120000,surface:80,pieces:1,ch:0,etage:0,neuf:false,standing:false,statut:'disponible',agent:'NM',recence:3,feat:['Vitrine','Grand passage','Sanitaires'],desc:"Local commercial avec belle vitrine sur un axe passant de Chéraga. Parfait pour commerce ou bureau d'accueil."},
+  {id:7,titre:'Villa avec piscine',type:'Villa',tx:'vente',commune:'Bois des Cars',prix:65000000,surface:280,pieces:6,ch:4,etage:0,neuf:false,standing:true,statut:'réservé',agent:'RH',recence:4,feat:['Piscine','Jardin','Garage','Terrasse'],desc:"Villa familiale avec piscine et jardin, dans un quartier résidentiel prisé de Bois des Cars. Actuellement sous réservation."},
+  {id:8,titre:'Appartement F3 standing',type:'Appartement',tx:'location',commune:'Dely Ibrahim',prix:70000,surface:100,pieces:3,ch:2,etage:6,neuf:true,standing:true,statut:'disponible',agent:'YB',recence:1,feat:['Neuf','Ascenseur','Parking','Vue dégagée'],desc:"F3 neuf de standing avec vue dégagée, dans une résidence de qualité à Dely Ibrahim. Cuisine équipée, parking en sous-sol."},
+  {id:9,titre:'Terrain constructible',type:'Terrain',tx:'vente',commune:'Ouled Fayet',prix:30000000,surface:300,pieces:0,ch:0,etage:0,neuf:false,standing:false,statut:'disponible',agent:'NM',recence:3,feat:['Titré','Viabilisé','Zone résidentielle'],desc:"Terrain plat de 300 m², titré et viabilisé, en zone résidentielle d'Ouled Fayet. Idéal construction villa."},
+  {id:10,titre:'Appartement F5 haut standing',type:'Appartement',tx:'vente',commune:'Ben Aknoun',prix:42000000,surface:160,pieces:5,ch:4,etage:3,neuf:false,standing:true,statut:'disponible',agent:'YB',recence:2,feat:['Double exposition','Ascenseur','2 parkings','Buanderie'],desc:"Vaste F5 à double exposition, quatre chambres, dans un immeuble de standing de Ben Aknoun. Deux places de parking."},
+  {id:11,titre:'Studio front de mer',type:'Appartement',tx:'location',commune:'Aïn Benian',prix:30000,surface:38,pieces:1,ch:0,etage:2,neuf:false,standing:false,statut:'loué',agent:'RH',recence:5,feat:['Vue mer','Meublé'],desc:"Studio meublé avec vue mer à Aïn Benian. Actuellement loué — nous consulter pour les disponibilités à venir."},
+  {id:12,titre:'Duplex neuf F4',type:'Duplex',tx:'vente',commune:'Chéraga',prix:38000000,surface:150,pieces:4,ch:3,etage:4,neuf:true,standing:true,statut:'disponible',agent:'NM',recence:1,feat:['Neuf','Terrasse','Ascenseur','Garantie décennale'],desc:"Duplex neuf F4 avec terrasse, livré avec garanties, dans un petit programme de Chéraga. Prestations modernes."}
+];
+const PROGRAMMES=[
+  {id:'terrasses',nom:"Les Terrasses d'Aïn Benian",commune:'Aïn Benian',avance:65,priceFrom:12000000,desc:"Une résidence de standing face à la mer, aux prestations soignées et aux espaces verts généreux. Livraison prévue dans 14 mois.",
+   plans:[{t:'F2',s:65,p:12000000,d:8,low:false},{t:'F3',s:90,p:17000000,d:5,low:false},{t:'F4',s:120,p:23000000,d:2,low:true},{t:'F5',s:150,p:30000000,d:1,low:true}],
+   eche:[{n:'01',t:'Réservation',p:'À la signature du contrat',pct:'30%'},{n:'02',t:'Gros œuvre achevé',p:'À l\'avancement des travaux',pct:'40%'},{n:'03',t:'Remise des clés',p:'À la livraison du logement',pct:'30%'}]},
+  {id:'parc',nom:'Parc Chéraga',commune:'Chéraga',avance:40,priceFrom:16000000,desc:"Un ensemble résidentiel au cœur d'un parc paysager à Chéraga, pensé pour les familles. Commerces en pied d'immeuble.",
+   plans:[{t:'F3',s:88,p:16000000,d:12,low:false},{t:'F4',s:115,p:21000000,d:7,low:false},{t:'F5',s:145,p:28000000,d:3,low:true}],
+   eche:[{n:'01',t:'Réservation',p:'À la signature du contrat',pct:'25%'},{n:'02',t:'Étapes de chantier',p:'Répartis sur la construction',pct:'50%'},{n:'03',t:'Livraison',p:'À la remise des clés',pct:'25%'}]}
+];
+const AGENTS={
+  NM:{ini:'NM',nom:'Nassim Merabet',sect:'Chéraga · Ouled Fayet',bio:"Fin connaisseur des quartiers en développement de l'ouest, à l'écoute des primo-accédants."},
+  YB:{ini:'YB',nom:'Yasmine Belhadj',sect:'Dely Ibrahim · Ben Aknoun',bio:"Spécialiste des biens de standing et des grandes surfaces résidentielles."},
+  RH:{ini:'RH',nom:'Rachid Hamidi',sect:'Aïn Benian · Bois des Cars',bio:"Expert de la location et des biens en bord de mer, réactif et disponible."}
+};
+
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+function fmtDA(n){return Math.round(n).toLocaleString('fr-FR').replace(/\u202f/g,' ')+' DA';}
+function millStr(n){if(n>=1000000)return '('+(n/1000000).toLocaleString('fr-FR',{maximumFractionDigits:1})+' M)';return '';}
+function priceLabel(p){return p.tx==='location'?fmtDA(p.prix)+' <small>/mois</small>':fmtDA(p.prix);}
+
+/* SVG bâtiments par type */
+function propSVG(p){
+  const skies={disponible:['#EDE6D8','#D9CFBC'],réservé:['#EEE7D9','#DED4C0'],vendu:['#E4DDCF','#D2C8B4'],loué:['#E4DDCF','#D2C8B4']};
+  const sky=skies[p.statut]||skies.disponible;
+  const T=p.type;
+  let scene='';
+  if(T==='Villa'){
+    scene=`<rect x="60" y="130" width="180" height="90" fill="#26364A"/><polygon points="50,130 150,80 250,130" fill="#1B2735"/><rect x="95" y="160" width="30" height="60" fill="#C0603F"/><rect x="150" y="150" width="26" height="26" fill="#E7E1D6"/><rect x="196" y="150" width="26" height="26" fill="#E7E1D6"/><rect x="40" y="220" width="220" height="6" fill="#1B2735"/>`;
+  }else if(T==='Terrain'){
+    scene=`<rect x="40" y="150" width="220" height="70" fill="#C8BCA0" opacity=".6"/><path d="M40 150 L260 150" stroke="#1B2735" stroke-dasharray="8 6" stroke-width="2"/><path d="M60 220 L60 150 M120 220 L120 150 M180 220 L180 150 M240 220 L240 150" stroke="#1B2735" stroke-dasharray="4 8" stroke-width="1.5" opacity=".5"/><circle cx="150" cy="120" r="14" fill="none" stroke="#C0603F" stroke-width="2"/><path d="M150 106 L150 134 M136 120 L164 120" stroke="#C0603F" stroke-width="2"/>`;
+  }else if(T==='Local'){
+    scene=`<rect x="70" y="90" width="160" height="130" fill="#26364A"/><rect x="85" y="150" width="130" height="70" fill="#1B2735"/><rect x="90" y="155" width="120" height="60" fill="#3A4F6B" opacity=".5"/><rect x="70" y="90" width="160" height="24" fill="#C0603F"/>`;
+  }else{ // appartement / duplex
+    const floors=T==='Duplex'?5:5;
+    let win='';for(let f=0;f<floors;f++){for(let c=0;c<4;c++){win+=`<rect x="${92+c*30}" y="${100+f*24}" width="18" height="14" fill="${(f+c)%3===0?'#C0603F':'#E7E1D6'}" opacity="${(f+c)%3===0?'.9':'.7'}"/>`;}}
+    scene=`<rect x="80" y="88" width="140" height="132" fill="#26364A"/>${win}<rect x="80" y="88" width="140" height="8" fill="#1B2735"/>`;
+  }
+  return `<svg viewBox="0 0 300 220" xmlns="http://www.w3.org/2000/svg" role="img" preserveAspectRatio="xMidYMid slice">
+    <defs><linearGradient id="sky${p.id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${sky[0]}"/><stop offset="1" stop-color="${sky[1]}"/></linearGradient></defs>
+    <rect width="300" height="220" fill="url(#sky${p.id})"/>${scene}</svg>`;
+}
+function progSVG(pr,i){
+  let win='';for(let f=0;f<6;f++){for(let c=0;c<6;c++){win+=`<rect x="${70+c*30}" y="${70+f*24}" width="18" height="14" fill="${(f+c)%4===0?'#C0603F':'#E7E1D6'}" opacity="${(f+c)%4===0?'.9':'.65'}"/>`;}}
+  return `<svg viewBox="0 0 400 225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><rect width="400" height="225" fill="#E7E1D6"/><rect x="60" y="55" width="200" height="170" fill="#26364A"/>${win}<rect x="280" y="90" width="80" height="135" fill="#2E4058"/><rect x="290" y="110" width="60" height="8" fill="#C0603F" opacity=".7"/><rect x="290" y="130" width="60" height="8" fill="#E7E1D6" opacity=".5"/></svg>`;
+}
+
+/* ===== ÉTAT / FILTRES ===== */
+let filters={tx:'tous',types:new Set(),communes:new Set(),prixMax:Infinity,surfaceMin:0,piecesMin:0,neuf:'tous',standing:false,favOnly:false,sort:'recent'};
+let favs=new Set();
+let searchTx='vente';
+
+function initSelects(){
+  $('#s-commune').innerHTML='<option value="">Toutes communes</option>'+COMMUNES.map(c=>`<option>${c}</option>`).join('');
+  const budgets=[['','Indifférent'],[10000000,'10 M DA'],[20000000,'20 M DA'],[30000000,'30 M DA'],[50000000,'50 M DA'],[100000,'100 000 DA/mois']];
+  $('#s-budget').innerHTML=budgets.map(([v,l])=>`<option value="${v}">${l}</option>`).join('');
+  // filtres types
+  const types=['Appartement','Villa','Duplex','Local','Terrain'];
+  $('#fTypes').innerHTML=types.map(t=>{const cnt=PROPS.filter(p=>p.type===t).length;return `<label class="fcheck"><input type="checkbox" data-tf="${t}"><span class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span> ${t}<span class="cnt">${cnt}</span></label>`;}).join('');
+  $('#fCommunes').innerHTML=COMMUNES.map(c=>{const cnt=PROPS.filter(p=>p.commune===c).length;return `<label class="fcheck"><input type="checkbox" data-cf="${c}"><span class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span> ${c}<span class="cnt">${cnt}</span></label>`;}).join('');
+  $('#mCount').textContent=PROPS.filter(p=>p.statut==='disponible').length;
+}
+
+function applyFilters(){
+  let list=PROPS.filter(p=>{
+    if(filters.tx!=='tous'&&p.tx!==filters.tx)return false;
+    if(filters.types.size&&!filters.types.has(p.type))return false;
+    if(filters.communes.size&&!filters.communes.has(p.commune))return false;
+    if(p.prix>filters.prixMax)return false;
+    if(p.surface<filters.surfaceMin)return false;
+    if(filters.piecesMin&&p.pieces<filters.piecesMin)return false;
+    if(filters.neuf==='neuf'&&!p.neuf)return false;
+    if(filters.neuf==='ancien'&&p.neuf)return false;
+    if(filters.standing&&!p.standing)return false;
+    if(filters.favOnly&&!favs.has(p.id))return false;
+    return true;
+  });
+  const s=filters.sort;
+  list.sort((a,b)=> s==='prix-asc'?a.prix-b.prix : s==='prix-desc'?b.prix-a.prix : s==='surface-desc'?b.surface-a.surface : a.recence-b.recence);
+  return list;
+}
+function propCard(p){
+  const specs = p.type==='Terrain'
+    ? `<span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 3h18v18H3z"/></svg>${p.surface} m²</span><span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11z"/></svg>${p.commune}</span>`
+    : `<span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 3h18v18H3z"/></svg>${p.surface} m²</span>${p.pieces?`<span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 20V9l8-5 8 5v11"/><path d="M9 20v-6h6v6"/></svg>${p.pieces} pièces</span>`:''}${p.etage?`<span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 20h16M6 20V8h5v12M13 20V4h5v16"/></svg>${p.etage}ᵉ ét.</span>`:''}`;
+  return `<article class="prop-card reveal" data-bien="${p.id}" role="button" tabindex="0" aria-label="${p.titre}, ${p.commune}, ${fmtDA(p.prix)}">
+    <div class="prop-media">
+      <span class="prop-status st-${p.statut}">${p.statut}</span>
+      ${p.neuf?'<span class="prop-tag">Neuf</span>':(p.standing?'<span class="prop-tag">Standing</span>':'')}
+      <button class="fav-heart ${favs.has(p.id)?'on':''}" data-fav="${p.id}" aria-label="Ajouter aux favoris" aria-pressed="${favs.has(p.id)}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-7-4.3-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.7-7 10-7 10z"/></svg></button>
+      ${propSVG(p)}
+    </div>
+    <div class="prop-body">
+      <span class="loc"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11z"/></svg>${p.commune} · ${p.tx==='vente'?'Vente':'Location'}</span>
+      <h3>${p.titre}</h3>
+      <div class="prop-specs">${specs}</div>
+      <div class="prop-foot"><span class="prop-price">${p.tx==='location'?fmtDA(p.prix)+' <small>/mois</small>':fmtDA(p.prix)}${p.tx==='vente'?`<span class="mill">${millStr(p.prix)}</span>`:''}</span>
+      <span style="font-family:var(--disp);font-size:.74rem;color:var(--terra);font-weight:600;display:flex;align-items:center;gap:.3rem">Voir <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
+    </div>
+  </article>`;
+}
+function renderResults(){
+  const list=applyFilters();
+  $('#rCount').textContent=list.length;
+  const g=$('#resultsGrid');
+  g.innerHTML=list.length?list.map(propCard).join(''):`<div class="no-results"><h3>Aucun bien ne correspond</h3><p>Essayez d'élargir vos critères ou de réinitialiser les filtres.</p></div>`;
+  requestAnimationFrame(initReveal);
+}
+function renderHome(){
+  $('#homeProps').innerHTML=PROPS.filter(p=>p.statut==='disponible').slice(0,3).map(propCard).join('');
+  $('#homeProgs').innerHTML=PROGRAMMES.map((pr,i)=>progCard(pr,i)).join('');
+}
+function progCard(pr,i){return `<article class="prog-card reveal" data-prog="${pr.id}" role="button" tabindex="0" aria-label="${pr.nom}">
+  <div class="prog-media">${progSVG(pr,i)}<div class="prog-prog"><div style="display:flex;justify-content:space-between;font-family:var(--disp);font-size:.8rem;font-weight:600"><span>Avancement des travaux</span><span>${pr.avance}%</span></div><div class="prog-bar"><span style="width:${pr.avance}%"></span></div></div></div>
+  <div class="prog-body"><span class="ploc">${pr.commune}</span><h3>${pr.nom}</h3><div class="prange">À partir de ${fmtDA(pr.priceFrom)}</div></div></article>`;}
+
+/* Toggle favori */
+function toggleFav(id){id=+id;if(favs.has(id))favs.delete(id);else favs.add(id);updateFav();}
+function updateFav(){const c=$('#favCount');c.textContent=favs.size;c.classList.toggle('show',favs.size>0);
+  $$('[data-fav]').forEach(b=>{const on=favs.has(+b.dataset.fav);b.classList.toggle('on',on);b.setAttribute('aria-pressed',on);});}
+
+/* ===== FICHE BIEN ===== */
+let visit={date:0,slot:null};
+function renderBien(id){
+  const p=PROPS.find(x=>x.id===+id);if(!p)return;
+  visit={date:0,slot:null};
+  const ag=AGENTS[p.agent];
+  const stColors={disponible:'var(--ok)',réservé:'var(--warn)',vendu:'var(--stop)',loué:'var(--stop)'};
+  const JN=['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'],MN=['jan','fév','mar','avr','mai','juin','juil','août','sep','oct','nov','déc'];
+  const days=[];let d=new Date();let c=0;while(c<6){d=new Date(d);d.setDate(d.getDate()+1);if(d.getDay()!==5){days.push(new Date(d));c++;}}
+  const canVisit=p.statut==='disponible'||p.statut==='réservé';
+  $('#bienContent').innerHTML=`
+    <nav class="results-count" style="font-size:.8rem;color:var(--muted);margin-bottom:1.2rem"><button data-nav="resultats" style="font-family:var(--disp);color:var(--muted)">← Retour aux résultats</button></nav>
+    <div class="pd-head">
+      <div><span class="pd-loc">${p.commune} · ${p.tx==='vente'?'À vendre':'À louer'}</span><h1>${p.titre}</h1></div>
+      <div class="pd-price-big">${p.tx==='location'?fmtDA(p.prix)+'<small>par mois</small>':fmtDA(p.prix)+`<small>${millStr(p.prix)}</small>`}</div>
+    </div>
+    <div class="pd-gallery">
+      <div class="pd-main-img">${propSVG(p)}</div>
+      <div class="pd-side-imgs">
+        <div class="si">${propSVG({...p,id:p.id+100})}</div>
+        <div class="si plan"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="3" width="18" height="18"/><path d="M3 10h18M10 3v18M10 15h6"/></svg><span>Plan du bien</span></div>
+      </div>
+    </div>
+    <div class="pd-cols">
+      <div>
+        <span class="pd-status-badge" style="background:${stColors[p.statut]}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2">${p.statut==='disponible'?'<path d="M5 13l4 4L19 7"/>':'<circle cx="12" cy="12" r="9"/><path d="M12 8v4"/>'}</svg>${p.statut.charAt(0).toUpperCase()+p.statut.slice(1)}</span>
+        <div class="specs-grid">
+          <div class="spec-cell"><div class="sl">Surface</div><div class="sv">${p.surface} m²</div></div>
+          <div class="spec-cell"><div class="sl">${p.type==='Terrain'?'Type':'Pièces'}</div><div class="sv">${p.type==='Terrain'?'Terrain':p.pieces}</div></div>
+          <div class="spec-cell"><div class="sl">${p.type==='Terrain'||p.type==='Local'?'État':'Chambres'}</div><div class="sv">${p.type==='Terrain'||p.type==='Local'?(p.neuf?'Neuf':'—'):p.ch}</div></div>
+          <div class="spec-cell"><div class="sl">Étage</div><div class="sv">${p.etage?p.etage+'ᵉ':'RdC'}</div></div>
+          <div class="spec-cell"><div class="sl">Exposition</div><div class="sv" style="font-size:1rem">Traversant</div></div>
+          <div class="spec-cell"><div class="sl">État</div><div class="sv" style="font-size:1rem">${p.neuf?'Neuf':'Bon état'}</div></div>
+        </div>
+        <h3 class="serif" style="font-weight:400;font-size:1.5rem">Description</h3>
+        <p class="pd-desc">${p.desc}</p>
+        <h3 class="serif" style="font-weight:400;font-size:1.5rem">Équipements</h3>
+        <ul class="pd-features">${p.feat.map(f=>`<li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>${f}</li>`).join('')}</ul>
+        <div class="map-holder"><span class="pin"><svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.6"/></svg></span><span class="maplab">${p.commune}, ouest d'Alger</span></div>
+      </div>
+      <div>
+        <div class="agent-card">
+          <div class="agent-top"><span class="agent-av">${ag.ini}</span><div><h4>${ag.nom}</h4><div class="arole">Agent référent · ${ag.sect}</div></div></div>
+          ${canVisit?`
+          <h4 style="font-family:var(--disp);font-size:1rem;margin-bottom:.8rem">Demander une visite</h4>
+          <div class="cal-dates" id="vDates">${days.map((dd,i)=>`<button class="cal-date" data-vd="${i}" aria-pressed="${i===0}"><span class="d">${JN[dd.getDay()]}</span><span class="n">${dd.getDate()}</span></button>`).join('')}</div>
+          <div class="slots" id="vSlots">${['10:00','11:30','14:00','15:30','17:00'].map((s,i)=>`<button class="slot" data-vs="${s}" ${i===2?'disabled':''} aria-pressed="false">${s}</button>`).join('')}</div>
+          <form id="visitForm" class="visit-form" novalidate>
+            <div class="field"><label for="v-nom">Nom & prénom</label><input id="v-nom" required></div>
+            <div class="field"><label for="v-tel">Téléphone</label><input id="v-tel" type="tel" placeholder="+213 _ __ __ __ __" required></div>
+            <label class="consent"><span style="position:relative;display:inline-flex"><input type="checkbox" class="c" id="v-consent" required><span class="chk"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span></span><span>J'accepte d'être contacté(e) pour organiser la visite (<a href="#" data-legal="confidentialite">confidentialité</a>).</span></label>
+            <button type="submit" class="btn btn-terra btn-block">Demander la visite</button>
+          </form>`:`<p style="color:var(--texte-2);font-size:.92rem;margin-bottom:1rem">Ce bien est actuellement <strong>${p.statut}</strong>. Laissez vos coordonnées pour être prévenu(e) d'un bien similaire.</p><button class="btn btn-outline btn-block" data-nav="contact">Être alerté</button>`}
+          <button class="btn btn-ghost btn-block" data-fav="${p.id}" style="margin-top:.7rem">${favs.has(p.id)?'✓ Dans mes favoris':'♡ Ajouter aux favoris'}</button>
+        </div>
+      </div>
+    </div>`;
+  // suggestions
+  $('#bienSuggest').innerHTML=PROPS.filter(x=>x.id!==p.id&&x.commune===p.commune).concat(PROPS.filter(x=>x.commune!==p.commune)).slice(0,3).map(propCard).join('');
+  bindLegal();
+  if(canVisit){
+    $('#vDates').onclick=e=>{const b=e.target.closest('[data-vd]');if(!b)return;visit.date=+b.dataset.vd;$$('#vDates .cal-date').forEach(x=>x.setAttribute('aria-pressed',x===b));};
+    $('#vSlots').onclick=e=>{const b=e.target.closest('[data-vs]');if(!b||b.disabled)return;visit.slot=b.dataset.vs;$$('#vSlots .slot').forEach(x=>x.setAttribute('aria-pressed',x===b));};
+    $('#visitForm').addEventListener('submit',e=>{e.preventDefault();let ok=true;['#v-nom','#v-tel'].forEach(s=>{const f=$(s);f.style.borderColor=f.value.trim()?'':'#B4553F';if(!f.value.trim())ok=false;});if(!$('#v-consent').checked){ok=false;toast('Merci de cocher le consentement');}if(!visit.slot){ok=false;toast('Choisissez un créneau');}if(!ok)return;
+      const dd=days[visit.date];const ref='VIS-'+Math.floor(1000+Math.random()*8999);
+      $('.agent-card').innerHTML=`<div class="confirm" style="padding:.5rem 0"><div class="badge"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 13l4 4L19 7"/></svg></div><h3 style="font-size:1.3rem">Visite demandée</h3><p style="font-size:.9rem">${ag.nom} vous confirmera la visite du <strong>${JN[dd.getDay()]} ${dd.getDate()} ${MN[dd.getMonth()]} à ${visit.slot}</strong>.</p><span class="ref">${ref}</span></div>`;
+      toast('Demande de visite envoyée');
+    });
+  }
+  window.scrollTo({top:0,behavior:'instant'});
+}
+
+/* ===== FICHE PROGRAMME ===== */
+function renderProg(id){
+  const pr=PROGRAMMES.find(x=>x.id===id);if(!pr)return;
+  $('#progContent').innerHTML=`
+    <nav class="results-count" style="font-size:.8rem;color:var(--muted);margin-bottom:1.2rem"><button data-nav="programmes" style="font-family:var(--disp);color:var(--muted)">← Tous les programmes</button></nav>
+    <div class="pd-head"><div><span class="pd-loc">${pr.commune} · Programme neuf</span><h1>${pr.nom}</h1></div><div class="pd-price-big" style="font-size:1.6rem">À partir de<small>${fmtDA(pr.priceFrom)}</small></div></div>
+    <div class="pd-main-img" style="aspect-ratio:16/7;margin-bottom:2rem">${progSVG(pr,0)}</div>
+    <div class="pd-cols">
+      <div>
+        <p class="pd-desc" style="font-size:1.05rem">${pr.desc}</p>
+        <div style="background:var(--blanc);border:1px solid var(--ligne-2);border-radius:8px;padding:1.4rem;margin:1.4rem 0">
+          <div style="display:flex;justify-content:space-between;font-family:var(--disp);font-weight:600;margin-bottom:.5rem"><span>Avancement des travaux</span><span style="color:var(--terra)">${pr.avance}%</span></div>
+          <div class="prog-bar" style="background:var(--pierre-2);height:8px"><span style="width:${pr.avance}%"></span></div>
+        </div>
+        <h3 class="serif" style="font-weight:400;font-size:1.6rem;margin:1.4rem 0 .4rem">Plans & disponibilités</h3>
+        <table class="plans-table">
+          <thead><tr><th>Type</th><th>Surface</th><th>À partir de</th><th>Disponibilité</th></tr></thead>
+          <tbody>${pr.plans.map(pl=>`<tr><td class="ptype">${pl.t}</td><td class="serif">${pl.s} m²</td><td class="pprice">${fmtDA(pl.p)}</td><td><span class="dispo-pill ${pl.low?'dispo-low':'dispo-ok'}">${pl.d} restant${pl.d>1?'s':''}</span></td></tr>`).join('')}</tbody>
+        </table>
+        <h3 class="serif" style="font-weight:400;font-size:1.6rem;margin:1.6rem 0 .4rem">Échéancier de paiement</h3>
+        <div class="echeance">${pr.eche.map(e=>`<div class="ech-step"><span class="ech-pct">${e.pct}</span><div class="en">${e.n}</div><h4>${e.t}</h4><p>${e.p}</p></div>`).join('')}</div>
+      </div>
+      <div>
+        <div class="agent-card">
+          <h4 style="font-family:var(--disp);font-size:1.1rem;margin-bottom:.4rem">Intéressé par ce programme ?</h4>
+          <p style="font-size:.88rem;color:var(--texte-2);margin-bottom:1rem">Recevez la brochure, les plans détaillés et les conditions de réservation.</p>
+          <form id="progForm" novalidate>
+            <div class="field"><label for="pg-nom">Nom & prénom</label><input id="pg-nom" required></div>
+            <div class="field"><label for="pg-tel">Téléphone</label><input id="pg-tel" type="tel" placeholder="+213 _ __ __ __ __" required></div>
+            <div class="field"><label for="pg-type">Type recherché</label><select id="pg-type">${pr.plans.map(pl=>`<option>${pl.t} — ${pl.s} m²</option>`).join('')}</select></div>
+            <label class="consent"><span style="position:relative;display:inline-flex"><input type="checkbox" class="c" id="pg-consent" required><span class="chk"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span></span><span>J'accepte d'être recontacté(e) au sujet de ce programme.</span></label>
+            <button type="submit" class="btn btn-terra btn-block">Recevoir la brochure</button>
+          </form>
+        </div>
+      </div>
+    </div>`;
+  bindLegal();
+  $('#progForm').addEventListener('submit',e=>{e.preventDefault();let ok=true;['#pg-nom','#pg-tel'].forEach(s=>{const f=$(s);f.style.borderColor=f.value.trim()?'':'#B4553F';if(!f.value.trim())ok=false;});if(!$('#pg-consent').checked){ok=false;toast('Merci de cocher le consentement');}if(!ok)return;$('#progForm').reset();toast('Demande envoyée — brochure en route');});
+  window.scrollTo({top:0,behavior:'instant'});
+}
+
+/* ===== NAV ===== */
+function showView(name){$$('.view').forEach(v=>v.classList.remove('active'));const el=$('#view-'+name);if(el)el.classList.add('active');
+  $$('.nav-links a').forEach(a=>a.removeAttribute('aria-current'));$$(`.nav-links a[data-nav="${name}"]`).forEach(a=>a.setAttribute('aria-current','page'));
+  if(name==='resultats')renderResults();
+  if(name==='programmes')$('#progGrid').innerHTML=PROGRAMMES.map((pr,i)=>progCard(pr,i)).join('');
+  if(name==='agence')$('#agentsGrid').innerHTML=Object.values(AGENTS).map(a=>`<div class="agent-tile reveal"><span class="av">${a.ini}</span><h4>${a.nom}</h4><div class="sect">${a.sect}</div><p>${a.bio}</p></div>`).join('');
+  closeMenu();window.scrollTo({top:0,behavior:'instant'});requestAnimationFrame(initReveal);}
+
+/* ===== LEGAL ===== */
+const LEGAL={
+  mentions:{t:'Mentions légales',h:`<h3>Éditeur</h3><p>ATRIUM — Agence & promotion immobilière. Route de Chéraga, Dely Ibrahim, Alger. Téléphone : +213 _ __ __ __ __. Email : contact@atrium-immo.dz.</p><h3>Activité</h3><p>Agence immobilière et promoteur. Registre du commerce et agrément à compléter.</p><h3>Annonces</h3><p>Les prix sont indiqués « à partir de » lorsque cela s'applique et le statut de chaque bien (disponible, réservé, vendu, loué) est affiché de façon transparente.</p><p style="color:var(--muted);font-size:.82rem;margin-top:1rem">Site de démonstration.</p>`},
+  confidentialite:{t:'Politique de confidentialité',h:`<h3>Données collectées</h3><p>Lors d'une demande de visite ou de contact, nous collectons vos nom, prénom et téléphone, afin d'organiser un rendez-vous ou de répondre à votre projet.</p><h3>Utilisation</h3><p>Vos données servent uniquement au suivi de votre demande immobilière. Elles ne sont ni vendues ni cédées à des tiers.</p><h3>Favoris</h3><p>Vos biens favoris sont conservés le temps de votre visite sur le site, pour votre confort.</p><h3>Vos droits</h3><p>Accès, rectification et suppression sur demande à contact@atrium-immo.dz.</p>`}
+};
+function openLegal(k){const L=LEGAL[k];if(!L)return;$('#legalTitle').textContent=L.t;$('#legalBody').innerHTML=L.h;$('#modalLegal').classList.add('on');$('#overlay').classList.add('on');document.body.style.overflow='hidden';}
+function closeModal(){$$('.modal.on').forEach(m=>m.classList.remove('on'));$('#overlay').classList.remove('on');document.body.style.overflow='';}
+function bindLegal(){$$('[data-legal]').forEach(b=>b.onclick=e=>{e.preventDefault();openLegal(b.dataset.legal);});}
+
+let io;function initReveal(){if(!io)io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.1,rootMargin:'0px 0px -30px 0px'});$$('.reveal:not(.in)').forEach(el=>{if(el.closest('.view:not(.active)'))return;io.observe(el);});}
+function closeMenu(){$('#navLinks').classList.remove('open');$('#burger').classList.remove('open');$('#burger').setAttribute('aria-expanded','false');}
+let toastT;function toast(m){$('#toastMsg').textContent=m;$('#toast').classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>$('#toast').classList.remove('on'),2400);}
+
+/* Prix range mapping */
+const PRIX_STEPS=[10,20,30,40,50,65,85,100]; // millions ; 100 = indifférent
+function prixFromRange(v){ if(v>=100)return Infinity; const m=Math.round(v/100*100); return m*1000000*1; }
+
+document.addEventListener('DOMContentLoaded',()=>{
+  initSelects();renderHome();renderResults();updateFav();
+  initReveal();setTimeout(()=>$('#cookie').classList.add('on'),1200);
+
+  // Recherche hero
+  $$('.search-tab').forEach(t=>t.onclick=()=>{searchTx=t.dataset.tx;$$('.search-tab').forEach(x=>x.setAttribute('aria-pressed',x===t));
+    const budgets=searchTx==='vente'?[['','Indifférent'],[15000000,'15 M DA'],[25000000,'25 M DA'],[40000000,'40 M DA'],[70000000,'70 M DA']]:[['','Indifférent'],[40000,'40 000 DA/mois'],[70000,'70 000 DA/mois'],[120000,'120 000 DA/mois']];
+    $('#s-budget').innerHTML=budgets.map(([v,l])=>`<option value="${v}">${l}</option>`).join('');});
+  $('#searchGo').onclick=()=>{
+    filters={tx:searchTx,types:new Set(),communes:new Set(),prixMax:Infinity,surfaceMin:0,piecesMin:0,neuf:'tous',standing:false,favOnly:false,sort:'recent'};
+    if($('#s-type').value)filters.types.add($('#s-type').value);
+    if($('#s-commune').value)filters.communes.add($('#s-commune').value);
+    if($('#s-budget').value)filters.prixMax=+$('#s-budget').value;
+    syncFilterUI();showView('resultats');
+  };
+
+  // Filtres panneau
+  $('#fTx').onclick=e=>{const b=e.target.closest('[data-txf]');if(!b)return;filters.tx=b.dataset.txf;$$('#fTx button').forEach(x=>x.setAttribute('aria-pressed',x===b));renderResults();};
+  $('#fPieces').onclick=e=>{const b=e.target.closest('[data-pf]');if(!b)return;filters.piecesMin=+b.dataset.pf;$$('#fPieces button').forEach(x=>x.setAttribute('aria-pressed',x===b));renderResults();};
+  $('#fNeuf').onclick=e=>{const b=e.target.closest('[data-nf]');if(!b)return;filters.neuf=b.dataset.nf;$$('#fNeuf button').forEach(x=>x.setAttribute('aria-pressed',x===b));renderResults();};
+  $('#fTypes').onclick=e=>{const i=e.target.closest('input');if(!i)return;i.checked?filters.types.add(i.dataset.tf):filters.types.delete(i.dataset.tf);renderResults();};
+  $('#fCommunes').onclick=e=>{const i=e.target.closest('input');if(!i)return;i.checked?filters.communes.add(i.dataset.cf):filters.communes.delete(i.dataset.cf);renderResults();};
+  $('#fSurface').onchange=e=>{filters.surfaceMin=+e.target.value;renderResults();};
+  $('#fStanding').onchange=e=>{filters.standing=e.target.checked;renderResults();};
+  $('#fFav').onchange=e=>{filters.favOnly=e.target.checked;renderResults();};
+  $('#sortSel').onchange=e=>{filters.sort=e.target.value;renderResults();};
+  $('#fPrix').oninput=e=>{const v=+e.target.value;filters.prixMax=v>=100?Infinity:(PRIX_STEPS[Math.min(PRIX_STEPS.length-1,Math.floor(v/100*PRIX_STEPS.length))]*1000000);
+    $('#fPrixVal').textContent=v>=100?'Indifférent':fmtDA(filters.prixMax);renderResults();};
+  $('#resetFilters').onclick=()=>{filters={tx:'tous',types:new Set(),communes:new Set(),prixMax:Infinity,surfaceMin:0,piecesMin:0,neuf:'tous',standing:false,favOnly:false,sort:filters.sort};syncFilterUI();renderResults();};
+  $('#filterToggle').onclick=()=>$('#filtersPanel').classList.toggle('open');
+
+  function syncFilterUI(){
+    $$('#fTx button').forEach(x=>x.setAttribute('aria-pressed',x.dataset.txf===filters.tx));
+    $$('#fPieces button').forEach(x=>x.setAttribute('aria-pressed',+x.dataset.pf===filters.piecesMin));
+    $$('#fNeuf button').forEach(x=>x.setAttribute('aria-pressed',x.dataset.nf===filters.neuf));
+    $$('#fTypes input').forEach(i=>i.checked=filters.types.has(i.dataset.tf));
+    $$('#fCommunes input').forEach(i=>i.checked=filters.communes.has(i.dataset.cf));
+    $('#fSurface').value=filters.surfaceMin;$('#fStanding').checked=filters.standing;$('#fFav').checked=filters.favOnly;
+    $('#fPrix').value=filters.prixMax===Infinity?100:100;$('#fPrixVal').textContent=filters.prixMax===Infinity?'Indifférent':fmtDA(filters.prixMax);
+  }
+  window.syncFilterUI=syncFilterUI;
+
+  // délégation clics
+  document.body.addEventListener('click',e=>{
+    const fav=e.target.closest('[data-fav]');if(fav){e.stopPropagation();toggleFav(fav.dataset.fav);if($('#view-resultats').classList.contains('active'))renderResults();return;}
+    const nav=e.target.closest('[data-nav]');if(nav){e.preventDefault();showView(nav.dataset.nav);return;}
+    const bien=e.target.closest('[data-bien]');if(bien){showView('bien');renderBien(bien.dataset.bien);return;}
+    const prog=e.target.closest('[data-prog]');if(prog){showView('programme');renderProg(prog.dataset.prog);return;}
+  });
+  document.body.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){if(e.target.matches('[data-bien]')){e.preventDefault();showView('bien');renderBien(e.target.dataset.bien);}if(e.target.matches('[data-prog]')){e.preventDefault();showView('programme');renderProg(e.target.dataset.prog);}}});
+
+  $('#burger').onclick=()=>{const o=$('#navLinks').classList.toggle('open');$('#burger').classList.toggle('open',o);$('#burger').setAttribute('aria-expanded',o);};
+  $('#overlay').onclick=closeModal;$$('[data-close]').forEach(b=>b.onclick=closeModal);
+  $('#cookieAccept').onclick=()=>{$('#cookie').classList.remove('on');toast('Cookies acceptés');};
+  $('#cookieRefuse').onclick=()=>{$('#cookie').classList.remove('on');toast('Cookies refusés');};
+  $('#cookieReopen').onclick=()=>$('#cookie').classList.add('on');
+  $('#contactForm').addEventListener('submit',e=>{e.preventDefault();let ok=true;$$('#contactForm [required]').forEach(f=>{const bad=f.type==='checkbox'?!f.checked:!f.value.trim();f.style.borderColor=bad?'#B4553F':'';if(bad)ok=false;});if(!ok){toast('Complétez les champs requis');return;}$('#contactForm').reset();toast('Message envoyé — merci !');});
+  bindLegal();
+  addEventListener('scroll',()=>requestAnimationFrame(initReveal),{passive:true});
+  addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal();closeMenu();}});
+});
+</script>
+</body>
+</html>

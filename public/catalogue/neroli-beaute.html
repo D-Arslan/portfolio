@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NÉROLI — Salon de coiffure & institut de beauté · Alger</title>
+<meta name="description" content="NÉROLI, salon de coiffure et institut de beauté à Alger. Coiffure, couleur, soins visage, ongles, épilation, maquillage et lissage. Réservation en ligne multi-prestations.">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Manrope:wght@300;400;500;600;700&display=swap');
+
+:root{
+  --creme:#F6EDE6;
+  --creme-2:#FBF5F0;
+  --blush:#E9CFC6;
+  --blush-2:#F0DDD6;
+  --nude:#E3CAB8;
+  --choco:#382822;
+  --choco-2:#4E3A31;
+  --texte:#3A2A24;
+  --texte-2:#6E5A50;
+  --muted:#A08A7E;
+  --or:#C69A5B;
+  --or-clair:#DDBE8B;
+  --or-fonce:#A87E3F;
+  --ligne:rgba(56,40,34,.14);
+  --ligne-2:rgba(56,40,34,.08);
+  --shadow:0 24px 60px -34px rgba(56,40,34,.5);
+  --shadow-sm:0 14px 34px -22px rgba(56,40,34,.45);
+  --disp:'Playfair Display',Georgia,serif;--body:'Manrope',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:var(--body);background:var(--creme);color:var(--texte);line-height:1.65;font-size:16px;overflow-x:hidden;font-weight:400}
+img,svg{display:block;max-width:100%}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+a{color:inherit;text-decoration:none}
+input,select,textarea{font-family:inherit;font-size:1rem;color:inherit}
+ul{list-style:none}
+h1,h2,h3,h4{font-family:var(--disp);font-weight:400;line-height:1.1}
+:focus-visible{outline:2px solid var(--or);outline-offset:3px;border-radius:3px}
+.skip{position:absolute;left:-999px;background:var(--choco);color:var(--creme);padding:.7rem 1.2rem;z-index:200;border-radius:6px}
+.skip:focus{left:1rem;top:1rem}
+
+.wrap{max-width:1180px;margin:0 auto;padding:0 clamp(1.1rem,4vw,2.4rem)}
+.section{padding:clamp(3.6rem,8vw,6.5rem) 0}
+.eyebrow{font-family:var(--body);font-weight:600;font-size:.72rem;letter-spacing:.32em;text-transform:uppercase;color:var(--or-fonce)}
+.center{text-align:center}
+.divider{width:40px;height:1px;background:var(--or);margin:1.2rem auto;opacity:.7}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.6rem;font-family:var(--body);font-weight:600;font-size:.76rem;letter-spacing:.18em;text-transform:uppercase;padding:1rem 2rem;border-radius:2px;transition:transform .35s,background .35s,color .35s,box-shadow .35s}
+.btn-solid{background:var(--choco);color:var(--creme)}
+.btn-solid:hover{background:var(--choco-2);transform:translateY(-2px);box-shadow:var(--shadow)}
+.btn-gold{background:var(--or);color:#fff}
+.btn-gold:hover{background:var(--or-fonce);transform:translateY(-2px)}
+.btn-outline{border:1px solid var(--choco);color:var(--choco)}
+.btn-outline:hover{background:var(--choco);color:var(--creme)}
+.btn-ghost-light{border:1px solid rgba(246,237,230,.4);color:var(--creme)}
+.btn-ghost-light:hover{background:rgba(246,237,230,.1)}
+.btn-block{width:100%}
+.btn:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
+
+/* HEADER */
+.header{position:sticky;top:0;z-index:90;background:rgba(246,237,230,.85);backdrop-filter:blur(14px);border-bottom:1px solid var(--ligne-2)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:80px;gap:1rem}
+.brand{font-family:var(--disp);font-size:1.8rem;letter-spacing:.34em;padding-left:.34em;color:var(--choco);font-weight:500}
+.nav-links{display:flex;gap:2rem;align-items:center}
+.nav-links a{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;font-weight:600;color:var(--texte-2);position:relative;padding:.4rem 0;transition:color .3s}
+.nav-links a::after{content:"";position:absolute;left:0;bottom:0;height:1px;width:0;background:var(--or);transition:width .35s}
+.nav-links a:hover,.nav-links a[aria-current="page"]{color:var(--choco)}
+.nav-links a:hover::after,.nav-links a[aria-current="page"]::after{width:100%}
+.nav-right{display:flex;align-items:center;gap:1rem}
+.sel-btn{position:relative;display:flex;align-items:center;gap:.5rem;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;font-weight:600}
+.sel-count{position:absolute;top:-9px;right:-12px;min-width:18px;height:18px;padding:0 4px;border-radius:9px;background:var(--or);color:#fff;font-size:.62rem;font-weight:700;letter-spacing:0;display:flex;align-items:center;justify-content:center;transform:scale(0);transition:transform .3s cubic-bezier(.2,1.5,.4,1)}
+.sel-count.show{transform:scale(1)}
+.burger{display:none;flex-direction:column;gap:5px;padding:6px}
+.burger span{width:22px;height:1.6px;background:var(--choco);transition:.3s}
+
+/* HERO */
+.hero{position:relative;overflow:hidden;background:radial-gradient(120% 120% at 85% 10%,var(--blush) 0%,transparent 45%),radial-gradient(100% 100% at 5% 95%,var(--nude) 0%,transparent 42%),var(--creme)}
+.hero-inner{display:grid;grid-template-columns:1.05fr .95fr;gap:3rem;align-items:center;min-height:min(82vh,720px);padding:3rem 0}
+.hero h1{font-size:clamp(3rem,7.5vw,5.6rem);font-weight:400;line-height:.98;margin:1.2rem 0 1.3rem}
+.hero h1 em{font-style:italic;color:var(--or-fonce)}
+.hero p.lead{color:var(--texte-2);font-size:1.08rem;max-width:44ch;margin-bottom:2.2rem}
+.hero-cta{display:flex;gap:1rem;flex-wrap:wrap}
+.hero-visual{position:relative;aspect-ratio:4/5;border-radius:200px 200px 12px 12px;overflow:hidden;background:linear-gradient(160deg,var(--blush-2),var(--nude) 60%,var(--blush));box-shadow:var(--shadow);display:flex;align-items:flex-end;justify-content:center}
+.hero-visual .figure{width:78%;filter:drop-shadow(0 10px 20px rgba(56,40,34,.2))}
+.photo-fill{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;border:0}
+.hero-badge{position:absolute;top:1.4rem;left:1.4rem;background:rgba(251,245,240,.92);backdrop-filter:blur(4px);border-radius:40px;padding:.5rem 1.1rem;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:var(--or-fonce);display:flex;gap:.5rem;align-items:center}
+.hero-stats{display:flex;gap:2rem;margin-top:2.2rem;flex-wrap:wrap}
+.hstat .n{font-family:var(--disp);font-size:2rem;color:var(--choco)}
+.hstat .l{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+
+/* SECTION HEAD */
+.shead{max-width:640px}.shead.center{margin:0 auto}
+.shead h2{font-size:clamp(2.1rem,4.8vw,3.4rem);font-weight:400;margin-top:.6rem}
+.shead h2 em{font-style:italic;color:var(--or-fonce)}
+.shead p{color:var(--texte-2);margin-top:1rem}
+
+/* UNIVERS GRID (accueil) */
+.univ-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem}
+.univ-card{position:relative;border-radius:8px;overflow:hidden;aspect-ratio:3/4;display:flex;align-items:flex-end;padding:1.6rem;color:var(--creme);transition:transform .5s;cursor:pointer}
+.univ-card:hover{transform:translateY(-6px)}
+.univ-card::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 30%,rgba(56,40,34,.75));z-index:1}
+.univ-card .bg{position:absolute;inset:0;z-index:0;transition:transform .6s}
+.univ-card:hover .bg{transform:scale(1.06)}
+.univ-card .txt{position:relative;z-index:2}
+.univ-card h3{font-size:1.6rem;color:#fff}
+.univ-card p{font-size:.82rem;color:rgba(255,255,255,.85);margin-top:.2rem}
+.univ-card .arrow{position:absolute;top:1.4rem;right:1.4rem;z-index:2;width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.5);display:flex;align-items:center;justify-content:center;color:#fff;transition:.3s}
+.univ-card:hover .arrow{background:var(--or);border-color:var(--or)}
+
+/* CHOCO BAND */
+.band-choco{background:var(--choco);color:var(--creme)}
+.band-choco .shead h2{color:var(--creme)}
+.band-choco .shead p{color:rgba(246,237,230,.75)}
+.fidelite{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-top:3rem}
+.fid{display:flex;flex-direction:column;gap:.6rem}
+.fid .fico{color:var(--or-clair)}
+.fid h3{color:var(--creme);font-size:1.5rem}
+.fid p{color:rgba(246,237,230,.72);font-size:.92rem}
+
+/* PRESTATIONS (page tarifs / prestations) */
+.presta-nav{display:flex;flex-wrap:wrap;gap:.6rem;justify-content:center;margin:2.4rem 0 3rem}
+.pchip{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:var(--texte-2);padding:.6rem 1.2rem;border:1px solid var(--ligne);border-radius:40px;transition:.3s}
+.pchip:hover{border-color:var(--or-clair);color:var(--choco)}
+.pchip[aria-pressed="true"]{background:var(--choco);color:var(--creme);border-color:var(--choco)}
+.univ-block{margin-bottom:3rem}
+.univ-block h3{font-size:1.9rem;font-weight:400;margin-bottom:.3rem}
+.univ-block h3 em{font-style:italic;color:var(--or-fonce)}
+.univ-block .ub-sub{color:var(--muted);font-size:.88rem;margin-bottom:1.4rem}
+.presta-list{background:var(--creme-2);border:1px solid var(--ligne-2);border-radius:10px;overflow:hidden}
+.presta-row{display:flex;align-items:center;gap:1rem;padding:1.1rem 1.4rem;border-bottom:1px solid var(--ligne-2);transition:background .25s}
+.presta-row:last-child{border-bottom:none}
+.presta-row:hover{background:var(--blush-2)}
+.presta-info{flex:1}
+.presta-info h4{font-family:var(--body);font-weight:600;font-size:1rem;color:var(--choco)}
+.presta-info .meta{font-size:.8rem;color:var(--muted);display:flex;gap:.8rem;margin-top:.1rem;align-items:center}
+.presta-info .meta .dur{display:flex;gap:.3rem;align-items:center}
+.presta-price{font-family:var(--disp);font-size:1.25rem;color:var(--choco);white-space:nowrap}
+.presta-add{width:40px;height:40px;border-radius:50%;border:1px solid var(--ligne);display:flex;align-items:center;justify-content:center;color:var(--or-fonce);transition:.25s;flex-shrink:0}
+.presta-add:hover{background:var(--or);color:#fff;border-color:var(--or);transform:scale(1.08)}
+.presta-add.added{background:var(--choco);color:var(--creme);border-color:var(--choco)}
+
+/* FORFAITS */
+.forfait-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.6rem;margin-top:1rem}
+.forfait{background:var(--creme-2);border:1px solid var(--ligne-2);border-radius:12px;padding:2rem;display:flex;flex-direction:column;position:relative;overflow:hidden}
+.forfait.feat{background:var(--choco);color:var(--creme);border-color:var(--choco)}
+.forfait.feat h3,.forfait.feat .price{color:var(--creme)}
+.forfait .tag{position:absolute;top:1.2rem;right:1.2rem;font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:var(--or-fonce);background:var(--blush-2);padding:.3rem .7rem;border-radius:30px}
+.forfait.feat .tag{background:var(--or);color:#fff}
+.forfait h3{font-size:1.7rem;font-weight:400;margin-bottom:.4rem}
+.forfait .dur-line{font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem}
+.forfait.feat .dur-line{color:rgba(246,237,230,.7)}
+.forfait ul.incl{margin:1rem 0;flex:1}
+.forfait ul.incl li{display:flex;gap:.6rem;padding:.4rem 0;font-size:.9rem;color:var(--texte-2)}
+.forfait.feat ul.incl li{color:rgba(246,237,230,.85)}
+.forfait ul.incl svg{color:var(--or);flex-shrink:0;margin-top:3px}
+.forfait .price-row{display:flex;align-items:baseline;gap:.6rem;margin:.6rem 0 1.2rem}
+.forfait .price{font-family:var(--disp);font-size:2rem}
+.forfait .old{font-size:1rem;color:var(--muted);text-decoration:line-through}
+
+/* ÉQUIPE */
+.team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.4rem}
+.team-card{border-radius:10px;overflow:hidden;background:var(--creme-2);border:1px solid var(--ligne-2);transition:transform .4s,box-shadow .4s}
+.team-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-sm)}
+.team-photo{aspect-ratio:1;display:flex;align-items:center;justify-content:center;position:relative}
+.team-photo .ini{font-family:var(--disp);font-size:3.2rem;color:rgba(255,255,255,.85)}
+.team-body{padding:1.3rem}
+.team-body h3{font-size:1.4rem;font-weight:400}
+.team-body .role{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--or-fonce);font-weight:600;margin:.2rem 0 .6rem}
+.team-body p{font-size:.88rem;color:var(--texte-2)}
+
+/* GALERIE */
+.gal-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+.gal-item{aspect-ratio:1;border-radius:8px;overflow:hidden;position:relative;display:flex;align-items:flex-end;padding:1rem}
+.gal-item::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(56,40,34,.6));z-index:1}
+.gal-item span{position:relative;z-index:2;color:#fff;font-size:.8rem;font-weight:600;letter-spacing:.04em}
+.gal-item.tall{grid-row:span 2;aspect-ratio:auto}
+
+/* AVIS */
+.avis-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.4rem}
+.avis{background:var(--creme-2);border:1px solid var(--ligne-2);border-radius:10px;padding:1.8rem}
+.stars{color:var(--or);letter-spacing:.12em;margin-bottom:.8rem}
+.avis p{font-family:var(--disp);font-style:italic;font-size:1.2rem;line-height:1.4;color:var(--choco);margin-bottom:1rem}
+.avis .who{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600}
+
+/* RDV BUILDER — MOMENT FORT */
+.rdv-grid{display:grid;grid-template-columns:1.4fr .8fr;gap:2rem;align-items:start}
+.rdv-main{}
+.rdv-summary{position:sticky;top:100px;background:var(--choco);color:var(--creme);border-radius:14px;padding:1.6rem;box-shadow:var(--shadow)}
+.rdv-summary h3{color:var(--creme);font-size:1.4rem;margin-bottom:.3rem}
+.rdv-summary .empty{color:rgba(246,237,230,.6);font-size:.9rem;padding:1.5rem 0;text-align:center}
+.sum-list{margin:1rem 0;max-height:280px;overflow-y:auto}
+.sum-item{display:flex;justify-content:space-between;gap:.8rem;padding:.7rem 0;border-bottom:1px solid rgba(246,237,230,.15);align-items:flex-start}
+.sum-item .si-name{font-size:.9rem;font-weight:600}
+.sum-item .si-dur{font-size:.72rem;color:rgba(246,237,230,.6)}
+.sum-item .si-price{font-family:var(--disp);font-size:1.05rem;white-space:nowrap}
+.sum-item .si-rm{color:rgba(246,237,230,.5);font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;margin-top:.2rem}
+.sum-item .si-rm:hover{color:var(--or-clair)}
+.sum-totals{border-top:1px solid rgba(246,237,230,.25);margin-top:.5rem;padding-top:1rem}
+.sum-line{display:flex;justify-content:space-between;font-size:.9rem;margin-bottom:.5rem;color:rgba(246,237,230,.85)}
+.sum-line.big{font-family:var(--disp);font-size:1.5rem;color:var(--creme);margin-top:.6rem}
+.dur-badge{display:inline-flex;gap:.4rem;align-items:center;background:rgba(246,237,230,.12);border-radius:30px;padding:.4rem .9rem;font-size:.8rem;margin-bottom:1rem}
+
+.rdv-phase{margin-bottom:1.4rem}
+.rdv-phase h3{font-size:1.5rem;font-weight:400;margin-bottom:.3rem}
+.rdv-phase .ph-sub{color:var(--texte-2);font-size:.9rem;margin-bottom:1.2rem}
+.prat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:.9rem}
+.prat-pick{display:flex;gap:.9rem;align-items:center;padding:1rem;border:1px solid var(--ligne);border-radius:10px;background:var(--creme-2);transition:.25s;text-align:left}
+.prat-pick:hover{border-color:var(--or-clair)}
+.prat-pick[aria-pressed="true"]{border-color:var(--or);box-shadow:0 0 0 1px var(--or)}
+.prat-pick .pav{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--disp);font-size:1.3rem;color:#fff;flex-shrink:0}
+.prat-pick h4{font-family:var(--body);font-weight:600;font-size:.95rem;color:var(--choco)}
+.prat-pick p{font-size:.75rem;color:var(--muted)}
+.cal-dates{display:flex;gap:.6rem;overflow-x:auto;padding-bottom:.5rem;margin-bottom:1.2rem}
+.cal-date{flex-shrink:0;min-width:64px;padding:.7rem .4rem;border:1px solid var(--ligne);border-radius:8px;text-align:center;background:var(--creme-2);transition:.25s}
+.cal-date:hover{border-color:var(--or-clair)}
+.cal-date[aria-pressed="true"]{background:var(--choco);color:var(--creme);border-color:var(--choco)}
+.cal-date .d{font-size:.64rem;text-transform:uppercase;opacity:.7}
+.cal-date .n{font-family:var(--disp);font-size:1.4rem}
+.cal-date .m{font-size:.64rem;text-transform:uppercase}
+.slots{display:grid;grid-template-columns:repeat(auto-fill,minmax(76px,1fr));gap:.5rem}
+.slot{padding:.6rem;border:1px solid var(--ligne);border-radius:6px;font-weight:600;font-size:.86rem;background:var(--creme-2);color:var(--texte-2);transition:.25s}
+.slot:hover:not(:disabled){border-color:var(--or-clair)}
+.slot[aria-pressed="true"]{background:var(--or);color:#fff;border-color:var(--or)}
+.slot:disabled{opacity:.35;text-decoration:line-through;cursor:not-allowed}
+
+/* FORMS */
+.field{margin-bottom:1rem}
+.field label{display:block;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--texte-2);font-weight:600;margin-bottom:.4rem}
+.field input,.field select,.field textarea{width:100%;padding:.85rem 1rem;border:1px solid var(--ligne);border-radius:6px;background:var(--creme-2);transition:border-color .25s,box-shadow .25s}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--or);box-shadow:0 0 0 3px rgba(198,154,91,.15);outline:none}
+.field textarea{resize:vertical;min-height:90px}
+.field.two{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.consent{display:flex;gap:.7rem;align-items:flex-start;margin:.9rem 0;font-size:.85rem;color:var(--texte-2)}
+.consent a{color:var(--or-fonce);text-decoration:underline;text-underline-offset:2px}
+.chk{position:relative;width:19px;height:19px;border:1px solid var(--muted);border-radius:4px;flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;background:#fff;transition:.2s}
+input[type=checkbox]{position:absolute;opacity:0;width:100%;height:100%;cursor:pointer;margin:0}
+label:has(input:checked) .chk{background:var(--or);border-color:var(--or)}
+.chk svg{opacity:0;transition:.2s}
+label:has(input:checked) .chk svg{opacity:1}
+
+/* CONFIRM */
+.confirm{text-align:center;padding:2rem 0}
+.confirm .badge{width:70px;height:70px;border-radius:50%;background:var(--blush-2);display:flex;align-items:center;justify-content:center;margin:0 auto 1.2rem;color:var(--or-fonce)}
+.confirm h3{font-size:2rem;font-weight:400;margin-bottom:.5rem}
+.confirm p{color:var(--texte-2);max-width:44ch;margin:0 auto .5rem}
+.confirm .ref{display:inline-block;margin:1rem 0;font-family:var(--disp);font-size:1.3rem;color:var(--or-fonce);border:1px dashed var(--or-clair);padding:.5rem 1.4rem;border-radius:6px}
+
+/* CONTACT */
+.contact-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(2rem,5vw,3.5rem);align-items:start}
+.info-card li{display:flex;gap:1rem;padding:1.1rem 0;border-bottom:1px solid var(--ligne-2);align-items:flex-start}
+.info-card .cico{color:var(--or-fonce);flex-shrink:0;margin-top:2px}
+.info-card .lab{font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.info-card .v{font-family:var(--disp);font-size:1.2rem;margin-top:.1rem}
+.info-card .v small{display:block;font-family:var(--body);font-size:.85rem;color:var(--texte-2)}
+.card-form{background:var(--creme-2);border:1px solid var(--ligne-2);border-radius:12px;padding:clamp(1.5rem,3vw,2.2rem)}
+
+/* FOOTER */
+.footer{background:var(--choco);color:rgba(246,237,230,.8)}
+.footer-top{display:grid;grid-template-columns:1.6fr 1fr 1fr 1.2fr;gap:2.2rem;padding:clamp(3rem,6vw,4.5rem) 0 3rem}
+.footer .brand{color:var(--creme);margin-bottom:1rem;padding-left:0}
+.footer-about{font-size:.9rem;color:rgba(246,237,230,.65);max-width:32ch;line-height:1.6}
+.footer-col h4{font-family:var(--body);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--or-clair);margin-bottom:1rem;font-weight:600}
+.footer-col a,.footer-col li{display:block;font-size:.9rem;color:rgba(246,237,230,.7);padding:.3rem 0;transition:color .25s}
+.footer-col a:hover{color:var(--creme)}
+.footer-bottom{border-top:1px solid rgba(246,237,230,.15);padding:1.5rem 0;display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between;align-items:center;font-size:.8rem}
+.footer-bottom .legal-links{display:flex;gap:1.3rem;flex-wrap:wrap}
+.footer-bottom button{color:rgba(246,237,230,.7);font-size:.8rem}
+.footer-bottom button:hover{color:var(--creme)}
+.signature a{color:var(--or-clair);border-bottom:1px solid transparent}
+.signature a:hover{border-color:var(--or-clair)}
+
+/* OVERLAY / MODAL / COOKIE / TOAST */
+.overlay{position:fixed;inset:0;background:rgba(56,40,34,.45);backdrop-filter:blur(2px);opacity:0;visibility:hidden;transition:.3s;z-index:100}
+.overlay.on{opacity:1;visibility:visible}
+.modal{position:fixed;inset:0;z-index:120;display:flex;align-items:center;justify-content:center;padding:1.2rem;opacity:0;visibility:hidden;transition:.3s}
+.modal.on{opacity:1;visibility:visible}
+.modal-bg{position:absolute;inset:0;background:rgba(56,40,34,.5);backdrop-filter:blur(3px)}
+.modal-card{position:relative;background:var(--creme);border-radius:14px;max-width:560px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:var(--shadow);transform:translateY(14px);transition:.3s}
+.modal.on .modal-card{transform:none}
+.modal-head{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;padding:1.6rem 1.8rem 1rem}
+.modal-head h2{font-size:1.6rem;font-weight:400}
+.modal-close{width:38px;height:38px;border-radius:50%;background:var(--blush-2);color:var(--choco);display:flex;align-items:center;justify-content:center}
+.modal-body{padding:0 1.8rem 1.8rem}
+.legal-body{font-size:.92rem;color:var(--texte-2);line-height:1.7}
+.legal-body h3{font-family:var(--disp);color:var(--choco);font-size:1.25rem;margin:1.3rem 0 .5rem;font-weight:500}
+.legal-body p{margin-bottom:.7rem}
+
+.cookie{position:fixed;left:1rem;right:1rem;bottom:1rem;z-index:130;max-width:560px;margin:0 auto;background:var(--choco);color:var(--creme);border-radius:12px;padding:1.4rem 1.5rem;box-shadow:var(--shadow);transform:translateY(160%);transition:transform .5s cubic-bezier(.2,.8,.3,1)}
+.cookie.on{transform:translateY(0)}
+.cookie p{font-size:.86rem;color:rgba(246,237,230,.82);margin-bottom:1rem}
+.cookie p a{color:var(--or-clair);text-decoration:underline}
+.cookie-actions{display:flex;gap:.7rem;flex-wrap:wrap}
+.cookie-actions .btn{padding:.7rem 1.4rem}
+.cookie .btn-solid{background:var(--or);color:#fff}
+.cookie .btn-solid:hover{background:var(--or-clair)}
+
+.toast{position:fixed;bottom:1.5rem;left:50%;transform:translate(-50%,160%);z-index:140;background:var(--choco);color:var(--creme);padding:.9rem 1.5rem;border-radius:40px;font-size:.85rem;font-weight:500;display:flex;gap:.6rem;align-items:center;box-shadow:var(--shadow);transition:transform .4s}
+.toast.on{transform:translate(-50%,0)}
+.toast svg{color:var(--or-clair)}
+
+.view{display:none}.view.active{display:block;animation:vin .45s ease}
+@keyframes vin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.7,.3,1)}
+.reveal.in{opacity:1;transform:none}
+.reveal.d1{transition-delay:.08s}.reveal.d2{transition-delay:.16s}.reveal.d3{transition-delay:.24s}
+
+@media(max-width:940px){
+  .hero-inner,.rdv-grid,.contact-grid{grid-template-columns:1fr}
+  .rdv-summary{position:static;order:-1}
+  .univ-grid,.forfait-grid,.fidelite{grid-template-columns:1fr 1fr}
+  .team-grid,.gal-grid{grid-template-columns:1fr 1fr}
+  .avis-grid{grid-template-columns:1fr}
+  .footer-top{grid-template-columns:1fr 1fr}
+}
+@media(max-width:640px){
+  .nav-links{position:fixed;inset:80px 0 auto 0;flex-direction:column;background:var(--creme);padding:1rem clamp(1.1rem,4vw,2.4rem) 1.6rem;gap:0;transform:translateY(-130%);transition:transform .4s;box-shadow:var(--shadow);border-bottom:1px solid var(--ligne)}
+  .nav-links.open{transform:translateY(0)}
+  .nav-links a{padding:1rem 0;border-bottom:1px solid var(--ligne-2);width:100%;font-size:.85rem}
+  .nav-links a::after{display:none}
+  .burger{display:flex}
+  .burger.open span:nth-child(1){transform:translateY(6.6px) rotate(45deg)}
+  .burger.open span:nth-child(2){opacity:0}
+  .burger.open span:nth-child(3){transform:translateY(-6.6px) rotate(-45deg)}
+  .univ-grid,.forfait-grid,.fidelite,.team-grid,.gal-grid{grid-template-columns:1fr}
+  .footer-top{grid-template-columns:1fr}
+  .field.two{grid-template-columns:1fr}
+  .brand{font-size:1.5rem;letter-spacing:.26em}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<a href="#main" class="skip">Aller au contenu</a>
+
+<header class="header">
+  <div class="wrap">
+    <nav class="nav" aria-label="Navigation principale">
+      <a href="#" class="brand" data-nav="accueil" aria-label="NÉROLI, accueil">NÉROLI</a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#" data-nav="accueil" aria-current="page">Accueil</a></li>
+        <li><a href="#" data-nav="prestations">Prestations</a></li>
+        <li><a href="#" data-nav="forfaits">Forfaits</a></li>
+        <li><a href="#" data-nav="equipe">L'équipe</a></li>
+        <li><a href="#" data-nav="galerie">Galerie</a></li>
+        <li><a href="#" data-nav="contact">Contact</a></li>
+      </ul>
+      <div class="nav-right">
+        <button class="sel-btn" data-nav="rdv" aria-label="Voir ma sélection et réserver">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M8 7V5a4 4 0 0 1 8 0v2"/><path d="M5 7h14l-1 13H6z"/></svg>
+          Réserver<span class="sel-count" id="selCount">0</span>
+        </button>
+        <button class="burger" id="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ACCUEIL -->
+<section class="view active" id="view-accueil">
+  <div class="hero">
+    <div class="wrap">
+      <div class="hero-inner">
+        <div class="reveal">
+          <span class="eyebrow">Coiffure · Beauté · Esthétique</span>
+          <h1>Le soin comme <em>rituel</em></h1>
+          <p class="lead">Un salon-institut à Alger où l'on prend le temps de vous sublimer : coiffure, couleur, soins du visage, ongles et maquillage, sous les mains d'une équipe passionnée.</p>
+          <div class="hero-cta">
+            <button class="btn btn-gold" data-nav="prestations">Composer ma visite</button>
+            <button class="btn btn-outline" data-nav="rdv">Réserver</button>
+          </div>
+          <div class="hero-stats">
+            <div class="hstat"><div class="n">7</div><div class="l">Univers de soins</div></div>
+            <div class="hstat"><div class="n">40+</div><div class="l">Prestations</div></div>
+            <div class="hstat"><div class="n">4,9<span style="font-size:1rem">★</span></div><div class="l">Avis clientes</div></div>
+          </div>
+        </div>
+        <div class="reveal d1">
+          <div class="hero-visual">
+            <span class="hero-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l2.2 5.5L20 9l-4 4 1 6-5-3-5 3 1-6-4-4 5.8-.5z"/></svg> Carte de fidélité</span>
+            <img class="photo-fill" src="https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?auto=format&fit=crop&w=1000&q=70" alt="Intérieur du salon NÉROLI" loading="lazy" onerror="this.remove()">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Univers -->
+  <div class="section">
+    <div class="wrap">
+      <div class="shead center reveal">
+        <span class="eyebrow">Nos univers</span>
+        <h2>Sept mondes pour <em>vous</em></h2>
+      </div>
+      <div class="univ-grid" id="univHome" style="margin-top:3rem"></div>
+      <div class="center" style="margin-top:2.6rem"><button class="btn btn-outline" data-nav="prestations">Voir toutes les prestations</button></div>
+    </div>
+  </div>
+
+  <!-- Fidélité (choco) -->
+  <div class="band-choco section">
+    <div class="wrap">
+      <div class="shead center reveal">
+        <span class="eyebrow" style="color:var(--or-clair)">L'expérience NÉROLI</span>
+        <h2>Chouchoutée, à chaque visite</h2>
+      </div>
+      <div class="fidelite">
+        <div class="fid reveal"><span class="fico"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M12 3l2.2 5.5L20 9l-4 4 1 6-5-3-5 3 1-6-4-4 5.8-.5z"/></svg></span><h3>Carte de fidélité</h3><p>Une prestation offerte tous les dix rendez-vous, et des attentions à chaque passage.</p></div>
+        <div class="fid reveal d1"><span class="fico"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 9h18"/></svg></span><h3>Rappel par SMS</h3><p>Un rappel de votre rendez-vous la veille, uniquement si vous l'acceptez.</p></div>
+        <div class="fid reveal d2"><span class="fico"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M12 21s-7-4.3-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.7-7 10-7 10z"/></svg></span><h3>Forfaits mariée</h3><p>Un accompagnement sur-mesure pour votre plus beau jour, essai inclus.</p></div>
+      </div>
+      <div class="center" style="margin-top:3rem"><button class="btn btn-gold" data-nav="forfaits">Découvrir les forfaits</button></div>
+    </div>
+  </div>
+
+  <!-- Avis -->
+  <div class="section">
+    <div class="wrap">
+      <div class="shead center reveal"><span class="eyebrow">Elles témoignent</span><h2>La parole à nos clientes</h2></div>
+      <div class="avis-grid" id="avisHome" style="margin-top:2.6rem"></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRESTATIONS -->
+<section class="view" id="view-prestations">
+  <div class="section">
+    <div class="wrap">
+      <div class="shead center reveal">
+        <span class="eyebrow">Prestations & tarifs</span>
+        <h2>Composez votre visite</h2>
+        <p>Ajoutez les prestations qui vous font envie : la durée et le total se calculent en direct. Vous choisirez ensuite votre praticienne et votre créneau.</p>
+      </div>
+      <div class="presta-nav" id="prestaNav"></div>
+      <div id="prestaBlocks"></div>
+    </div>
+  </div>
+</section>
+
+<!-- FORFAITS -->
+<section class="view" id="view-forfaits">
+  <div class="section">
+    <div class="wrap">
+      <div class="shead center reveal"><span class="eyebrow">Nos forfaits</span><h2>Des rituels <em>complets</em></h2>
+        <p>Des combinaisons pensées pour les grandes occasions comme pour les moments de douceur. Ajoutez-les en un clic à votre réservation.</p></div>
+      <div class="forfait-grid" id="forfaitGrid" style="margin-top:1.6rem"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ÉQUIPE -->
+<section class="view" id="view-equipe">
+  <div class="section">
+    <div class="wrap">
+      <div class="shead center reveal"><span class="eyebrow">Notre équipe</span><h2>Les mains qui vous <em>subliment</em></h2></div>
+      <div class="team-grid" id="teamGrid" style="margin-top:2.8rem"></div>
+    </div>
+  </div>
+</section>
+
+<!-- GALERIE -->
+<section class="view" id="view-galerie">
+  <div class="section">
+    <div class="wrap">
+      <div class="shead center reveal"><span class="eyebrow">Réalisations</span><h2>Un aperçu de <em>notre travail</em></h2>
+        <p>Quelques réalisations récentes, publiées avec l'accord de nos clientes.</p></div>
+      <div class="gal-grid" id="galGrid" style="margin-top:2.6rem"></div>
+    </div>
+  </div>
+</section>
+
+<!-- RDV (MOMENT FORT) -->
+<section class="view" id="view-rdv">
+  <div class="section">
+    <div class="wrap">
+      <div class="shead reveal"><span class="eyebrow">Réservation</span><h2>Votre visite, sur-mesure</h2>
+        <p>Composez vos prestations, choisissez votre praticienne et votre créneau. La durée totale ajuste automatiquement les disponibilités.</p></div>
+      <div class="rdv-grid" style="margin-top:2.4rem">
+        <div class="rdv-main" id="rdvMain"></div>
+        <aside class="rdv-summary" id="rdvSummary" aria-label="Récapitulatif de la sélection"></aside>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="view" id="view-contact">
+  <div class="section">
+    <div class="wrap">
+      <div class="shead center reveal"><span class="eyebrow">Nous trouver</span><h2>Contact & accès</h2></div>
+      <div class="contact-grid" style="margin-top:2.8rem">
+        <div class="reveal">
+          <ul class="info-card">
+            <li><span class="cico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.6"/></svg></span>
+              <div><div class="lab">Salon</div><div class="v">Rue Hassiba Ben Bouali<small>Sacré-Cœur, Alger · 16000</small></div></div></li>
+            <li><span class="cico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M5 4h4l2 5-3 2a12 12 0 0 0 5 5l2-3 5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></span>
+              <div><div class="lab">Téléphone</div><div class="v" style="font-size:1.05rem">+213 _ __ __ __ __</div></div></li>
+            <li><span class="cico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 5h16v14H4z"/><path d="M4 7l8 6 8-6"/></svg></span>
+              <div><div class="lab">Email</div><div class="v" style="font-size:1.05rem">bonjour@neroli-beaute.dz</div></div></li>
+            <li><span class="cico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+              <div><div class="lab">Horaires</div><div class="v" style="font-size:1.05rem">Sam – Jeu : 9h – 19h<small>Vendredi : sur rendez-vous</small></div></div></li>
+          </ul>
+          <button class="btn btn-gold" data-nav="rdv" style="margin-top:1.4rem">Réserver en ligne</button>
+        </div>
+        <div class="card-form reveal d1">
+          <form id="contactForm" novalidate>
+            <div class="field two"><div><label for="c-nom">Nom & prénom</label><input id="c-nom" required></div><div><label for="c-tel">Téléphone</label><input id="c-tel" type="tel" placeholder="+213 _ __ __ __ __" required></div></div>
+            <div class="field"><label for="c-email">Email (facultatif)</label><input id="c-email" type="email"></div>
+            <div class="field"><label for="c-msg">Message</label><textarea id="c-msg" required></textarea></div>
+            <label class="consent"><span style="position:relative;display:inline-flex"><input type="checkbox" id="c-consent" required><span class="chk"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span></span><span>J'accepte d'être recontactée au sujet de ma demande (<a href="#" data-legal="confidentialite">confidentialité</a>).</span></label>
+            <button type="submit" class="btn btn-solid btn-block">Envoyer</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <div>
+        <div class="brand">NÉROLI</div>
+        <p class="footer-about">Salon de coiffure et institut de beauté à Alger. Coiffure, couleur, soins, ongles, maquillage. Un lieu pour prendre soin de soi.</p>
+      </div>
+      <div class="footer-col"><h4>Prestations</h4>
+        <a href="#" data-nav="prestations">Coiffure</a><a href="#" data-nav="prestations">Couleur & mèches</a><a href="#" data-nav="prestations">Soins visage</a><a href="#" data-nav="prestations">Ongles</a><a href="#" data-nav="prestations">Maquillage</a></div>
+      <div class="footer-col"><h4>Le salon</h4>
+        <a href="#" data-nav="forfaits">Forfaits mariée</a><a href="#" data-nav="equipe">L'équipe</a><a href="#" data-nav="galerie">Galerie</a><a href="#" data-nav="rdv">Réserver</a></div>
+      <div class="footer-col"><h4>Salon</h4>
+        <li>Rue Hassiba Ben Bouali</li><li>Sacré-Cœur, Alger</li><li>Sam – Jeu : 9h – 19h</li><li>+213 _ __ __ __ __</li></div>
+    </div>
+    <div class="footer-bottom">
+      <div class="legal-links">
+        <button data-legal="mentions">Mentions légales</button>
+        <button data-legal="confidentialite">Politique de confidentialité</button>
+        <button id="cookieReopen">Gérer les cookies</button>
+      </div>
+      <span class="signature">Réalisé par <a href="https://difarslan.com" target="_blank" rel="noopener">Arslan DIF — difarslan.com</a></span>
+    </div>
+  </div>
+</footer>
+
+<div class="overlay" id="overlay"></div>
+<div class="modal" id="modalLegal" role="dialog" aria-modal="true" aria-labelledby="legalTitle">
+  <div class="modal-bg" data-close></div>
+  <div class="modal-card">
+    <div class="modal-head"><h2 id="legalTitle"></h2><button class="modal-close" data-close aria-label="Fermer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+    <div class="modal-body legal-body" id="legalBody"></div>
+  </div>
+</div>
+
+<div class="cookie" id="cookie" role="dialog" aria-label="Cookies">
+  <p>Nous utilisons des cookies pour améliorer votre expérience et mesurer l'audience. <a href="#" data-legal="confidentialite">En savoir plus</a>.</p>
+  <div class="cookie-actions"><button class="btn btn-solid" id="cookieAccept">Accepter</button><button class="btn btn-ghost-light" id="cookieRefuse">Refuser</button></div>
+</div>
+
+<div class="toast" id="toast"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg><span id="toastMsg"></span></div>
+
+<script>
+/* ===== DONNÉES ===== */
+const UNIVERS=[
+  {id:'coiffure',nom:'Coiffure',sub:'Coupes, brushings & coiffures',grad:'linear-gradient(160deg,#C69A5B,#8A6636)',items:[
+    {n:'Coupe femme + brushing',d:60,p:2800},{n:'Coupe femme',d:45,p:1800},{n:'Coupe homme',d:30,p:1200},{n:'Coupe enfant (-12 ans)',d:30,p:900},{n:'Brushing',d:40,p:1500},{n:'Coiffure attachée / soirée',d:60,p:3500},{n:'Chignon',d:75,p:4500}]},
+  {id:'couleur',nom:'Couleur & mèches',sub:'Colorations, balayages, patines',grad:'linear-gradient(160deg,#A87E3F,#5C3F28)',items:[
+    {n:'Couleur racines',d:90,p:3500},{n:'Couleur complète',d:120,p:5000},{n:'Mèches / balayage',d:150,p:7000},{n:'Ombré hair',d:180,p:8500},{n:'Patine / gloss',d:45,p:2500}]},
+  {id:'visage',nom:'Soins du visage',sub:'Nettoyage, hydratation, éclat',grad:'linear-gradient(160deg,#E9CFC6,#B98C7E)',items:[
+    {n:'Nettoyage de peau profond',d:60,p:4000},{n:'Soin hydratant',d:50,p:3500},{n:'Soin anti-âge',d:70,p:5500},{n:'Peeling doux',d:60,p:6000}]},
+  {id:'ongles',nom:'Ongles',sub:'Manucure, pédicure, semi-permanent',grad:'linear-gradient(160deg,#DDBE8B,#A87E3F)',items:[
+    {n:'Manucure classique',d:40,p:1500},{n:'Vernis semi-permanent',d:50,p:2500},{n:'Pose gel / capsules',d:90,p:4500},{n:'Pédicure',d:60,p:2500},{n:'Nail art (par main)',d:20,p:800}]},
+  {id:'epilation',nom:'Épilation',sub:'Cire tiède & orientale',grad:'linear-gradient(160deg,#E3CAB8,#B08E76)',items:[
+    {n:'Sourcils',d:15,p:600},{n:'Lèvre supérieure',d:10,p:500},{n:'Aisselles',d:15,p:1000},{n:'Demi-jambes',d:25,p:1500},{n:'Jambes complètes',d:40,p:2500},{n:'Maillot',d:25,p:1500}]},
+  {id:'maquillage',nom:'Maquillage',sub:'Jour, soirée, mariée',grad:'linear-gradient(160deg,#C69A5B,#7A5636)',items:[
+    {n:'Maquillage jour',d:40,p:3000},{n:'Maquillage soirée',d:60,p:4500},{n:'Maquillage mariée (essai inclus)',d:90,p:9000}]},
+  {id:'lissage',nom:'Lissage',sub:'Kératine, brésilien, botox',grad:'linear-gradient(160deg,#8A6636,#4E3A31)',items:[
+    {n:'Lissage à la kératine',d:150,p:9000},{n:'Lissage brésilien',d:180,p:12000},{n:'Botox capillaire',d:120,p:7000}]}
+];
+const FORFAITS=[
+  {id:'mariee',nom:'Mariée Sérénité',tag:'Le grand jour',feat:true,d:300,p:22000,old:25000,incl:['Essai maquillage & coiffure','Maquillage mariée longue tenue','Chignon ou coiffure','Manucure semi-permanent','Soin éclat du visage']},
+  {id:'evenement',nom:'Événement Éclat',tag:'Occasion',d:150,p:8000,old:9500,incl:['Brushing ou coiffure','Maquillage soirée','Pose vernis semi-permanent']},
+  {id:'douceur',nom:'Parenthèse Douceur',tag:'Détente',d:150,p:8500,old:10000,incl:['Soin visage hydratant','Manucure classique','Brushing']}
+];
+const TEAM=[
+  {ini:'Y',nom:'Yasmine',role:'Coloriste experte',grad:'linear-gradient(160deg,#A87E3F,#5C3F28)',bio:"Spécialiste des balayages naturels et des couleurs sur-mesure adaptées à votre carnation."},
+  {ini:'L',nom:'Lina',role:'Coiffeuse & chignons',grad:'linear-gradient(160deg,#C69A5B,#8A6636)',bio:"Coupes tendance et coiffures d'exception pour vos plus beaux événements."},
+  {ini:'S',nom:'Sofia',role:'Esthéticienne',grad:'linear-gradient(160deg,#E9CFC6,#B98C7E)',bio:"Soins du visage et épilation en douceur, avec des produits sélectionnés avec soin."},
+  {ini:'N',nom:'Nour',role:'Nail artist & maquilleuse',grad:'linear-gradient(160deg,#DDBE8B,#A87E3F)',bio:"Ongles impeccables et maquillages lumineux, du naturel au plus sophistiqué."}
+];
+const GALLERY=[
+  {t:'Balayage miel',grad:'linear-gradient(160deg,#DDBE8B,#8A6636)',tall:true},
+  {t:'Chignon bohème',grad:'linear-gradient(160deg,#C69A5B,#5C3F28)'},
+  {t:'Nail art nude',grad:'linear-gradient(160deg,#E9CFC6,#B98C7E)'},
+  {t:'Maquillage soirée',grad:'linear-gradient(160deg,#A87E3F,#382822)'},
+  {t:'Ombré cuivré',grad:'linear-gradient(160deg,#C4664A,#7A5636)',tall:true},
+  {t:'Soin éclat',grad:'linear-gradient(160deg,#F0DDD6,#C69A5B)'},
+  {t:'Coupe carré',grad:'linear-gradient(160deg,#8A6636,#382822)'},
+  {t:'Manucure française',grad:'linear-gradient(160deg,#E3CAB8,#A87E3F)'}
+];
+const AVIS=[
+  {s:5,t:"Un accueil adorable et un balayage exactement comme je le voulais. Je ne changerais de salon pour rien au monde.",w:"Meriem — Hydra"},
+  {s:5,t:"Forfait mariée impeccable, essai rassurant et résultat sublime le jour J. Merci à toute l'équipe.",w:"Sabrina — El Biar"},
+  {s:5,t:"Le calcul du temps et du prix avant de venir, c'est tellement pratique. On sait à quoi s'attendre.",w:"Amina — Kouba"},
+  {s:5,t:"Soin du visage divin, on ressort détendue et la peau lumineuse. Un vrai moment pour soi.",w:"Ines — Chéraga"}
+];
+
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const fmt=n=>Math.round(n).toLocaleString('fr-FR').replace(/\u202f/g,' ')+' DA';
+function fmtDur(min){const h=Math.floor(min/60),m=min%60;return h?(m?`${h} h ${m}`:`${h} h`):`${m} min`;}
+function itemKey(u,i){return u+'|'+i;}
+/* Photos libres de droits (Unsplash). Repli automatique sur le dégradé si l'image ne charge pas. */
+const UIMG=id=>`https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=800&q=70`;
+const UNIV_IMG={coiffure:'1634449571010-02389ed0f9b0',couleur:'1562322140-8baeececf3df',visage:'1617897903246-719242758050',ongles:'1604654894610-df63bc536371',epilation:'1607008829749-c0f284a49fc4',maquillage:'1596462502278-27bfdc403348',lissage:'1580618672591-eb180b1a973f'};
+const GAL_IMG=['1580618672591-eb180b1a973f','1634449571010-02389ed0f9b0','1607779097040-26e80aa78e66','1522335789203-aabd1fc54bc9','1562322140-8baeececf3df','1617897903246-719242758050','1560066984-138dadb4c035','1604654894610-df63bc536371'];
+function photoFill(url,alt=''){return `<img class="photo-fill" src="${url}" alt="${alt}" loading="lazy" onerror="this.remove()">`;}
+
+/* ===== ÉTAT ===== */
+let selection=[]; // {univ,idx,n,d,p,key}
+let rdv={prat:null,date:null,slot:null};
+
+function addPresta(univId,idx){
+  const u=UNIVERS.find(x=>x.id===univId);const it=u.items[idx];const key=itemKey(univId,idx);
+  if(selection.find(s=>s.key===key)){toast('Déjà dans votre sélection');return;}
+  selection.push({key,univ:univId,idx,n:it.n,d:it.d,p:it.p});
+  updateSel();toast('Ajouté à votre sélection');
+}
+function addForfait(fid){
+  const f=FORFAITS.find(x=>x.id===fid);const key='forfait|'+fid;
+  if(selection.find(s=>s.key===key)){toast('Forfait déjà sélectionné');return;}
+  selection.push({key,univ:'forfait',idx:fid,n:'Forfait '+f.nom,d:f.d,p:f.p});
+  updateSel();toast('Forfait ajouté');
+}
+function removeSel(key){selection=selection.filter(s=>s.key!==key);updateSel();}
+function totalDur(){return selection.reduce((s,x)=>s+x.d,0);}
+function totalPrice(){return selection.reduce((s,x)=>s+x.p,0);}
+function updateSel(){
+  const n=selection.length;const c=$('#selCount');c.textContent=n;c.classList.toggle('show',n>0);
+  renderSummary();renderPrestaState();
+}
+
+/* ===== RENDU ACCUEIL ===== */
+function renderHome(){
+  $('#univHome').innerHTML=UNIVERS.slice(0,6).map(u=>univCard(u)).join('');
+  $('#avisHome').innerHTML=AVIS.map(a=>`<div class="avis reveal"><div class="stars" aria-label="${a.s} sur 5">${'★'.repeat(a.s)}</div><p>« ${a.t} »</p><div class="who">${a.w}</div></div>`).join('');
+}
+function univCard(u){return `<article class="univ-card reveal" data-univ-go="${u.id}" role="button" tabindex="0" aria-label="${u.nom}"><span class="bg" style="background:${u.grad}">${UNIV_IMG[u.id]?photoFill(UIMG(UNIV_IMG[u.id]),u.nom):''}</span><span class="arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><span class="txt"><h3>${u.nom}</h3><p>${u.sub}</p></span></article>`;}
+
+/* ===== PRESTATIONS ===== */
+let prestaFilter='all';
+function renderPrestaNav(){
+  const chips=[['all','Tout'],...UNIVERS.map(u=>[u.id,u.nom])];
+  $('#prestaNav').innerHTML=chips.map(([id,l])=>`<button class="pchip" data-pfilter="${id}" aria-pressed="${id===prestaFilter}">${l}</button>`).join('');
+}
+function renderPrestaBlocks(){
+  const list=prestaFilter==='all'?UNIVERS:UNIVERS.filter(u=>u.id===prestaFilter);
+  $('#prestaBlocks').innerHTML=list.map(u=>`<div class="univ-block reveal"><h3>${u.nom}</h3><div class="ub-sub">${u.sub}</div>
+    <div class="presta-list">${u.items.map((it,i)=>{const key=itemKey(u.id,i);const added=selection.find(s=>s.key===key);
+      return `<div class="presta-row"><div class="presta-info"><h4>${it.n}</h4><div class="meta"><span class="dur"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg>${fmtDur(it.d)}</span></div></div>
+      <span class="presta-price">${fmt(it.p)}</span>
+      <button class="presta-add ${added?'added':''}" data-add="${u.id}" data-idx="${i}" aria-label="Ajouter ${it.n}">${added?'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>':'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 5v14M5 12h14"/></svg>'}</button></div>`;}).join('')}</div></div>`).join('');
+  requestAnimationFrame(initReveal);
+}
+function renderPrestaState(){
+  $$('#prestaBlocks .presta-add').forEach(b=>{const key=itemKey(b.dataset.add,+b.dataset.idx);const added=selection.find(s=>s.key===key);
+    b.classList.toggle('added',!!added);
+    b.innerHTML=added?'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>':'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 5v14M5 12h14"/></svg>';});
+}
+
+/* ===== FORFAITS ===== */
+function renderForfaits(){
+  $('#forfaitGrid').innerHTML=FORFAITS.map(f=>`<div class="forfait ${f.feat?'feat':''} reveal"><span class="tag">${f.tag}</span><h3>${f.nom}</h3><div class="dur-line">Durée estimée ${fmtDur(f.d)}</div>
+    <ul class="incl">${f.incl.map(i=>`<li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>${i}</li>`).join('')}</ul>
+    <div class="price-row"><span class="price">${fmt(f.p)}</span><span class="old">${fmt(f.old)}</span></div>
+    <button class="btn ${f.feat?'btn-gold':'btn-outline'} btn-block" data-forfait="${f.id}">Ajouter à ma réservation</button></div>`).join('');
+}
+
+/* ===== ÉQUIPE / GALERIE ===== */
+function renderTeam(){$('#teamGrid').innerHTML=TEAM.map(t=>`<article class="team-card reveal"><div class="team-photo" style="background:${t.grad}"><span class="ini">${t.ini}</span></div><div class="team-body"><h3>${t.nom}</h3><div class="role">${t.role}</div><p>${t.bio}</p></div></article>`).join('');}
+function renderGallery(){$('#galGrid').innerHTML=GALLERY.map((g,i)=>`<div class="gal-item ${g.tall?'tall':''} reveal" style="background:${g.grad}">${GAL_IMG[i]?photoFill(UIMG(GAL_IMG[i]),g.t):''}<span>${g.t}</span></div>`).join('');}
+
+/* ===== RDV BUILDER ===== */
+function renderSummary(){
+  const s=$('#rdvSummary');
+  if(!selection.length){s.innerHTML=`<h3>Ma sélection</h3><p class="empty">Aucune prestation pour le moment.<br>Ajoutez-en depuis « Prestations » ou « Forfaits ».</p><button class="btn btn-gold btn-block" data-nav="prestations">Choisir mes prestations</button>`;
+    bindNav(s);return;}
+  s.innerHTML=`<h3>Ma sélection</h3>
+    <span class="dur-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg> Durée totale ${fmtDur(totalDur())}</span>
+    <div class="sum-list">${selection.map(x=>`<div class="sum-item"><div><div class="si-name">${x.n}</div><div class="si-dur">${fmtDur(x.d)}</div><button class="si-rm" data-rm="${x.key}">Retirer</button></div><div class="si-price">${fmt(x.p)}</div></div>`).join('')}</div>
+    <div class="sum-totals">
+      <div class="sum-line"><span>${selection.length} prestation${selection.length>1?'s':''}</span><span>${fmtDur(totalDur())}</span></div>
+      <div class="sum-line big"><span>Total</span><span>${fmt(totalPrice())}</span></div>
+    </div>`;
+  s.querySelectorAll('[data-rm]').forEach(b=>b.onclick=()=>removeSel(b.dataset.rm));
+  renderRdvMain();
+}
+function renderRdvMain(){
+  const m=$('#rdvMain');
+  if(!selection.length){m.innerHTML=`<div style="background:var(--creme-2);border:1px solid var(--ligne-2);border-radius:12px;padding:2.4rem;text-align:center">
+    <h3 style="font-size:1.6rem;margin-bottom:.6rem">Commencez par vos prestations</h3>
+    <p style="color:var(--texte-2);margin-bottom:1.4rem">Composez votre visite : chaque ajout met à jour la durée et le total.</p>
+    <button class="btn btn-gold" data-nav="prestations">Ajouter des prestations</button></div>`;bindNav(m);return;}
+  const dur=totalDur();
+  const JN=['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'],MN=['jan','fév','mar','avr','mai','juin','juil','août','sep','oct','nov','déc'];
+  const days=[];let d=new Date();let c=0;while(c<8){d=new Date(d);d.setDate(d.getDate()+1);if(d.getDay()!==5){days.push(new Date(d));c++;}}
+  if(rdv.date===null)rdv.date=0;
+  const allSlots=['09:00','10:00','11:00','12:00','14:00','15:00','16:00','17:00'];
+  // créneaux indisponibles si la durée dépasse la fermeture (19h)
+  m.innerHTML=`
+    <div class="rdv-phase">
+      <h3>Choisissez votre praticienne</h3>
+      <p class="ph-sub">Ou laissez-nous vous attribuer la première disponible pour votre sélection.</p>
+      <div class="prat-grid">
+        <button class="prat-pick" data-prat="indiff" aria-pressed="${rdv.prat==='indiff'}"><span class="pav" style="background:linear-gradient(160deg,#C69A5B,#8A6636)">✿</span><span><h4>Peu importe</h4><p>1ʳᵉ disponible</p></span></button>
+        ${TEAM.map(t=>`<button class="prat-pick" data-prat="${t.ini}" aria-pressed="${rdv.prat===t.ini}"><span class="pav" style="background:${t.grad}">${t.ini}</span><span><h4>${t.nom}</h4><p>${t.role}</p></span></button>`).join('')}
+      </div>
+    </div>
+    <div class="rdv-phase">
+      <h3>Choisissez un créneau</h3>
+      <p class="ph-sub">Votre visite dure environ <strong>${fmtDur(dur)}</strong> — nous réservons le temps nécessaire.</p>
+      <div class="cal-dates" id="calDates">${days.map((dd,i)=>`<button class="cal-date" data-di="${i}" aria-pressed="${rdv.date===i}"><span class="d">${JN[dd.getDay()]}</span><span class="n">${dd.getDate()}</span><span class="m">${MN[dd.getMonth()]}</span></button>`).join('')}</div>
+      <div class="slots" id="calSlots">${allSlots.map((s,i)=>{const [h,mn]=s.split(':').map(Number);const end=h*60+mn+dur;const dispo=end<=19*60 && !(i===2||i===5);return `<button class="slot" data-slot="${s}" aria-pressed="${rdv.slot===s}" ${dispo?'':'disabled'}>${s}</button>`;}).join('')}</div>
+    </div>
+    <div id="rdvFinal"></div>`;
+  const dd0=days[rdv.date];
+  $('#calDates').onclick=e=>{const b=e.target.closest('[data-di]');if(!b)return;rdv.date=+b.dataset.di;rdv.slot=null;renderRdvMain();};
+  $('#calSlots').onclick=e=>{const b=e.target.closest('[data-slot]');if(!b||b.disabled)return;rdv.slot=b.dataset.slot;$$('#calSlots .slot').forEach(x=>x.setAttribute('aria-pressed',x===b));renderFinal(days);};
+  $('.prat-grid').onclick=e=>{const b=e.target.closest('[data-prat]');if(!b)return;rdv.prat=b.dataset.prat;$$('.prat-pick').forEach(x=>x.setAttribute('aria-pressed',x===b));};
+  if(rdv.slot)renderFinal(days);
+}
+function renderFinal(days){
+  const dd=days[rdv.date];const JN=['dimanche','lundi','mardi','mercredi','jeudi','vendredi','samedi'];const MN=['jan','fév','mar','avr','mai','juin','juil','août','sep','oct','nov','déc'];
+  $('#rdvFinal').innerHTML=`<div class="rdv-phase" style="background:var(--creme-2);border:1px solid var(--ligne-2);border-radius:12px;padding:1.6rem;margin-top:.5rem">
+    <h3 style="font-size:1.3rem">Vos coordonnées</h3>
+    <p class="ph-sub">Rendez-vous le <strong>${JN[dd.getDay()]} ${dd.getDate()} ${MN[dd.getMonth()]} à ${rdv.slot}</strong>${rdv.prat&&rdv.prat!=='indiff'?' avec '+(TEAM.find(t=>t.ini===rdv.prat)?.nom):''}.</p>
+    <form id="rdvForm" novalidate>
+      <div class="field two"><div><label for="r-nom">Nom & prénom</label><input id="r-nom" required></div><div><label for="r-tel">Téléphone</label><input id="r-tel" type="tel" placeholder="+213 _ __ __ __ __" required></div></div>
+      <label class="consent"><span style="position:relative;display:inline-flex"><input type="checkbox" id="r-sms"><span class="chk"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span></span><span>J'accepte de recevoir un <strong>rappel par SMS</strong> la veille (facultatif).</span></label>
+      <label class="consent"><span style="position:relative;display:inline-flex"><input type="checkbox" id="r-photo"><span class="chk"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span></span><span>J'autorise la publication éventuelle de photos « avant / après » de ma prestation (facultatif, révocable).</span></label>
+      <label class="consent"><span style="position:relative;display:inline-flex"><input type="checkbox" id="r-consent" required><span class="chk"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span></span><span>Je consens au traitement de mes données pour ce rendez-vous (<a href="#" data-legal="confidentialite">confidentialité</a>).</span></label>
+      <button type="submit" class="btn btn-gold btn-block">Confirmer — ${fmt(totalPrice())} · ${fmtDur(totalDur())}</button>
+    </form></div>`;
+  bindLegal();
+  $('#rdvForm').addEventListener('submit',e=>{e.preventDefault();let ok=true;['#r-nom','#r-tel'].forEach(s=>{const f=$(s);f.style.borderColor=f.value.trim()?'':'#C4664A';if(!f.value.trim())ok=false;});if(!$('#r-consent').checked){ok=false;toast('Merci de cocher le consentement');}if(!ok)return;
+    const ref='NR-'+Math.floor(1000+Math.random()*8999);
+    $('#rdvMain').innerHTML=`<div class="confirm"><div class="badge"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 13l4 4L19 7"/></svg></div>
+      <h3>Réservation confirmée</h3>
+      <p>Votre visite est réservée le <strong>${JN[dd.getDay()]} ${dd.getDate()} ${MN[dd.getMonth()]} à ${rdv.slot}</strong>, pour ${fmtDur(totalDur())}.</p>
+      <span class="ref">${ref}</span>
+      <p style="font-size:.86rem;color:var(--muted)">${$('#r-sms').checked?'Un rappel SMS vous sera envoyé la veille. ':''}Au plaisir de vous recevoir chez NÉROLI.</p>
+      <button class="btn btn-solid" id="rDone" style="margin-top:1.2rem">Terminer</button></div>`;
+    selection=[];rdv={prat:null,date:null,slot:null};updateSel();
+    $('#rDone').onclick=()=>showView('accueil');
+    toast('Réservation enregistrée');
+  });
+}
+
+/* ===== NAV ===== */
+function showView(name){$$('.view').forEach(v=>v.classList.remove('active'));const el=$('#view-'+name);if(el)el.classList.add('active');
+  $$('.nav-links a').forEach(a=>a.removeAttribute('aria-current'));$$(`.nav-links a[data-nav="${name}"]`).forEach(a=>a.setAttribute('aria-current','page'));
+  if(name==='prestations'){renderPrestaBlocks();}
+  if(name==='rdv'){renderSummary();}
+  closeMenu();window.scrollTo({top:0,behavior:'instant'});requestAnimationFrame(initReveal);}
+function bindNav(scope){(scope||document).querySelectorAll('[data-nav]').forEach(b=>b.onclick=e=>{e.preventDefault();showView(b.dataset.nav);});}
+
+/* ===== LEGAL / MODAL ===== */
+const LEGAL={
+  mentions:{t:'Mentions légales',h:`<h3>Éditeur</h3><p>Salon NÉROLI — Rue Hassiba Ben Bouali, Sacré-Cœur, Alger (16000). Téléphone : +213 _ __ __ __ __. Email : bonjour@neroli-beaute.dz.</p><h3>Hébergement</h3><p>Site hébergé par un prestataire technique dont les coordonnées sont disponibles sur demande.</p><h3>Propriété intellectuelle</h3><p>Les visuels et contenus sont la propriété du salon NÉROLI.</p><p style="color:var(--muted);font-size:.82rem;margin-top:1rem">Site de démonstration.</p>`},
+  confidentialite:{t:'Politique de confidentialité',h:`<h3>Données collectées</h3><p>Pour une réservation, nous collectons vos nom, prénom et téléphone. L'email est facultatif. Aucune donnée n'est vendue à des tiers.</p><h3>Rappel SMS</h3><p>Le rappel par SMS n'est activé qu'avec votre consentement explicite et reste désactivable à tout moment.</p><h3>Photos avant / après</h3><p>La publication de photos de vos réalisations est soumise à votre autorisation préalable et peut être retirée sur simple demande.</p><h3>Vos droits</h3><p>Accès, rectification et suppression de vos données à bonjour@neroli-beaute.dz.</p>`}
+};
+function openLegal(k){const L=LEGAL[k];if(!L)return;$('#legalTitle').textContent=L.t;$('#legalBody').innerHTML=L.h;$('#modalLegal').classList.add('on');$('#overlay').classList.add('on');document.body.style.overflow='hidden';}
+function closeModal(){$$('.modal.on').forEach(m=>m.classList.remove('on'));$('#overlay').classList.remove('on');document.body.style.overflow='';}
+function bindLegal(){$$('[data-legal]').forEach(b=>b.onclick=e=>{e.preventDefault();openLegal(b.dataset.legal);});}
+
+let io;function initReveal(){if(!io)io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.1,rootMargin:'0px 0px -40px 0px'});$$('.reveal:not(.in)').forEach(el=>{if(el.closest('.view:not(.active)'))return;io.observe(el);});}
+function closeMenu(){$('#navLinks').classList.remove('open');$('#burger').classList.remove('open');$('#burger').setAttribute('aria-expanded','false');}
+let toastT;function toast(m){$('#toastMsg').textContent=m;$('#toast').classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>$('#toast').classList.remove('on'),2400);}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  renderHome();renderPrestaNav();renderForfaits();renderTeam();renderGallery();renderSummary();updateSel();
+  initReveal();setTimeout(()=>$('#cookie').classList.add('on'),1200);
+
+  document.body.addEventListener('click',e=>{
+    const nav=e.target.closest('[data-nav]');if(nav){e.preventDefault();showView(nav.dataset.nav);return;}
+    const go=e.target.closest('[data-univ-go]');if(go){showView('prestations');prestaFilter=go.dataset.univGo;renderPrestaNav();renderPrestaBlocks();return;}
+    const add=e.target.closest('[data-add]');if(add){addPresta(add.dataset.add,+add.dataset.idx);return;}
+    const ff=e.target.closest('[data-forfait]');if(ff){addForfait(ff.dataset.forfait);return;}
+  });
+  document.body.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.matches('[data-univ-go]')){e.preventDefault();showView('prestations');prestaFilter=e.target.dataset.univGo;renderPrestaNav();renderPrestaBlocks();}});
+  $('#prestaNav').addEventListener('click',e=>{const b=e.target.closest('[data-pfilter]');if(!b)return;prestaFilter=b.dataset.pfilter;renderPrestaNav();renderPrestaBlocks();});
+  $('#burger').onclick=()=>{const o=$('#navLinks').classList.toggle('open');$('#burger').classList.toggle('open',o);$('#burger').setAttribute('aria-expanded',o);};
+  $('#overlay').onclick=closeModal;$$('[data-close]').forEach(b=>b.onclick=closeModal);
+  $('#cookieAccept').onclick=()=>{$('#cookie').classList.remove('on');toast('Cookies acceptés');};
+  $('#cookieRefuse').onclick=()=>{$('#cookie').classList.remove('on');toast('Cookies refusés');};
+  $('#cookieReopen').onclick=()=>$('#cookie').classList.add('on');
+  $('#contactForm').addEventListener('submit',e=>{e.preventDefault();let ok=true;$$('#contactForm [required]').forEach(f=>{const bad=f.type==='checkbox'?!f.checked:!f.value.trim();f.style.borderColor=bad?'#C4664A':'';if(bad)ok=false;});if(!ok){toast('Complétez les champs requis');return;}$('#contactForm').reset();toast('Message envoyé — merci !');});
+  bindLegal();
+  addEventListener('scroll',()=>requestAnimationFrame(initReveal),{passive:true});
+  addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal();closeMenu();}});
+});
+</script>
+</body>
+</html>

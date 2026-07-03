@@ -1,0 +1,1416 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ÉCRIN — Maison de joaillerie · Alger</title>
+<meta name="description" content="ÉCRIN, maison de joaillerie à Alger. Bagues, colliers, bracelets, boucles et alliances en or et pierres. Sur-mesure et essayage en boutique.">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap');
+
+/* ============ TOKENS ============ */
+:root{
+  --ivoire:#F5EFE6;
+  --ivoire-2:#F9F5EE;
+  --champagne:#EFE6D8;
+  --champagne-2:#E9DDC9;
+  --blush:#E7D2CB;
+  --espresso:#2A211C;
+  --espresso-2:#4B3F36;
+  --muted:#8A7C6C;
+  --or:#A88A4E;
+  --or-clair:#CBB07C;
+  --or-fonce:#8A6E39;
+  --ligne:rgba(42,33,28,.14);
+  --ligne-2:rgba(42,33,28,.08);
+  --ok:#5C7A56;
+  --shadow-soft:0 20px 50px -28px rgba(42,33,28,.45);
+  --shadow-card:0 14px 40px -26px rgba(42,33,28,.5);
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'Jost','Helvetica Neue',Arial,sans-serif;
+  --maxw:1200px;
+}
+
+/* ============ RESET ============ */
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  font-family:var(--sans);
+  background:var(--ivoire);
+  color:var(--espresso);
+  line-height:1.6;
+  font-weight:400;
+  font-size:16px;
+  overflow-x:hidden;
+}
+img,svg{display:block;max-width:100%}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+a{color:inherit;text-decoration:none}
+input,select,textarea{font-family:inherit;font-size:1rem;color:inherit}
+ul{list-style:none}
+
+/* Focus visible pour accessibilité clavier */
+:focus-visible{outline:2px solid var(--or);outline-offset:3px;border-radius:2px}
+.skip{position:absolute;left:-999px;top:0;background:var(--espresso);color:var(--ivoire);padding:.7rem 1.2rem;z-index:200;font:500 .85rem/1 var(--sans)}
+.skip:focus{left:1rem;top:1rem}
+
+/* ============ TYPO HELPERS ============ */
+.eyebrow{
+  font-family:var(--sans);
+  font-weight:500;
+  font-size:.72rem;
+  letter-spacing:.28em;
+  text-transform:uppercase;
+  color:var(--or-fonce);
+}
+.serif{font-family:var(--serif)}
+h1,h2,h3{font-family:var(--serif);font-weight:400;line-height:1.06;letter-spacing:.005em}
+.price{font-family:var(--serif);font-weight:500;letter-spacing:.01em}
+
+/* ============ LAYOUT ============ */
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 clamp(1.1rem,4vw,2.6rem)}
+.section{padding:clamp(4rem,9vw,7.5rem) 0}
+.center{text-align:center}
+.divider{width:46px;height:1px;background:var(--or);margin:1.4rem auto;opacity:.8}
+.divider.left{margin-left:0}
+
+/* ============ BOUTONS ============ */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:.6rem;
+  font-weight:500;font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;
+  padding:1rem 2rem;border-radius:2px;
+  transition:transform .35s cubic-bezier(.2,.7,.3,1),background .35s,color .35s,box-shadow .35s;
+  will-change:transform;
+}
+.btn-solid{background:var(--espresso);color:var(--ivoire)}
+.btn-solid:hover{background:var(--or-fonce);transform:translateY(-2px);box-shadow:var(--shadow-soft)}
+.btn-outline{border:1px solid var(--espresso);color:var(--espresso)}
+.btn-outline:hover{background:var(--espresso);color:var(--ivoire);transform:translateY(-2px)}
+.btn-gold{border:1px solid var(--or);color:var(--or-fonce)}
+.btn-gold:hover{background:var(--or);color:#fff;border-color:var(--or)}
+.btn-block{width:100%}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
+.link-gold{color:var(--or-fonce);border-bottom:1px solid var(--or-clair);padding-bottom:2px;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;font-weight:500;transition:border-color .3s,color .3s}
+.link-gold:hover{color:var(--or);border-color:var(--or)}
+
+/* ============ HEADER ============ */
+.header{
+  position:sticky;top:0;z-index:90;
+  background:rgba(245,239,230,.82);
+  backdrop-filter:saturate(140%) blur(14px);
+  border-bottom:1px solid var(--ligne-2);
+  transition:box-shadow .4s;
+}
+.header.scrolled{box-shadow:0 10px 30px -24px rgba(42,33,28,.6)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:74px;gap:1rem}
+.brand{display:flex;align-items:baseline;gap:.5rem;font-family:var(--serif);font-size:1.75rem;letter-spacing:.42em;padding-left:.42em;font-weight:500}
+.brand .dot{color:var(--or);font-size:.6em;transform:translateY(-.35em);letter-spacing:0}
+.nav-links{display:flex;gap:2.1rem;align-items:center}
+.nav-links a{
+  font-size:.76rem;letter-spacing:.16em;text-transform:uppercase;font-weight:500;color:var(--espresso-2);
+  position:relative;padding:.4rem 0;transition:color .3s;
+}
+.nav-links a::after{content:"";position:absolute;left:0;bottom:0;height:1px;width:0;background:var(--or);transition:width .35s ease}
+.nav-links a:hover,.nav-links a[aria-current="page"]{color:var(--espresso)}
+.nav-links a:hover::after,.nav-links a[aria-current="page"]::after{width:100%}
+.nav-right{display:flex;align-items:center;gap:1.3rem}
+.cart-btn{position:relative;display:flex;align-items:center;gap:.5rem;font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;font-weight:500}
+.cart-count{
+  position:absolute;top:-9px;right:-12px;min-width:18px;height:18px;padding:0 4px;border-radius:9px;
+  background:var(--or);color:#fff;font-size:.62rem;font-weight:600;letter-spacing:0;
+  display:flex;align-items:center;justify-content:center;
+  transform:scale(0);transition:transform .3s cubic-bezier(.2,1.5,.4,1)}
+.cart-count.show{transform:scale(1)}
+.burger{display:none;flex-direction:column;gap:5px;padding:6px}
+.burger span{width:22px;height:1.5px;background:var(--espresso);transition:.3s}
+
+/* ============ HERO ============ */
+.hero{position:relative;overflow:hidden;background:
+  radial-gradient(120% 120% at 82% 8%, var(--blush) 0%, transparent 42%),
+  radial-gradient(120% 110% at 12% 90%, var(--champagne) 0%, transparent 46%),
+  var(--ivoire);}
+.hero-inner{display:grid;grid-template-columns:1.05fr .95fr;gap:3rem;align-items:center;min-height:min(86vh,760px);padding:3rem 0}
+.hero-copy{max-width:520px}
+.hero h1{font-size:clamp(3rem,7vw,5.4rem);font-weight:300;line-height:.98;margin:1.2rem 0 1.4rem}
+.hero h1 em{font-style:italic;color:var(--or-fonce)}
+.hero p{color:var(--espresso-2);font-size:1.06rem;max-width:44ch;margin-bottom:2.2rem}
+.hero-cta{display:flex;gap:1rem;flex-wrap:wrap}
+.hero-stage{position:relative;display:flex;align-items:center;justify-content:center;min-height:420px}
+.hero-jewel{
+  width:min(440px,90%);aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(circle at 40% 34%, var(--ivoire-2) 0%, var(--champagne) 58%, var(--champagne-2) 100%);
+  box-shadow:var(--shadow-soft), inset 0 2px 30px rgba(255,255,255,.6);
+  display:flex;align-items:center;justify-content:center;position:relative;
+}
+.hero-jewel::before{content:"";position:absolute;inset:-2px;border-radius:50%;border:1px solid var(--or-clair);opacity:.5}
+.hero-caption{position:absolute;bottom:6%;right:0;background:rgba(249,245,238,.9);backdrop-filter:blur(4px);
+  border:1px solid var(--ligne);padding:.9rem 1.2rem;max-width:210px;box-shadow:var(--shadow-card)}
+.hero-caption .eyebrow{font-size:.62rem}
+.hero-caption p{font-family:var(--serif);font-size:1.15rem;margin:.2rem 0 0;color:var(--espresso)}
+
+/* Reflet d'or animé */
+.gleam{position:relative;overflow:hidden;isolation:isolate}
+.gleam::after{
+  content:"";position:absolute;inset:0;z-index:2;pointer-events:none;
+  background:linear-gradient(115deg,transparent 38%,rgba(255,255,255,.55) 48%,rgba(203,176,124,.35) 52%,transparent 62%);
+  transform:translateX(-130%);transition:transform .9s ease;
+}
+.gleam:hover::after,.card:hover .gleam::after{transform:translateX(130%)}
+
+/* ============ BANDE VALEURS ============ */
+.values{background:var(--espresso);color:var(--ivoire)}
+.values .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;padding-top:3.4rem;padding-bottom:3.4rem}
+.value{display:flex;flex-direction:column;gap:.55rem}
+.value .vico{color:var(--or-clair)}
+.value h3{font-size:1.35rem;color:var(--ivoire);font-weight:400}
+.value p{font-size:.9rem;color:rgba(245,239,230,.72);line-height:1.5}
+
+/* ============ SECTION HEAD ============ */
+.shead{max-width:640px}
+.shead.center{margin:0 auto}
+.shead h2{font-size:clamp(2.1rem,4.6vw,3.3rem);font-weight:300;margin-top:.7rem}
+.shead p{color:var(--espresso-2);margin-top:1rem;font-size:1.02rem}
+
+/* ============ GRILLE PRODUITS ============ */
+.filters{display:flex;flex-wrap:wrap;gap:.6rem;justify-content:center;margin:2.6rem 0 3rem}
+.filter{
+  font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;font-weight:500;color:var(--espresso-2);
+  padding:.6rem 1.2rem;border:1px solid var(--ligne);border-radius:40px;background:transparent;transition:.3s}
+.filter:hover{border-color:var(--or-clair);color:var(--espresso)}
+.filter[aria-pressed="true"]{background:var(--espresso);color:var(--ivoire);border-color:var(--espresso)}
+
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(1.4rem,3vw,2.6rem)}
+.card{background:var(--ivoire-2);border:1px solid var(--ligne-2);border-radius:4px;overflow:hidden;
+  display:flex;flex-direction:column;transition:transform .5s cubic-bezier(.2,.7,.3,1),box-shadow .5s;text-align:left}
+.card:hover{transform:translateY(-6px);box-shadow:var(--shadow-card)}
+.card-media{position:relative;aspect-ratio:1/1;background:
+  radial-gradient(circle at 42% 36%, var(--ivoire-2) 0%, var(--champagne) 66%, var(--champagne-2) 100%);
+  display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--ligne-2)}
+.card-media svg{width:66%;height:66%}
+.jphoto{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;border:0;transition:transform .6s ease}
+.card:hover .jphoto{transform:scale(1.05)}
+.card-tag{z-index:3}
+.pd-zoomhint{z-index:3}
+.pd-main.zoom .jphoto{transform:scale(1.6)}
+.card-tag{position:absolute;top:.9rem;left:.9rem;font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;font-weight:600;
+  color:var(--or-fonce);background:rgba(249,245,238,.9);border:1px solid var(--ligne);padding:.3rem .6rem;border-radius:30px}
+.card-body{padding:1.3rem 1.4rem 1.5rem;display:flex;flex-direction:column;gap:.35rem;flex:1}
+.card-body .cat{font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:500}
+.card-body h3{font-size:1.5rem;font-weight:400}
+.card-meta{font-size:.85rem;color:var(--espresso-2);flex:1}
+.card-foot{display:flex;align-items:center;justify-content:space-between;margin-top:1rem;padding-top:1rem;border-top:1px solid var(--ligne-2)}
+.card-foot .price{font-size:1.28rem}
+.card-foot .voir{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--or-fonce);font-weight:500;display:flex;align-items:center;gap:.4rem;transition:gap .3s}
+.card:hover .card-foot .voir{gap:.7rem}
+.metal-dots{display:flex;gap:5px;margin-top:.2rem}
+.mdot{width:12px;height:12px;border-radius:50%;border:1px solid rgba(0,0,0,.12)}
+
+/* ============ FEATURED ============ */
+.feature{background:var(--champagne);overflow:hidden}
+.feature .wrap{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,5vw,4.5rem);align-items:center}
+.feature-media{aspect-ratio:4/5;border-radius:4px;background:
+  radial-gradient(circle at 40% 34%, var(--ivoire-2) 0%, var(--champagne-2) 70%, var(--blush) 130%);
+  display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-card)}
+.feature-media svg{width:64%}
+.feature h2{font-size:clamp(2.1rem,4.4vw,3.2rem);font-weight:300;margin:.8rem 0 1.1rem}
+.feature p{color:var(--espresso-2);margin-bottom:1.4rem;max-width:46ch}
+.feature ul.specs{margin:1.4rem 0 2rem;border-top:1px solid var(--ligne)}
+.feature ul.specs li{display:flex;justify-content:space-between;gap:1rem;padding:.75rem 0;border-bottom:1px solid var(--ligne-2);font-size:.92rem}
+.feature ul.specs li span:first-child{color:var(--muted);letter-spacing:.04em}
+.feature ul.specs li span:last-child{font-family:var(--serif);font-size:1.08rem}
+
+/* ============ PRODUIT (FICHE) ============ */
+.pd{padding-top:clamp(2rem,5vw,3.5rem)}
+.crumbs{display:flex;gap:.5rem;align-items:center;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:2rem;flex-wrap:wrap}
+.crumbs button{color:var(--muted);font-size:inherit;letter-spacing:inherit;text-transform:inherit}
+.crumbs button:hover{color:var(--or-fonce)}
+.pd-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(2rem,5vw,4rem);align-items:start}
+.pd-gallery{position:sticky;top:100px}
+.pd-main{aspect-ratio:1;border-radius:4px;background:
+  radial-gradient(circle at 42% 36%, var(--ivoire-2) 0%, var(--champagne) 70%, var(--champagne-2) 120%);
+  display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-card);overflow:hidden;position:relative}
+.pd-main svg{width:70%;transition:transform .5s ease}
+.pd-main.zoom svg{transform:scale(1.7)}
+.pd-zoomhint{position:absolute;bottom:1rem;left:1rem;font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
+  background:rgba(249,245,238,.85);border:1px solid var(--ligne);padding:.35rem .7rem;border-radius:30px;display:flex;gap:.4rem;align-items:center}
+.pd-thumbs{display:flex;gap:.7rem;margin-top:.9rem}
+.pd-thumb{flex:1;aspect-ratio:1;border-radius:3px;border:1px solid var(--ligne);background:var(--champagne);
+  display:flex;align-items:center;justify-content:center;transition:border-color .3s;overflow:hidden}
+.pd-thumb svg{width:70%}
+.pd-thumb[aria-pressed="true"]{border-color:var(--or)}
+
+.pd-info .cat{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--or-fonce);font-weight:500}
+.pd-info h1{font-size:clamp(2.3rem,4.5vw,3.3rem);font-weight:300;margin:.5rem 0 .7rem}
+.pd-info .pd-desc{color:var(--espresso-2);font-size:1.02rem;max-width:52ch}
+.pd-price-row{display:flex;align-items:baseline;gap:1rem;margin:1.6rem 0;padding-bottom:1.4rem;border-bottom:1px solid var(--ligne)}
+.pd-price{font-size:2.4rem;color:var(--espresso)}
+.pd-price small{font-size:.9rem;font-family:var(--sans);color:var(--muted);letter-spacing:.02em}
+.opt{margin:1.4rem 0}
+.opt-label{display:flex;justify-content:space-between;align-items:center;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--espresso-2);font-weight:500;margin-bottom:.8rem}
+.opt-label .val{font-family:var(--serif);font-size:1.05rem;letter-spacing:0;text-transform:none;color:var(--espresso)}
+.metal-choices{display:flex;gap:.8rem;flex-wrap:wrap}
+.metal-choice{display:flex;flex-direction:column;align-items:center;gap:.5rem;padding:.7rem;border:1px solid var(--ligne);border-radius:4px;min-width:74px;transition:.3s;background:var(--ivoire-2)}
+.metal-choice:hover{border-color:var(--or-clair)}
+.metal-choice[aria-pressed="true"]{border-color:var(--or);box-shadow:0 0 0 1px var(--or)}
+.metal-swatch{width:30px;height:30px;border-radius:50%;box-shadow:inset 0 2px 4px rgba(255,255,255,.5),inset 0 -3px 6px rgba(0,0,0,.15)}
+.metal-choice span{font-size:.68rem;letter-spacing:.06em;color:var(--espresso-2)}
+.size-choices{display:flex;gap:.55rem;flex-wrap:wrap}
+.size-choice{min-width:48px;padding:.6rem .7rem;border:1px solid var(--ligne);border-radius:4px;font-size:.85rem;font-weight:500;
+  color:var(--espresso-2);background:var(--ivoire-2);transition:.3s;letter-spacing:.02em}
+.size-choice:hover{border-color:var(--or-clair)}
+.size-choice[aria-pressed="true"]{background:var(--espresso);color:var(--ivoire);border-color:var(--espresso)}
+.gravure-box{border:1px solid var(--ligne);border-radius:4px;padding:1.1rem 1.2rem;background:var(--ivoire-2)}
+.gravure-head{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.gravure-head label{display:flex;align-items:center;gap:.7rem;font-size:.9rem;font-weight:500;cursor:pointer}
+.gravure-head .plus{font-size:.8rem;color:var(--or-fonce);font-family:var(--serif);font-size:1.05rem}
+.gravure-input{margin-top:.9rem;display:none}
+.gravure-input.on{display:block}
+.gravure-input input{width:100%;padding:.75rem .9rem;border:1px solid var(--ligne);border-radius:3px;background:#fff;letter-spacing:.06em}
+.gravure-input .hint{font-size:.72rem;color:var(--muted);margin-top:.4rem;text-align:right}
+.pd-actions{display:flex;flex-direction:column;gap:.9rem;margin-top:2rem}
+.pd-row2{display:flex;gap:.9rem}
+.pd-row2 .btn{flex:1}
+.pd-trust{margin-top:1.8rem;display:grid;grid-template-columns:1fr 1fr;gap:.9rem}
+.pd-trust li{display:flex;gap:.6rem;align-items:flex-start;font-size:.82rem;color:var(--espresso-2)}
+.pd-trust .tico{color:var(--or);flex-shrink:0;margin-top:2px}
+.checkbox{position:relative;width:18px;height:18px;border:1px solid var(--muted);border-radius:3px;flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;transition:.2s;background:#fff}
+input[type=checkbox]{position:absolute;opacity:0;width:100%;height:100%;cursor:pointer;margin:0}
+input[type=checkbox]:checked + .checkbox,label:has(input:checked) .checkbox{background:var(--or);border-color:var(--or)}
+.checkbox svg{opacity:0;transition:.2s}
+input[type=checkbox]:checked + .checkbox svg,label:has(input:checked) .checkbox svg{opacity:1}
+
+/* ============ SUR-MESURE ============ */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(1.5rem,3vw,3rem);margin-top:3rem}
+.step{position:relative}
+.step .num{font-family:var(--serif);font-size:3.4rem;color:var(--or-clair);line-height:1;font-weight:400}
+.step h3{font-size:1.55rem;font-weight:400;margin:.6rem 0 .7rem}
+.step p{color:var(--espresso-2);font-size:.96rem}
+.step:not(:last-child)::after{content:"";position:absolute;top:1.6rem;right:-1.2rem;width:2.4rem;height:1px;background:var(--or-clair)}
+
+/* ============ MAISON / SPLIT ============ */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,5vw,4.5rem);align-items:center}
+.split-media{aspect-ratio:5/6;border-radius:4px;background:
+  radial-gradient(circle at 35% 30%, var(--blush) 0%, var(--champagne) 55%, var(--champagne-2) 120%);
+  box-shadow:var(--shadow-card);display:flex;align-items:center;justify-content:center}
+.split-media .mono{font-family:var(--serif);font-size:clamp(4rem,12vw,8rem);color:var(--or-fonce);opacity:.35;letter-spacing:.1em;font-weight:300}
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:2rem;border-top:1px solid var(--ligne);padding-top:1.6rem}
+.stat .n{font-family:var(--serif);font-size:2.4rem;color:var(--or-fonce);font-weight:400}
+.stat .l{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+
+/* ============ AVIS ============ */
+.reviews{display:grid;grid-template-columns:repeat(3,1fr);gap:1.6rem;margin-top:3rem}
+.review{background:var(--ivoire-2);border:1px solid var(--ligne-2);border-radius:4px;padding:1.8rem}
+.stars{color:var(--or);letter-spacing:.15em;font-size:.9rem;margin-bottom:.9rem}
+.review p{font-family:var(--serif);font-size:1.2rem;font-style:italic;color:var(--espresso);line-height:1.4;margin-bottom:1.2rem}
+.review .who{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:500}
+
+/* ============ CONTACT ============ */
+.contact-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(2rem,5vw,4rem);align-items:start}
+.contact-info li{display:flex;gap:1rem;padding:1.2rem 0;border-bottom:1px solid var(--ligne-2);align-items:flex-start}
+.contact-info .cico{color:var(--or);flex-shrink:0;margin-top:3px}
+.contact-info .lab{font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:500}
+.contact-info .v{font-family:var(--serif);font-size:1.2rem;margin-top:.15rem}
+.contact-info .v small{font-family:var(--sans);font-size:.85rem;color:var(--espresso-2);display:block;letter-spacing:0}
+
+/* ============ FORMULAIRES ============ */
+.field{margin-bottom:1.1rem}
+.field label{display:block;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--espresso-2);font-weight:500;margin-bottom:.5rem}
+.field input,.field select,.field textarea{
+  width:100%;padding:.85rem 1rem;border:1px solid var(--ligne);border-radius:3px;background:#fff;transition:border-color .3s,box-shadow .3s}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--or);box-shadow:0 0 0 3px rgba(168,138,78,.12);outline:none}
+.field textarea{resize:vertical;min-height:110px}
+.field.two{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.card-form{background:var(--ivoire-2);border:1px solid var(--ligne-2);border-radius:6px;padding:clamp(1.6rem,3vw,2.4rem)}
+.consent{display:flex;gap:.8rem;align-items:flex-start;margin:1.2rem 0;font-size:.85rem;color:var(--espresso-2);line-height:1.5}
+.consent a{color:var(--or-fonce);text-decoration:underline;text-underline-offset:2px}
+.form-note{font-size:.78rem;color:var(--muted);margin-top:1rem;display:flex;gap:.5rem;align-items:flex-start}
+
+/* ============ PANIER (DRAWER) ============ */
+.overlay{position:fixed;inset:0;background:rgba(42,33,28,.42);backdrop-filter:blur(2px);opacity:0;visibility:hidden;transition:.35s;z-index:100}
+.overlay.on{opacity:1;visibility:visible}
+.drawer{position:fixed;top:0;right:0;height:100%;width:min(440px,92vw);background:var(--ivoire);z-index:110;
+  transform:translateX(100%);transition:transform .45s cubic-bezier(.3,.8,.3,1);display:flex;flex-direction:column;box-shadow:-30px 0 60px -30px rgba(42,33,28,.5)}
+.drawer.on{transform:translateX(0)}
+.drawer-head{display:flex;align-items:center;justify-content:space-between;padding:1.5rem 1.6rem;border-bottom:1px solid var(--ligne)}
+.drawer-head h2{font-size:1.6rem;font-weight:400}
+.drawer-close{width:38px;height:38px;border-radius:50%;border:1px solid var(--ligne);display:flex;align-items:center;justify-content:center;transition:.3s}
+.drawer-close:hover{background:var(--champagne);border-color:var(--or-clair)}
+.drawer-body{flex:1;overflow-y:auto;padding:1.4rem 1.6rem}
+.cart-item{display:grid;grid-template-columns:74px 1fr auto;gap:1rem;padding:1.1rem 0;border-bottom:1px solid var(--ligne-2);align-items:start}
+.cart-item-media{width:74px;height:74px;border-radius:3px;background:var(--champagne);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.cart-item-media svg{width:70%}
+.cart-item h4{font-family:var(--serif);font-size:1.15rem;font-weight:500}
+.cart-item .ci-meta{font-size:.76rem;color:var(--muted);margin-top:.2rem;line-height:1.4}
+.qty{display:inline-flex;align-items:center;border:1px solid var(--ligne);border-radius:30px;margin-top:.5rem}
+.qty button{width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:1rem;color:var(--espresso-2)}
+.qty span{min-width:24px;text-align:center;font-size:.85rem;font-weight:500}
+.ci-right{text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:.6rem}
+.ci-price{font-family:var(--serif);font-size:1.1rem;font-weight:500}
+.ci-remove{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid transparent}
+.ci-remove:hover{color:var(--or-fonce);border-color:var(--or-clair)}
+.cart-empty{text-align:center;padding:3rem 1rem;color:var(--muted)}
+.cart-empty svg{margin:0 auto 1.2rem;color:var(--or-clair)}
+.cart-empty h3{font-size:1.5rem;font-weight:400;color:var(--espresso);margin-bottom:.5rem}
+.drawer-foot{border-top:1px solid var(--ligne);padding:1.4rem 1.6rem;background:var(--ivoire-2)}
+.cart-line{display:flex;justify-content:space-between;font-size:.9rem;margin-bottom:.6rem;color:var(--espresso-2)}
+.cart-line.total{font-family:var(--serif);font-size:1.4rem;color:var(--espresso);margin:.8rem 0 1.2rem;padding-top:.8rem;border-top:1px solid var(--ligne)}
+.cart-line.total span:last-child{font-weight:500}
+.free-ship{font-size:.76rem;color:var(--ok);display:flex;gap:.4rem;align-items:center;margin-bottom:1rem}
+
+/* ============ MODALS ============ */
+.modal{position:fixed;inset:0;z-index:120;display:flex;align-items:center;justify-content:center;padding:1.2rem;
+  opacity:0;visibility:hidden;transition:.3s}
+.modal.on{opacity:1;visibility:visible}
+.modal-bg{position:absolute;inset:0;background:rgba(42,33,28,.45);backdrop-filter:blur(3px)}
+.modal-card{position:relative;background:var(--ivoire);border-radius:6px;max-width:560px;width:100%;max-height:90vh;overflow-y:auto;
+  box-shadow:var(--shadow-soft);transform:translateY(16px) scale(.98);transition:.35s cubic-bezier(.2,.8,.3,1)}
+.modal.on .modal-card{transform:none}
+.modal-head{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;padding:1.6rem 1.8rem 1rem}
+.modal-head h2{font-size:1.7rem;font-weight:400}
+.modal-head .eyebrow{margin-bottom:.4rem}
+.modal-body{padding:0 1.8rem 1.8rem}
+.legal-body{font-size:.9rem;color:var(--espresso-2);line-height:1.7}
+.legal-body h3{font-family:var(--serif);font-size:1.3rem;color:var(--espresso);margin:1.4rem 0 .5rem;font-weight:500}
+.legal-body p{margin-bottom:.7rem}
+
+/* RDV créneaux */
+.rdv-dates{display:flex;gap:.6rem;overflow-x:auto;padding-bottom:.5rem;margin-bottom:1.2rem}
+.rdv-date{flex-shrink:0;min-width:66px;padding:.7rem .5rem;border:1px solid var(--ligne);border-radius:5px;text-align:center;background:var(--ivoire-2);transition:.3s}
+.rdv-date:hover{border-color:var(--or-clair)}
+.rdv-date[aria-pressed="true"]{background:var(--espresso);color:var(--ivoire);border-color:var(--espresso)}
+.rdv-date .d{font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;opacity:.7}
+.rdv-date .n{font-family:var(--serif);font-size:1.5rem;line-height:1.1}
+.rdv-date .m{font-size:.62rem;letter-spacing:.06em;text-transform:uppercase}
+.slots{display:grid;grid-template-columns:repeat(4,1fr);gap:.55rem}
+.slot{padding:.6rem;border:1px solid var(--ligne);border-radius:4px;font-size:.82rem;font-weight:500;background:var(--ivoire-2);transition:.3s}
+.slot:hover{border-color:var(--or-clair)}
+.slot[aria-pressed="true"]{background:var(--or);color:#fff;border-color:var(--or)}
+.slot:disabled{opacity:.4;text-decoration:line-through;cursor:not-allowed}
+
+/* Confirmations */
+.confirm{text-align:center;padding:1rem 0 .5rem}
+.confirm .ok-badge{width:64px;height:64px;border-radius:50%;background:var(--champagne);border:1px solid var(--or-clair);
+  display:flex;align-items:center;justify-content:center;margin:0 auto 1.2rem;color:var(--or-fonce)}
+.confirm h2{font-size:2rem;font-weight:300;margin-bottom:.6rem}
+.confirm p{color:var(--espresso-2);max-width:40ch;margin:0 auto .5rem}
+.confirm .ref{display:inline-block;margin:1rem 0;font-family:var(--serif);font-size:1.3rem;letter-spacing:.15em;
+  border:1px dashed var(--or-clair);padding:.5rem 1.4rem;border-radius:4px;color:var(--or-fonce)}
+
+/* ============ FOOTER ============ */
+.footer{background:var(--espresso);color:rgba(245,239,230,.8)}
+.footer-top{display:grid;grid-template-columns:1.6fr 1fr 1fr 1.2fr;gap:2.5rem;padding:clamp(3rem,6vw,5rem) 0 3rem}
+.footer .brand{color:var(--ivoire);margin-bottom:1.1rem}
+.footer-col h4{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--or-clair);margin-bottom:1.2rem;font-weight:500;font-family:var(--sans)}
+.footer-col a,.footer-col li{display:block;font-size:.9rem;color:rgba(245,239,230,.7);padding:.32rem 0;transition:color .3s}
+.footer-col a:hover{color:var(--ivoire)}
+.footer-about{font-size:.92rem;color:rgba(245,239,230,.65);max-width:34ch;line-height:1.6}
+.newsletter{display:flex;margin-top:1.2rem;border:1px solid rgba(245,239,230,.25);border-radius:3px;overflow:hidden}
+.newsletter input{flex:1;background:transparent;border:none;padding:.7rem .9rem;color:var(--ivoire);font-size:.85rem}
+.newsletter input::placeholder{color:rgba(245,239,230,.5)}
+.newsletter button{padding:0 1.1rem;background:var(--or);color:#fff;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;font-weight:500}
+.footer-bottom{border-top:1px solid rgba(245,239,230,.14);padding:1.6rem 0;display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between;align-items:center;font-size:.8rem}
+.footer-bottom .legal-links{display:flex;gap:1.4rem;flex-wrap:wrap}
+.footer-bottom .legal-links button{font-size:.8rem;color:rgba(245,239,230,.7)}
+.footer-bottom .legal-links button:hover{color:var(--ivoire)}
+.signature{color:rgba(245,239,230,.55)}
+.signature a{color:var(--or-clair);border-bottom:1px solid transparent}
+.signature a:hover{border-color:var(--or-clair)}
+
+/* ============ COOKIE ============ */
+.cookie{position:fixed;left:1rem;right:1rem;bottom:1rem;z-index:130;max-width:560px;margin:0 auto;
+  background:var(--espresso);color:var(--ivoire);border-radius:8px;padding:1.4rem 1.5rem;box-shadow:var(--shadow-soft);
+  transform:translateY(140%);transition:transform .5s cubic-bezier(.2,.8,.3,1)}
+.cookie.on{transform:translateY(0)}
+.cookie p{font-size:.86rem;color:rgba(245,239,230,.82);margin-bottom:1rem;line-height:1.5}
+.cookie p a{color:var(--or-clair);text-decoration:underline;text-underline-offset:2px}
+.cookie-actions{display:flex;gap:.7rem;flex-wrap:wrap}
+.cookie-actions .btn{padding:.7rem 1.4rem;font-size:.72rem}
+.cookie .btn-solid{background:var(--or);color:#fff}
+.cookie .btn-solid:hover{background:var(--or-clair)}
+.cookie .btn-ghost{border:1px solid rgba(245,239,230,.3);color:var(--ivoire)}
+.cookie .btn-ghost:hover{background:rgba(245,239,230,.08)}
+
+/* ============ VUES ============ */
+.view{display:none}
+.view.active{display:block;animation:viewIn .5s ease}
+@keyframes viewIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* ============ SCROLL REVEAL ============ */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.3,1)}
+.reveal.in{opacity:1;transform:none}
+.reveal.d1{transition-delay:.08s}.reveal.d2{transition-delay:.16s}.reveal.d3{transition-delay:.24s}
+
+/* ============ TOAST ============ */
+.toast{position:fixed;bottom:1.5rem;left:50%;transform:translate(-50%,140%);z-index:140;
+  background:var(--espresso);color:var(--ivoire);padding:.9rem 1.4rem;border-radius:40px;font-size:.85rem;
+  display:flex;gap:.6rem;align-items:center;box-shadow:var(--shadow-soft);transition:transform .4s cubic-bezier(.2,.8,.3,1)}
+.toast.on{transform:translate(-50%,0)}
+.toast .tk{color:var(--or-clair)}
+
+/* ============ RESPONSIVE ============ */
+@media(max-width:960px){
+  .hero-inner{grid-template-columns:1fr;text-align:center;gap:2rem;padding-top:2rem}
+  .hero-copy{margin:0 auto}.hero p{margin-left:auto;margin-right:auto}.hero-cta{justify-content:center}
+  .feature .wrap,.split,.contact-grid,.pd-grid{grid-template-columns:1fr}
+  .pd-gallery{position:static}
+  .values .wrap{grid-template-columns:1fr 1fr;gap:2rem 1.5rem}
+  .footer-top{grid-template-columns:1fr 1fr}
+  .steps{grid-template-columns:1fr;gap:2rem}.step:not(:last-child)::after{display:none}
+  .reviews{grid-template-columns:1fr}
+}
+@media(max-width:720px){
+  .nav-links{position:fixed;inset:74px 0 auto 0;flex-direction:column;background:var(--ivoire);
+    padding:1.5rem clamp(1.1rem,4vw,2.6rem) 2rem;gap:0;border-bottom:1px solid var(--ligne);
+    transform:translateY(-120%);transition:transform .4s ease;box-shadow:var(--shadow-card);align-items:stretch}
+  .nav-links.open{transform:translateY(0)}
+  .nav-links a{padding:1rem 0;border-bottom:1px solid var(--ligne-2);font-size:.9rem}
+  .nav-links a::after{display:none}
+  .burger{display:flex}
+  .burger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+  .burger.open span:nth-child(2){opacity:0}
+  .burger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+  .grid{grid-template-columns:1fr 1fr;gap:1rem}
+  .card-body h3{font-size:1.3rem}
+  .brand{font-size:1.4rem;letter-spacing:.32em}
+  .stat-row{grid-template-columns:1fr}
+  .pd-trust{grid-template-columns:1fr}
+  .slots{grid-template-columns:repeat(3,1fr)}
+  .field.two{grid-template-columns:1fr}
+}
+@media(max-width:420px){
+  .grid{grid-template-columns:1fr}
+  .values .wrap{grid-template-columns:1fr}
+  .footer-top{grid-template-columns:1fr}
+}
+
+/* ============ REDUCED MOTION ============ */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;
+    transition-duration:.001ms!important;scroll-behavior:auto!important}
+  .reveal{opacity:1;transform:none}
+  .gleam::after{display:none}
+}
+</style>
+</head>
+<body>
+<a href="#main" class="skip">Aller au contenu</a>
+
+<!-- ============ HEADER ============ -->
+<header class="header" id="header">
+  <div class="wrap">
+    <nav class="nav" aria-label="Navigation principale">
+      <a href="#" class="brand" data-nav="accueil" aria-label="ÉCRIN, accueil">ÉCRIN<span class="dot">◆</span></a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#" data-nav="accueil" aria-current="page">Accueil</a></li>
+        <li><a href="#" data-nav="collections">Collections</a></li>
+        <li><a href="#" data-nav="surmesure">Sur-mesure</a></li>
+        <li><a href="#" data-nav="maison">La Maison</a></li>
+        <li><a href="#" data-nav="contact">Contact</a></li>
+      </ul>
+      <div class="nav-right">
+        <button class="cart-btn" id="cartOpen" aria-label="Ouvrir le panier">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M6 8h12l-1 12H7L6 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+          <span class="cart-count" id="cartCount" aria-live="polite">0</span>
+        </button>
+        <button class="burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false"><span></span><span></span><span></span></button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ================= ACCUEIL ================= -->
+<section class="view active" id="view-accueil" aria-label="Accueil">
+  <div class="hero">
+    <div class="wrap">
+      <div class="hero-inner">
+        <div class="hero-copy reveal">
+          <span class="eyebrow">Maison de joaillerie · Alger</span>
+          <h1>L'or qui vous <em>ressemble</em></h1>
+          <p>Des pièces dessinées et façonnées à la main, en or 18 carats et pierres choisies. Chaque bijou est poinçonné, certifié et livré dans son écrin.</p>
+          <div class="hero-cta">
+            <button class="btn btn-solid" data-nav="collections">Découvrir les collections</button>
+            <button class="btn btn-outline" data-nav="surmesure">Créer sur-mesure</button>
+          </div>
+        </div>
+        <div class="hero-stage reveal d1">
+          <div class="hero-jewel gleam" id="heroJewel" aria-hidden="true"></div>
+          <div class="hero-caption">
+            <span class="eyebrow">Pièce signature</span>
+            <p>Solitaire Lumière</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Valeurs -->
+  <div class="values">
+    <div class="wrap">
+      <div class="value reveal">
+        <span class="vico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M12 2l3 6 6 .9-4.5 4.3L18 20l-6-3.2L6 20l1.5-6.8L3 8.9 9 8z"/></svg></span>
+        <h3>Or 18 carats</h3>
+        <p>Métal poinçonné et pierres sélectionnées, chaque pièce est accompagnée de son certificat d'authenticité.</p>
+      </div>
+      <div class="value reveal d1">
+        <span class="vico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9.5 12l1.7 1.7L15 10"/></svg></span>
+        <h3>Livraison assurée</h3>
+        <p>Expédition assurée et suivie dans les 58 wilayas, offerte pour chaque commande.</p>
+      </div>
+      <div class="value reveal d2">
+        <span class="vico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M12 21s-7-4.3-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.7-7 10-7 10z"/></svg></span>
+        <h3>Garantie à vie</h3>
+        <p>Nettoyage, retaille et entretien offerts en atelier. Reprise possible sous 30 jours.</p>
+      </div>
+      <div class="value reveal d3">
+        <span class="vico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M4 7l8-4 8 4v10l-8 4-8-4z"/><path d="M4 7l8 4 8-4M12 11v10"/></svg></span>
+        <h3>Sur-mesure</h3>
+        <p>Un dessin, une pierre, une gravure : nos joailliers créent la pièce dont vous rêvez.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Aperçu collections -->
+  <div class="section">
+    <div class="wrap">
+      <div class="shead center reveal">
+        <span class="eyebrow">Nouveautés</span>
+        <h2>Les pièces du moment</h2>
+        <p>Une sélection de bagues, colliers et bracelets prêts à être portés — ou à personnaliser selon votre envie.</p>
+      </div>
+      <div class="grid" id="homeGrid" style="margin-top:3rem"></div>
+      <div class="center" style="margin-top:3rem">
+        <button class="btn btn-outline" data-nav="collections">Voir toutes les collections</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Featured piece -->
+  <div class="feature section">
+    <div class="wrap">
+      <div class="feature-media gleam reveal" id="featureMedia" aria-hidden="true"></div>
+      <div class="reveal d1">
+        <span class="eyebrow">Pièce d'exception</span>
+        <h2>Collier Goutte de Ciel</h2>
+        <p>Un saphir bleu ceint d'un halo de diamants, suspendu à une chaîne d'or blanc filée main. Une pièce lumineuse, pensée pour capter le regard sans jamais l'imposer.</p>
+        <ul class="specs">
+          <li><span>Pierre principale</span><span>Saphir bleu 0,80 ct</span></li>
+          <li><span>Métal</span><span>Or blanc 18 ct</span></li>
+          <li><span>Diamants</span><span>Halo pavé, 0,24 ct</span></li>
+          <li><span>Certificat</span><span>Authenticité & poinçon</span></li>
+        </ul>
+        <button class="btn btn-solid" data-product="col-01">Découvrir la pièce</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Avis -->
+  <div class="section" style="background:var(--ivoire-2)">
+    <div class="wrap">
+      <div class="shead center reveal">
+        <span class="eyebrow">Elles nous ont fait confiance</span>
+        <h2>La parole à nos clientes</h2>
+      </div>
+      <div class="reviews" id="reviewsGrid"></div>
+    </div>
+  </div>
+
+  <!-- Sur-mesure teaser -->
+  <div class="section">
+    <div class="wrap split">
+      <div class="reveal">
+        <span class="eyebrow">Atelier</span>
+        <h2 style="font-size:clamp(2.1rem,4.4vw,3.2rem);font-weight:300;margin:.7rem 0 1.1rem">Une idée, un bijou unique</h2>
+        <p style="color:var(--espresso-2);margin-bottom:1.8rem;max-width:46ch">Vous avez une pierre de famille à remonter, une bague de fiançailles à imaginer, une gravure à transmettre ? Nos joailliers vous accompagnent du croquis à l'écrin.</p>
+        <button class="btn btn-gold" data-nav="surmesure">Commencer un projet sur-mesure</button>
+      </div>
+      <div class="split-media gleam reveal d1" aria-hidden="true"><span class="mono">É</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= COLLECTIONS ================= -->
+<section class="view" id="view-collections" aria-label="Collections">
+  <div class="section" style="padding-bottom:0">
+    <div class="wrap">
+      <div class="shead center">
+        <span class="eyebrow">La boutique</span>
+        <h2>Nos collections</h2>
+        <p>Douze pièces façonnées en atelier. Filtrez par univers, choisissez votre métal et votre taille.</p>
+      </div>
+      <div class="filters" id="filters" role="group" aria-label="Filtrer par catégorie"></div>
+    </div>
+  </div>
+  <div class="wrap" style="padding-bottom:clamp(4rem,9vw,7rem)">
+    <p id="collCount" style="font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:1.6rem"></p>
+    <div class="grid" id="collGrid"></div>
+  </div>
+</section>
+
+<!-- ================= FICHE PRODUIT ================= -->
+<section class="view" id="view-produit" aria-label="Fiche produit">
+  <div class="pd section">
+    <div class="wrap">
+      <nav class="crumbs" aria-label="Fil d'Ariane">
+        <button data-nav="accueil">Accueil</button><span>/</span>
+        <button data-nav="collections">Collections</button><span>/</span>
+        <span id="pdCrumb" style="color:var(--espresso-2)"></span>
+      </nav>
+      <div class="pd-grid" id="pdContent"></div>
+    </div>
+  </div>
+  <!-- suggestions -->
+  <div class="section" style="background:var(--ivoire-2)">
+    <div class="wrap">
+      <div class="shead"><span class="eyebrow">À découvrir aussi</span><h2 style="font-size:2.2rem">Ces pièces peuvent vous plaire</h2></div>
+      <div class="grid" id="pdSuggest" style="margin-top:2.4rem"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SUR-MESURE ================= -->
+<section class="view" id="view-surmesure" aria-label="Sur-mesure">
+  <div class="section">
+    <div class="wrap">
+      <div class="shead center reveal">
+        <span class="eyebrow">L'atelier ÉCRIN</span>
+        <h2>Créer sur-mesure</h2>
+        <p>De la première esquisse à la remise de l'écrin, nous donnons forme à la pièce que vous imaginez — bague de fiançailles, remontage d'un bijou de famille, gravure d'exception.</p>
+      </div>
+      <div class="steps">
+        <div class="step reveal">
+          <span class="num">01</span>
+          <h3>Le rendez-vous</h3>
+          <p>En boutique ou en visio, on écoute votre projet, votre budget et l'histoire du bijou. On parle métal, pierre, style et délai.</p>
+        </div>
+        <div class="step reveal d1">
+          <span class="num">02</span>
+          <h3>Le dessin</h3>
+          <p>Notre joaillier réalise un croquis puis un rendu 3D. Vous validez la forme, le sertissage et le poids d'or avant tout façonnage.</p>
+        </div>
+        <div class="step reveal d2">
+          <span class="num">03</span>
+          <h3>La pièce</h3>
+          <p>Fabrication à la main en atelier, contrôle, poinçon et certificat. Livraison assurée ou remise en main propre dans votre écrin.</p>
+        </div>
+      </div>
+      <div class="split" style="margin-top:clamp(4rem,8vw,6rem);align-items:center">
+        <div class="split-media gleam reveal" aria-hidden="true"><span class="mono">◆</span></div>
+        <div class="reveal d1">
+          <span class="eyebrow">Parlons de votre projet</span>
+          <h2 style="font-size:clamp(2rem,4vw,2.8rem);font-weight:300;margin:.6rem 0 1rem">Décrivez la pièce de vos rêves</h2>
+          <p style="color:var(--espresso-2);margin-bottom:1.6rem;max-width:44ch">Laissez-nous quelques mots. Un conseiller vous rappelle sous 48 h pour fixer un rendez-vous à l'atelier.</p>
+          <div class="card-form">
+            <form id="customForm" novalidate>
+              <div class="field two">
+                <div><label for="cf-nom">Nom & prénom</label><input id="cf-nom" required></div>
+                <div><label for="cf-tel">Téléphone</label><input id="cf-tel" type="tel" placeholder="+213 _ __ __ __ __" required></div>
+              </div>
+              <div class="field">
+                <label for="cf-type">Type de projet</label>
+                <select id="cf-type">
+                  <option>Bague de fiançailles</option>
+                  <option>Alliance sur-mesure</option>
+                  <option>Remontage d'un bijou de famille</option>
+                  <option>Collier ou pendentif</option>
+                  <option>Gravure / cadeau personnalisé</option>
+                  <option>Autre projet</option>
+                </select>
+              </div>
+              <div class="field"><label for="cf-msg">Votre projet</label><textarea id="cf-msg" placeholder="Une pierre, un budget indicatif, une occasion, une échéance…"></textarea></div>
+              <label class="consent">
+                <span style="position:relative;display:inline-flex"><input type="checkbox" id="cf-consent" required><span class="checkbox"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span></span>
+                <span>J'accepte que mes données soient utilisées pour être recontacté au sujet de mon projet, conformément à la <a href="#" data-legal="confidentialite">politique de confidentialité</a>.</span>
+              </label>
+              <button type="submit" class="btn btn-solid btn-block">Envoyer ma demande</button>
+              <p class="form-note"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--or)" stroke-width="1.5" style="flex-shrink:0"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg> Nous ne collectons que le nécessaire. Aucune donnée n'est cédée à des tiers.</p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= LA MAISON ================= -->
+<section class="view" id="view-maison" aria-label="La Maison">
+  <div class="section">
+    <div class="wrap">
+      <div class="shead center reveal">
+        <span class="eyebrow">Depuis 2009 · Alger</span>
+        <h2>La Maison ÉCRIN</h2>
+      </div>
+      <div class="split" style="margin-top:3rem;align-items:center">
+        <div class="split-media gleam reveal" aria-hidden="true"><span class="mono">É</span></div>
+        <div class="reveal d1">
+          <p style="font-family:var(--serif);font-size:1.5rem;font-weight:300;line-height:1.4;color:var(--espresso);margin-bottom:1.4rem">« Un bijou n'est pas un objet : c'est un serment que l'on garde sur soi. »</p>
+          <p style="color:var(--espresso-2);margin-bottom:1.2rem">Née d'un petit atelier de la rue Didouche Mourad, ÉCRIN dessine et façonne à Alger des pièces en or et pierres depuis plus de quinze ans. Chaque création passe entre les mains d'un seul joaillier, du premier trait au dernier polissage.</p>
+          <p style="color:var(--espresso-2)">Nous croyons à une joaillerie honnête : un métal poinçonné, un prix clair au poids d'or du jour, un certificat pour chaque pierre. Rien de plus précieux que la confiance.</p>
+          <div class="stat-row">
+            <div class="stat"><div class="n">15+</div><div class="l">Années d'atelier</div></div>
+            <div class="stat"><div class="n">2 400+</div><div class="l">Pièces façonnées</div></div>
+            <div class="stat"><div class="n">18 ct</div><div class="l">Or poinçonné</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="section" style="background:var(--champagne)">
+    <div class="wrap">
+      <div class="shead center reveal"><span class="eyebrow">Nos engagements</span><h2 style="font-size:clamp(2rem,4vw,2.8rem)">Ce qui fait la maison</h2></div>
+      <div class="grid" style="grid-template-columns:repeat(3,1fr);margin-top:2.6rem">
+        <div class="review reveal"><div class="stars">◆</div><h3 style="font-family:var(--serif);font-size:1.5rem;font-weight:400;margin-bottom:.5rem">Traçabilité</h3><p style="font-family:var(--sans);font-style:normal;font-size:.95rem;color:var(--espresso-2)">Chaque pierre est certifiée et chaque métal poinçonné selon la réglementation en vigueur.</p></div>
+        <div class="review reveal d1"><div class="stars">◆</div><h3 style="font-family:var(--serif);font-size:1.5rem;font-weight:400;margin-bottom:.5rem">Fait main</h3><p style="font-family:var(--sans);font-style:normal;font-size:.95rem;color:var(--espresso-2)">Aucune sous-traitance : nos joailliers façonnent chaque pièce dans notre atelier d'Alger.</p></div>
+        <div class="review reveal d2"><div class="stars">◆</div><h3 style="font-family:var(--serif);font-size:1.5rem;font-weight:400;margin-bottom:.5rem">Accompagnement</h3><p style="font-family:var(--sans);font-style:normal;font-size:.95rem;color:var(--espresso-2)">Entretien, retaille et conseil offerts à vie. Nous restons là bien après l'achat.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section class="view" id="view-contact" aria-label="Contact">
+  <div class="section">
+    <div class="wrap">
+      <div class="shead center reveal">
+        <span class="eyebrow">Nous rencontrer</span>
+        <h2>Contact & boutique</h2>
+        <p>Passez à la boutique pour un essayage, ou prenez rendez-vous avec un conseiller. Nous vous répondons sous 24 h.</p>
+      </div>
+      <div class="contact-grid" style="margin-top:3rem">
+        <div class="reveal">
+          <ul class="contact-info">
+            <li><span class="cico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.6"/></svg></span>
+              <div><div class="lab">Boutique</div><div class="v">Rue Didouche Mourad<small>Alger-Centre, 16000 · Alger</small></div></div></li>
+            <li><span class="cico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 5h16v14H4z"/><path d="M4 7l8 6 8-6"/></svg></span>
+              <div><div class="lab">Email</div><div class="v" style="font-size:1.05rem">bonjour@ecrin-joaillerie.dz</div></div></li>
+            <li><span class="cico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M5 4h4l2 5-3 2a12 12 0 0 0 5 5l2-3 5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></span>
+              <div><div class="lab">Téléphone</div><div class="v" style="font-size:1.05rem">+213 _ __ __ __ __</div></div></li>
+            <li><span class="cico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+              <div><div class="lab">Horaires</div><div class="v" style="font-size:1.05rem">Dim – Jeu : 9h30 – 18h30<small>Samedi : 10h – 17h · Vendredi fermé</small></div></div></li>
+          </ul>
+          <button class="btn btn-gold" id="rdvContactBtn" style="margin-top:1.5rem">Prendre rendez-vous en boutique</button>
+        </div>
+        <div class="card-form reveal d1">
+          <form id="contactForm" novalidate>
+            <div class="field two">
+              <div><label for="ct-nom">Nom & prénom</label><input id="ct-nom" required></div>
+              <div><label for="ct-tel">Téléphone</label><input id="ct-tel" type="tel" placeholder="+213 _ __ __ __ __" required></div>
+            </div>
+            <div class="field"><label for="ct-email">Email (facultatif)</label><input id="ct-email" type="email"></div>
+            <div class="field"><label for="ct-obj">Objet</label>
+              <select id="ct-obj"><option>Question sur une pièce</option><option>Prendre rendez-vous</option><option>Projet sur-mesure</option><option>Service après-vente</option><option>Autre</option></select></div>
+            <div class="field"><label for="ct-msg">Message</label><textarea id="ct-msg" required></textarea></div>
+            <label class="consent">
+              <span style="position:relative;display:inline-flex"><input type="checkbox" id="ct-consent" required><span class="checkbox"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span></span>
+              <span>J'accepte d'être recontacté(e) au sujet de ma demande (<a href="#" data-legal="confidentialite">politique de confidentialité</a>).</span>
+            </label>
+            <button type="submit" class="btn btn-solid btn-block">Envoyer le message</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <div>
+        <div class="brand" style="padding-left:0">ÉCRIN<span class="dot">◆</span></div>
+        <p class="footer-about">Maison de joaillerie à Alger. Or 18 carats, pierres certifiées, création sur-mesure. Chaque bijou est poinçonné et livré dans son écrin.</p>
+        <div class="newsletter">
+          <label for="nl" style="position:absolute;left:-9999px">Votre email</label>
+          <input id="nl" type="email" placeholder="Votre email pour nos nouveautés">
+          <button id="nlBtn">OK</button>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Collections</h4>
+        <a href="#" data-filter="bagues">Bagues</a>
+        <a href="#" data-filter="colliers">Colliers</a>
+        <a href="#" data-filter="bracelets">Bracelets</a>
+        <a href="#" data-filter="boucles">Boucles d'oreilles</a>
+        <a href="#" data-filter="alliances">Alliances</a>
+      </div>
+      <div class="footer-col">
+        <h4>La Maison</h4>
+        <a href="#" data-nav="maison">Notre histoire</a>
+        <a href="#" data-nav="surmesure">Sur-mesure</a>
+        <a href="#" data-nav="contact">Contact</a>
+        <a href="#" id="rdvFooter">Rendez-vous boutique</a>
+      </div>
+      <div class="footer-col">
+        <h4>Boutique</h4>
+        <li>Rue Didouche Mourad</li>
+        <li>Alger-Centre, 16000</li>
+        <li>Dim – Jeu : 9h30 – 18h30</li>
+        <li>+213 _ __ __ __ __</li>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="legal-links">
+        <button data-legal="mentions">Mentions légales</button>
+        <button data-legal="confidentialite">Politique de confidentialité</button>
+        <button data-legal="cgv">Conditions de vente</button>
+        <button id="cookieReopen">Gérer les cookies</button>
+      </div>
+      <span class="signature">Réalisé par <a href="https://difarslan.com" target="_blank" rel="noopener">Arslan DIF — difarslan.com</a></span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ PANIER DRAWER ============ -->
+<div class="overlay" id="overlay"></div>
+<aside class="drawer" id="drawer" aria-label="Panier" aria-hidden="true">
+  <div class="drawer-head">
+    <h2 id="drawerTitle">Votre panier</h2>
+    <button class="drawer-close" id="drawerClose" aria-label="Fermer le panier"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  </div>
+  <div class="drawer-body" id="drawerBody"></div>
+  <div class="drawer-foot" id="drawerFoot" style="display:none"></div>
+</aside>
+
+<!-- ============ MODAL RDV ============ -->
+<div class="modal" id="modalRdv" role="dialog" aria-modal="true" aria-labelledby="rdvTitle">
+  <div class="modal-bg" data-close></div>
+  <div class="modal-card">
+    <div class="modal-head">
+      <div><span class="eyebrow">Essayage & conseil</span><h2 id="rdvTitle">Rendez-vous en boutique</h2></div>
+      <button class="drawer-close" data-close aria-label="Fermer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <div class="modal-body" id="rdvBody"></div>
+  </div>
+</div>
+
+<!-- ============ MODAL LEGAL ============ -->
+<div class="modal" id="modalLegal" role="dialog" aria-modal="true" aria-labelledby="legalTitle">
+  <div class="modal-bg" data-close></div>
+  <div class="modal-card">
+    <div class="modal-head">
+      <div><span class="eyebrow">Informations</span><h2 id="legalTitle"></h2></div>
+      <button class="drawer-close" data-close aria-label="Fermer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <div class="modal-body legal-body" id="legalBody"></div>
+  </div>
+</div>
+
+<!-- ============ COOKIE ============ -->
+<div class="cookie" id="cookie" role="dialog" aria-label="Gestion des cookies">
+  <p>Nous utilisons des cookies pour mesurer l'audience et améliorer votre visite. Vous pouvez accepter ou refuser. En savoir plus dans notre <a href="#" data-legal="confidentialite">politique de confidentialité</a>.</p>
+  <div class="cookie-actions">
+    <button class="btn btn-solid" id="cookieAccept">Tout accepter</button>
+    <button class="btn btn-ghost" id="cookieRefuse">Refuser</button>
+  </div>
+</div>
+
+<!-- ============ TOAST ============ -->
+<div class="toast" id="toast"><span class="tk">◆</span><span id="toastMsg"></span></div>
+
+<script>
+/* ================= DONNÉES ================= */
+const METALS={
+  jaune:{label:'Or jaune',swatch:'linear-gradient(135deg,#E7C877,#C9A24E,#9A7A2E)',mult:1.00,g:{l:'#E7C877',m:'#C9A24E',d:'#9A7A2E'}},
+  blanc:{label:'Or blanc',swatch:'linear-gradient(135deg,#F1EFEA,#CFCCC4,#A6A199)',mult:1.05,g:{l:'#EFECE6',m:'#CBC7BF',d:'#9C978E'}},
+  rose :{label:'Or rose', swatch:'linear-gradient(135deg,#EFC4B2,#D69A82,#B0715A)',mult:1.03,g:{l:'#EFC4B2',m:'#D69A82',d:'#B0715A'}}
+};
+const GRAVURE_PRICE=4500;
+const CATS={bagues:'Bagues',colliers:'Colliers',bracelets:'Bracelets',boucles:"Boucles d'oreilles",alliances:'Alliances'};
+
+const PRODUCTS=[
+  {id:'sol-01',name:'Solitaire Lumière',cat:'bagues',shape:'solitaire',price:320000,metals:['blanc','jaune','rose'],sizeType:'ring',sizes:[48,50,52,54,56,58],carat:'0,30 ct',pierre:'Diamant taille brillant',poids:'3,2 g',grav:true,tag:'Signature',desc:"Un solitaire épuré : une couronne de six griffes qui laisse la lumière traverser la pierre. La monture fine met le diamant en apesanteur."},
+  {id:'all-01',name:'Alliance Éternité',cat:'alliances',shape:'alliance',price:165000,metals:['blanc','jaune','rose'],sizeType:'ring',sizes:[48,50,52,54,56,58,60],carat:'0,25 ct',pierre:'Diamants sertis grain',poids:'2,8 g',grav:true,desc:"Un demi-tour de diamants sertis grain sur un anneau d'or 18 carats. La promesse, portée au quotidien."},
+  {id:'all-02',name:"Alliance Fil d'Or",cat:'alliances',shape:'jonc',price:78000,metals:['jaune','rose','blanc'],sizeType:'ring',sizes:[48,50,52,54,56,58,60,62],carat:'—',pierre:'Or 18 carats poli',poids:'2,1 g',grav:true,tag:'Best-seller',desc:"L'alliance classique par excellence : un jonc fin, poli miroir, confortable et intemporel. Idéale à graver."},
+  {id:'bag-01',name:'Jonc Nomade',cat:'bagues',shape:'jonc',price:92000,metals:['jaune','rose'],sizeType:'ring',sizes:[50,52,54,56,58],carat:'—',pierre:'Or 18 carats martelé',poids:'2,6 g',grav:true,desc:"Un jonc légèrement martelé qui accroche la lumière. À porter seul ou empilé, du matin au soir."},
+  {id:'bag-02',name:'Chevalière Sceau',cat:'bagues',shape:'chevaliere',price:110000,metals:['jaune','blanc'],sizeType:'ring',sizes:[52,54,56,58,60,62],carat:'—',pierre:'Or 18 carats, plateau à graver',poids:'6,4 g',grav:true,desc:"Une chevalière au plateau généreux, prête à recevoir vos initiales ou un blason. Un bijou qui se transmet."},
+  {id:'col-01',name:'Collier Goutte de Ciel',cat:'colliers',shape:'collier-pendentif',price:210000,metals:['blanc','jaune'],sizeType:'length',sizes:['40 cm','42 cm','45 cm'],carat:'0,80 ct',pierre:'Saphir bleu & halo de diamants',poids:'4,1 g',grav:false,tag:'Exception',desc:"Un saphir bleu ceint d'un halo de diamants, suspendu à une chaîne filée main. Une pièce de lumière."},
+  {id:'col-02',name:'Chaîne Maille Douce',cat:'colliers',shape:'collier-chaine',price:145000,metals:['jaune','rose','blanc'],sizeType:'length',sizes:['40 cm','45 cm','50 cm'],carat:'—',pierre:'Or 18 carats, maille forçat',poids:'5,3 g',grav:false,desc:"Une chaîne souple à maille forçat, parfaite seule ou en superposition. La base d'une garde-robe de bijoux."},
+  {id:'col-03',name:'Rivière Perles',cat:'colliers',shape:'collier-pendentif',price:240000,metals:['blanc','jaune'],sizeType:'length',sizes:['42 cm','45 cm'],carat:'—',pierre:"Perles d'eau douce & or",poids:'—',grav:false,desc:"Des perles d'eau douce enfilées à la main, ponctuées d'un fermoir d'or ouvragé. Une élégance sans âge."},
+  {id:'bou-01',name:'Créoles Éclat',cat:'boucles',shape:'boucles-creoles',price:68000,metals:['jaune','rose','blanc'],sizeType:'none',sizes:[],carat:'—',pierre:'Or 18 carats poli',poids:'2,4 g',grav:false,tag:'Best-seller',desc:"Des créoles fines au poli miroir, assez légères pour s'oublier, assez présentes pour illuminer un visage."},
+  {id:'bou-02',name:'Puces Étoile',cat:'boucles',shape:'boucles-puces',price:135000,metals:['blanc','jaune','rose'],sizeType:'none',sizes:[],carat:'0,20 ct',pierre:'Diamants taille brillant',poids:'1,2 g',grav:false,desc:"Deux diamants sertis quatre griffes, posés au plus près du lobe. Le point de lumière du quotidien."},
+  {id:'bra-01',name:'Jonc Serment',cat:'bracelets',shape:'bracelet-jonc',price:185000,metals:['jaune','rose'],sizeType:'wrist',sizes:['S','M','L'],carat:'—',pierre:'Or 18 carats massif',poids:'8,7 g',grav:true,desc:"Un jonc ouvert en or massif, au tombé parfait sur le poignet. Un bijou plein, franc, que l'on ne quitte plus."},
+  {id:'bra-02',name:'Rivière Tennis',cat:'bracelets',shape:'bracelet-tennis',price:480000,metals:['blanc','jaune'],sizeType:'wrist',sizes:['16 cm','17 cm','18 cm'],carat:'1,50 ct',pierre:'Diamants sertis quatre griffes',poids:'—',grav:false,tag:'Exception',desc:"Une ligne continue de diamants sertis quatre griffes. Le bracelet d'une vie, à offrir ou à s'offrir."}
+];
+
+const REVIEWS=[
+  {stars:5,text:"Une bague de fiançailles façonnée pour nous, du croquis à l'écrin. Un accompagnement d'une justesse rare.",who:"Lamia B. · Hydra"},
+  {stars:5,text:"J'ai fait remonter la bague de ma grand-mère. Le résultat dépasse tout ce que j'imaginais.",who:"Nadia K. · Chéraga"},
+  {stars:5,text:"Livraison assurée jusqu'à Oran, écrin superbe, certificat dans la boîte. Sérieux et élégant.",who:"Yasmine T. · Oran"}
+];
+
+const WILAYAS=["01 · Adrar","02 · Chlef","03 · Laghouat","04 · Oum El Bouaghi","05 · Batna","06 · Béjaïa","07 · Biskra","08 · Béchar","09 · Blida","10 · Bouira","11 · Tamanrasset","12 · Tébessa","13 · Tlemcen","14 · Tiaret","15 · Tizi Ouzou","16 · Alger","17 · Djelfa","18 · Jijel","19 · Sétif","20 · Saïda","21 · Skikda","22 · Sidi Bel Abbès","23 · Annaba","24 · Guelma","25 · Constantine","26 · Médéa","27 · Mostaganem","28 · M'Sila","29 · Mascara","30 · Ouargla","31 · Oran","32 · El Bayadh","33 · Illizi","34 · Bordj Bou Arréridj","35 · Boumerdès","36 · El Tarf","37 · Tindouf","38 · Tissemsilt","39 · El Oued","40 · Khenchela","41 · Souk Ahras","42 · Tipaza","43 · Mila","44 · Aïn Defla","45 · Naâma","46 · Aïn Témouchent","47 · Ghardaïa","48 · Relizane","49 · El M'Ghair","50 · El Meniaa","51 · Ouled Djellal","52 · Bordj Badji Mokhtar","53 · Béni Abbès","54 · Timimoun","55 · Touggourt","56 · Djanet","57 · In Salah","58 · In Guezzam"];
+
+/* ================= UTILITAIRES ================= */
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const fmt=n=>Math.round(n).toLocaleString('fr-FR').replace(/\u202f/g,' ')+' DA';
+const productById=id=>PRODUCTS.find(p=>p.id===id);
+/* Photos libres de droits (Unsplash). L'illustration SVG reste en repli si l'image ne charge pas. */
+const jURL=id=>`https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=800&q=70`;
+const JIMG={'sol-01':'1622398925373-3f91b1e275f5','all-01':'1622398925373-3f91b1e275f5','all-02':'1622398925373-3f91b1e275f5','bag-01':'1622398925373-3f91b1e275f5','bag-02':'1622398925373-3f91b1e275f5','col-01':'1758995115682-1452a1a9e35b','col-02':'1758995115682-1452a1a9e35b','col-03':'1758995115682-1452a1a9e35b','bou-01':'1758995115682-1452a1a9e35b','bou-02':'1758995115682-1452a1a9e35b','bra-01':'1622398925373-3f91b1e275f5','bra-02':'1622398925373-3f91b1e275f5'};
+function jphoto(p){const id=p&&JIMG[p.id];return id?`<img class="jphoto" src="${jURL(id)}" alt="${p.name}" loading="lazy" onerror="this.remove()">`:'';}
+function priceOf(p,metal='jaune',grav=false){return p.price*METALS[metal].mult + (grav?GRAVURE_PRICE:0);}
+
+/* ---- SVG bijoux ---- */
+function goldDefs(uid,metal){
+  const g=METALS[metal].g;
+  return `<defs>
+    <linearGradient id="au-${uid}" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="${g.l}"/><stop offset=".5" stop-color="${g.m}"/><stop offset="1" stop-color="${g.d}"/>
+    </linearGradient>
+    <radialGradient id="gem-${uid}" cx=".4" cy=".35" r=".8">
+      <stop offset="0" stop-color="#ffffff"/><stop offset=".55" stop-color="#EAF0F6"/><stop offset="1" stop-color="#C9D6E4"/>
+    </radialGradient>
+    <radialGradient id="saph-${uid}" cx=".4" cy=".35" r=".8">
+      <stop offset="0" stop-color="#8FB4E6"/><stop offset=".6" stop-color="#3E6FB0"/><stop offset="1" stop-color="#274B82"/>
+    </radialGradient>
+  </defs>`;
+}
+function gem(cx,cy,r,uid,type='diamond'){
+  const fill=type==='saphir'?`url(#saph-${uid})`:`url(#gem-${uid})`;
+  const s=r; // brilliant top view (octagon + facets)
+  const pts=[]; for(let i=0;i<8;i++){const a=Math.PI/8+i*Math.PI/4;pts.push([cx+Math.cos(a)*s,cy+Math.sin(a)*s]);}
+  const poly=pts.map(p=>p.join(',')).join(' ');
+  const tbl=pts.map(p=>[cx+(p[0]-cx)*.52,cy+(p[1]-cy)*.52].join(',')).join(' ');
+  let facets='';for(let i=0;i<8;i++){const p=pts[i];facets+=`<line x1="${p[0]}" y1="${p[1]}" x2="${cx+(p[0]-cx)*.52}" y2="${cy+(p[1]-cy)*.52}" stroke="rgba(255,255,255,.7)" stroke-width=".6"/>`;}
+  return `<polygon points="${poly}" fill="${fill}" stroke="rgba(255,255,255,.85)" stroke-width="1"/>
+    <polygon points="${tbl}" fill="rgba(255,255,255,.28)" stroke="rgba(255,255,255,.7)" stroke-width=".6"/>
+    ${facets}
+    <circle cx="${cx-r*.32}" cy="${cy-r*.32}" r="${r*.14}" fill="#fff" opacity=".9"/>`;
+}
+function jewelSVG(shape,metal='jaune',uid='x'){
+  const au=`url(#au-${uid})`;
+  const D=goldDefs(uid,metal);
+  const S=(inner)=>`<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img">${D}${inner}</svg>`;
+  switch(shape){
+    case 'solitaire':
+      return S(`<ellipse cx="100" cy="128" rx="46" ry="50" fill="none" stroke="${au}" stroke-width="9"/>
+        <path d="M88 84 L100 70 L112 84" fill="none" stroke="${au}" stroke-width="4" stroke-linecap="round"/>
+        ${gem(100,74,17,uid)}`);
+    case 'jonc':
+      return S(`<ellipse cx="100" cy="118" rx="50" ry="54" fill="none" stroke="${au}" stroke-width="11"/>
+        <ellipse cx="100" cy="118" rx="50" ry="54" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2"/>`);
+    case 'chevaliere':
+      return S(`<ellipse cx="100" cy="126" rx="46" ry="50" fill="none" stroke="${au}" stroke-width="10"/>
+        <rect x="70" y="66" width="60" height="46" rx="12" fill="${au}" stroke="rgba(255,255,255,.4)" stroke-width="1.5"/>
+        <rect x="82" y="80" width="36" height="18" rx="4" fill="none" stroke="rgba(0,0,0,.18)" stroke-width="1.5"/>`);
+    case 'alliance':{
+      let d='';for(let i=0;i<7;i++){const a=-Math.PI/2 + (i-3)*0.32; d+=gem(100+Math.cos(a)*50,120+Math.sin(a)*54,6,uid);}
+      return S(`<ellipse cx="100" cy="120" rx="50" ry="54" fill="none" stroke="${au}" stroke-width="9"/>${d}`);}
+    case 'collier-pendentif':
+      return S(`<path d="M40 46 Q100 150 160 46" fill="none" stroke="${au}" stroke-width="4"/>
+        <path d="M40 46 Q100 150 160 46" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="1" stroke-dasharray="1 5"/>
+        <path d="M100 122 L100 138" stroke="${au}" stroke-width="3"/>
+        ${gem(100,152,16,uid, metal==='blanc'?'saphir':'diamond')}`);
+    case 'collier-chaine':{
+      let links='';for(let i=0;i<14;i++){const t=i/13;const x=40+120*t;const y=46+ (Math.sin(Math.PI*t))*100;links+=`<circle cx="${x}" cy="${y}" r="4.5" fill="none" stroke="${au}" stroke-width="3"/>`;}
+      return S(links);}
+    case 'boucles-creoles':
+      return S(`<circle cx="72" cy="100" r="34" fill="none" stroke="${au}" stroke-width="9"/>
+        <circle cx="128" cy="100" r="34" fill="none" stroke="${au}" stroke-width="9"/>
+        <circle cx="72" cy="100" r="34" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="2"/>
+        <circle cx="128" cy="100" r="34" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="2"/>`);
+    case 'boucles-puces':
+      return S(`${gem(72,100,20,uid)}${gem(128,100,20,uid)}`);
+    case 'bracelet-jonc':
+      return S(`<ellipse cx="100" cy="100" rx="72" ry="50" fill="none" stroke="${au}" stroke-width="13" stroke-dasharray="330 40" transform="rotate(8 100 100)"/>
+        <ellipse cx="100" cy="100" rx="72" ry="50" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="2.5" stroke-dasharray="330 40" transform="rotate(8 100 100)"/>`);
+    case 'bracelet-tennis':{
+      let d='';for(let i=0;i<9;i++){const t=i/8;const x=28+144*t;const y=100+Math.sin(Math.PI*t-Math.PI/2)*10;d+=gem(x,y,9,uid);}
+      return S(`<path d="M24 100 Q100 118 176 100" fill="none" stroke="${au}" stroke-width="2" opacity=".5"/>${d}`);}
+    default:
+      return S(gem(100,100,30,uid));
+  }
+}
+
+/* ================= ÉTAT ================= */
+let cart=[]; let currentFilter='tous'; let currentProduct=null;
+let cfg={metal:'jaune',size:null,grav:false,gravText:''};
+let rdv={date:null,slot:null,motif:'Essayage & conseil'};
+let cookieChoice=null;
+
+/* ================= NAVIGATION VUES ================= */
+function showView(name,opts={}){
+  $$('.view').forEach(v=>v.classList.remove('active'));
+  const el=$('#view-'+name); if(el)el.classList.add('active');
+  $$('.nav-links a').forEach(a=>a.removeAttribute('aria-current'));
+  $$(`.nav-links a[data-nav="${name}"]`).forEach(a=>a.setAttribute('aria-current','page'));
+  closeMenu();
+  if(!opts.keepScroll)window.scrollTo({top:0,behavior:'instant'});
+  requestAnimationFrame(initReveal);
+}
+function goProduct(id){
+  currentProduct=productById(id); if(!currentProduct)return;
+  cfg={metal:currentProduct.metals[0],size:(currentProduct.sizes[0]??null),grav:false,gravText:''};
+  renderProduct(); showView('produit');
+}
+
+/* ================= RENDU CARTES ================= */
+function cardHTML(p){
+  const dots=p.metals.map(m=>`<span class="mdot" style="background:${METALS[m].swatch}" title="${METALS[m].label}"></span>`).join('');
+  return `<article class="card" tabindex="0" data-open="${p.id}" role="button" aria-label="${p.name}, ${fmt(priceOf(p,p.metals[0]))}">
+    <div class="card-media gleam">${jewelSVG(p.shape,p.metals[0],p.id)}${jphoto(p)}${p.tag?`<span class="card-tag">${p.tag}</span>`:''}</div>
+    <div class="card-body">
+      <span class="cat">${CATS[p.cat]}</span>
+      <h3>${p.name}</h3>
+      <p class="card-meta">${p.pierre}${p.carat!=='—'?' · '+p.carat:''}</p>
+      <div class="metal-dots" aria-hidden="true">${dots}</div>
+      <div class="card-foot">
+        <span class="price">${fmt(priceOf(p,p.metals[0]))}</span>
+        <span class="voir">Voir <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </div>
+    </div>
+  </article>`;
+}
+function renderHome(){$('#homeGrid').innerHTML=PRODUCTS.slice(0,6).map(cardHTML).join('');}
+function renderReviews(){$('#reviewsGrid').innerHTML=REVIEWS.map(r=>`<div class="review reveal"><div class="stars" aria-label="${r.stars} sur 5">${'◆'.repeat(r.stars)}</div><p>« ${r.text} »</p><div class="who">${r.who}</div></div>`).join('');}
+
+function renderFilters(){
+  const cats=['tous',...Object.keys(CATS)];
+  $('#filters').innerHTML=cats.map(c=>`<button class="filter" data-filter="${c}" aria-pressed="${c===currentFilter}">${c==='tous'?'Tout':CATS[c]}</button>`).join('');
+}
+function renderColl(){
+  const list=currentFilter==='tous'?PRODUCTS:PRODUCTS.filter(p=>p.cat===currentFilter);
+  $('#collGrid').innerHTML=list.map(cardHTML).join('');
+  $('#collCount').textContent=`${list.length} pièce${list.length>1?'s':''}`;
+  $$('#filters .filter').forEach(b=>b.setAttribute('aria-pressed',b.dataset.filter===currentFilter));
+  requestAnimationFrame(initReveal);
+}
+function setFilter(f){currentFilter=f;renderColl();}
+
+/* ================= FICHE PRODUIT ================= */
+function renderProduct(){
+  const p=currentProduct; $('#pdCrumb').textContent=p.name;
+  const uid='detail';
+  const sizeLabel={ring:'Taille (tour de doigt)',length:'Longueur de chaîne',wrist:'Taille',none:''}[p.sizeType];
+  const metalHTML=p.metals.map(m=>`<button class="metal-choice" data-metal="${m}" aria-pressed="${m===cfg.metal}">
+      <span class="metal-swatch" style="background:${METALS[m].swatch}"></span><span>${METALS[m].label}</span></button>`).join('');
+  const sizeHTML=p.sizeType==='none'?'':`<div class="opt">
+      <div class="opt-label"><span>${sizeLabel}</span><span class="val" id="sizeVal">${cfg.size??''}</span></div>
+      <div class="size-choices" id="sizeChoices">${p.sizes.map(s=>`<button class="size-choice" data-size="${s}" aria-pressed="${s===cfg.size}">${s}</button>`).join('')}</div>
+    </div>`;
+  const gravHTML=p.grav?`<div class="opt"><div class="gravure-box">
+      <div class="gravure-head"><label><span style="position:relative;display:inline-flex"><input type="checkbox" id="gravChk"><span class="checkbox"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span></span>Ajouter une gravure</label><span class="plus">+ ${fmt(GRAVURE_PRICE)}</span></div>
+      <div class="gravure-input" id="gravWrap"><input id="gravInput" maxlength="20" placeholder="Ex : 12.06.2025 · L & A"><div class="hint"><span id="gravCount">0</span>/20 caractères</div></div>
+    </div></div>`:'';
+  $('#pdContent').innerHTML=`
+    <div class="pd-gallery">
+      <div class="pd-main gleam" id="pdMain" title="Cliquer pour zoomer">${jewelSVG(p.shape,cfg.metal,uid)}${jphoto(p)}
+        <span class="pd-zoomhint"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4M11 8v6M8 11h6"/></svg> Cliquer pour zoomer</span>
+      </div>
+      <div class="pd-thumbs" id="pdThumbs"></div>
+    </div>
+    <div class="pd-info">
+      <span class="cat">${CATS[p.cat]}</span>
+      <h1>${p.name}</h1>
+      <p class="pd-desc">${p.desc}</p>
+      <div class="pd-price-row"><span class="pd-price price" id="pdPrice">${fmt(priceOf(p,cfg.metal))}</span><small>TTC · livraison assurée offerte</small></div>
+      <div class="opt"><div class="opt-label"><span>Métal</span><span class="val" id="metalVal">${METALS[cfg.metal].label}</span></div><div class="metal-choices" id="metalChoices">${metalHTML}</div></div>
+      ${sizeHTML}
+      ${gravHTML}
+      <div class="pd-actions">
+        <button class="btn btn-solid btn-block" id="addCartBtn">Ajouter au panier — <span id="btnPrice">${fmt(priceOf(p,cfg.metal))}</span></button>
+        <div class="pd-row2">
+          <button class="btn btn-gold" id="pdRdv">Essayer en boutique</button>
+          <button class="btn btn-outline" data-nav="surmesure">Personnaliser</button>
+        </div>
+      </div>
+      <ul class="pd-trust">
+        <li><span class="tico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/></svg></span> Certificat d'authenticité & poinçon</li>
+        <li><span class="tico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 7l8-4 8 4v10l-8 4-8-4z"/></svg></span> ${p.pierre}${p.poids!=='—'?' · '+p.poids:''}</li>
+        <li><span class="tico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M5 13l4 4L19 7"/></svg></span> Garantie & entretien à vie</li>
+        <li><span class="tico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 7h13v8H3zM16 10h3l2 3v2h-5"/><circle cx="7" cy="17" r="1.6"/><circle cx="17" cy="17" r="1.6"/></svg></span> Livraison assurée · 58 wilayas</li>
+      </ul>
+    </div>`;
+  // vignettes (3 vues stylisées)
+  $('#pdThumbs').innerHTML=[cfg.metal,...p.metals.filter(m=>m!==cfg.metal)].slice(0,3)
+    .map((m,i)=>`<button class="pd-thumb" data-thumb="${m}" aria-pressed="${i===0}" aria-label="Vue ${METALS[m].label}">${jewelSVG(p.shape,m,'th'+i)}</button>`).join('');
+  bindProduct();
+  // suggestions
+  $('#pdSuggest').innerHTML=PRODUCTS.filter(x=>x.id!==p.id&&x.cat===p.cat).concat(PRODUCTS.filter(x=>x.cat!==p.cat)).slice(0,3).map(cardHTML).join('');
+}
+function updatePdPrice(){
+  const val=fmt(priceOf(currentProduct,cfg.metal,cfg.grav));
+  $('#pdPrice').textContent=val; $('#btnPrice').textContent=val;
+}
+function bindProduct(){
+  const p=currentProduct;
+  $('#metalChoices').addEventListener('click',e=>{const b=e.target.closest('[data-metal]');if(!b)return;
+    cfg.metal=b.dataset.metal;
+    $$('#metalChoices .metal-choice').forEach(x=>x.setAttribute('aria-pressed',x.dataset.metal===cfg.metal));
+    $('#metalVal').textContent=METALS[cfg.metal].label;
+    $('#pdMain').innerHTML=jewelSVG(p.shape,cfg.metal,'detail')+jphoto(p)+$('#pdMain').querySelector('.pd-zoomhint').outerHTML;
+    bindZoom();
+    // regénérer vignettes ordre
+    $('#pdThumbs').innerHTML=[cfg.metal,...p.metals.filter(m=>m!==cfg.metal)].slice(0,3)
+      .map((m,i)=>`<button class="pd-thumb" data-thumb="${m}" aria-pressed="${i===0}" aria-label="Vue ${METALS[m].label}">${jewelSVG(p.shape,m,'th'+i)}</button>`).join('');
+    bindThumbs();
+    updatePdPrice();
+  });
+  const sc=$('#sizeChoices'); if(sc)sc.addEventListener('click',e=>{const b=e.target.closest('[data-size]');if(!b)return;
+    cfg.size=isNaN(b.dataset.size)?b.dataset.size:Number(b.dataset.size);
+    $$('#sizeChoices .size-choice').forEach(x=>x.setAttribute('aria-pressed',(x.dataset.size==String(cfg.size))));
+    $('#sizeVal').textContent=cfg.size;});
+  const gc=$('#gravChk'); if(gc)gc.addEventListener('change',e=>{cfg.grav=e.target.checked;$('#gravWrap').classList.toggle('on',cfg.grav);updatePdPrice();});
+  const gi=$('#gravInput'); if(gi)gi.addEventListener('input',e=>{cfg.gravText=e.target.value;$('#gravCount').textContent=e.target.value.length;});
+  $('#addCartBtn').addEventListener('click',()=>addToCart(p));
+  $('#pdRdv').addEventListener('click',()=>openRdv('Essayage — '+p.name));
+  bindThumbs(); bindZoom();
+}
+function bindThumbs(){$$('#pdThumbs .pd-thumb').forEach(t=>t.addEventListener('click',()=>{
+  const m=t.dataset.thumb;$$('#pdThumbs .pd-thumb').forEach(x=>x.setAttribute('aria-pressed',x===t));
+  $('#pdMain').innerHTML=jewelSVG(currentProduct.shape,m,'detail')+jphoto(currentProduct)+$('#pdMain').querySelector('.pd-zoomhint').outerHTML;bindZoom();}));}
+function bindZoom(){const m=$('#pdMain');if(m)m.onclick=()=>m.classList.toggle('zoom');}
+
+/* ================= PANIER ================= */
+function addToCart(p){
+  const line={pid:p.id,name:p.name,shape:p.shape,metal:cfg.metal,size:cfg.size,
+    grav:cfg.grav,gravText:cfg.gravText,unit:priceOf(p,cfg.metal,cfg.grav),qty:1,
+    key:[p.id,cfg.metal,cfg.size,cfg.grav,cfg.gravText].join('|')};
+  const ex=cart.find(l=>l.key===line.key);
+  if(ex)ex.qty++; else cart.push(line);
+  updateCart(); openDrawer(); toast('Ajouté au panier');
+}
+function updateCart(){
+  const n=cart.reduce((s,l)=>s+l.qty,0);
+  const c=$('#cartCount'); c.textContent=n; c.classList.toggle('show',n>0);
+  renderDrawer();
+}
+function renderDrawer(){
+  const body=$('#drawerBody'), foot=$('#drawerFoot');
+  if(!cart.length){
+    body.innerHTML=`<div class="cart-empty">
+      <svg width="54" height="54" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M6 8h12l-1 12H7L6 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+      <h3>Votre panier est vide</h3><p style="margin-bottom:1.4rem">Découvrez nos pièces et composez votre écrin.</p>
+      <button class="btn btn-outline" id="emptyShop">Voir les collections</button></div>`;
+    foot.style.display='none';
+    $('#emptyShop').onclick=()=>{closeDrawer();showView('collections');};
+    return;
+  }
+  body.innerHTML=cart.map((l,i)=>`<div class="cart-item">
+    <div class="cart-item-media">${jewelSVG(l.shape,l.metal,'ci'+i)}</div>
+    <div><h4>${l.name}</h4><div class="ci-meta">${METALS[l.metal].label}${l.size?' · '+l.size:''}${l.grav?'<br>Gravure : « '+(l.gravText||'—')+' »':''}</div>
+      <div class="qty"><button data-dec="${i}" aria-label="Diminuer">−</button><span>${l.qty}</span><button data-inc="${i}" aria-label="Augmenter">+</button></div>
+    </div>
+    <div class="ci-right"><span class="ci-price">${fmt(l.unit*l.qty)}</span><button class="ci-remove" data-rm="${i}">Retirer</button></div>
+  </div>`).join('');
+  const total=cart.reduce((s,l)=>s+l.unit*l.qty,0);
+  foot.style.display='block';
+  foot.innerHTML=`
+    <div class="free-ship"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 13l4 4L19 7"/></svg> Livraison assurée offerte dans les 58 wilayas</div>
+    <div class="cart-line"><span>Sous-total</span><span>${fmt(total)}</span></div>
+    <div class="cart-line"><span>Livraison assurée</span><span>Offerte</span></div>
+    <div class="cart-line total"><span>Total</span><span>${fmt(total)}</span></div>
+    <button class="btn btn-solid btn-block" id="checkoutBtn">Passer commande</button>`;
+  body.querySelectorAll('[data-inc]').forEach(b=>b.onclick=()=>{cart[b.dataset.inc].qty++;updateCart();});
+  body.querySelectorAll('[data-dec]').forEach(b=>b.onclick=()=>{const l=cart[b.dataset.dec];l.qty--;if(l.qty<1)cart.splice(b.dataset.dec,1);updateCart();});
+  body.querySelectorAll('[data-rm]').forEach(b=>b.onclick=()=>{cart.splice(b.dataset.rm,1);updateCart();});
+  $('#checkoutBtn').onclick=openCheckout;
+}
+function openDrawer(){$('#drawer').classList.add('on');$('#overlay').classList.add('on');$('#drawer').setAttribute('aria-hidden','false');document.body.style.overflow='hidden';}
+function closeDrawer(){$('#drawer').classList.remove('on');$('#overlay').classList.remove('on');$('#drawer').setAttribute('aria-hidden','true');document.body.style.overflow='';}
+
+/* ================= CHECKOUT ================= */
+function openCheckout(){
+  const total=cart.reduce((s,l)=>s+l.unit*l.qty,0);
+  $('#drawerTitle').textContent='Commande';
+  $('#drawerBody').innerHTML=`
+    <form id="coForm" novalidate>
+      <p style="font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:1.2rem">Livraison</p>
+      <div class="field two"><div><label for="co-nom">Nom</label><input id="co-nom" required></div><div><label for="co-prenom">Prénom</label><input id="co-prenom" required></div></div>
+      <div class="field two"><div><label for="co-tel">Téléphone</label><input id="co-tel" type="tel" placeholder="+213 _ __ __ __ __" required></div><div><label for="co-email">Email (facultatif)</label><input id="co-email" type="email"></div></div>
+      <div class="field"><label for="co-wilaya">Wilaya</label><select id="co-wilaya" required><option value="">Choisir…</option>${WILAYAS.map(w=>`<option>${w}</option>`).join('')}</select></div>
+      <div class="field"><label for="co-adr">Adresse de livraison</label><textarea id="co-adr" placeholder="Commune, rue, points de repère" required></textarea></div>
+      <p style="font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:1.4rem 0 .8rem">Paiement</p>
+      <div class="field">
+        <label class="consent" style="margin:0 0 .7rem"><span style="position:relative;display:inline-flex"><input type="radio" name="pay" value="cod" checked style="opacity:0;position:absolute"><span class="checkbox" style="border-radius:50%"><svg width="10" height="10" viewBox="0 0 24 24"><circle cx="12" cy="12" r="6" fill="#fff"/></svg></span></span><span><strong>Paiement à la livraison</strong> — réglez à la remise du colis assuré.</span></label>
+        <label class="consent" style="margin:0"><span style="position:relative;display:inline-flex"><input type="radio" name="pay" value="vir" style="opacity:0;position:absolute"><span class="checkbox" style="border-radius:50%"><svg width="10" height="10" viewBox="0 0 24 24"><circle cx="12" cy="12" r="6" fill="#fff"/></svg></span></span><span><strong>Virement bancaire</strong> — les coordonnées vous sont envoyées après validation.</span></label>
+      </div>
+      <div class="cart-line total" style="margin:1rem 0 1.2rem"><span>Total à régler</span><span>${fmt(total)}</span></div>
+      <label class="consent"><span style="position:relative;display:inline-flex"><input type="checkbox" id="co-consent" required><span class="checkbox"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span></span>
+        <span>J'accepte les <a href="#" data-legal="cgv">conditions de vente</a> et le traitement de mes données pour cette commande (<a href="#" data-legal="confidentialite">confidentialité</a>).</span></label>
+      <p class="form-note" style="margin-bottom:1rem"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--or)" stroke-width="1.5" style="flex-shrink:0"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg> Données de paiement jamais stockées. Colis assuré jusqu'à la remise.</p>
+      <button type="submit" class="btn btn-solid btn-block">Confirmer la commande</button>
+      <button type="button" class="btn btn-outline btn-block" id="backCart" style="margin-top:.7rem">Retour au panier</button>
+    </form>`;
+  $('#drawerFoot').style.display='none';
+  $('#backCart').onclick=()=>{$('#drawerTitle').textContent='Votre panier';$('#drawerFoot').style.display='block';renderDrawer();};
+  $('#coForm').addEventListener('submit',e=>{
+    e.preventDefault();
+    if(!validForm('#coForm'))return;
+    const ref='ÉC-'+Math.floor(100000+Math.random()*899999);
+    $('#drawerBody').innerHTML=`<div class="confirm">
+      <div class="ok-badge"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 13l4 4L19 7"/></svg></div>
+      <h2>Commande confirmée</h2>
+      <p>Merci ! Un conseiller vous contacte sous 24 h pour confirmer la livraison assurée.</p>
+      <span class="ref">${ref}</span>
+      <p style="font-size:.85rem;color:var(--muted)">Un récapitulatif a été préparé pour l'adresse indiquée.</p>
+      <button class="btn btn-solid" id="coDone" style="margin-top:1.4rem">Continuer mes achats</button>
+    </div>`;
+    cart=[];updateCart();
+    $('#coDone').onclick=()=>{closeDrawer();$('#drawerTitle').textContent='Votre panier';showView('collections');};
+    bindLegalLinks();
+  });
+  bindLegalLinks();
+}
+
+/* ================= RENDEZ-VOUS ================= */
+function openRdv(motif='Essayage & conseil'){
+  rdv={date:null,slot:null,motif};
+  const days=[];const jn=['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'];const mn=['Jan','Fév','Mar','Avr','Mai','Juin','Juil','Août','Sep','Oct','Nov','Déc'];
+  let d=new Date(); let added=0;
+  while(added<8){d.setDate(d.getDate()+1);if(d.getDay()!==5){days.push(new Date(d));added++;}} // ferme le vendredi
+  const slots=['10:00','11:00','12:00','14:00','15:00','16:00','17:00','18:00'];
+  $('#rdvBody').innerHTML=`
+    <p style="color:var(--espresso-2);margin-bottom:1.2rem;font-size:.95rem">${motif} · à la boutique de la rue Didouche Mourad. Choisissez un créneau, on vous confirme par téléphone.</p>
+    <div class="opt-label" style="margin-bottom:.6rem"><span>Date</span></div>
+    <div class="rdv-dates" id="rdvDates">${days.map((dd,i)=>`<button class="rdv-date" data-date="${i}" aria-pressed="false"><span class="d">${jn[dd.getDay()]}</span><span class="n">${dd.getDate()}</span><span class="m">${mn[dd.getMonth()]}</span></button>`).join('')}</div>
+    <div class="opt-label" style="margin-bottom:.6rem"><span>Créneau</span></div>
+    <div class="slots" id="rdvSlots">${slots.map((s,i)=>`<button class="slot" data-slot="${s}" aria-pressed="false" ${i===2?'disabled':''}>${s}</button>`).join('')}</div>
+    <div class="field two" style="margin-top:1.4rem"><div><label for="rd-nom">Nom</label><input id="rd-nom" required></div><div><label for="rd-tel">Téléphone</label><input id="rd-tel" type="tel" placeholder="+213 _ __ __ __ __" required></div></div>
+    <label class="consent"><span style="position:relative;display:inline-flex"><input type="checkbox" id="rd-consent" required><span class="checkbox"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span></span><span>J'accepte d'être recontacté(e) pour confirmer ce rendez-vous.</span></label>
+    <button class="btn btn-solid btn-block" id="rdvConfirm" disabled>Confirmer le rendez-vous</button>`;
+  const check=()=>{$('#rdvConfirm').disabled=!(rdv.date!==null&&rdv.slot);};
+  $('#rdvDates').onclick=e=>{const b=e.target.closest('[data-date]');if(!b)return;rdv.date=days[b.dataset.date];$$('#rdvDates .rdv-date').forEach(x=>x.setAttribute('aria-pressed',x===b));check();};
+  $('#rdvSlots').onclick=e=>{const b=e.target.closest('[data-slot]');if(!b||b.disabled)return;rdv.slot=b.dataset.slot;$$('#rdvSlots .slot').forEach(x=>x.setAttribute('aria-pressed',x===b));check();};
+  $('#rdvConfirm').onclick=()=>{
+    if(!$('#rd-nom').value||!$('#rd-tel').value||!$('#rd-consent').checked){toast('Complétez vos coordonnées');return;}
+    const jn2=['dimanche','lundi','mardi','mercredi','jeudi','vendredi','samedi'];
+    $('#rdvBody').innerHTML=`<div class="confirm">
+      <div class="ok-badge"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 13l4 4L19 7"/></svg></div>
+      <h2>Rendez-vous demandé</h2>
+      <p>Nous vous attendons le <strong>${jn2[rdv.date.getDay()]} ${rdv.date.getDate()}</strong> à <strong>${rdv.slot}</strong>. Un conseiller confirme par téléphone.</p>
+      <button class="btn btn-solid" data-close style="margin-top:1.4rem">Parfait</button></div>`;
+    bindCloseAll();
+  };
+  openModal('#modalRdv');
+}
+
+/* ================= LÉGAL ================= */
+const LEGAL={
+  mentions:{t:'Mentions légales',h:`
+    <h3>Éditeur du site</h3><p>ÉCRIN — Maison de joaillerie. Boutique : rue Didouche Mourad, Alger-Centre (16000), Alger, Algérie. Téléphone : +213 _ __ __ __ __. Email : bonjour@ecrin-joaillerie.dz.</p>
+    <p>Registre du commerce et numéro d'identification fiscale : mentions à compléter. Directeur de la publication : la gérance.</p>
+    <h3>Hébergement</h3><p>Site hébergé par un prestataire technique dont les coordonnées peuvent être obtenues sur demande à l'adresse email ci-dessus.</p>
+    <h3>Propriété intellectuelle</h3><p>L'ensemble des visuels, textes et créations présentés sur ce site sont la propriété d'ÉCRIN. Toute reproduction sans autorisation est interdite.</p>
+    <p style="color:var(--muted);font-size:.82rem;margin-top:1rem">Ceci est un site de démonstration. Les informations légales définitives seront renseignées avant mise en production.</p>`},
+  confidentialite:{t:'Politique de confidentialité',h:`
+    <h3>Données collectées</h3><p>Nous collectons uniquement les données nécessaires au traitement de vos demandes : nom, téléphone, email (facultatif) et adresse de livraison le cas échéant. Aucune donnée de paiement n'est stockée.</p>
+    <h3>Finalité</h3><p>Vos données servent à répondre à vos demandes, préparer vos commandes, organiser vos rendez-vous et, si vous y consentez, vous informer de nos nouveautés.</p>
+    <h3>Conservation & partage</h3><p>Vos données ne sont jamais cédées ni vendues à des tiers. Elles sont conservées le temps strictement nécessaire, puis supprimées.</p>
+    <h3>Vos droits</h3><p>Vous pouvez à tout moment demander l'accès, la rectification ou la suppression de vos données en écrivant à bonjour@ecrin-joaillerie.dz.</p>
+    <h3>Cookies</h3><p>Nous utilisons des cookies de mesure d'audience, activés uniquement avec votre consentement via le bandeau prévu à cet effet.</p>`},
+  cgv:{t:'Conditions de vente',h:`
+    <h3>Prix</h3><p>Les prix sont indiqués en dinars algériens (DA), toutes taxes comprises. Ils tiennent compte du métal, de la taille et des options choisies (gravure).</p>
+    <h3>Commande & paiement</h3><p>Le paiement s'effectue à la livraison ou par virement bancaire. Toute commande est confirmée par téléphone sous 24 h.</p>
+    <h3>Livraison</h3><p>Livraison assurée et suivie dans les 58 wilayas, offerte. Les délais indicatifs vous sont communiqués à la confirmation.</p>
+    <h3>Retour & garantie</h3><p>Reprise possible sous 30 jours pour les pièces non gravées, dans leur état d'origine avec certificat. Garantie, nettoyage et retaille offerts à vie.</p>
+    <p style="color:var(--muted);font-size:.82rem;margin-top:1rem">Conditions de démonstration, à finaliser avant mise en production.</p>`}
+};
+function openLegal(k){const L=LEGAL[k];if(!L)return;$('#legalTitle').textContent=L.t;$('#legalBody').innerHTML=L.h;openModal('#modalLegal');}
+
+/* ================= MODALS GÉNÉRIQUES ================= */
+let lastFocus=null;
+function openModal(sel){lastFocus=document.activeElement;$(sel).classList.add('on');document.body.style.overflow='hidden';
+  const c=$(sel).querySelector('.modal-card');if(c)c.focus?.();}
+function closeModal(sel){$(sel).classList.remove('on');if(!$('#drawer').classList.contains('on'))document.body.style.overflow='';if(lastFocus)lastFocus.focus?.();}
+function bindCloseAll(){$$('[data-close]').forEach(b=>{b.onclick=()=>{$$('.modal.on').forEach(m=>closeModal('#'+m.id));};});}
+
+/* ================= FORM VALIDATION ================= */
+function validForm(sel){
+  let ok=true;
+  $$(sel+' [required]').forEach(f=>{
+    const bad=(f.type==='checkbox')?!f.checked:!f.value.trim();
+    f.style.borderColor=bad?'#B4553F':''; if(bad)ok=false;
+  });
+  if(!ok)toast('Veuillez compléter les champs requis');
+  return ok;
+}
+
+/* ================= TOAST ================= */
+let toastT;
+function toast(msg){$('#toastMsg').textContent=msg;$('#toast').classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>$('#toast').classList.remove('on'),2600);}
+
+/* ================= REVEAL ================= */
+let io;
+function initReveal(){
+  if(!io){io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.12,rootMargin:'0px 0px -40px 0px'});}
+  $$('.reveal:not(.in)').forEach(el=>{
+    if(el.closest('.view:not(.active)'))return;
+    io.observe(el);
+  });
+}
+
+/* ================= MENU MOBILE ================= */
+function closeMenu(){$('#navLinks').classList.remove('open');$('#burger').classList.remove('open');$('#burger').setAttribute('aria-expanded','false');}
+
+/* ================= COOKIE ================= */
+function showCookie(){if(cookieChoice===null)setTimeout(()=>$('#cookie').classList.add('on'),1200);}
+function setCookie(v){cookieChoice=v;$('#cookie').classList.remove('on');toast(v?'Cookies acceptés':'Cookies refusés');}
+
+/* ================= INIT & ÉVÉNEMENTS ================= */
+function bindLegalLinks(){$$('[data-legal]').forEach(b=>{b.onclick=e=>{e.preventDefault();openLegal(b.dataset.legal);};});}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  // hero + featured visuels
+  $('#heroJewel').innerHTML=jewelSVG('solitaire','blanc','hero');
+  $('#heroJewel').firstElementChild.style.width='58%';$('#heroJewel').firstElementChild.style.height='58%';
+  $('#heroJewel').insertAdjacentHTML('beforeend',`<img class="jphoto" src="${jURL('1758995115682-1452a1a9e35b')}" alt="Bijoux ÉCRIN" loading="lazy" onerror="this.remove()">`);
+  $('#featureMedia').innerHTML=jewelSVG('collier-pendentif','blanc','feat')+`<img class="jphoto" src="${jURL('1622398925373-3f91b1e275f5')}" alt="Alliance en or" loading="lazy" onerror="this.remove()">`;
+  renderHome(); renderReviews(); renderFilters(); renderColl();
+  updateCart(); initReveal(); showCookie();
+
+  // Navigation data-nav
+  document.body.addEventListener('click',e=>{
+    const nav=e.target.closest('[data-nav]'); if(nav){e.preventDefault();showView(nav.dataset.nav);return;}
+    const open=e.target.closest('[data-open]'); if(open){goProduct(open.dataset.open);return;}
+    const prod=e.target.closest('[data-product]'); if(prod){e.preventDefault();goProduct(prod.dataset.product);return;}
+    const flt=e.target.closest('[data-filter]'); if(flt&&(flt.tagName==='A'||flt.closest('.footer'))){e.preventDefault();setFilter(flt.dataset.filter);showView('collections');return;}
+  });
+  // clavier sur cartes
+  document.body.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.matches('[data-open]')){e.preventDefault();goProduct(e.target.dataset.open);}});
+
+  // filtres collections
+  $('#filters').addEventListener('click',e=>{const b=e.target.closest('.filter');if(b)setFilter(b.dataset.filter);});
+
+  // panier
+  $('#cartOpen').onclick=openDrawer;
+  $('#drawerClose').onclick=closeDrawer;
+  $('#overlay').onclick=()=>{closeDrawer();$$('.modal.on').forEach(m=>closeModal('#'+m.id));};
+
+  // burger
+  $('#burger').onclick=()=>{const o=$('#navLinks').classList.toggle('open');$('#burger').classList.toggle('open',o);$('#burger').setAttribute('aria-expanded',o);};
+
+  // rdv
+  $('#rdvContactBtn').onclick=()=>openRdv();
+  $('#rdvFooter').onclick=e=>{e.preventDefault();openRdv();};
+
+  // cookie
+  $('#cookieAccept').onclick=()=>setCookie(true);
+  $('#cookieRefuse').onclick=()=>setCookie(false);
+  $('#cookieReopen').onclick=()=>{$('#cookie').classList.add('on');};
+
+  // legal
+  bindLegalLinks(); bindCloseAll();
+
+  // formulaires simples
+  ['#customForm','#contactForm'].forEach(sel=>{const f=$(sel);if(f)f.addEventListener('submit',e=>{e.preventDefault();if(!validForm(sel))return;
+    f.querySelectorAll('input,textarea,select').forEach(x=>{if(x.type!=='submit')x.value='';x.checked=false;});
+    toast('Message envoyé — merci !');});});
+
+  // newsletter
+  $('#nlBtn').onclick=()=>{const v=$('#nl').value.trim();if(v){$('#nl').value='';toast('Inscription enregistrée');}else toast('Entrez un email');};
+
+  // header scroll
+  addEventListener('scroll',()=>{$('#header').classList.toggle('scrolled',scrollY>20);},{passive:true});
+  // reveal au scroll
+  addEventListener('scroll',()=>requestAnimationFrame(initReveal),{passive:true});
+
+  // Échap ferme
+  addEventListener('keydown',e=>{if(e.key==='Escape'){closeDrawer();$$('.modal.on').forEach(m=>closeModal('#'+m.id));closeMenu();}});
+});
+</script>
+</body>
+</html>

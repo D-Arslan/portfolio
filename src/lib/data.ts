@@ -1106,6 +1106,9 @@ const THEME = {
   wellness:   { fr: "Bien-être & loisirs",     en: "Wellness & leisure" },
   ticketing:  { fr: "Billetterie & événements", en: "Ticketing & events" },
   hospitality:{ fr: "Hôtellerie",               en: "Hospitality" },
+  health:     { fr: "Santé & beauté",           en: "Health & beauty" },
+  realestate: { fr: "Immobilier",               en: "Real estate" },
+  education:  { fr: "Éducation",                 en: "Education" },
 } as const;
 
 export const catalogue: CatalogueItem[] = [
@@ -1124,4 +1127,11 @@ export const catalogue: CatalogueItem[] = [
   { slug: "galerie-diwan/dar-yasmine.html",  name: "Dar Yasmine",    category: { fr: "Hôtel bord de mer",       en: "Seaside hotel" },       theme: THEME.hospitality },
   { slug: "pizzaiolo/index.html",            name: "Atelier du Pizzaiolo", category: { fr: "Pizzeria au feu de bois", en: "Wood-fired pizzeria" }, theme: THEME.dining },
   { slug: "braz/index.html",                 name: "BRAZ",           category: { fr: "Grill & fast-food",       en: "Grill & fast food" },   theme: THEME.dining },
+  { slug: "formaggio.html",                  name: "Formaggio",      category: { fr: "Fromagerie & pizza",      en: "Cheese & pizza" },      theme: THEME.dining },
+  { slug: "la-braise.html",                  name: "La Braise",      category: { fr: "Pizza napolitaine",       en: "Neapolitan pizza" },    theme: THEME.dining },
+  { slug: "ecrin-bijouterie.html",           name: "Écrin",          category: { fr: "Joaillerie",              en: "Jewelry house" },       theme: THEME.retail },
+  { slug: "neroli-beaute.html",              name: "Néroli",         category: { fr: "Coiffure & institut",     en: "Hair & beauty salon" }, theme: THEME.health },
+  { slug: "eclat-dentaire.html",             name: "Éclat",          category: { fr: "Cabinet dentaire",        en: "Dental clinic" },       theme: THEME.health },
+  { slug: "atrium-immobilier.html",          name: "Atrium",         category: { fr: "Agence immobilière",      en: "Real estate agency" },  theme: THEME.realestate },
+  { slug: "envol-ecole-creche.html",         name: "L'Envol",        category: { fr: "École & crèche",          en: "School & daycare" },    theme: THEME.education },
 ];

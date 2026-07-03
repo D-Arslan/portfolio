@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cabinet ÉCLAT — Dentiste à Alger · Prise de rendez-vous en ligne</title>
+<meta name="description" content="Cabinet dentaire ÉCLAT à Alger : soins généraux, esthétique, implants, orthodontie et pédodontie. Prise de rendez-vous en ligne, accès urgence dentaire. Conventionné CNAS / CASNOS.">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Nunito+Sans:opsz,wght@6..12,300;6..12,400;6..12,600;6..12,700&display=swap');
+
+:root{
+  --blanc:#FBFAF7;
+  --blanc-2:#FFFFFF;
+  --surface:#EEF6F3;
+  --surface-2:#E3F0EC;
+  --menthe:#4FA396;
+  --menthe-c:#8FC9BE;
+  --menthe-d:#2E7D71;
+  --menthe-glow:rgba(79,163,150,.14);
+  --sable:#E7D3B0;
+  --sable-s:#F4E9D4;
+  --encre:#22403C;
+  --encre-2:#3C5854;
+  --muted:#6E837E;
+  --urgence:#D9776A;
+  --urgence-bg:#FBEDEA;
+  --ligne:rgba(34,64,60,.12);
+  --ligne-2:rgba(34,64,60,.07);
+  --ok:#4FA396;
+  --shadow:0 18px 40px -22px rgba(34,64,60,.4);
+  --shadow-soft:0 10px 28px -18px rgba(34,64,60,.35);
+  --r:22px; --r-s:14px;
+  --disp:'Nunito',system-ui,sans-serif;
+  --body:'Nunito Sans',system-ui,sans-serif;
+  --maxw:1180px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:var(--body);background:var(--blanc);color:var(--encre);line-height:1.62;font-size:16.5px;overflow-x:hidden}
+img,svg{display:block;max-width:100%}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+a{color:inherit;text-decoration:none}
+input,select,textarea{font-family:inherit;font-size:1rem;color:inherit}
+ul{list-style:none}
+h1,h2,h3,h4{font-family:var(--disp);font-weight:800;line-height:1.12;letter-spacing:-.01em}
+:focus-visible{outline:3px solid var(--menthe);outline-offset:2px;border-radius:6px}
+.skip{position:absolute;left:-999px;top:0;background:var(--encre);color:#fff;padding:.7rem 1.2rem;z-index:300;border-radius:0 0 10px 0}
+.skip:focus{left:0}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 clamp(1.1rem,4vw,2.4rem)}
+.section{padding:clamp(3.5rem,8vw,6.5rem) 0}
+.eyebrow{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--disp);font-weight:700;font-size:.8rem;letter-spacing:.03em;color:var(--menthe-d);
+  background:var(--surface);padding:.4rem .9rem;border-radius:40px}
+.eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--menthe)}
+.center{text-align:center}
+
+/* boutons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.55rem;font-family:var(--disp);font-weight:700;font-size:.98rem;
+  padding:.95rem 1.7rem;border-radius:40px;transition:transform .3s cubic-bezier(.2,.7,.3,1),box-shadow .3s,background .3s,color .3s}
+.btn svg{width:18px;height:18px}
+.btn-primary{background:var(--menthe);color:#fff;box-shadow:0 10px 24px -12px rgba(79,163,150,.7)}
+.btn-primary:hover{background:var(--menthe-d);transform:translateY(-2px);box-shadow:0 16px 30px -12px rgba(79,163,150,.8)}
+.btn-ghost{background:var(--blanc-2);color:var(--encre);box-shadow:inset 0 0 0 1.5px var(--ligne)}
+.btn-ghost:hover{box-shadow:inset 0 0 0 1.5px var(--menthe-c);transform:translateY(-2px)}
+.btn-urgence{background:var(--urgence);color:#fff;box-shadow:0 10px 24px -12px rgba(217,119,106,.7)}
+.btn-urgence:hover{background:#c9685c;transform:translateY(-2px)}
+.btn-block{width:100%}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
+.textlink{color:var(--menthe-d);font-weight:700;font-family:var(--disp);border-bottom:2px solid var(--menthe-c);padding-bottom:1px}
+.textlink:hover{border-color:var(--menthe)}
+
+/* header */
+.header{position:sticky;top:0;z-index:90;background:rgba(251,250,247,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--ligne-2);transition:box-shadow .3s}
+.header.scrolled{box-shadow:0 8px 24px -20px rgba(34,64,60,.5)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:76px;gap:1rem}
+.brand{display:flex;align-items:center;gap:.6rem;font-family:var(--disp);font-weight:900;font-size:1.5rem;letter-spacing:-.02em;color:var(--encre)}
+.brand .logo{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,var(--menthe),var(--menthe-d));display:flex;align-items:center;justify-content:center;box-shadow:0 6px 14px -6px rgba(79,163,150,.7)}
+.nav-links{display:flex;gap:.4rem;align-items:center}
+.nav-links a{font-family:var(--disp);font-weight:700;font-size:.95rem;color:var(--encre-2);padding:.55rem .95rem;border-radius:30px;transition:.25s}
+.nav-links a:hover{background:var(--surface);color:var(--encre)}
+.nav-links a[aria-current="page"]{background:var(--surface-2);color:var(--menthe-d)}
+.nav-right{display:flex;align-items:center;gap:.7rem}
+.burger{display:none;flex-direction:column;gap:5px;padding:8px}
+.burger span{width:22px;height:2px;border-radius:2px;background:var(--encre);transition:.3s}
+
+/* hero */
+.hero{position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;width:60vw;height:60vw;max-width:720px;max-height:720px;right:-14vw;top:-16vw;border-radius:50%;
+  background:radial-gradient(circle,var(--surface-2),transparent 68%);z-index:0}
+.hero::after{content:"";position:absolute;width:34vw;height:34vw;max-width:400px;left:-8vw;bottom:-12vw;border-radius:50%;
+  background:radial-gradient(circle,var(--sable-s),transparent 66%);z-index:0}
+.hero-inner{position:relative;z-index:1;display:grid;grid-template-columns:1.05fr .95fr;gap:3rem;align-items:center;padding:clamp(2.5rem,6vw,4.5rem) 0}
+.hero h1{font-size:clamp(2.4rem,5.6vw,4rem);font-weight:900;letter-spacing:-.025em;margin:1.1rem 0 1.2rem}
+.hero h1 .hl{color:var(--menthe-d);position:relative}
+.hero p{font-size:1.1rem;color:var(--encre-2);max-width:46ch;margin-bottom:1.8rem}
+.hero-cta{display:flex;gap:.9rem;flex-wrap:wrap;margin-bottom:1.8rem}
+.hero-trust{display:flex;gap:1.4rem;flex-wrap:wrap;font-family:var(--disp);font-weight:700;font-size:.88rem;color:var(--encre-2)}
+.hero-trust span{display:flex;align-items:center;gap:.45rem}
+.hero-trust svg{color:var(--menthe)}
+.hero-visual{position:relative;display:flex;align-items:center;justify-content:center}
+.hero-card{background:var(--blanc-2);border-radius:28px;padding:1.6rem;box-shadow:var(--shadow);width:min(400px,100%);position:relative;z-index:2}
+.hero-tooth{width:100%;aspect-ratio:4/3;border-radius:20px;background:linear-gradient(140deg,var(--surface),var(--surface-2));display:flex;align-items:center;justify-content:center;margin-bottom:1.2rem}
+.hero-tooth svg{width:44%;color:var(--menthe-d)}
+.mini-slot{display:flex;align-items:center;justify-content:space-between;gap:1rem;background:var(--surface);border-radius:16px;padding:.9rem 1.1rem;margin-bottom:.7rem}
+.mini-slot .ms-l{font-family:var(--disp);font-weight:700;font-size:.92rem}
+.mini-slot .ms-l small{display:block;font-weight:600;font-family:var(--body);color:var(--muted);font-size:.78rem}
+.mini-slot .ms-pill{font-family:var(--disp);font-weight:700;font-size:.82rem;color:var(--menthe-d);background:var(--blanc-2);padding:.35rem .8rem;border-radius:30px}
+/* urgence floating */
+.urgence-float{position:absolute;bottom:-18px;left:-16px;z-index:3;background:var(--blanc-2);border-radius:18px;padding:.9rem 1.1rem;box-shadow:var(--shadow);
+  display:flex;gap:.8rem;align-items:center;max-width:250px;border:1.5px solid var(--urgence-bg)}
+.urgence-float .uf-ico{width:40px;height:40px;border-radius:12px;background:var(--urgence-bg);color:var(--urgence);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.urgence-float .uf-t{font-family:var(--disp);font-weight:800;font-size:.9rem;line-height:1.2}
+.urgence-float .uf-t small{display:block;font-family:var(--body);font-weight:600;color:var(--muted);font-size:.75rem;margin-top:2px}
+
+/* bande urgence */
+.urgence-bar{background:var(--urgence-bg)}
+.urgence-bar .wrap{display:flex;align-items:center;justify-content:space-between;gap:1.4rem;padding:1.3rem 0;flex-wrap:wrap}
+.urgence-bar .ub-l{display:flex;align-items:center;gap:1rem}
+.urgence-bar .ub-ico{width:48px;height:48px;border-radius:14px;background:#fff;color:var(--urgence);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:var(--shadow-soft)}
+.urgence-bar h3{font-size:1.2rem;color:var(--encre)}
+.urgence-bar p{font-size:.9rem;color:var(--encre-2)}
+
+/* section head */
+.shead{max-width:640px}
+.shead.center{margin:0 auto}
+.shead h2{font-size:clamp(2rem,4.4vw,3rem);font-weight:900;letter-spacing:-.02em;margin:.9rem 0 .6rem}
+.shead p{color:var(--encre-2);font-size:1.05rem}
+
+/* soins grid */
+.soins-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;margin-top:3rem}
+.soin{background:var(--blanc-2);border-radius:var(--r);padding:1.8rem;box-shadow:var(--shadow-soft);border:1px solid var(--ligne-2);transition:transform .35s,box-shadow .35s;position:relative;overflow:hidden}
+.soin:hover{transform:translateY(-5px);box-shadow:var(--shadow)}
+.soin-ico{width:56px;height:56px;border-radius:16px;background:var(--surface);color:var(--menthe-d);display:flex;align-items:center;justify-content:center;margin-bottom:1.1rem}
+.soin h3{font-size:1.35rem;margin-bottom:.5rem}
+.soin p{font-size:.94rem;color:var(--encre-2);margin-bottom:1.1rem}
+.soin .price{font-family:var(--disp);font-weight:800;color:var(--menthe-d);font-size:1.02rem;display:flex;align-items:baseline;gap:.4rem}
+.soin .price small{font-family:var(--body);font-weight:600;color:var(--muted);font-size:.78rem}
+
+/* équipe */
+.team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.4rem;margin-top:3rem}
+.member{background:var(--blanc-2);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow-soft);border:1px solid var(--ligne-2);transition:transform .35s}
+.member:hover{transform:translateY(-5px)}
+.member-photo{aspect-ratio:1;background:linear-gradient(150deg,var(--surface),var(--surface-2));display:flex;align-items:center;justify-content:center;position:relative}
+.member-photo .initials{font-family:var(--disp);font-weight:900;font-size:2.6rem;color:var(--menthe-d);opacity:.55}
+.member-body{padding:1.2rem 1.3rem 1.5rem}
+.member-body h3{font-size:1.2rem}
+.member-body .spec{font-family:var(--disp);font-weight:700;color:var(--menthe-d);font-size:.85rem;margin:.15rem 0 .5rem}
+.member-body .dip{font-size:.82rem;color:var(--muted);margin-bottom:.6rem}
+.member-body .bio{font-size:.88rem;color:var(--encre-2)}
+
+/* cabinet / équipement */
+.equip-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;margin-top:2.6rem}
+.equip{background:var(--blanc-2);border-radius:var(--r);padding:1.6rem;border:1px solid var(--ligne-2);display:flex;gap:1rem;align-items:flex-start}
+.equip .eq-ico{width:46px;height:46px;border-radius:12px;background:var(--sable-s);color:var(--encre);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.equip h3{font-size:1.1rem;margin-bottom:.3rem}
+.equip p{font-size:.9rem;color:var(--encre-2)}
+.hygiene{background:var(--surface);border-radius:28px;padding:clamp(1.8rem,4vw,2.6rem);margin-top:2.4rem;display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:center}
+.hygiene ul li{display:flex;gap:.7rem;align-items:flex-start;padding:.5rem 0;font-size:.95rem}
+.hygiene ul li svg{color:var(--menthe);flex-shrink:0;margin-top:3px}
+
+/* avis */
+.reviews{display:grid;grid-template-columns:repeat(4,1fr);gap:1.3rem;margin-top:2.8rem}
+.review{background:var(--blanc-2);border-radius:var(--r-s);padding:1.5rem;border:1px solid var(--ligne-2)}
+.review .stars{color:var(--sable);font-size:1rem;letter-spacing:2px;margin-bottom:.7rem}
+.review p{font-size:.95rem;color:var(--encre-2);margin-bottom:1rem}
+.review .who{font-family:var(--disp);font-weight:700;font-size:.85rem}
+
+/* FAQ */
+.faq{max-width:760px;margin:2.6rem auto 0}
+.faq-item{background:var(--blanc-2);border:1px solid var(--ligne-2);border-radius:var(--r-s);margin-bottom:.9rem;overflow:hidden}
+.faq-q{width:100%;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1.2rem 1.4rem;font-family:var(--disp);font-weight:700;font-size:1.02rem;text-align:left}
+.faq-q .chev{transition:transform .3s;color:var(--menthe);flex-shrink:0}
+.faq-item.open .chev{transform:rotate(180deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease}
+.faq-a-inner{padding:0 1.4rem 1.3rem;color:var(--encre-2);font-size:.95rem}
+
+/* ===== PRISE DE RDV (STEPPER) ===== */
+.rdv-shell{max-width:820px;margin:0 auto}
+.stepper{display:flex;align-items:center;gap:.4rem;margin:2.2rem 0 2.4rem;justify-content:center}
+.stepper .st{display:flex;align-items:center;gap:.6rem}
+.stepper .dot{width:34px;height:34px;border-radius:50%;background:var(--surface);color:var(--muted);display:flex;align-items:center;justify-content:center;
+  font-family:var(--disp);font-weight:800;font-size:.9rem;transition:.3s;flex-shrink:0}
+.stepper .st.done .dot,.stepper .st.active .dot{background:var(--menthe);color:#fff}
+.stepper .lbl{font-family:var(--disp);font-weight:700;font-size:.82rem;color:var(--muted)}
+.stepper .st.active .lbl,.stepper .st.done .lbl{color:var(--encre)}
+.stepper .bar{width:34px;height:2px;background:var(--ligne);border-radius:2px}
+.stepper .st.done + .bar{background:var(--menthe-c)}
+@media(max-width:640px){.stepper .lbl{display:none}.stepper .bar{width:18px}}
+
+.rdv-card{background:var(--blanc-2);border-radius:26px;box-shadow:var(--shadow-soft);border:1px solid var(--ligne-2);padding:clamp(1.4rem,4vw,2.4rem)}
+.rdv-step{display:none;animation:fade .4s ease}
+.rdv-step.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.rdv-step h2{font-size:1.6rem;margin-bottom:.4rem}
+.rdv-step .sub{color:var(--encre-2);margin-bottom:1.6rem;font-size:.98rem}
+
+.choice-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:.9rem}
+.choice{display:flex;align-items:center;gap:.9rem;padding:1.1rem 1.2rem;border-radius:16px;border:2px solid var(--ligne);background:var(--blanc);text-align:left;transition:.25s}
+.choice:hover{border-color:var(--menthe-c);background:var(--surface)}
+.choice[aria-pressed="true"]{border-color:var(--menthe);background:var(--surface-2)}
+.choice .ci{width:44px;height:44px;border-radius:12px;background:var(--surface);color:var(--menthe-d);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.choice[aria-pressed="true"] .ci{background:#fff}
+.choice.urgent{border-color:var(--urgence-bg)}
+.choice.urgent .ci{background:var(--urgence-bg);color:var(--urgence)}
+.choice.urgent[aria-pressed="true"]{border-color:var(--urgence);background:var(--urgence-bg)}
+.choice h4{font-family:var(--disp);font-weight:800;font-size:1.02rem}
+.choice small{color:var(--muted);font-size:.82rem;display:block}
+
+.prac-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.9rem}
+.prac{padding:1.1rem;border-radius:16px;border:2px solid var(--ligne);background:var(--blanc);text-align:center;transition:.25s}
+.prac:hover{border-color:var(--menthe-c)}
+.prac[aria-pressed="true"]{border-color:var(--menthe);background:var(--surface-2)}
+.prac .av{width:52px;height:52px;border-radius:50%;margin:0 auto .6rem;background:linear-gradient(150deg,var(--surface),var(--surface-2));display:flex;align-items:center;justify-content:center;font-family:var(--disp);font-weight:900;color:var(--menthe-d)}
+.prac h4{font-family:var(--disp);font-weight:800;font-size:1rem}
+.prac small{color:var(--muted);font-size:.8rem}
+
+.rdv-dates{display:flex;gap:.6rem;overflow-x:auto;padding-bottom:.6rem;margin-bottom:1.5rem}
+.rdv-date{flex-shrink:0;min-width:70px;padding:.8rem .5rem;border:2px solid var(--ligne);border-radius:16px;text-align:center;background:var(--blanc);transition:.25s}
+.rdv-date:hover{border-color:var(--menthe-c)}
+.rdv-date[aria-pressed="true"]{border-color:var(--menthe);background:var(--surface-2)}
+.rdv-date .d{font-family:var(--disp);font-weight:700;font-size:.68rem;text-transform:uppercase;color:var(--muted)}
+.rdv-date .n{font-family:var(--disp);font-weight:900;font-size:1.5rem;line-height:1.1;color:var(--encre)}
+.rdv-date .m{font-size:.7rem;color:var(--muted)}
+.slots{display:grid;grid-template-columns:repeat(auto-fill,minmax(78px,1fr));gap:.6rem}
+.slot{padding:.7rem;border:2px solid var(--ligne);border-radius:12px;font-family:var(--disp);font-weight:700;font-size:.9rem;background:var(--blanc);transition:.25s}
+.slot:hover:not(:disabled){border-color:var(--menthe-c)}
+.slot[aria-pressed="true"]{background:var(--menthe);color:#fff;border-color:var(--menthe)}
+.slot:disabled{opacity:.4;text-decoration:line-through;cursor:not-allowed}
+.slot.rapid{border-color:var(--urgence);color:var(--urgence)}
+.slot.rapid[aria-pressed="true"]{background:var(--urgence);color:#fff;border-color:var(--urgence)}
+
+.summary-box{background:var(--surface);border-radius:16px;padding:1.2rem 1.4rem;margin-bottom:1.4rem}
+.summary-box .sl{display:flex;justify-content:space-between;gap:1rem;padding:.4rem 0;font-size:.95rem}
+.summary-box .sl span:first-child{color:var(--muted)}
+.summary-box .sl span:last-child{font-family:var(--disp);font-weight:700}
+
+.field{margin-bottom:1.1rem}
+.field label{display:block;font-family:var(--disp);font-weight:700;font-size:.88rem;margin-bottom:.45rem}
+.field input,.field select,.field textarea{width:100%;padding:.85rem 1rem;border:2px solid var(--ligne);border-radius:12px;background:var(--blanc);transition:.25s}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--menthe);background:#fff}
+.field textarea{resize:vertical;min-height:90px}
+.field.two{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.consent{display:flex;gap:.75rem;align-items:flex-start;font-size:.9rem;color:var(--encre-2);margin:.9rem 0}
+.consent a{color:var(--menthe-d);text-decoration:underline}
+.cbx{position:relative;flex-shrink:0;width:22px;height:22px}
+.cbx input{position:absolute;opacity:0;width:100%;height:100%;cursor:pointer;margin:0}
+.cbx .box{width:22px;height:22px;border:2px solid var(--muted);border-radius:6px;background:#fff;display:flex;align-items:center;justify-content:center;transition:.2s}
+.cbx svg{opacity:0;transition:.2s}
+.cbx input:checked + .box{background:var(--menthe);border-color:var(--menthe)}
+.cbx input:checked + .box svg{opacity:1}
+.privacy-note{display:flex;gap:.6rem;align-items:flex-start;background:var(--surface);border-radius:12px;padding:.9rem 1rem;font-size:.84rem;color:var(--encre-2);margin-top:1rem}
+.privacy-note svg{color:var(--menthe-d);flex-shrink:0;margin-top:1px}
+.rdv-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:1.8rem}
+
+.confirm{text-align:center;padding:1rem 0}
+.confirm .badge{width:72px;height:72px;border-radius:50%;background:var(--surface-2);color:var(--menthe-d);display:flex;align-items:center;justify-content:center;margin:0 auto 1.2rem}
+.confirm h2{font-size:1.9rem}
+.confirm p{color:var(--encre-2);max-width:44ch;margin:.6rem auto}
+.confirm .ref{display:inline-block;margin:1rem 0;font-family:var(--disp);font-weight:800;background:var(--surface);padding:.6rem 1.4rem;border-radius:30px;color:var(--menthe-d)}
+.confirm .reminders{text-align:left;background:var(--sable-s);border-radius:16px;padding:1.2rem 1.4rem;max-width:440px;margin:1.4rem auto 0}
+.confirm .reminders li{display:flex;gap:.6rem;padding:.35rem 0;font-size:.9rem}
+.confirm .reminders svg{color:var(--encre);flex-shrink:0}
+
+/* contact */
+.contact-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:2.4rem;margin-top:2.6rem}
+.info-card{background:var(--blanc-2);border-radius:var(--r);border:1px solid var(--ligne-2);padding:1.8rem;box-shadow:var(--shadow-soft)}
+.info-card li{display:flex;gap:.9rem;padding:.9rem 0;border-bottom:1px solid var(--ligne-2);align-items:flex-start}
+.info-card li:last-child{border:none}
+.info-card .ico{width:42px;height:42px;border-radius:12px;background:var(--surface);color:var(--menthe-d);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.info-card .lab{font-family:var(--disp);font-weight:700;font-size:.8rem;color:var(--muted)}
+.info-card .v{font-family:var(--disp);font-weight:800;font-size:1.05rem}
+.info-card .v small{display:block;font-family:var(--body);font-weight:400;color:var(--encre-2);font-size:.85rem}
+.map{aspect-ratio:16/9;border-radius:var(--r);margin-top:1.4rem;overflow:hidden;background:var(--surface);position:relative;border:1px solid var(--ligne-2)}
+.map svg{width:100%;height:100%}
+.map .pin{position:absolute;left:50%;top:46%;transform:translate(-50%,-50%);color:var(--urgence)}
+
+/* footer */
+.footer{background:var(--encre);color:rgba(251,250,247,.78);margin-top:2rem}
+.footer-top{display:grid;grid-template-columns:1.6fr 1fr 1fr 1.2fr;gap:2.2rem;padding:clamp(3rem,6vw,4.5rem) 0 2.6rem}
+.footer .brand{color:#fff;margin-bottom:1rem}
+.footer .brand .logo{box-shadow:none}
+.footer p.about{font-size:.92rem;color:rgba(251,250,247,.6);max-width:32ch}
+.footer h4{font-family:var(--disp);font-weight:800;font-size:.95rem;color:#fff;margin-bottom:1rem}
+.footer a,.footer li{display:block;font-size:.92rem;color:rgba(251,250,247,.65);padding:.3rem 0;transition:.25s}
+.footer a:hover{color:#fff}
+.conv{display:inline-flex;gap:.5rem;align-items:center;background:rgba(251,250,247,.08);padding:.5rem .9rem;border-radius:30px;font-family:var(--disp);font-weight:700;font-size:.82rem;color:#fff;margin-top:1rem}
+.footer-bottom{border-top:1px solid rgba(251,250,247,.14);padding:1.5rem 0;display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between;align-items:center;font-size:.85rem}
+.footer-bottom .legal{display:flex;gap:1.2rem;flex-wrap:wrap}
+.footer-bottom .legal button{font-size:.85rem;color:rgba(251,250,247,.65)}
+.footer-bottom .legal button:hover{color:#fff}
+.sig a{color:var(--menthe-c);border-bottom:1px solid transparent}
+.sig a:hover{border-color:var(--menthe-c)}
+
+/* modal */
+.modal{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;padding:1.2rem;opacity:0;visibility:hidden;transition:.3s}
+.modal.on{opacity:1;visibility:visible}
+.modal-bg{position:absolute;inset:0;background:rgba(34,64,60,.5);backdrop-filter:blur(3px)}
+.modal-card{position:relative;background:var(--blanc);border-radius:24px;max-width:560px;width:100%;max-height:88vh;overflow-y:auto;box-shadow:var(--shadow);
+  transform:translateY(14px) scale(.98);transition:.3s}
+.modal.on .modal-card{transform:none}
+.modal-head{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;padding:1.6rem 1.8rem 1rem}
+.modal-head h2{font-size:1.5rem}
+.modal-close{width:38px;height:38px;border-radius:50%;background:var(--surface);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.modal-close:hover{background:var(--surface-2)}
+.modal-body{padding:0 1.8rem 1.8rem}
+.legal-body{font-size:.94rem;color:var(--encre-2)}
+.legal-body h3{font-family:var(--disp);font-weight:800;color:var(--encre);margin:1.2rem 0 .4rem;font-size:1.1rem}
+.legal-body p{margin-bottom:.7rem}
+
+/* cookie */
+.cookie{position:fixed;left:1rem;right:1rem;bottom:1rem;z-index:210;max-width:560px;margin:0 auto;background:#fff;border-radius:20px;
+  padding:1.4rem 1.5rem;box-shadow:var(--shadow);border:1px solid var(--ligne-2);transform:translateY(160%);transition:transform .5s cubic-bezier(.2,.8,.3,1)}
+.cookie.on{transform:none}
+.cookie p{font-size:.9rem;color:var(--encre-2);margin-bottom:1rem}
+.cookie p a{color:var(--menthe-d);text-decoration:underline}
+.cookie-actions{display:flex;gap:.7rem;flex-wrap:wrap}
+.cookie-actions .btn{padding:.7rem 1.3rem;font-size:.9rem}
+
+/* toast */
+.toast{position:fixed;bottom:1.4rem;left:50%;transform:translate(-50%,160%);z-index:220;background:var(--encre);color:#fff;
+  padding:.9rem 1.4rem;border-radius:30px;font-family:var(--disp);font-weight:700;font-size:.9rem;display:flex;gap:.6rem;align-items:center;box-shadow:var(--shadow);transition:transform .4s cubic-bezier(.2,.8,.3,1)}
+.toast.on{transform:translate(-50%,0)}
+.toast svg{color:var(--menthe-c)}
+
+/* views + reveal */
+.view{display:none}.view.active{display:block;animation:fade .4s ease}
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.3,1)}
+.reveal.in{opacity:1;transform:none}
+.reveal.d1{transition-delay:.08s}.reveal.d2{transition-delay:.16s}.reveal.d3{transition-delay:.24s}
+
+@media(max-width:920px){
+  .hero-inner,.contact-grid,.hygiene{grid-template-columns:1fr}
+  .soins-grid,.equip-grid{grid-template-columns:1fr 1fr}
+  .team-grid,.reviews{grid-template-columns:1fr 1fr}
+  .footer-top{grid-template-columns:1fr 1fr}
+  .hero-visual{margin-top:1rem}
+}
+@media(max-width:640px){
+  .nav-links{position:fixed;inset:76px 0 auto 0;flex-direction:column;background:var(--blanc);padding:1rem clamp(1.1rem,4vw,2.4rem) 1.6rem;
+    gap:.2rem;border-bottom:1px solid var(--ligne);transform:translateY(-130%);transition:transform .4s;box-shadow:var(--shadow-soft);align-items:stretch}
+  .nav-links.open{transform:none}
+  .nav-links a{padding:.9rem 1rem}
+  .burger{display:flex}
+  .burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .burger.open span:nth-child(2){opacity:0}
+  .burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+  .soins-grid,.equip-grid,.team-grid,.reviews,.field.two{grid-template-columns:1fr}
+  .footer-top{grid-template-columns:1fr}
+  .urgence-float{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
+  .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+<a href="#main" class="skip">Aller au contenu</a>
+
+<header class="header" id="header">
+  <div class="wrap">
+    <nav class="nav" aria-label="Navigation principale">
+      <a href="#" class="brand" data-nav="accueil" aria-label="Cabinet ÉCLAT, accueil">
+        <span class="logo"><svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M12 3c-2 0-3 1-5 1S4 3 3.5 5C2.7 8 3.5 13 5 17c.6 1.6 1.2 3 2 3s1-1.5 1.4-3c.3-1.2.7-2 1.6-2s1.3.8 1.6 2c.4 1.5.6 3 1.4 3s1.4-1.4 2-3c1.5-4 2.3-9 1.5-12C17 3 16 4 14 4s-.9-1-2-1z"/></svg></span>
+        ÉCLAT
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#" data-nav="accueil" aria-current="page">Accueil</a></li>
+        <li><a href="#" data-nav="soins">Soins</a></li>
+        <li><a href="#" data-nav="equipe">L'équipe</a></li>
+        <li><a href="#" data-nav="cabinet">Le cabinet</a></li>
+        <li><a href="#" data-nav="contact">Contact</a></li>
+      </ul>
+      <div class="nav-right">
+        <button class="btn btn-primary" data-nav="rdv" style="padding:.7rem 1.3rem;font-size:.9rem">Prendre RDV</button>
+        <button class="burger" id="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ============ ACCUEIL ============ -->
+<section class="view active" id="view-accueil" aria-label="Accueil">
+  <div class="hero">
+    <div class="wrap">
+      <div class="hero-inner">
+        <div class="hero-copy reveal">
+          <span class="eyebrow">Cabinet dentaire · Alger</span>
+          <h1>Prendre soin de votre sourire, <span class="hl">en douceur</span></h1>
+          <p>Soins généraux, esthétique, implants, orthodontie et soins des enfants. Un cabinet lumineux, un accompagnement à l'écoute, et la prise de rendez-vous en ligne.</p>
+          <div class="hero-cta">
+            <button class="btn btn-primary" data-nav="rdv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M3 9h18M8 2v4M16 2v4"/></svg> Prendre rendez-vous</button>
+            <button class="btn btn-ghost" data-nav="soins">Découvrir les soins</button>
+          </div>
+          <div class="hero-trust">
+            <span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg> Conventionné CNAS / CASNOS</span>
+            <span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg> Stérilisation contrôlée</span>
+            <span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg> Rappel de RDV par SMS</span>
+          </div>
+        </div>
+        <div class="hero-visual reveal d1">
+          <div class="hero-card">
+            <img src="https://images.unsplash.com/photo-1728342057953-94bfad8f0e7e?auto=format&fit=crop&w=800&q=70" alt="Salle de soins lumineuse du cabinet" loading="lazy" onerror="this.remove()" style="width:100%;height:150px;object-fit:cover;border-radius:16px;margin-bottom:1.1rem">
+            <div class="hero-tooth"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3c-2 0-3 1-5 1S4 3 3.5 5C2.7 8 3.5 13 5 17c.6 1.6 1.2 3 2 3s1-1.5 1.4-3c.3-1.2.7-2 1.6-2s1.3.8 1.6 2c.4 1.5.6 3 1.4 3s1.4-1.4 2-3c1.5-4 2.3-9 1.5-12C17 3 16 4 14 4s-.9-1-2-1z"/></svg></div>
+            <div class="mini-slot"><div class="ms-l">Consultation<small>Dr Belhadj</small></div><div class="ms-pill">Demain · 10h30</div></div>
+            <div class="mini-slot"><div class="ms-l">Détartrage<small>Dr Meddour</small></div><div class="ms-pill">Jeu. · 14h00</div></div>
+            <button class="btn btn-primary btn-block" data-nav="rdv" style="margin-top:.4rem">Voir tous les créneaux</button>
+          </div>
+          <div class="urgence-float">
+            <span class="uf-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg></span>
+            <span class="uf-t">Douleur ?<small id="ufSlot">Créneau rapide aujourd'hui</small></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bande urgence -->
+  <div class="urgence-bar">
+    <div class="wrap">
+      <div class="ub-l">
+        <span class="ub-ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg></span>
+        <div><h3>Urgence dentaire ?</h3><p>Douleur, dent cassée, abcès — nous vous recevons au plus vite.</p></div>
+      </div>
+      <button class="btn btn-urgence" id="urgenceBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 4h4l2 5-3 2a12 12 0 0 0 5 5l2-3 5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg> Prochain créneau : <span id="urgTime">aujourd'hui</span></button>
+    </div>
+  </div>
+
+  <!-- Soins aperçu -->
+  <div class="section">
+    <div class="wrap">
+      <div class="shead center reveal">
+        <span class="eyebrow">Nos soins</span>
+        <h2>Une prise en charge complète</h2>
+        <p>Du contrôle de routine aux traitements spécialisés, chaque soin fait l'objet d'un diagnostic et d'un devis personnalisés.</p>
+      </div>
+      <div class="soins-grid" id="soinsHome"></div>
+      <div class="center" style="margin-top:2.6rem"><button class="btn btn-ghost" data-nav="soins">Tous les soins & tarifs</button></div>
+    </div>
+  </div>
+
+  <!-- Équipement teaser -->
+  <div class="section" style="background:var(--surface)">
+    <div class="wrap">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:2.4rem;align-items:center" class="cab-teaser">
+        <div class="reveal">
+          <span class="eyebrow">Le cabinet</span>
+          <h2 style="font-size:clamp(1.9rem,4vw,2.7rem);margin:.9rem 0 1rem">Un plateau technique moderne, une hygiène irréprochable</h2>
+          <p style="color:var(--encre-2);margin-bottom:1.4rem">Radiographie panoramique numérique, empreinte optique et CFAO, chaîne de stérilisation tracée. Moins d'attente, plus de confort, une sécurité constante.</p>
+          <button class="btn btn-primary" data-nav="cabinet">Découvrir le cabinet</button>
+          <img src="https://images.unsplash.com/photo-1629909614456-6b1c5c94cecc?auto=format&fit=crop&w=800&q=70" alt="Espace d'accueil du cabinet" loading="lazy" onerror="this.remove()" style="width:100%;height:200px;object-fit:cover;border-radius:18px;margin-top:1.6rem">
+        </div>
+        <div class="equip-grid reveal d1" style="grid-template-columns:1fr;margin-top:0">
+          <div class="equip"><span class="eq-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 3v4M12 17v4M3 12h4M17 12h4"/></svg></span><div><h3>Radiographie panoramique</h3><p>Imagerie numérique faible dose, résultat immédiat.</p></div></div>
+          <div class="equip"><span class="eq-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M8 9h8M8 13h5"/></svg></span><div><h3>Empreinte numérique · CFAO</h3><p>Sans pâte, prothèses conçues et ajustées avec précision.</p></div></div>
+          <div class="equip"><span class="eq-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 13l4 4L19 7"/><circle cx="12" cy="12" r="10"/></svg></span><div><h3>Stérilisation tracée</h3><p>Instruments stérilisés et contrôlés à chaque étape.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Avis -->
+  <div class="section">
+    <div class="wrap">
+      <div class="shead center reveal"><span class="eyebrow">Vos retours</span><h2>Ce que disent nos patients</h2></div>
+      <div class="reviews" id="reviewsGrid"></div>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="section" style="background:var(--surface)">
+    <div class="wrap">
+      <div class="shead center reveal"><span class="eyebrow">Questions fréquentes</span><h2>Bon à savoir avant de venir</h2></div>
+      <div class="faq" id="faq"></div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="section center">
+    <div class="wrap">
+      <div class="reveal" style="background:linear-gradient(140deg,var(--menthe),var(--menthe-d));border-radius:28px;padding:clamp(2.4rem,5vw,3.6rem);color:#fff;box-shadow:var(--shadow)">
+        <h2 style="color:#fff;font-size:clamp(1.8rem,4vw,2.6rem)">Prêt·e à prendre soin de votre sourire ?</h2>
+        <p style="color:rgba(255,255,255,.9);max-width:44ch;margin:.8rem auto 1.6rem">Choisissez votre motif, votre praticien et votre créneau en moins d'une minute.</p>
+        <button class="btn btn-ghost" data-nav="rdv" style="background:#fff">Prendre rendez-vous</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SOINS ============ -->
+<section class="view" id="view-soins" aria-label="Soins">
+  <div class="section">
+    <div class="wrap">
+      <div class="shead center"><span class="eyebrow">Nos soins</span><h2>Soins & tarifs indicatifs</h2>
+        <p>Les fourchettes ci-dessous sont indicatives. Un devis précis vous est remis après examen. Cabinet conventionné CNAS / CASNOS.</p></div>
+      <div class="soins-grid" id="soinsGrid" style="margin-top:3rem"></div>
+      <p style="text-align:center;color:var(--muted);font-size:.86rem;margin-top:2rem;max-width:640px;margin-left:auto;margin-right:auto">
+        Ces informations sont fournies à titre indicatif et ne constituent pas un engagement de résultat. Chaque situation clinique est évaluée individuellement.</p>
+      <div class="center" style="margin-top:2rem"><button class="btn btn-primary" data-nav="rdv">Prendre rendez-vous</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ÉQUIPE ============ -->
+<section class="view" id="view-equipe" aria-label="L'équipe">
+  <div class="section">
+    <div class="wrap">
+      <div class="shead center"><span class="eyebrow">L'équipe</span><h2>Des praticiens à votre écoute</h2>
+        <p>Une équipe pluridisciplinaire qui prend le temps d'expliquer, de rassurer et d'accompagner chaque patient.</p></div>
+      <div class="team-grid" id="teamGrid"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CABINET ============ -->
+<section class="view" id="view-cabinet" aria-label="Le cabinet">
+  <div class="section">
+    <div class="wrap">
+      <div class="shead center"><span class="eyebrow">Le cabinet</span><h2>Équipement & hygiène</h2>
+        <p>Un environnement pensé pour votre confort et votre sécurité, du premier accueil jusqu'à la salle de soins.</p></div>
+      <div style="display:grid;grid-template-columns:1.4fr 1fr;gap:1rem;margin:0 0 2.4rem" class="cab-photos reveal">
+        <img src="https://images.unsplash.com/photo-1704455306251-b4634215d98f?auto=format&fit=crop&w=1000&q=70" alt="Salle de soins du cabinet ÉCLAT" loading="lazy" onerror="this.closest('.cab-photos').style.display='none'" style="width:100%;height:280px;object-fit:cover;border-radius:20px">
+        <img src="https://images.unsplash.com/photo-1643660527098-559f89e45a92?auto=format&fit=crop&w=800&q=70" alt="Unit et équipement numérique" loading="lazy" onerror="this.style.display='none'" style="width:100%;height:280px;object-fit:cover;border-radius:20px">
+      </div>
+      <div class="equip-grid" id="equipGrid"></div>
+      <div class="hygiene reveal">
+        <div>
+          <span class="eyebrow">Hygiène & sécurité</span>
+          <h2 style="font-size:clamp(1.7rem,3.6vw,2.4rem);margin:.8rem 0 .6rem">Une chaîne de stérilisation rigoureuse</h2>
+          <p style="color:var(--encre-2)">Nous appliquons des protocoles stricts, contrôlés à chaque étape, pour une sécurité constante.</p>
+        </div>
+        <ul>
+          <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg> Instruments à usage unique dès que possible</li>
+          <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg> Stérilisation autoclave tracée par cycle</li>
+          <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg> Surfaces désinfectées entre chaque patient</li>
+          <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg> Traitement de l'eau des units contrôlé</li>
+        </ul>
+      </div>
+      <div class="center" style="margin-top:2.6rem"><button class="btn btn-primary" data-nav="rdv">Prendre rendez-vous</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRISE DE RDV ============ -->
+<section class="view" id="view-rdv" aria-label="Prise de rendez-vous">
+  <div class="section">
+    <div class="wrap">
+      <div class="rdv-shell">
+        <div class="shead center"><span class="eyebrow">Rendez-vous en ligne</span><h2>Réservez votre créneau</h2>
+          <p>En quatre étapes simples. Vous recevez une confirmation, puis un rappel par SMS si vous le souhaitez.</p></div>
+        <div class="stepper" id="stepper" aria-hidden="true"></div>
+        <div class="rdv-card">
+          <!-- Étape 1 : motif -->
+          <div class="rdv-step active" id="step-1">
+            <h2>Quel est le motif ?</h2>
+            <p class="sub">Sélectionnez le type de rendez-vous qui vous convient.</p>
+            <div class="choice-grid" id="motifGrid"></div>
+            <div class="rdv-nav"><span></span><button class="btn btn-primary" id="next1" disabled>Continuer <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>
+          </div>
+          <!-- Étape 2 : praticien -->
+          <div class="rdv-step" id="step-2">
+            <h2>Avec quel praticien ?</h2>
+            <p class="sub">Choisissez un praticien, ou laissez-nous vous orienter.</p>
+            <div class="prac-grid" id="pracGrid"></div>
+            <div class="rdv-nav"><button class="btn btn-ghost" data-back="1">Retour</button><button class="btn btn-primary" id="next2" disabled>Continuer <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>
+          </div>
+          <!-- Étape 3 : créneau -->
+          <div class="rdv-step" id="step-3">
+            <h2>Choisissez un créneau</h2>
+            <p class="sub" id="step3sub">Sélectionnez une date puis un horaire disponible.</p>
+            <div class="rdv-dates" id="rdvDates"></div>
+            <div class="slots" id="rdvSlots"></div>
+            <div class="rdv-nav"><button class="btn btn-ghost" data-back="2">Retour</button><button class="btn btn-primary" id="next3" disabled>Continuer <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>
+          </div>
+          <!-- Étape 4 : coordonnées -->
+          <div class="rdv-step" id="step-4">
+            <h2>Vos coordonnées</h2>
+            <p class="sub">Nous ne collectons que le nécessaire pour vous recevoir.</p>
+            <div class="summary-box" id="summaryBox"></div>
+            <form id="rdvForm" novalidate>
+              <div class="field two"><div><label for="r-nom">Nom & prénom</label><input id="r-nom" required></div><div><label for="r-tel">Téléphone</label><input id="r-tel" type="tel" placeholder="+213 _ __ __ __ __" required></div></div>
+              <div class="field"><label for="r-email">Email (facultatif)</label><input id="r-email" type="email"></div>
+              <div class="field"><label for="r-note">Précisions (facultatif)</label><textarea id="r-note" placeholder="Un symptôme, une question, un besoin particulier…"></textarea></div>
+              <label class="consent"><span class="cbx"><input type="checkbox" id="r-sms"><span class="box"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span></span>
+                <span>J'accepte de recevoir un rappel de rendez-vous par SMS (facultatif).</span></label>
+              <label class="consent"><span class="cbx"><input type="checkbox" id="r-consent" required><span class="box"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span></span>
+                <span>Je consens à ce que mes données soient utilisées uniquement pour la gestion de mon rendez-vous, dans le respect de la confidentialité des données de santé (<a href="#" data-legal="confidentialite">en savoir plus</a>).</span></label>
+              <div class="privacy-note"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+                Vos informations médicales ne sont jamais demandées via ce formulaire. Elles restent confidentielles et ne sont abordées qu'au cabinet.</div>
+              <div class="rdv-nav"><button type="button" class="btn btn-ghost" data-back="3">Retour</button><button type="submit" class="btn btn-primary">Confirmer le rendez-vous</button></div>
+            </form>
+          </div>
+          <!-- Confirmation -->
+          <div class="rdv-step" id="step-5">
+            <div class="confirm">
+              <div class="badge"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg></div>
+              <h2>Rendez-vous demandé</h2>
+              <p id="confirmText"></p>
+              <span class="ref" id="confirmRef"></span>
+              <ul class="reminders">
+                <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M3 9h18"/></svg> Un conseiller confirme par téléphone sous 24 h.</li>
+                <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/></svg> Pensez à votre carte CNAS / CASNOS.</li>
+                <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3h8l2 4v13H6V7z"/></svg> Apportez toute ordonnance ou radio récente.</li>
+              </ul>
+              <button class="btn btn-primary" id="rdvDone" style="margin-top:1.6rem">Retour à l'accueil</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="view" id="view-contact" aria-label="Contact & accès">
+  <div class="section">
+    <div class="wrap">
+      <div class="shead center"><span class="eyebrow">Contact & accès</span><h2>Nous trouver, nous joindre</h2>
+        <p>Une question ? Écrivez-nous ou appelez le cabinet. Pour un soin, privilégiez la prise de rendez-vous en ligne.</p></div>
+      <div class="contact-grid">
+        <div class="reveal">
+          <div class="info-card">
+            <ul>
+              <li><span class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.6"/></svg></span><div><div class="lab">Adresse</div><div class="v">Boulevard Krim Belkacem<small>Télemly, Alger-Centre · 16000</small></div></div></li>
+              <li><span class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 4h4l2 5-3 2a12 12 0 0 0 5 5l2-3 5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></span><div><div class="lab">Téléphone</div><div class="v">+213 _ __ __ __ __</div></div></li>
+              <li><span class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16v14H4z"/><path d="M4 7l8 6 8-6"/></svg></span><div><div class="lab">Email</div><div class="v" style="font-size:.98rem">contact@cabinet-eclat.dz</div></div></li>
+              <li><span class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><div><div class="lab">Horaires</div><div class="v" style="font-size:.98rem">Dim – Jeu : 8h30 – 18h00<small>Samedi : 9h – 13h · Vendredi fermé</small></div></div></li>
+            </ul>
+          </div>
+          <div class="map" aria-label="Plan d'accès (illustratif)">
+            <svg viewBox="0 0 400 225" xmlns="http://www.w3.org/2000/svg" role="img">
+              <rect width="400" height="225" fill="#E3F0EC"/>
+              <path d="M0 150 H400 M0 90 H400 M120 0 V225 M280 0 V225" stroke="#C9DED8" stroke-width="10" fill="none"/>
+              <path d="M60 0 L120 90 M340 40 L280 90" stroke="#D5E8E2" stroke-width="6" fill="none"/>
+              <rect x="140" y="100" width="120" height="40" rx="6" fill="#CFE4DD"/>
+            </svg>
+            <span class="pin"><svg width="34" height="34" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="11" r="2.6" fill="#fff"/></svg></span>
+          </div>
+        </div>
+        <div class="reveal d1">
+          <div class="info-card">
+            <h3 style="margin-bottom:1rem">Envoyer un message</h3>
+            <form id="contactForm" novalidate>
+              <div class="field two"><div><label for="c-nom">Nom & prénom</label><input id="c-nom" required></div><div><label for="c-tel">Téléphone</label><input id="c-tel" type="tel" placeholder="+213 _ __ __ __ __" required></div></div>
+              <div class="field"><label for="c-email">Email (facultatif)</label><input id="c-email" type="email"></div>
+              <div class="field"><label for="c-obj">Objet</label><select id="c-obj"><option>Question générale</option><option>Renseignement sur un soin</option><option>Remboursement / conventionnement</option><option>Autre</option></select></div>
+              <div class="field"><label for="c-msg">Message</label><textarea id="c-msg" placeholder="Merci de ne pas communiquer d'informations médicales sensibles ici." required></textarea></div>
+              <label class="consent"><span class="cbx"><input type="checkbox" id="c-consent" required><span class="box"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span></span>
+                <span>J'accepte d'être recontacté(e) au sujet de ma demande (<a href="#" data-legal="confidentialite">politique de confidentialité</a>).</span></label>
+              <button type="submit" class="btn btn-primary btn-block">Envoyer</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <div>
+        <div class="brand"><span class="logo"><svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M12 3c-2 0-3 1-5 1S4 3 3.5 5C2.7 8 3.5 13 5 17c.6 1.6 1.2 3 2 3s1-1.5 1.4-3c.3-1.2.7-2 1.6-2s1.3.8 1.6 2c.4 1.5.6 3 1.4 3s1.4-1.4 2-3c1.5-4 2.3-9 1.5-12C17 3 16 4 14 4s-.9-1-2-1z"/></svg></span>ÉCLAT</div>
+        <p class="about">Cabinet dentaire à Alger. Soins généraux et spécialisés, dans un cadre lumineux et rassurant.</p>
+        <div class="conv"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg> Conventionné CNAS / CASNOS</div>
+      </div>
+      <div><h4>Soins</h4><a href="#" data-nav="soins">Soins généraux</a><a href="#" data-nav="soins">Esthétique & blanchiment</a><a href="#" data-nav="soins">Implants</a><a href="#" data-nav="soins">Orthodontie</a><a href="#" data-nav="soins">Enfants</a></div>
+      <div><h4>Le cabinet</h4><a href="#" data-nav="equipe">L'équipe</a><a href="#" data-nav="cabinet">Équipement</a><a href="#" data-nav="rdv">Prendre RDV</a><a href="#" data-nav="contact">Contact</a></div>
+      <div><h4>Cabinet</h4><li>Bd Krim Belkacem, Télemly</li><li>Alger-Centre · 16000</li><li>Dim – Jeu : 8h30 – 18h00</li><li>+213 _ __ __ __ __</li></div>
+    </div>
+    <div class="footer-bottom">
+      <div class="legal">
+        <button data-legal="mentions">Mentions légales</button>
+        <button data-legal="confidentialite">Politique de confidentialité</button>
+        <button id="cookieReopen">Gérer les cookies</button>
+      </div>
+      <span class="sig">Réalisé par <a href="https://difarslan.com" target="_blank" rel="noopener">Arslan DIF — difarslan.com</a></span>
+    </div>
+  </div>
+</footer>
+
+<!-- modal legal -->
+<div class="modal" id="modalLegal" role="dialog" aria-modal="true" aria-labelledby="legalTitle">
+  <div class="modal-bg" data-close></div>
+  <div class="modal-card">
+    <div class="modal-head"><h2 id="legalTitle"></h2><button class="modal-close" data-close aria-label="Fermer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+    <div class="modal-body legal-body" id="legalBody"></div>
+  </div>
+</div>
+
+<!-- cookie -->
+<div class="cookie" id="cookie" role="dialog" aria-label="Cookies">
+  <p>Nous utilisons des cookies de mesure d'audience pour améliorer le site. Aucune donnée de santé n'est concernée. <a href="#" data-legal="confidentialite">En savoir plus</a>.</p>
+  <div class="cookie-actions"><button class="btn btn-primary" id="cookieAccept">Accepter</button><button class="btn btn-ghost" id="cookieRefuse">Refuser</button></div>
+</div>
+
+<div class="toast" id="toast"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg><span id="toastMsg"></span></div>
+
+<script>
+/* ===== DONNÉES ===== */
+const SOINS=[
+  {ico:'tooth',name:'Soins généraux',desc:"Caries, composites, dévitalisations, extractions. Le suivi de routine pour garder des dents saines.",price:"2 500 – 12 000 DA"},
+  {ico:'sparkle',name:'Esthétique & blanchiment',desc:"Blanchiment, facettes, restaurations esthétiques discrètes, en respectant votre émail.",price:"25 000 – 45 000 DA"},
+  {ico:'implant',name:'Implantologie',desc:"Remplacement d'une ou plusieurs dents par implants, avec bilan préalable complet.",price:"Sur devis · dès 90 000 DA"},
+  {ico:'aligner',name:'Orthodontie & aligneurs',desc:"Bagues et aligneurs transparents pour aligner le sourire, adultes et adolescents.",price:"Sur devis"},
+  {ico:'child',name:'Soins des enfants',desc:"Prévention, scellement des sillons et soins tout en douceur, dans un cadre rassurant.",price:"2 000 – 4 000 DA"},
+  {ico:'xray',name:'Radiologie',desc:"Panoramique numérique et clichés rétro-alvéolaires, faible dose, résultat immédiat.",price:"2 000 – 3 500 DA"}
+];
+const TEAM=[
+  {name:'Dr Yacine Belhadj',spec:'Dentisterie générale',dip:'Doctorat en médecine dentaire — Université d\'Alger',bio:"Attaché à une dentisterie préventive et à l'écoute, il accompagne les patients de tous âges.",ini:'YB'},
+  {name:'Dr Amel Chérifi',spec:'Orthodontie & aligneurs',dip:'DES d\'orthopédie dento-faciale',bio:"Spécialisée dans les traitements par aligneurs transparents pour adultes et adolescents.",ini:'AC'},
+  {name:'Dr Karim Saïdi',spec:'Implantologie & chirurgie',dip:'Post-graduation en implantologie orale',bio:"Il réalise bilans implantaires et chirurgies avec un souci constant de sécurité.",ini:'KS'},
+  {name:'Dr Lina Meddour',spec:'Pédodontie',dip:'Certificat de pédodontie',bio:"Elle met les plus jeunes en confiance et transmet les bons réflexes dès le plus jeune âge.",ini:'LM'}
+];
+const EQUIP=[
+  {ico:'xray',t:'Radiographie panoramique numérique',d:"Vue d'ensemble faible dose, avec résultat immédiat à l'écran pour un diagnostic partagé."},
+  {ico:'scan',t:'Empreinte numérique & CFAO',d:"Empreintes optiques sans pâte, plus confortables, pour des prothèses ajustées avec précision."},
+  {ico:'steril',t:'Chaîne de stérilisation tracée',d:"Autoclave contrôlé, traçabilité par cycle, à usage unique dès que possible."},
+  {ico:'chair',t:'Units modernes & confort',d:"Fauteuils ergonomiques, ambiance apaisante et prise en charge de l'anxiété dentaire."},
+  {ico:'shield',t:"Protocoles d'hygiène stricts",d:"Désinfection des surfaces entre chaque patient et traitement de l'eau des units."},
+  {ico:'access',t:'Accès facilité',d:"Cabinet accessible, salle d'attente lumineuse, prise de rendez-vous en ligne."}
+];
+const REVIEWS=[
+  {s:5,t:"Accueil chaleureux et explications claires à chaque étape. On se sent en confiance.",w:"Salima R."},
+  {s:5,t:"Prise de rendez-vous en ligne très pratique, et un rappel SMS la veille. Cabinet impeccable.",w:"Mourad B."},
+  {s:5,t:"Mes enfants n'ont plus peur du dentiste, l'équipe est douce et patiente.",w:"Nawel T."},
+  {s:5,t:"J'ai été reçu rapidement pour une urgence. Merci pour la disponibilité.",w:"Hamza L."}
+];
+const FAQ=[
+  {q:"J'ai peur d'avoir mal, comment ça se passe ?",a:"Chaque soin est réalisé sous anesthésie locale adaptée quand c'est nécessaire. Nous prenons le temps d'expliquer et de vous mettre à l'aise, et nous savons accompagner l'anxiété dentaire."},
+  {q:"Le cabinet est-il conventionné ?",a:"Oui, le cabinet est conventionné CNAS / CASNOS. Pensez à apporter votre carte lors de votre venue. Le détail de la prise en charge dépend de votre régime et du soin réalisé."},
+  {q:"Comment se déroule une première visite ?",a:"La première visite comprend un examen clinique, éventuellement une radiographie, puis l'explication d'un plan de soins et d'un devis personnalisé. Aucun soin engageant n'est réalisé sans votre accord."},
+  {q:"Que faire en cas d'urgence dentaire ?",a:"En cas de douleur, de traumatisme ou d'abcès, utilisez l'accès « urgence dentaire » : nous vous proposons le prochain créneau rapide disponible. En dehors des horaires, contactez les services d'urgence."},
+  {q:"Puis-je annuler ou modifier mon rendez-vous ?",a:"Oui, contactez le cabinet le plus tôt possible. Si vous avez activé le rappel par SMS, un lien de gestion vous sera communiqué."}
+];
+const MOTIFS=[
+  {id:'consult',ico:'stetho',t:'Consultation',s:'Bilan & conseils',dur:'30 min'},
+  {id:'detartrage',ico:'sparkle',t:'Détartrage',s:'Nettoyage & prévention',dur:'30 min'},
+  {id:'blanchiment',ico:'star',t:'Blanchiment',s:'Éclaircissement',dur:'45 min'},
+  {id:'controle',ico:'check',t:'Contrôle',s:'Suivi de soin',dur:'20 min'},
+  {id:'urgence',ico:'bolt',t:'Douleur / urgence',s:'Prise en charge rapide',dur:'—',urgent:true}
+];
+
+/* ===== ICONES ===== */
+function ic(n){const p={
+  tooth:'<path d="M12 3c-2 0-3 1-5 1S4 3 3.5 5C2.7 8 3.5 13 5 17c.6 1.6 1.2 3 2 3s1-1.5 1.4-3c.3-1.2.7-2 1.6-2s1.3.8 1.6 2c.4 1.5.6 3 1.4 3s1.4-1.4 2-3c1.5-4 2.3-9 1.5-12C17 3 16 4 14 4s-.9-1-2-1z"/>',
+  sparkle:'<path d="M12 2l1.6 5.4L19 9l-5.4 1.6L12 16l-1.6-5.4L5 9l5.4-1.6z"/><path d="M18 14l.8 2.2L21 17l-2.2.8L18 20l-.8-2.2L15 17l2.2-.8z"/>',
+  implant:'<path d="M12 2c2 0 3 2 3 4s-1 2-1 4-1 8-2 8-2-6-2-8-1-2-1-4 1-4 3-4z" fill="none"/><path d="M9 6h6"/>',
+  aligner:'<path d="M4 9c2-2 5-3 8-3s6 1 8 3c-1 4-3 8-8 8s-7-4-8-8z"/><path d="M8 8v3M12 8v4M16 8v3"/>',
+  child:'<circle cx="12" cy="8" r="3"/><path d="M6 20c0-3.5 2.7-6 6-6s6 2.5 6 6"/>',
+  xray:'<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8c2 1 6 1 8 0M8 13c2 1 6 1 8 0M8 17h8"/>',
+  scan:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M8 9h8M8 13h5"/>',
+  steril:'<circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/>',
+  chair:'<path d="M6 4h4v8H6zM6 12h9a3 3 0 0 1 3 3v3M9 20v-2"/>',
+  shield:'<path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/>',
+  access:'<circle cx="12" cy="4" r="2"/><path d="M6 8h12M12 8v6l4 6M12 14l-4 6"/>',
+  stetho:'<path d="M6 3v5a4 4 0 0 0 8 0V3M10 12v3a4 4 0 0 0 8 0v-1"/><circle cx="18" cy="12" r="2"/>',
+  star:'<path d="M12 3l2.5 6L21 9.7l-4.7 4.3L17.5 21 12 17.5 6.5 21l1.2-7L3 9.7 9.5 9z"/>',
+  check:'<circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/>',
+  bolt:'<path d="M13 2L4 14h7l-1 8 9-12h-7z"/>'
+};return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${p[n]||''}</svg>`;}
+
+/* ===== UTILS ===== */
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const JN=['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'],JNL=['dimanche','lundi','mardi','mercredi','jeudi','vendredi','samedi'];
+const MN=['jan.','fév.','mars','avr.','mai','juin','juil.','août','sep.','oct.','nov.','déc.'];
+
+/* ===== ÉTAT RDV ===== */
+let rdv={motif:null,prac:null,date:null,slot:null,rapid:false},step=1;
+
+/* ===== RENDU ===== */
+function renderHome(){
+  $('#soinsHome').innerHTML=SOINS.slice(0,3).map(soinCard).join('');
+  $('#reviewsGrid').innerHTML=REVIEWS.map(r=>`<div class="review reveal"><div class="stars" aria-label="${r.s} sur 5">${'★'.repeat(r.s)}</div><p>« ${r.t} »</p><div class="who">${r.w}</div></div>`).join('');
+  $('#faq').innerHTML=FAQ.map((f,i)=>`<div class="faq-item"><button class="faq-q" aria-expanded="false" data-faq="${i}">${f.q}<span class="chev"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></span></button><div class="faq-a"><div class="faq-a-inner">${f.a}</div></div></div>`).join('');
+}
+function soinCard(s){return `<div class="soin reveal"><div class="soin-ico">${ic(s.ico)}</div><h3>${s.name}</h3><p>${s.desc}</p><div class="price">${s.price.includes('devis')?'':'<small>À partir de</small>'} ${s.price}</div></div>`;}
+function renderSoins(){$('#soinsGrid').innerHTML=SOINS.map(soinCard).join('');}
+function renderTeam(){$('#teamGrid').innerHTML=TEAM.map(m=>`<div class="member reveal"><div class="member-photo"><span class="initials">${m.ini}</span></div><div class="member-body"><h3>${m.name}</h3><div class="spec">${m.spec}</div><div class="dip">${m.dip}</div><p class="bio">${m.bio}</p></div></div>`).join('');}
+function renderEquip(){$('#equipGrid').innerHTML=EQUIP.map(e=>`<div class="equip reveal"><span class="eq-ico">${ic(e.ico)}</span><div><h3>${e.t}</h3><p>${e.d}</p></div></div>`).join('');}
+
+/* ===== STEPPER ===== */
+function renderStepper(){
+  const labels=['Motif','Praticien','Créneau','Coordonnées'];
+  $('#stepper').innerHTML=labels.map((l,i)=>{
+    const n=i+1;const cls=step>n?'done':(step===n?'active':'');
+    return `<div class="st ${cls}"><span class="dot">${step>n?'✓':n}</span><span class="lbl">${l}</span></div>${i<3?'<span class="bar"></span>':''}`;
+  }).join('');
+}
+function goStep(n){
+  step=n;$$('.rdv-step').forEach(s=>s.classList.remove('active'));$('#step-'+n).classList.add('active');renderStepper();
+  $('#view-rdv').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+/* ===== ÉTAPE 1 motif ===== */
+function renderMotifs(){
+  $('#motifGrid').innerHTML=MOTIFS.map(m=>`<button class="choice ${m.urgent?'urgent':''}" data-motif="${m.id}" aria-pressed="${rdv.motif===m.id}"><span class="ci">${ic(m.ico)}</span><span><h4>${m.t}</h4><small>${m.s}</small></span></button>`).join('');
+}
+/* ===== ÉTAPE 2 praticien ===== */
+function renderPrac(){
+  const list=[{name:'Peu importe',spec:'Premier créneau disponible',ini:'★',any:true},...TEAM];
+  $('#pracGrid').innerHTML=list.map((m,i)=>`<button class="prac" data-prac="${m.any?'any':i}" aria-pressed="${(rdv.prac===(m.any?'any':i))}"><span class="av">${m.ini}</span><h4>${m.name}</h4><small>${m.spec}</small></button>`).join('');
+}
+/* ===== ÉTAPE 3 créneau ===== */
+function buildDates(){const out=[];let d=new Date();let added=0;while(added<10){d.setDate(d.getDate()+1);if(d.getDay()!==5){out.push(new Date(d));added++;}}return out;}
+let DATES=[];
+function renderDates(){
+  DATES=buildDates();
+  $('#step3sub').textContent=rdv.rapid?"Urgence : voici les prochains créneaux rapides disponibles.":"Sélectionnez une date puis un horaire disponible.";
+  $('#rdvDates').innerHTML=DATES.map((dd,i)=>`<button class="rdv-date" data-di="${i}" aria-pressed="${rdv.date===i}"><span class="d">${JN[dd.getDay()]}</span><span class="n">${dd.getDate()}</span><span class="m">${MN[dd.getMonth()]}</span></button>`).join('');
+  if(rdv.date===null){rdv.date=0;$$('#rdvDates .rdv-date')[0].setAttribute('aria-pressed','true');}
+  renderSlots();
+}
+function renderSlots(){
+  const base=['09:00','09:40','10:20','11:00','11:40','14:00','14:40','15:20','16:00','16:40','17:20'];
+  // disponibilités pseudo-aléatoires déterministes selon la date
+  const di=rdv.date||0;
+  $('#rdvSlots').innerHTML=base.map((t,i)=>{
+    const seed=(di*7+i*3)%5; const disabled=seed===0||seed===3;
+    const rapid=rdv.rapid&&i<3&&!disabled;
+    return `<button class="slot ${rapid?'rapid':''}" data-slot="${t}" aria-pressed="${rdv.slot===t}" ${disabled?'disabled':''}>${t}${rapid?' ⚡':''}</button>`;
+  }).join('');
+}
+/* ===== ÉTAPE 4 récap ===== */
+function renderSummary(){
+  const m=MOTIFS.find(x=>x.id===rdv.motif);
+  const pracName=rdv.prac==='any'?'Premier praticien disponible':TEAM[rdv.prac].name;
+  const dd=DATES[rdv.date];
+  $('#summaryBox').innerHTML=`
+    <div class="sl"><span>Motif</span><span>${m.t}</span></div>
+    <div class="sl"><span>Praticien</span><span>${pracName}</span></div>
+    <div class="sl"><span>Date</span><span>${JNL[dd.getDay()]} ${dd.getDate()} ${MN[dd.getMonth()]}</span></div>
+    <div class="sl"><span>Horaire</span><span>${rdv.slot}</span></div>`;
+}
+
+/* ===== BOOKING NAV ===== */
+function bindRdv(){
+  $('#motifGrid').addEventListener('click',e=>{const b=e.target.closest('[data-motif]');if(!b)return;
+    rdv.motif=b.dataset.motif;rdv.rapid=(rdv.motif==='urgence');
+    $$('#motifGrid .choice').forEach(x=>x.setAttribute('aria-pressed',x.dataset.motif===rdv.motif));
+    $('#next1').disabled=false;});
+  $('#next1').onclick=()=>{renderPrac();goStep(2);};
+  $('#pracGrid').addEventListener('click',e=>{const b=e.target.closest('[data-prac]');if(!b)return;
+    rdv.prac=b.dataset.prac==='any'?'any':Number(b.dataset.prac);
+    $$('#pracGrid .prac').forEach(x=>x.setAttribute('aria-pressed',x.dataset.prac===b.dataset.prac));
+    $('#next2').disabled=false;});
+  $('#next2').onclick=()=>{rdv.date=null;rdv.slot=null;renderDates();$('#next3').disabled=true;goStep(3);};
+  $('#rdvDates').addEventListener('click',e=>{const b=e.target.closest('[data-di]');if(!b)return;
+    rdv.date=Number(b.dataset.di);rdv.slot=null;$('#next3').disabled=true;
+    $$('#rdvDates .rdv-date').forEach(x=>x.setAttribute('aria-pressed',Number(x.dataset.di)===rdv.date));renderSlots();});
+  $('#rdvSlots').addEventListener('click',e=>{const b=e.target.closest('[data-slot]');if(!b||b.disabled)return;
+    rdv.slot=b.dataset.slot;$$('#rdvSlots .slot').forEach(x=>x.setAttribute('aria-pressed',x.dataset.slot===rdv.slot));$('#next3').disabled=false;});
+  $('#next3').onclick=()=>{renderSummary();goStep(4);};
+  $$('[data-back]').forEach(b=>b.onclick=()=>goStep(Number(b.dataset.back)));
+  $('#rdvForm').addEventListener('submit',e=>{
+    e.preventDefault();
+    if(!valid('#rdvForm'))return;
+    const dd=DATES[rdv.date];const ref='RDV-'+Math.floor(1000+Math.random()*8999);
+    const pracName=rdv.prac==='any'?'un praticien disponible':TEAM[rdv.prac].name;
+    $('#confirmText').innerHTML=`Votre demande pour un rendez-vous de <strong>${MOTIFS.find(x=>x.id===rdv.motif).t.toLowerCase()}</strong> avec <strong>${pracName}</strong> le <strong>${JNL[dd.getDay()]} ${dd.getDate()} ${MN[dd.getMonth()]} à ${rdv.slot}</strong> a bien été enregistrée.`;
+    $('#confirmRef').textContent='Référence : '+ref;
+    goStep(5);
+  });
+  $('#rdvDone').onclick=()=>{resetRdv();showView('accueil');};
+}
+function resetRdv(){rdv={motif:null,prac:null,date:null,slot:null,rapid:false};$('#rdvForm').reset();
+  $('#next1').disabled=$('#next2').disabled=$('#next3').disabled=true;renderMotifs();goStep(1);}
+
+/* ===== URGENCE ===== */
+function startUrgence(){rdv={motif:'urgence',prac:'any',date:null,slot:null,rapid:true};
+  renderMotifs();$('#next1').disabled=false;renderPrac();$('#next2').disabled=false;renderDates();$('#next3').disabled=true;
+  showView('rdv');goStep(3);toast('Créneaux rapides affichés en priorité');}
+
+/* ===== NAV VUES ===== */
+function showView(name){
+  $$('.view').forEach(v=>v.classList.remove('active'));const el=$('#view-'+name);if(el)el.classList.add('active');
+  $$('.nav-links a').forEach(a=>a.removeAttribute('aria-current'));$$(`.nav-links a[data-nav="${name}"]`).forEach(a=>a.setAttribute('aria-current','page'));
+  closeMenu();window.scrollTo({top:0});requestAnimationFrame(initReveal);
+}
+function closeMenu(){$('#navLinks').classList.remove('open');$('#burger').classList.remove('open');$('#burger').setAttribute('aria-expanded','false');}
+
+/* ===== LEGAL ===== */
+const LEGAL={
+  mentions:{t:'Mentions légales',h:`<h3>Éditeur</h3><p>Cabinet dentaire ÉCLAT — boulevard Krim Belkacem, Télemly, Alger-Centre (16000). Téléphone : +213 _ __ __ __ __. Email : contact@cabinet-eclat.dz. Cabinet conventionné CNAS / CASNOS.</p><p>Numéro d'inscription à l'Ordre et informations réglementaires : à compléter avant mise en production.</p><h3>Hébergement</h3><p>Site hébergé par un prestataire technique dont les coordonnées sont disponibles sur demande.</p><h3>Communication médicale</h3><p>Les informations de ce site sont fournies à titre informatif et n'engagent aucun résultat. Elles ne remplacent pas une consultation.</p><p style="color:var(--muted);font-size:.85rem">Site de démonstration — informations légales à finaliser.</p>`},
+  confidentialite:{t:'Politique de confidentialité',h:`<h3>Données collectées</h3><p>Nous collectons uniquement les données nécessaires à la prise de rendez-vous et au contact : nom, téléphone, email facultatif. Aucune information médicale n'est demandée via les formulaires en ligne.</p><h3>Données de santé</h3><p>Les données de santé sont particulièrement sensibles : elles ne sont abordées qu'au cabinet, dans le cadre du secret médical, et bénéficient d'une confidentialité renforcée.</p><h3>Rappels SMS</h3><p>Le rappel par SMS est facultatif et n'est activé qu'avec votre consentement explicite. Vous pouvez le retirer à tout moment.</p><h3>Conservation & partage</h3><p>Vos données ne sont ni vendues ni cédées à des tiers. Elles sont conservées le temps strictement nécessaire.</p><h3>Vos droits</h3><p>Vous pouvez demander l'accès, la rectification ou la suppression de vos données en écrivant à contact@cabinet-eclat.dz.</p>`}
+};
+function openLegal(k){const L=LEGAL[k];if(!L)return;$('#legalTitle').textContent=L.t;$('#legalBody').innerHTML=L.h;$('#modalLegal').classList.add('on');document.body.style.overflow='hidden';}
+function closeModal(){$('#modalLegal').classList.remove('on');document.body.style.overflow='';}
+
+/* ===== FORM VALIDATION ===== */
+function valid(sel){let ok=true;$$(sel+' [required]').forEach(f=>{const bad=f.type==='checkbox'?!f.checked:!f.value.trim();
+  const wrap=f.type==='checkbox'?f.closest('.consent'):f;if(f.type!=='checkbox')f.style.borderColor=bad?'#D9776A':'';if(bad)ok=false;});
+  if(!ok)toast('Veuillez compléter les champs requis');return ok;}
+
+/* ===== TOAST ===== */
+let tT;function toast(m){$('#toastMsg').textContent=m;$('#toast').classList.add('on');clearTimeout(tT);tT=setTimeout(()=>$('#toast').classList.remove('on'),2600);}
+
+/* ===== REVEAL ===== */
+let io;function initReveal(){if(!io)io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.1,rootMargin:'0px 0px -40px'});
+  $$('.reveal:not(.in)').forEach(el=>{if(el.closest('.view:not(.active)'))return;io.observe(el);});}
+
+/* ===== COOKIE ===== */
+let cookieChoice=null;
+function showCookie(){if(cookieChoice===null)setTimeout(()=>$('#cookie').classList.add('on'),1100);}
+
+/* ===== INIT ===== */
+document.addEventListener('DOMContentLoaded',()=>{
+  renderHome();renderSoins();renderTeam();renderEquip();renderMotifs();renderStepper();bindRdv();initReveal();showCookie();
+  // slot urgence factice
+  const now=new Date();const uh=Math.min(17,now.getHours()+2);$('#ufSlot').textContent="Aujourd'hui vers "+uh+"h00";$('#urgTime').textContent="aujourd'hui "+uh+"h00";
+
+  document.body.addEventListener('click',e=>{
+    const nav=e.target.closest('[data-nav]');if(nav){e.preventDefault();showView(nav.dataset.nav);return;}
+    const lg=e.target.closest('[data-legal]');if(lg){e.preventDefault();openLegal(lg.dataset.legal);return;}
+    const fq=e.target.closest('[data-faq]');if(fq){const it=fq.closest('.faq-item');const open=it.classList.toggle('open');
+      fq.setAttribute('aria-expanded',open);const a=it.querySelector('.faq-a');a.style.maxHeight=open?a.scrollHeight+'px':0;return;}
+  });
+  $('#urgenceBtn').onclick=startUrgence;
+  $('#burger').onclick=()=>{const o=$('#navLinks').classList.toggle('open');$('#burger').classList.toggle('open',o);$('#burger').setAttribute('aria-expanded',o);};
+  $$('[data-close]').forEach(b=>b.onclick=closeModal);
+  $('#cookieAccept').onclick=()=>{cookieChoice=true;$('#cookie').classList.remove('on');toast('Préférences enregistrées');};
+  $('#cookieRefuse').onclick=()=>{cookieChoice=false;$('#cookie').classList.remove('on');toast('Cookies refusés');};
+  $('#cookieReopen').onclick=()=>$('#cookie').classList.add('on');
+  $('#contactForm').addEventListener('submit',e=>{e.preventDefault();if(!valid('#contactForm'))return;e.target.reset();toast('Message envoyé — merci !');});
+  addEventListener('scroll',()=>{$('#header').classList.toggle('scrolled',scrollY>18);requestAnimationFrame(initReveal);},{passive:true});
+  addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal();closeMenu();}});
+});
+</script>
+</body>
+</html>
