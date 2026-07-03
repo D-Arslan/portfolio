@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import { translations, services } from "@/lib/data";
 
@@ -15,6 +15,20 @@ export default function QuoteForm() {
   const { t, lang } = useLanguage();
   const tr = translations.services;
   const [status, setStatus] = useState<Status>("idle");
+
+  // Dropdown custom « type de projet » (le <select> natif ne se style pas)
+  const [typeOpen, setTypeOpen] = useState(false);
+  const [typeValue, setTypeValue] = useState("");
+  const typeRef = useRef<HTMLDivElement>(null);
+  const typeOptions = [...services.map((s) => t(s.title)), lang === "fr" ? "Autre" : "Other"];
+
+  useEffect(() => {
+    function onDocClick(e: MouseEvent) {
+      if (typeRef.current && !typeRef.current.contains(e.target as Node)) setTypeOpen(false);
+    }
+    document.addEventListener("mousedown", onDocClick);
+    return () => document.removeEventListener("mousedown", onDocClick);
+  }, []);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -38,6 +52,7 @@ export default function QuoteForm() {
       if (json.success) {
         setStatus("success");
         form.reset();
+        setTypeValue("");
       } else {
         setStatus("error");
       }
@@ -82,13 +97,48 @@ export default function QuoteForm() {
           </div>
           <div>
             <label className={labelCls} htmlFor="qf-type">{t(tr.form_type)}</label>
-            <select id="qf-type" name="project_type" defaultValue="" className={inputCls}>
-              <option value="" disabled>{t(tr.form_type_ph)}</option>
-              {services.map((s) => (
-                <option key={s.id} value={s.title[lang]}>{t(s.title)}</option>
-              ))}
-              <option value={lang === "fr" ? "Autre" : "Other"}>{lang === "fr" ? "Autre" : "Other"}</option>
-            </select>
+            <div className="relative" ref={typeRef}>
+              <input type="hidden" name="project_type" value={typeValue} />
+              <button
+                type="button"
+                id="qf-type"
+                onClick={() => setTypeOpen((o) => !o)}
+                aria-haspopup="listbox"
+                aria-expanded={typeOpen}
+                className={`${inputCls} flex items-center justify-between text-left ${typeValue ? "text-[var(--text)]" : "text-[var(--dim)]"}`}
+              >
+                <span className="truncate">{typeValue || t(tr.form_type_ph)}</span>
+                <svg
+                  className={`w-4 h-4 flex-shrink-0 ml-2 text-[var(--muted)] transition-transform ${typeOpen ? "rotate-180" : ""}`}
+                  fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              {typeOpen && (
+                <div
+                  role="listbox"
+                  className="absolute z-30 top-full mt-1.5 w-full bg-[var(--surface2)] border border-[var(--border)] rounded-lg overflow-hidden shadow-[0_16px_40px_rgba(0,0,0,0.4)]"
+                >
+                  {typeOptions.map((opt) => (
+                    <button
+                      key={opt}
+                      type="button"
+                      role="option"
+                      aria-selected={typeValue === opt}
+                      onClick={() => { setTypeValue(opt); setTypeOpen(false); }}
+                      className={`w-full text-left px-4 py-2.5 text-sm transition-colors ${
+                        typeValue === opt
+                          ? "bg-[var(--gold-glow)] text-[var(--gold)]"
+                          : "text-[var(--text)] hover:bg-[var(--bg2)]"
+                      }`}
+                    >
+                      {opt}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         </div>
 
