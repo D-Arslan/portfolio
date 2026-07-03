@@ -9,7 +9,7 @@ import { translations, services } from "@/lib/data";
 // Voir .env.example pour la marche à suivre.
 const WEB3FORMS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY ?? "";
 
-type Status = "idle" | "sending" | "success" | "error";
+type Status = "idle" | "sending" | "success" | "error" | "mailto";
 
 export default function QuoteForm() {
   const { t, lang } = useLanguage();
@@ -35,7 +35,23 @@ export default function QuoteForm() {
     setStatus("sending");
 
     const form = e.currentTarget;
-    const data = Object.fromEntries(new FormData(form).entries());
+    const data = Object.fromEntries(new FormData(form).entries()) as Record<string, string>;
+
+    // Repli : ouvre l'e-mail pré-rempli si Web3Forms est injoignable (DNS bloqué)
+    // ou renvoie une erreur (clé absente). Aucune demande n'est perdue.
+    function openMailto() {
+      const subject = encodeURIComponent(`Demande de devis — ${data.name || ""}`);
+      const body = encodeURIComponent(
+        `Nom : ${data.name || "-"}\n` +
+        `Email : ${data.email || "-"}\n` +
+        `Entreprise : ${data.company || "-"}\n` +
+        `Type de projet : ${data.project_type || "-"}\n` +
+        `Budget : ${data.budget || "-"}\n\n` +
+        `${data.message || ""}`,
+      );
+      window.location.href = `mailto:difarslan@gmail.com?subject=${subject}&body=${body}`;
+      setStatus("mailto");
+    }
 
     try {
       const res = await fetch("https://api.web3forms.com/submit", {
@@ -54,10 +70,10 @@ export default function QuoteForm() {
         form.reset();
         setTypeValue("");
       } else {
-        setStatus("error");
+        openMailto();
       }
     } catch {
-      setStatus("error");
+      openMailto();
     }
   }
 
@@ -167,6 +183,15 @@ export default function QuoteForm() {
 
         {status === "success" && (
           <p className="text-sm text-[var(--gold)] font-medium">✓ {t(tr.form_success)}</p>
+        )}
+        {status === "mailto" && (
+          <p className="text-sm text-[var(--muted)]">
+            {t({
+              fr: "Votre messagerie s'ouvre avec votre demande pré-remplie. Si rien ne s'ouvre, écrivez à ",
+              en: "Your email app is opening with your request pre-filled. If nothing opens, email ",
+            })}
+            <a href="mailto:difarslan@gmail.com" className="text-[var(--gold)] underline">difarslan@gmail.com</a>.
+          </p>
         )}
         {status === "error" && (
           <p className="text-sm text-red-400 font-medium">{t(tr.form_error)}</p>
