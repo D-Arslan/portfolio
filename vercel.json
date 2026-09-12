@@ -1,8 +1,24 @@
 {
   "redirects": [
     {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "portfolio-tan-one-61.vercel.app"
+        }
+      ],
+      "destination": "https://arslandif.com/",
+      "permanent": true
+    },
+    {
       "source": "/:path*",
-      "has": [{ "type": "host", "value": "portfolio-tan-one-61.vercel.app" }],
+      "has": [
+        {
+          "type": "host",
+          "value": "portfolio-tan-one-61.vercel.app"
+        }
+      ],
       "destination": "https://arslandif.com/:path*",
       "permanent": true
     }
