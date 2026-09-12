@@ -20,6 +20,7 @@ const FILTERS: { key: "all" | Category; labelKey: keyof typeof translations.proj
 const THUMB_URLS: Record<string, string> = {
   fieldz:   "https://fieldz.pro/",
   coiflow:  "https://www.coiflow.com/",
+  acb:      "https://americanclothingbrands.com/",
   cyberlab: "https://cyberlab-uxey.onrender.com/",
   love101:  "https://love101-red.vercel.app/fr",
 };

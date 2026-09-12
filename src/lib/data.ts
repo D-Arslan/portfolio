@@ -36,8 +36,8 @@ export const translations = {
       en: "I'm Arslan DIF, a full stack developer and AI engineer based in Paris. Currently in the final year of a Master's in Data Science and Sports Technologies (SDTS) at UPEC, I'm looking for a data/ML/dev end-of-studies internship in Paris from February to August 2027.",
     },
     p2: {
-      fr: "J'ai fondé FIELDZ (plateforme de réservation de terrains de sport) et Coiflow (SaaS pour barbershops), deux projets que je développe et opère activement. Mon parcours combine ingénierie logicielle, intelligence artificielle et entrepreneuriat.",
-      en: "I founded FIELDZ (a sports field booking platform) and Coiflow (a SaaS for barbershops) — two projects I actively develop and operate. My background blends software engineering, AI, and entrepreneurship.",
+      fr: "J'ai fondé Coiflow (SaaS pour barbershops, en production) et je suis CTO de FIELDZ (réservation de terrains de sport, en production, dont l'adoption reste le défi en cours). J'ai aussi livré et maintenu, seul, une application de caisse et de stock pour un commerce réel. Mon parcours combine ingénierie logicielle, données et entrepreneuriat.",
+      en: "I founded Coiflow (a SaaS for barbershops, in production) and I'm CTO of FIELDZ (sports field booking, in production, where adoption is the current challenge). I also built and maintain, solo, a point-of-sale and inventory app for a real business. My background blends software engineering, data, and entrepreneurship.",
     },
     p3: {
       fr: "Je suis passionné par la construction de systèmes qui résolvent de vrais problèmes : des modèles de classification à 97 % de précision aux applications déployées en production, j'aime aller du prototype à l'impact.",
@@ -161,19 +161,35 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    id: "fieldz",
-    title: "FIELDZ",
+    id: "terraops",
+    title: "TerraOps — MLOps",
     description: {
-      fr: "Plateforme de réservation de terrains de sport (football, padel, tennis…). Architecture web + mobile, système de paiement, gestion des créneaux en temps réel.",
-      en: "Sports field booking platform (football, padel, tennis…). Web + mobile architecture, payment system, real-time slot management.",
+      fr: "Industrialisation de mon classifieur EuroSAT (ResNet-18, 98,1 % au gate de promotion) en plateforme MLOps complète : pipeline DVC (données versionnées sur MinIO), tracking et registry MLflow avec promotion champion/challenger sous contraintes (accuracy, rappel par classe, latence), serving FastAPI par alias avec rechargement à chaud, monitoring Prometheus (5 alertes) et journal des prédictions en PostgreSQL, détection de dérive Evidently déclenchant le ré-entraînement via GitHub Actions. 69 tests, CI avec smoke test Docker, test d'acceptation sur 520 requêtes réelles.",
+      en: "Productionising my EuroSAT classifier (ResNet-18, 98.1% at the promotion gate) into a full MLOps platform: DVC pipeline (data versioned on MinIO), MLflow tracking and registry with champion/challenger promotion under constraints (accuracy, per-class recall, latency), alias-based FastAPI serving with hot reload, Prometheus monitoring (5 alerts) and prediction logging in PostgreSQL, Evidently drift detection triggering retraining through GitHub Actions. 69 tests, CI with a Docker smoke test, acceptance test over 520 real requests.",
     },
-    tech: ["React", "React Native", "Spring Boot", "PostgreSQL", "Java"],
-    categories: ["fullstack", "mobile", "production"],
-    github: "https://github.com/D-Arslan",
+    tech: ["PyTorch", "DVC", "MLflow", "FastAPI", "Evidently", "Prometheus", "Docker", "GitHub Actions", "PostgreSQL"],
+    categories: ["aiml", "production"],
+    github: "https://github.com/D-Arslan/terraops",
     featured: true,
-    year: "2025–présent",
-    accent: "#1ED760",     // vert clair Fieldz
-    accentBg: "#05602B",   // vert foncé Fieldz
+    year: "2026",
+    accent: "#10b981",
+    accentBg: "#022c22",
+    accentText: "#ffffff",
+  },
+  {
+    id: "terraops-copilot",
+    title: "TerraOps Copilot — Agent RAG",
+    description: {
+      fr: "Agent LLM qui pilote TerraOps en langage naturel : boucle ReAct avec 5 outils (API live, registry MLflow, rapport de dérive Evidently) et retrieval hybride (ChromaDB + BM25, fusion RRF) sur la documentation. Le cœur du projet est le harnais d'évaluation : 29 cas, vérité terrain relue sur le système vivant, agents de contrôle oracle/null/liar pour valider les graders. Claude Opus 5 : 97 % de choix d'outil correct, 94 % d'exactitude factuelle, 100 % de citations réelles, 3 % d'hallucination — contre 69 / 54 / 27 / 17 % pour Qwen2.5-3B en local. 44 tests, Docker.",
+      en: "LLM agent that operates TerraOps in natural language: ReAct loop with 5 tools (live API, MLflow registry, Evidently drift report) and hybrid retrieval (ChromaDB + BM25, RRF fusion) over the documentation. The core of the project is the evaluation harness: 29 cases, ground truth re-read from the live system, oracle/null/liar control agents to validate the graders. Claude Opus 5: 97% correct tool choice, 94% factual accuracy, 100% real citations, 3% hallucination — versus 69 / 54 / 27 / 17% for a local Qwen2.5-3B. 44 tests, Docker.",
+    },
+    tech: ["Anthropic SDK", "RAG", "ChromaDB", "BM25", "sentence-transformers", "Pydantic", "Streamlit", "Docker"],
+    categories: ["aiml"],
+    github: "https://github.com/D-Arslan/terraops-copilot",
+    featured: true,
+    year: "2026",
+    accent: "#a78bfa",
+    accentBg: "#2e1065",
     accentText: "#ffffff",
   },
   {
@@ -209,6 +225,38 @@ export const projects: Project[] = [
     accentText: "#ffffff",
   },
   {
+    id: "urbanflow",
+    title: "UrbanFlow — Streaming",
+    description: {
+      fr: "Pipeline temps réel sur les données Vélib' (API GBFS) : ingestion Kafka (KRaft), Spark Structured Streaming avec fenêtres et watermark, stockage chaud PostgreSQL et froid Parquet/MinIO, modèles XGBoost et GRU servis par FastAPI, dashboard cartographique Streamlit. 7,3 M de mesures ingérées sur 1 516 stations. Conclusion documentée : à court terme la persistance est quasi optimale, XGBoost n'améliore que le RMSE (+1 à +5 %) — on sert le modèle honnêtement étiqueté.",
+      en: "Real-time pipeline on Vélib' data (GBFS API): Kafka (KRaft) ingestion, Spark Structured Streaming with windows and watermark, hot storage in PostgreSQL and cold storage in Parquet/MinIO, XGBoost and GRU models served by FastAPI, Streamlit map dashboard. 7.3M measurements ingested across 1,516 stations. Documented finding: at short horizons persistence is near-optimal, XGBoost only improves RMSE (+1 to +5%) — so the honestly-labelled model is served.",
+    },
+    tech: ["Kafka", "Spark", "PostgreSQL", "MinIO", "XGBoost", "PyTorch", "FastAPI", "Streamlit", "Docker"],
+    categories: ["aiml", "fullstack"],
+    github: "https://github.com/D-Arslan/UrbanFlow",
+    featured: true,
+    year: "2026",
+    accent: "#38bdf8",
+    accentBg: "#0c4a6e",
+    accentText: "#ffffff",
+  },
+  {
+    id: "acb",
+    title: "ACB — Caisse, stock & vitrine",
+    description: {
+      fr: "Client réel : boutique multimarque de vêtements américains. Application de caisse et de gestion de stock (PWA React : scan EAN par caméra ou douchette, vente à crédit, ticket WhatsApp, rapport Z, photos compressées côté navigateur) et site vitrine public bilingue FR/AR. Backend Spring Boot 3.5 en JDBC : mouvements de stock append-only protégés par triggers PostgreSQL, marges jamais exposées au rôle vendeur, JWT RS256, 61 migrations Flyway, 585 tests JUnit. En production sur VPS OVH avec HTTPS et sauvegardes quotidiennes.",
+      en: "Real client: a multi-brand American clothing store. Point-of-sale and inventory app (React PWA: EAN scanning by camera or barcode gun, credit sales, WhatsApp receipt, Z report, browser-side photo compression) plus a public FR/AR showcase website. Spring Boot 3.5 backend over JDBC: append-only stock movements protected by PostgreSQL triggers, margins never exposed to the seller role, RS256 JWT, 61 Flyway migrations, 585 JUnit tests. In production on an OVH VPS with HTTPS and daily backups.",
+    },
+    tech: ["Java 21", "Spring Boot", "React 18", "TypeScript", "PostgreSQL", "PWA", "Docker", "Caddy"],
+    categories: ["fullstack", "production"],
+    demo: "https://americanclothingbrands.com",
+    featured: true,
+    year: "2026–présent",
+    accent: "#ef4444",
+    accentBg: "#450a0a",
+    accentText: "#ffffff",
+  },
+  {
     id: "cyberlab",
     title: "CyberLab",
     description: {
@@ -241,6 +289,22 @@ export const projects: Project[] = [
     accentText: "#ffffff",
   },
   {
+    id: "fieldz",
+    title: "FIELDZ",
+    description: {
+      fr: "Plateforme de réservation de terrains de sport (football, padel, tennis…), en production. Architecture web + mobile, système de paiement, gestion des créneaux en temps réel. L'adoption côté clubs reste le défi en cours : pivot à l'étude.",
+      en: "Sports field booking platform (football, padel, tennis…), in production. Web + mobile architecture, payment system, real-time slot management. Club adoption is the current challenge: a pivot is under consideration.",
+    },
+    tech: ["React", "React Native", "Spring Boot", "PostgreSQL", "Java"],
+    categories: ["fullstack", "mobile", "production"],
+    github: "https://github.com/D-Arslan",
+    featured: false,
+    year: "2025–présent",
+    accent: "#1ED760",     // vert clair Fieldz
+    accentBg: "#05602B",   // vert foncé Fieldz
+    accentText: "#ffffff",
+  },
+  {
     id: "sentinel2",
     title: "MCTNet — Crop Classification",
     description: {
@@ -254,6 +318,22 @@ export const projects: Project[] = [
     year: "2025–2026",
     accent: "#06b6d4",
     accentBg: "#082f49",
+    accentText: "#ffffff",
+  },
+  {
+    id: "crous-sentinel",
+    title: "CROUS Sentinel",
+    description: {
+      fr: "Bot de veille des logements CROUS du Val-de-Marne. Playwright pilote un vrai Chromium pour franchir la salle d'attente anti-bot du site, puis interroge son API JSON interne toutes les 2 à 3 minutes. Alertes Telegram avec lien direct vers l'annonce, mémoire dédupliquée à écritures atomiques, alerte après 5 échecs consécutifs, tâche planifiée Windows avec verrou mono-instance. 12/12 vérifications déterministes (cycles multiples, panne Telegram, mémoire corrompue).",
+      en: "Monitoring bot for CROUS student housing in Val-de-Marne. Playwright drives a real Chromium to get through the site's anti-bot waiting room, then queries its internal JSON API every 2 to 3 minutes. Telegram alerts with a direct link to the listing, deduplicated memory with atomic writes, alert after 5 consecutive failures, Windows scheduled task with a single-instance lock. 12/12 deterministic checks (multiple cycles, Telegram outage, corrupt memory file).",
+    },
+    tech: ["Python", "Playwright", "Telegram Bot API", "Automation"],
+    categories: ["fullstack"],
+    github: "https://github.com/D-Arslan/crous-sentinel",
+    featured: false,
+    year: "2026",
+    accent: "#f97316",
+    accentBg: "#431407",
     accentText: "#ffffff",
   },
   {
@@ -463,6 +543,16 @@ export interface Experience {
 
 export const experiences: Experience[] = [
   {
+    company: "American Clothing Brands (ACB)",
+    role: { fr: "Développeur indépendant · Forward Deployed Engineer", en: "Freelance Developer · Forward Deployed Engineer" },
+    period: "2026 – Présent",
+    description: {
+      fr: "Client réel, boutique multimarque. Recueil du besoin avec un gérant non technique, maquettes validées, puis livraison en production en 3 sprints : caisse, scan codes-barres, réception et stock, back-office, site vitrine FR/AR. Déploiement sur VPS OVH (HTTPS, sauvegardes quotidiennes), formation du gérant, 250+ livraisons en 6 semaines pilotées par les retours terrain, maintenance continue.",
+      en: "Real client, multi-brand store. Requirements gathered with a non-technical manager, validated mockups, then production delivery in 3 sprints: point of sale, barcode scanning, receiving and inventory, back office, FR/AR showcase site. Deployed on an OVH VPS (HTTPS, daily backups), manager training, 250+ deliveries in 6 weeks driven by field feedback, ongoing maintenance.",
+    },
+    tags: ["Java 21", "Spring Boot", "React 18", "PostgreSQL", "Client réel"],
+  },
+  {
     company: "Coiflow",
     role: { fr: "Fondateur & Développeur Full Stack", en: "Founder & Full Stack Developer" },
     period: "2026 – Présent",
@@ -477,8 +567,8 @@ export const experiences: Experience[] = [
     role: { fr: "CoFondateur & CTO", en: "Co-founder & CTO" },
     period: "2025 – Présent",
     description: {
-      fr: "Plateforme de réservation de terrains de sport. Responsable de l'architecture technique, du développement web et mobile, et du management de l'équipe.",
-      en: "Sports field booking platform. Responsible for technical architecture, web and mobile development, and team management.",
+      fr: "Plateforme de réservation de terrains de sport, en production. Responsable de l'architecture technique, du développement web et mobile, et de l'équipe technique. L'adoption côté clubs reste le mur à franchir : pivot à l'étude.",
+      en: "Sports field booking platform, in production. Responsible for technical architecture, web and mobile development, and the tech team. Club adoption remains the wall to break through: a pivot is under consideration.",
     },
     tags: ["React Native", "Spring Boot", "PostgreSQL", "CTO"],
   },

@@ -60,7 +60,7 @@ export default function Hero() {
             {/* Role line */}
             <div className="flex items-center gap-2 font-[family-name:var(--font-mono)] text-sm text-[var(--muted)]">
               <span className="text-[var(--gold)]">↑</span>
-              {t({ fr: "Fondateur & CTO · FIELDZ", en: "Founder & CTO · FIELDZ" })}
+              {t({ fr: "Fondateur de Coiflow · CTO de FIELDZ", en: "Founder of Coiflow · CTO of FIELDZ" })}
             </div>
 
             {/* Description */}
@@ -139,7 +139,7 @@ export default function Hero() {
 
               {/* Stats grid */}
               <div className="grid grid-cols-2 gap-4 mb-6">
-                <StatCard value="12+" label={{ fr: "Projets", en: "Projects" }} />
+                <StatCard value="20+" label={{ fr: "Projets", en: "Projects" }} />
                 <StatCard value="97.8%" label={{ fr: "Précision IA", en: "AI accuracy" }} />
                 <StatCard value="2" label={{ fr: "Startups", en: "Startups" }} />
                 <StatCard value="4" label={{ fr: "Ans de code", en: "Years coding" }} />
@@ -147,7 +147,7 @@ export default function Hero() {
 
               {/* Stack */}
               <div className="flex flex-wrap gap-1.5">
-                {["React", "Spring Boot", "PyTorch", "TypeScript"].map((s) => (
+                {["PyTorch", "MLflow", "Spring Boot", "React"].map((s) => (
                   <span key={s} className="text-xs font-[family-name:var(--font-mono)] border border-[var(--border)] text-[var(--muted)] px-2.5 py-1 rounded">
                     {s}
                   </span>
