@@ -1110,7 +1110,7 @@ export const educations: Education[] = [
     institution: "Académie Aix-Marseille",
     degree: { fr: "Baccalauréat Général – Spé. Mathématiques & Physique-Chimie", en: "French Baccalaureate – Mathematics & Physics-Chemistry" },
     period: "2022",
-    logo: { light: "/republique_francaise.svg", dark: "/republique_francaise.svg" },
+    logo: { light: "/marianne.webp", dark: "/marianne.webp" },
     details: {
       fr: "Mention Très Bien. Mathématiques 19/20, Physique-Chimie 20/20.",
       en: "High Distinction. Mathematics 19/20, Physics-Chemistry 20/20.",

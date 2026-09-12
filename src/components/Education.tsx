@@ -42,7 +42,7 @@ export default function Education() {
                         alt={edu.institution}
                         width={64}
                         height={24}
-                        className="h-6 w-auto max-w-[72px] object-contain rounded-sm"
+                        className="h-7 w-auto max-w-[88px] object-contain rounded-sm"
                       />
                     ) : (
                       <Icon className="w-4 h-4 text-[var(--gold)]" />
