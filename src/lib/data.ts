@@ -1088,6 +1088,7 @@ export const educations: Education[] = [
       en: "Master 1 – Intelligent Computer Systems",
     },
     period: "2025 – 2026",
+    logo: { light: "/usthb_logo.webp", dark: "/usthb_logo.webp" },
     details: {
       fr: "Machine learning, deep learning, vision par ordinateur, optimisation, traitement du langage naturel.",
       en: "Machine learning, deep learning, computer vision, optimisation, natural language processing.",
@@ -1098,6 +1099,7 @@ export const educations: Education[] = [
     institution: "USTHB – Alger",
     degree: { fr: "Licence Informatique", en: "Bachelor's in Computer Science" },
     period: "2022 – 2025",
+    logo: { light: "/usthb_logo.webp", dark: "/usthb_logo.webp" },
     details: {
       fr: "Algorithmique, bases de données, réseaux, systèmes, compilation, IA. Moyenne Licence : 11,94/20 — Classement 95/402.",
       en: "Algorithms, databases, networks, systems, compilation, AI. Bachelor's average: 11.94/20 — Ranked 95/402.",
@@ -1108,6 +1110,7 @@ export const educations: Education[] = [
     institution: "Académie Aix-Marseille",
     degree: { fr: "Baccalauréat Général – Spé. Mathématiques & Physique-Chimie", en: "French Baccalaureate – Mathematics & Physics-Chemistry" },
     period: "2022",
+    logo: { light: "/republique_francaise.svg", dark: "/republique_francaise.svg" },
     details: {
       fr: "Mention Très Bien. Mathématiques 19/20, Physique-Chimie 20/20.",
       en: "High Distinction. Mathematics 19/20, Physics-Chemistry 20/20.",

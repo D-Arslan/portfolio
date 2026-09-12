@@ -40,9 +40,9 @@ export default function Education() {
                       <Image
                         src={theme === "dark" ? edu.logo.dark : edu.logo.light}
                         alt={edu.institution}
-                        width={theme === "dark" ? 20 : 56}
-                        height={20}
-                        className={theme === "dark" ? "w-5 h-5 rounded object-cover" : "h-5 w-auto object-contain"}
+                        width={64}
+                        height={24}
+                        className="h-6 w-auto max-w-[72px] object-contain rounded-sm"
                       />
                     ) : (
                       <Icon className="w-4 h-4 text-[var(--gold)]" />
