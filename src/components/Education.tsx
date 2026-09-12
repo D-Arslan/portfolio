@@ -36,17 +36,19 @@ export default function Education() {
                 <div>
                   <div className="font-[family-name:var(--font-mono)] text-xs text-[var(--dim)] mb-1.5">{edu.period}</div>
                   <div className="flex items-center gap-2">
-                    {edu.logo ? (
-                      <Image
-                        src={theme === "dark" ? edu.logo.dark : edu.logo.light}
-                        alt={edu.institution}
-                        width={64}
-                        height={24}
-                        className="h-7 w-auto max-w-[88px] object-contain rounded-sm"
-                      />
-                    ) : (
-                      <Icon className="w-4 h-4 text-[var(--gold)]" />
-                    )}
+                    <div className="w-[88px] h-7 shrink-0 flex items-center">
+                      {edu.logo ? (
+                        <Image
+                          src={theme === "dark" ? edu.logo.dark : edu.logo.light}
+                          alt={edu.institution}
+                          width={88}
+                          height={28}
+                          className="h-7 w-auto max-w-full object-contain object-left rounded-sm"
+                        />
+                      ) : (
+                        <Icon className="w-5 h-5 text-[var(--gold)]" />
+                      )}
+                    </div>
                     <span className="font-[family-name:var(--font-heading)] text-[15px] font-semibold text-[var(--gold)]">{edu.institution}</span>
                   </div>
                 </div>

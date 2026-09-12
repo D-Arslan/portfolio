@@ -65,11 +65,41 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon.png", type: "image/png", sizes: "512x512" },
+    ],
+    apple: [{ url: "/apple-icon.png", sizes: "180x180" }],
+  },
+};
+
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Arslan DIF",
+  url: "https://arslandif.com",
+  image: "https://arslandif.com/photo.png",
+  jobTitle: "Développeur Full Stack & Ingénieur IA",
+  email: "mailto:difarslan@gmail.com",
+  address: { "@type": "PostalAddress", addressLocality: "Paris", addressCountry: "FR" },
+  alumniOf: [
+    { "@type": "CollegeOrUniversity", name: "Université Paris-Est Créteil (UPEC)" },
+    { "@type": "CollegeOrUniversity", name: "USTHB" },
+  ],
+  sameAs: [
+    "https://github.com/D-Arslan",
+    "https://www.linkedin.com/in/arslan-dif-740077287/",
+  ],
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="fr" className={`${spaceGrotesk.variable} ${dmSans.variable} ${jetbrainsMono.variable}`}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+      />
       <body>
         <ThemeProvider>
           <LanguageProvider>{children}</LanguageProvider>
