@@ -31,17 +31,17 @@ export const metadata: Metadata = {
     "React", "Spring Boot", "PyTorch", "MLOps", "stage data Paris", "stage machine learning", "portfolio",
     "Arslan DIF", "FIELDZ", "Coiflow"
   ],
-  authors: [{ name: "Arslan DIF", url: "https://difarslan.com" }],
+  authors: [{ name: "Arslan DIF", url: "https://arslandif.com" }],
   creator: "Arslan DIF",
-  metadataBase: new URL("https://difarslan.com"),
+  metadataBase: new URL("https://arslandif.com"),
   alternates: {
-    canonical: "https://difarslan.com",
+    canonical: "https://arslandif.com",
   },
   openGraph: {
     title: "Arslan DIF – Développeur Full Stack & Ingénieur IA",
     description:
       "Portfolio d'Arslan DIF, développeur Full Stack et ingénieur IA. Étudiant en M2 Sciences des Données à l'UPEC (Paris). Recherche un stage de fin d'études data/ML/dev à Paris, février–août 2027.",
-    url: "https://difarslan.com",
+    url: "https://arslandif.com",
     siteName: "Arslan DIF",
     locale: "fr_FR",
     type: "website",
