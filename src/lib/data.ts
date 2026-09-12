@@ -18,23 +18,22 @@ export const translations = {
     title:    { fr: "Développeur Full Stack", en: "Full Stack Developer" },
     subtitle: { fr: "& Ingénieur IA",         en: "& AI Engineer" },
     desc: {
-      fr: "Fondateur, ingénieur et étudiant en Master IA à l'USTHB. Je conçois des produits web et mobile, et j'entraîne des modèles qui tournent en production.",
-      en: "Founder, engineer and AI Master's student at USTHB. I build web & mobile products and train models that run in production.",
+      fr: "Ingénieur full stack et étudiant en M2 Sciences des Données à l'UPEC, Paris. Je conçois des produits web et mobile, et j'industrialise des modèles qui tournent en production.",
+      en: "Full stack engineer and Data Science Master's student at UPEC, Paris. I build web & mobile products and ship models that run in production.",
     },
     cta_projects:        { fr: "Voir mes projets",       en: "View my projects" },
     cta_contact:         { fr: "Me contacter",           en: "Get in touch" },
-    cv_alternance_label: { fr: "CV Alternance",          en: "Resume (Internship)" },
-    cv_master_label:     { fr: "CV Master",              en: "Resume (Master)" },
+    cv_stage_label:      { fr: "CV Stage",               en: "Resume (Internship)" },
     available: {
-      fr: "Disponible pour alternance – Sept. 2026 · Paris",
-      en: "Available for apprenticeship – Sept. 2026 · Paris",
+      fr: "Disponible pour un stage – Fév. 2027 · Paris",
+      en: "Available for an internship – Feb. 2027 · Paris",
     },
   },
   about: {
     title: { fr: "À propos", en: "About" },
     p1: {
-      fr: "Je suis Arslan DIF, développeur full stack et ingénieur IA basé à Alger. Étudiant en Master 1 Systèmes Informatiques Intelligents à l'USTHB, je cherche une alternance à Paris à partir de septembre 2026.",
-      en: "I'm Arslan DIF, a full stack developer and AI engineer based in Algiers. Currently in my first year of a Master's in Intelligent Computer Systems at USTHB, I'm looking for an apprenticeship in Paris starting September 2026.",
+      fr: "Je suis Arslan DIF, développeur full stack et ingénieur IA basé à Paris. Étudiant en Master 2 Sciences des Données et Technologies du Sport (SDTS) à l'UPEC, je cherche un stage de fin d'études data/ML/dev à Paris de février à août 2027.",
+      en: "I'm Arslan DIF, a full stack developer and AI engineer based in Paris. Currently in the final year of a Master's in Data Science and Sports Technologies (SDTS) at UPEC, I'm looking for a data/ML/dev end-of-studies internship in Paris from February to August 2027.",
     },
     p2: {
       fr: "J'ai fondé FIELDZ (plateforme de réservation de terrains de sport) et Coiflow (SaaS pour barbershops), deux projets que je développe et opère activement. Mon parcours combine ingénierie logicielle, intelligence artificielle et entrepreneuriat.",
@@ -646,8 +645,8 @@ export const blogPosts: BlogPost[] = [
     date: "Nov. 2025",
     readTime: "4 min",
     title: {
-      fr: "Étudiant en IA à l'USTHB : ce que l'école n'apprend pas",
-      en: "AI Student at USTHB: What School Doesn't Teach You",
+      fr: "Étudier l'IA à l'USTHB : ce que l'école n'apprend pas",
+      en: "Studying AI at USTHB: What School Doesn't Teach You",
     },
     excerpt: {
       fr: "Entre les cours théoriques et les projets réels, il y a un gouffre. Voici comment je l'ai comblé.",
@@ -974,21 +973,36 @@ export interface Education {
   period: string;
   details: { fr: string; en: string };
   grade?: string;
+  /** Logo : version transparente (thème clair) et version avec fond (thème sombre) */
+  logo?: { light: string; dark: string };
 }
 
 export const educations: Education[] = [
+  {
+    institution: "UPEC – Paris",
+    degree: {
+      fr: "Master 2 – Sciences des Données et Technologies du Sport (SDTS)",
+      en: "Master 2 – Data Science and Sports Technologies (SDTS)",
+    },
+    period: "2026 – 2027",
+    details: {
+      fr: "Master Optique, Image, Vision, Multimédia – parcours SDTS. Science des données, apprentissage automatique, traitement du signal et de l'image, vision par ordinateur. Stage de fin d'études : février – août 2027.",
+      en: "Master's in Optics, Image, Vision, Multimedia – SDTS track. Data science, machine learning, signal and image processing, computer vision. End-of-studies internship: February – August 2027.",
+    },
+    logo: { light: "/upec_logo.webp", dark: "/upec_logo_sombre.png" },
+  },
   {
     institution: "USTHB – Alger",
     degree: {
       fr: "Master 1 – Systèmes Informatiques Intelligents",
       en: "Master 1 – Intelligent Computer Systems",
     },
-    period: "2025 – Présent",
+    period: "2025 – 2026",
     details: {
       fr: "Machine learning, deep learning, vision par ordinateur, optimisation, traitement du langage naturel.",
       en: "Machine learning, deep learning, computer vision, optimisation, natural language processing.",
     },
-    grade: "10,88/20 (S1)",
+    grade: "11,52/20",
   },
   {
     institution: "USTHB – Alger",

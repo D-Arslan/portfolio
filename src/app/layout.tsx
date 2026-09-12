@@ -25,10 +25,10 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "Arslan DIF – Développeur Full Stack & Ingénieur IA",
   description:
-    "Portfolio d'Arslan DIF, développeur Full Stack et ingénieur IA. Fondateur de FIELDZ et Coiflow. Recherche une alternance à Paris à partir de septembre 2026.",
+    "Portfolio d'Arslan DIF, développeur Full Stack et ingénieur IA. Étudiant en M2 Sciences des Données à l'UPEC (Paris). Recherche un stage de fin d'études data/ML/dev à Paris, février–août 2027.",
   keywords: [
     "développeur full stack", "ingénieur IA", "machine learning", "deep learning",
-    "React", "Spring Boot", "PyTorch", "alternance Paris", "portfolio",
+    "React", "Spring Boot", "PyTorch", "MLOps", "stage data Paris", "stage machine learning", "portfolio",
     "Arslan DIF", "FIELDZ", "Coiflow"
   ],
   authors: [{ name: "Arslan DIF", url: "https://difarslan.com" }],
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Arslan DIF – Développeur Full Stack & Ingénieur IA",
     description:
-      "Portfolio d'Arslan DIF, développeur Full Stack et ingénieur IA. Fondateur de FIELDZ et Coiflow. Recherche une alternance à Paris à partir de septembre 2026.",
+      "Portfolio d'Arslan DIF, développeur Full Stack et ingénieur IA. Étudiant en M2 Sciences des Données à l'UPEC (Paris). Recherche un stage de fin d'études data/ML/dev à Paris, février–août 2027.",
     url: "https://difarslan.com",
     siteName: "Arslan DIF",
     locale: "fr_FR",
@@ -58,7 +58,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Arslan DIF – Développeur Full Stack & Ingénieur IA",
     description:
-      "Portfolio d'Arslan DIF, développeur Full Stack et ingénieur IA. Alternance Paris sept. 2026.",
+      "Portfolio d'Arslan DIF, développeur Full Stack et ingénieur IA. Stage M2 data/ML · Paris · fév. 2027.",
     images: ["/photo.png"],
   },
   robots: {

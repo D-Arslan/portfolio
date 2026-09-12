@@ -27,9 +27,9 @@ export default function About() {
             {/* Tags */}
             <div className="flex flex-wrap gap-2 pt-2">
               {[
-                { fr: "Disponible Sept. 2026", en: "Available Sept. 2026" },
+                { fr: "Stage · fév. 2027", en: "Internship · Feb. 2027" },
                 { fr: "Paris", en: "Paris" },
-                { fr: "Alternance", en: "Apprenticeship" },
+                { fr: "M2 UPEC", en: "M2 UPEC" },
                 { fr: "Anglais C2", en: "C2 English" },
                 { fr: "Bac TB 17/20", en: "Bac Honors 17/20" },
               ].map((tag, i) => (

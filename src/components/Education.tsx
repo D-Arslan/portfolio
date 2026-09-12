@@ -1,18 +1,22 @@
 "use client";
 
 import { GraduationCap, Award, BookOpen, type LucideIcon } from "lucide-react";
+import Image from "next/image";
 import { useLanguage } from "@/context/LanguageContext";
+import { useTheme } from "@/context/ThemeContext";
 import { translations, educations } from "@/lib/data";
 import { SectionHeader } from "./About";
 import { useInView } from "@/hooks/useInView";
 
 const ICONS: Record<string, LucideIcon> = {
+  "UPEC – Paris": GraduationCap,
   "USTHB – Alger": GraduationCap,
   "Académie Aix-Marseille": Award,
 };
 
 export default function Education() {
   const { t } = useLanguage();
+  const { theme } = useTheme();
   const { ref, inView } = useInView();
 
   return (
@@ -32,7 +36,17 @@ export default function Education() {
                 <div>
                   <div className="font-[family-name:var(--font-mono)] text-xs text-[var(--dim)] mb-1.5">{edu.period}</div>
                   <div className="flex items-center gap-2">
-                    <Icon className="w-4 h-4 text-[var(--gold)]" />
+                    {edu.logo ? (
+                      <Image
+                        src={theme === "dark" ? edu.logo.dark : edu.logo.light}
+                        alt={edu.institution}
+                        width={theme === "dark" ? 20 : 56}
+                        height={20}
+                        className={theme === "dark" ? "w-5 h-5 rounded object-cover" : "h-5 w-auto object-contain"}
+                      />
+                    ) : (
+                      <Icon className="w-4 h-4 text-[var(--gold)]" />
+                    )}
                     <span className="font-[family-name:var(--font-heading)] text-[15px] font-semibold text-[var(--gold)]">{edu.institution}</span>
                   </div>
                 </div>

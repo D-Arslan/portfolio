@@ -86,7 +86,7 @@ export default function Hero() {
                 {t(tr.cta_contact)}
               </a>
               <a
-                href="/cv-alternance.pdf"
+                href="/cv-stage.pdf"
                 download
                 className="inline-flex items-center gap-2 bg-transparent border border-[var(--gold)] text-[var(--gold)] hover:bg-[var(--gold-glow)] text-sm px-5 py-3.5 rounded-md transition-all"
               >
@@ -120,7 +120,7 @@ export default function Hero() {
               {/* Badge */}
               <div className="inline-flex items-center gap-1.5 font-[family-name:var(--font-mono)] text-xs text-[var(--gold)] bg-[var(--gold-glow)] border border-[var(--gold)]/20 rounded-full px-3 py-1.5 mb-5">
                 <span className="w-1.5 h-1.5 bg-[var(--gold)] rounded-full animate-pulse" />
-                {t({ fr: "disponible · sept. 2026 · paris", en: "available · sept. 2026 · paris" })}
+                {t({ fr: "stage · fév. 2027 · paris", en: "internship · feb. 2027 · paris" })}
               </div>
 
               {/* Avatar */}
@@ -135,7 +135,7 @@ export default function Hero() {
               </div>
 
               <div className="font-[family-name:var(--font-heading)] text-[22px] font-bold mb-1">Arslan DIF</div>
-              <div className="text-sm font-[family-name:var(--font-mono)] text-[var(--muted)] mb-6">M1 IA · USTHB · Alger</div>
+              <div className="text-sm font-[family-name:var(--font-mono)] text-[var(--muted)] mb-6">M2 SDTS · UPEC · Paris</div>
 
               {/* Stats grid */}
               <div className="grid grid-cols-2 gap-4 mb-6">
