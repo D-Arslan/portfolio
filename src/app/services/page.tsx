@@ -8,13 +8,13 @@ export const metadata: Metadata = {
   description:
     "Développeur full stack freelance : site vitrine, application web / SaaS, application mobile et solutions IA sur mesure. Devis gratuit, réponse sous 48h.",
   alternates: {
-    canonical: "https://difarslan.com/services",
+    canonical: "https://arslandif.com/services",
   },
   openGraph: {
     title: "Prestations & Freelance – Arslan DIF",
     description:
       "Site vitrine, application web / SaaS, application mobile, solutions IA. Devis gratuit, réponse sous 48h.",
-    url: "https://difarslan.com/services",
+    url: "https://arslandif.com/services",
     siteName: "Arslan DIF",
     locale: "fr_FR",
     type: "website",

@@ -12,7 +12,7 @@ export default function Footer() {
           {t(translations.footer.made)}{" "}
           <span className="text-[var(--gold)] font-medium">Arslan DIF</span>
         </p>
-        <p>© {new Date().getFullYear()} · <span className="text-[var(--gold)]">difarslan.com</span></p>
+        <p>© {new Date().getFullYear()} · <span className="text-[var(--gold)]">arslandif.com</span></p>
       </div>
     </footer>
   );
