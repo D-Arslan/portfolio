@@ -1079,7 +1079,7 @@ export const educations: Education[] = [
       fr: "Master Optique, Image, Vision, Multimédia – parcours SDTS. Science des données, apprentissage automatique, traitement du signal et de l'image, vision par ordinateur. Stage de fin d'études : février – août 2027.",
       en: "Master's in Optics, Image, Vision, Multimedia – SDTS track. Data science, machine learning, signal and image processing, computer vision. End-of-studies internship: February – August 2027.",
     },
-    logo: { light: "/upec_logo.webp", dark: "/upec_logo.webp" },
+    logo: { light: "/upec_logo_sombre.png", dark: "/upec_logo_sombre.png" },
   },
   {
     institution: "USTHB – Alger",
