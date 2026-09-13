@@ -46,7 +46,7 @@ export default function Blog() {
 // logos with a dark background (svg/png on dark bg) vs transparent (webp on any bg)
 const DARK_BG_ICONS = new Set(["/fieldz/favicone-fieldz.svg"]);
 
-function BlogIcon({ icon, size = "lg" }: { icon: string; size?: "sm" | "lg" }) {
+function BlogIcon({ icon, alt, size = "lg" }: { icon: string; alt: string; size?: "sm" | "lg" }) {
   if (icon.startsWith("/")) {
     const needsBg = DARK_BG_ICONS.has(icon);
     return (
@@ -54,7 +54,7 @@ function BlogIcon({ icon, size = "lg" }: { icon: string; size?: "sm" | "lg" }) {
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={icon}
-          alt=""
+          alt={alt}
           className={`object-contain ${size === "lg" ? "h-16 w-auto max-w-[7rem]" : "h-10 w-auto max-w-[5rem]"}`}
         />
       </div>
@@ -81,7 +81,7 @@ function FeaturedCard({ post, onOpen }: { post: BlogPost; onOpen: () => void }) 
         <div className="absolute inset-0 opacity-[0.04]" style={{
           backgroundImage: "repeating-linear-gradient(135deg, transparent, transparent 14px, var(--text) 14px, var(--text) 15px)"
         }} />
-        <BlogIcon icon={post.icon} size="lg" />
+        <BlogIcon icon={post.icon} alt={t(post.title)} size="lg" />
         <div className="absolute top-4 left-4 font-[family-name:var(--font-mono)] text-[10px] tracking-widest uppercase px-2.5 py-1 rounded bg-[var(--gold)]/15 text-[var(--gold)] border border-[var(--gold)]/25">
           {t(tr.featured)}
         </div>
@@ -127,7 +127,7 @@ function BlogCard({ post, onOpen }: { post: BlogPost; onOpen: () => void }) {
       </div>
 
       <div className="mb-3">
-        <BlogIcon icon={post.icon} size="sm" />
+        <BlogIcon icon={post.icon} alt={t(post.title)} size="sm" />
       </div>
 
       <h3 className="font-[family-name:var(--font-heading)] text-sm font-semibold leading-snug text-[var(--text)] mb-2">
