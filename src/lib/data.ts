@@ -1065,6 +1065,8 @@ export interface Education {
   grade?: string;
   /** Logo : version transparente (thème clair) et version avec fond (thème sombre) */
   logo?: { light: string; dark: string };
+  /** Site officiel de l'institution (logo cliquable) */
+  url?: string;
 }
 
 export const educations: Education[] = [
@@ -1079,7 +1081,8 @@ export const educations: Education[] = [
       fr: "Master Optique, Image, Vision, Multimédia – parcours SDTS. Systèmes distribués, big data, apprentissage automatique, traitement du signal et de l'image. Stage de fin d'études : février – août 2027.",
       en: "Master's in Optics, Image, Vision, Multimedia – SDTS track. Distributed systems, big data, machine learning, signal and image processing. End-of-studies internship: February – August 2027.",
     },
-    logo: { light: "/upec_logo_sombre.png", dark: "/upec_logo_sombre.png" },
+    logo: { light: "/upec_logo.webp", dark: "/upec_logo_sombre.png" },
+    url: "https://www.u-pec.fr",
   },
   {
     institution: "USTHB – Alger",
@@ -1089,6 +1092,7 @@ export const educations: Education[] = [
     },
     period: "2025 – 2026",
     logo: { light: "/usthb_logo.webp", dark: "/usthb_logo.webp" },
+    url: "https://www.usthb.dz",
     details: {
       fr: "Machine learning, deep learning, vision par ordinateur, optimisation, traitement du langage naturel.",
       en: "Machine learning, deep learning, computer vision, optimisation, natural language processing.",
@@ -1100,6 +1104,7 @@ export const educations: Education[] = [
     degree: { fr: "Licence Informatique", en: "Bachelor's in Computer Science" },
     period: "2022 – 2025",
     logo: { light: "/usthb_logo.webp", dark: "/usthb_logo.webp" },
+    url: "https://www.usthb.dz",
     details: {
       fr: "Algorithmique, bases de données, réseaux, systèmes, compilation, IA. Moyenne Licence : 11,94/20 — Classement 95/402.",
       en: "Algorithms, databases, networks, systems, compilation, AI. Bachelor's average: 11.94/20 — Ranked 95/402.",
@@ -1111,6 +1116,7 @@ export const educations: Education[] = [
     degree: { fr: "Baccalauréat Général – Spé. Mathématiques & Physique-Chimie", en: "French Baccalaureate – Mathematics & Physics-Chemistry" },
     period: "2022",
     logo: { light: "/marianne.webp", dark: "/marianne.webp" },
+    url: "https://www.ac-aix-marseille.fr",
     details: {
       fr: "Mention Très Bien. Mathématiques 19/20, Physique-Chimie 20/20.",
       en: "High Distinction. Mathematics 19/20, Physics-Chemistry 20/20.",

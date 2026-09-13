@@ -36,15 +36,30 @@ export default function Education() {
                 <div>
                   <div className="font-[family-name:var(--font-mono)] text-xs text-[var(--dim)] mb-1.5">{edu.period}</div>
                   <div className="flex items-center gap-2">
-                    <div className="w-14 h-10 shrink-0 flex items-center justify-center">
+                    <div className="w-[72px] h-12 shrink-0 flex items-center justify-center">
                       {edu.logo ? (
-                        <Image
-                          src={theme === "dark" ? edu.logo.dark : edu.logo.light}
-                          alt={edu.institution}
-                          width={56}
-                          height={40}
-                          className="max-w-full max-h-full w-auto h-auto object-contain rounded-sm"
-                        />
+                        (() => {
+                          const img = (
+                            <Image
+                              src={theme === "dark" ? edu.logo.dark : edu.logo.light}
+                              alt={edu.institution}
+                              width={72}
+                              height={48}
+                              className="max-w-full max-h-full w-auto h-auto object-contain rounded-sm"
+                            />
+                          );
+                          return edu.url ? (
+                            <a
+                              href={edu.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              title={t({ fr: `Site officiel – ${edu.institution}`, en: `Official website – ${edu.institution}` })}
+                              className="flex items-center justify-center w-full h-full rounded-md transition-transform hover:scale-105 hover:opacity-90"
+                            >
+                              {img}
+                            </a>
+                          ) : img;
+                        })()
                       ) : (
                         <Icon className="w-5 h-5 text-[var(--gold)]" />
                       )}
