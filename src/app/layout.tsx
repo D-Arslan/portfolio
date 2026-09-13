@@ -25,7 +25,7 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "Arslan DIF – Développeur Full Stack & Ingénieur IA",
   description:
-    "Portfolio d'Arslan DIF, développeur Full Stack et ingénieur IA. Étudiant en M2 Sciences des Données à l'UPEC (Paris). Recherche un stage de fin d'études data/ML/dev à Paris, février–août 2027.",
+    "Portfolio d'Arslan DIF, développeur Full Stack et ingénieur IA. Étudiant en M2 Systèmes Distribués et Technologies de la Data Science (SDTS) à l'UPEC, Paris. Recherche un stage de fin d'études data/ML/dev à Paris, février–août 2027.",
   keywords: [
     "développeur full stack", "ingénieur IA", "machine learning", "deep learning",
     "React", "Spring Boot", "PyTorch", "MLOps", "stage data Paris", "stage machine learning", "portfolio",
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Arslan DIF – Développeur Full Stack & Ingénieur IA",
     description:
-      "Portfolio d'Arslan DIF, développeur Full Stack et ingénieur IA. Étudiant en M2 Sciences des Données à l'UPEC (Paris). Recherche un stage de fin d'études data/ML/dev à Paris, février–août 2027.",
+      "Portfolio d'Arslan DIF, développeur Full Stack et ingénieur IA. Étudiant en M2 Systèmes Distribués et Technologies de la Data Science (SDTS) à l'UPEC, Paris. Recherche un stage de fin d'études data/ML/dev à Paris, février–août 2027.",
     url: "https://arslandif.com",
     siteName: "Arslan DIF",
     locale: "fr_FR",

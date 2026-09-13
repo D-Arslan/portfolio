@@ -18,8 +18,8 @@ export const translations = {
     title:    { fr: "Développeur Full Stack", en: "Full Stack Developer" },
     subtitle: { fr: "& Ingénieur IA",         en: "& AI Engineer" },
     desc: {
-      fr: "Ingénieur full stack et étudiant en M2 Sciences des Données à l'UPEC, Paris. Je conçois des produits web et mobile, et j'industrialise des modèles qui tournent en production.",
-      en: "Full stack engineer and Data Science Master's student at UPEC, Paris. I build web & mobile products and ship models that run in production.",
+      fr: "Ingénieur full stack et étudiant en M2 Systèmes Distribués & Data Science (SDTS) à l'UPEC, Paris. Je conçois des produits web et mobile, et j'industrialise des modèles qui tournent en production.",
+      en: "Full stack engineer and Distributed Systems & Data Science Master's student at UPEC, Paris. I build web & mobile products and ship models that run in production.",
     },
     cta_projects:        { fr: "Voir mes projets",       en: "View my projects" },
     cta_contact:         { fr: "Me contacter",           en: "Get in touch" },
@@ -32,8 +32,8 @@ export const translations = {
   about: {
     title: { fr: "À propos", en: "About" },
     p1: {
-      fr: "Je suis Arslan DIF, développeur full stack et ingénieur IA basé à Paris. Étudiant en Master 2 Sciences des Données et Technologies du Sport (SDTS) à l'UPEC, je cherche un stage de fin d'études data/ML/dev à Paris de février à août 2027.",
-      en: "I'm Arslan DIF, a full stack developer and AI engineer based in Paris. Currently in the final year of a Master's in Data Science and Sports Technologies (SDTS) at UPEC, I'm looking for a data/ML/dev end-of-studies internship in Paris from February to August 2027.",
+      fr: "Je suis Arslan DIF, développeur full stack et ingénieur IA basé à Paris. Étudiant en Master 2 Systèmes Distribués et Technologies de la Data Science (SDTS) à l'UPEC, je cherche un stage de fin d'études data/ML/dev à Paris de février à août 2027.",
+      en: "I'm Arslan DIF, a full stack developer and AI engineer based in Paris. Currently in the final year of a Master's in Distributed Systems and Data Science Technologies (SDTS) at UPEC, I'm looking for a data/ML/dev end-of-studies internship in Paris from February to August 2027.",
     },
     p2: {
       fr: "J'ai fondé Coiflow (SaaS pour barbershops, en production) et je suis CTO de FIELDZ (réservation de terrains de sport, en production, dont l'adoption reste le défi en cours). J'ai aussi livré et maintenu, seul, une application de caisse et de stock pour un commerce réel. Mon parcours combine ingénierie logicielle, données et entrepreneuriat.",
@@ -1071,13 +1071,13 @@ export const educations: Education[] = [
   {
     institution: "UPEC – Paris",
     degree: {
-      fr: "Master 2 – Sciences des Données et Technologies du Sport (SDTS)",
-      en: "Master 2 – Data Science and Sports Technologies (SDTS)",
+      fr: "Master 2 – Systèmes Distribués et Technologies de la Data Science (SDTS)",
+      en: "Master 2 – Distributed Systems and Data Science Technologies (SDTS)",
     },
     period: "2026 – 2027",
     details: {
-      fr: "Master Optique, Image, Vision, Multimédia – parcours SDTS. Science des données, apprentissage automatique, traitement du signal et de l'image, vision par ordinateur. Stage de fin d'études : février – août 2027.",
-      en: "Master's in Optics, Image, Vision, Multimedia – SDTS track. Data science, machine learning, signal and image processing, computer vision. End-of-studies internship: February – August 2027.",
+      fr: "Master Optique, Image, Vision, Multimédia – parcours SDTS. Systèmes distribués, big data, apprentissage automatique, traitement du signal et de l'image. Stage de fin d'études : février – août 2027.",
+      en: "Master's in Optics, Image, Vision, Multimedia – SDTS track. Distributed systems, big data, machine learning, signal and image processing. End-of-studies internship: February – August 2027.",
     },
     logo: { light: "/upec_logo_sombre.png", dark: "/upec_logo_sombre.png" },
   },
